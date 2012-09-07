@@ -4,7 +4,7 @@ gem 'rails', '3.2.6'
   gem 'bootstrap-sass', '~> 2.0.2'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
- gem 'pg'
+# gem 'pg'
 gem 'will_paginate', '~> 3.0'
 gem 'jquery_datepicker'
 gem 'mysql2'
@@ -25,6 +25,10 @@ end
 gem 'jquery-rails'
 gem 'calendar_date_select', :git => 'http://github.com/paneq/calendar_date_select.git', :branch => 'rails3test'
 
+group :production do
+  gem 'thin'
+  gem 'pg'
+end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

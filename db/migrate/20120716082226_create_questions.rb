@@ -4,7 +4,7 @@ class CreateQuestions < ActiveRecord::Migration
       t.integer  :type_id
       t.integer  :category_id
       t.integer  :complexity_id
-      t.integer :answer
+      t.integer :answer_id
       t.string :question
       t.time :allowed_time
       t.string :created_by
