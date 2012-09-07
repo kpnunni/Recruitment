@@ -1,0 +1,48 @@
+<h1>Editing user</h1>
+<%= form_for  (@user) do |f| %>
+
+
+   <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+
+
+    <div class="row">
+      <div class="span10 offset0">
+
+        <%= f.label :Email %>
+        <%= f.text_field :user_email,:size => 22 %>
+
+        <%= f.label :password %>
+        <%= f.password_field :login_password %>
+
+        <%= f.label :confirm_Password %>
+        <%= f.password_field :login_password_confirmation %>
+        <br />
+
+        <b>Roles</b>
+        <% Role.all.each do |role| %>
+            <br />
+            <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role) %>
+            <%= role.role_name %>
+        <% end %>
+
+
+
+        <br />
+           <%= f.submit "Register", class: "btn btn-large btn-primary" %>
+               <br /><%= link_to image_tag('back.png') ,users_path %>
+      </div>
+    </div>
+   <% end %>

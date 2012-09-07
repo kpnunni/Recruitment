@@ -1,0 +1,24 @@
+    <div class="row">
+      <div class="span10 offset0"><h1>Instructions</h1>
+
+<table border="3" >
+  <tr>
+    <th>Instruction</th>
+
+   </tr>
+
+<% @instructions.each do |instruction| %>
+  <tr>
+    <td><%= instruction.instruction %></td>
+    <td><%= link_to image_tag('edit.png'), edit_instruction_path(instruction) %></td>
+    <td><%= link_to  image_tag('delete.png'), instruction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+  </tr>
+<% end %>
+</table>
+<h4><%= will_paginate @instructions ,:container=>false %></h4>
+              <%= render 'form' %>
+
+        <%= link_to image_tag('back.png') , exams_path  %>
+     </div>
+    </div>

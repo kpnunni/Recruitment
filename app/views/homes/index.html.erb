@@ -1,0 +1,27 @@
+
+<h1>
+  <div style="text-align: center;">
+   </br></br></br>
+   <%=  image_tag("suyati_logo.png" ) %>
+  </br></br></br>
+  Suyati Online Recruitment Test</div>
+  </br>
+</h1>
+  <h3 align="right" >
+
+    Users:<%= User.count  %></br>
+    Candidates:<%= Candidate.count  %></br>
+    Questions:<%= Question.count  %></br>
+    Exams:<%= Exam.count  %></br>
+    Scheduled Exams:<%= Schedule.where("sh_date >= ?",Date.today).count  %></br>
+    New Results:<%= RecruitmentTest.find_all_by_is_passed("Pending").count   %></br>
+  </h3>
+
+   <script type="text/javascript" >
+    window.onload = function()
+    {
+
+        //window.parent.close();
+    }
+</script>
+

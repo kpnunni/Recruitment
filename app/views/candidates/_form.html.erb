@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="span10 offset0">
+
+
+<%= form_for  @candidate, :html => { :multipart => true }  do |f| %>
+
+
+   <% if @candidate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
+
+      <ul>
+      <% @candidate.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+       <%= f.fields_for :user do |op| %>
+
+        <%= op.label :Email %>
+        <%= op.text_field :user_email,:size => 22 %>
+
+        <%= op.label :password %>
+        <%= op.password_field :login_password %>
+
+        <%= op.label :confirm_Password %>
+        <%= op.password_field :login_password_confirmation %>
+
+
+        <% end %>
+
+
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+
+        <%= f.label :address %>
+        <%= f.text_area  :address , :rows=>5%>
+
+        <%= f.label :phone_no_1 %>
+        <%= f.text_field :phone1 %>
+
+        <%= f.label :phone_no_2 %>
+        <%= f.text_field :phone2 %>
+
+        <%= f.label :technology %>
+        <%= f.text_field :technology %>
+
+        <%= f.label :certification %>
+        <%= f.text_field :certification %>
+
+        <%= f.label :skills %>
+        <%= f.text_field :skills %>
+
+        <%= f.label :resume  %>
+        <%= f.file_field :resume %>
+        <br />
+
+        <%= f.submit "Register" ,class: "btn btn-large btn-primary" %>
+    <% end %>
+         <%= link_to image_tag('back.png'),candidates_path  %>
+  </div>
+</div>

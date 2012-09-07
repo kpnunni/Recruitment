@@ -1,0 +1,101 @@
+    <div class="row">
+      <div class="span10 offset0"><h1>Candidate detail</h1>
+     <b>Name:</b>
+     <%=  @candidate.name %><br />
+
+     <b>Email:</b>
+     <%=  User.find(@candidate.user_id).user_email  %>
+     <br />
+
+     <b>address:</b>
+     <%=  @candidate.address %><br />
+
+     <b>phone1:</b>
+     <%=  @candidate.phone1 %><br />
+
+     <b>phone2:</b>
+     <%=  @candidate.phone2 %><br />
+
+     <b>technology:</b>
+     <%=  @candidate.technology %><br />
+
+     <b>certification:</b>
+     <%=  @candidate.certification %><br />
+
+     <b>skills:</b>
+     <%=  @candidate.skills %><br />
+
+     <b>resume_url:</b>
+     <%=  @candidate.resume %>
+     <%# if @candidate.resume.exists? then %>
+	      <%#= image_tag  @candidate.resume.url(:original) %>
+     <%#end %>
+
+     <%=link_to  image_tag('download.png'),@candidate.resume.url(:original,false)%>
+
+     <br />
+     <b>Scheduled date:</b>
+     <%=  @candidate.schedule.sh_date.strftime("%b %d %A,%Y") if !@candidate.schedule.nil?  %><br />
+
+     <b>Scheduled time:</b>
+     <%=  @candidate.schedule.sh_time.strftime("%I:%M%p")  if !@candidate.schedule.nil? %><br />
+
+        <br />
+      <h3>Experiences</h3>
+
+       <table border="3" >
+      <tr>
+        <th>from_date</th>
+        <th>to_date</th>
+        <th>experience_in</th>
+        <th>experience_from</th>
+      </tr>
+
+      <% @candidate.experiences.each   do |experience| %>
+          <tr>
+            <td><%= experience.from_date.strftime("%b %d,%Y") %></td>
+            <td><%= experience.to_date.strftime("%b %d,%Y") %></td>
+            <td><%= experience.experience_in %></td>
+            <td><%= experience.experience_from%></td>
+            <td><%= link_to image_tag('edit.png'), edit_candidate_experience_path(@candidate,experience ) %></td>
+            <td><%= link_to  image_tag('delete.png'), [@candidate,experience ] , method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+    </table>
+        <%= link_to  image_tag('addc.png'), new_candidate_experience_path(@candidate) %>
+
+        <br /><h3>Qualifications</h3>
+
+           <table border="3" >
+      <tr>
+        <th>qualification_in</th>
+        <th>qualification_from</th>
+        <th>from_date</th>
+        <th>to_date</th>
+        <th>mark_percentage</th>
+        <th>comments</th>
+      </tr>
+
+      <% @candidate.qualifications.each   do |qualification| %>
+          <tr>
+            <td><%= qualification.qualification_in %></td>
+            <td><%= qualification.qualification_from %></td>
+            <td><%= qualification.from_date.strftime(" %b %d,%Y") %></td>
+            <td><%= qualification.to_date.strftime(" %b %d,%Y")%></td>
+            <td><%= qualification.mark_percentage%></td>
+            <td><%= qualification.comments%></td>
+            <td><%= link_to image_tag('edit.png'), edit_candidate_qualification_path(@candidate,qualification ) %></td>
+            <td><%= link_to  image_tag('delete.png'), [@candidate,qualification ] , method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+    </table>
+        <%= link_to  image_tag('addc.png'), new_candidate_qualification_path(@candidate) %>
+
+
+        <br />
+     <%= link_to image_tag('back.png'), candidates_path %>
+
+      </div>
+    </div>
+
+

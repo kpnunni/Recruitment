@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="span10 offset0"><h1>Candidate:
+   <%=@recruitment_test.candidate.name %>
+  </h1>
+
+
+
+
+
+    <%= form_for (@recruitment_test) do |f|%>
+
+
+
+
+
+
+    <table border="3"   >
+      <tr>
+        <th>Category</th>
+        <th>no of questions</th>
+        <th>Right answers</th>
+        <th>Mark(%)</th>
+      </tr>
+         <% Category.all.each do |cat| %>
+         <% if @recruitment_test.candidate.schedule.exam.questions.where("category_id=?",cat.id).count!=0 %>
+
+          <tr>
+            <td><%=cat.category    %></td>
+            <td><%= @recruitment_test.candidate.schedule.exam.questions.where("category_id=?",cat.id).count %></td>
+            <td><%= @recruitment_test.each_right_answers(cat) %></td>
+            <td><%= @recruitment_test.calc_mark(cat)  %></td>
+
+          </tr>
+          <% end %>
+          <% end %>
+    </table>
+
+
+    <h2>Answer Paper</h2>
+
+        <table border="3"   >
+          <tr>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Right answer</th>
+            <th>Category</th>
+            <th>Complexity</th>
+          </tr>
+          <% @recruitment_test.candidate.answers.each do |ans| %>
+                      <tr>
+                        <td><%=ans.question.question   %></td>
+                        <td><%= ans.answer  %></td>
+                        <td><%=ans.question.answer_id  %></td>
+                        <td><%=ans.question.category.category  %></td>
+                         <td><%=ans.question.complexity.complexity  %></td>
+
+                      </tr>
+                  <% end %>
+
+
+        </table>
+
+        <%=f.label :Status  %>
+        <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
+        <%=f.label :Comments  %>
+        <%=f.text_field  :comments  %>  <br />
+        <%= f.submit "Submit" ,class: "btn btn-large btn-primary" %>
+        <% end %>
+         <%= link_to image_tag('back.png'), recruitment_tests_path  %>
+
+  </div>
+</div>

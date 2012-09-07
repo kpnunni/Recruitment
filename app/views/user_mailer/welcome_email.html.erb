@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Hai ,</h1>
+    <p>
+      Your email id is registered in "Suyati online recruitment test". <br/>
+      You are registered as <%  @user.roles.each do |rol| %>
+     <%= rol.role_name  %>
+         <%end  %>
+          .<br/>
+    </p>
+
+    <p>
+      .....................................................<br/>
+      username is: <%= @user.user_email %>.<br/>
+      password is: <%= @pass %>.<br/>
+      .....................................................<br/>
+    </p>
+    <p>
+      To login to the site, just follow this link: <%= @url %>
+
+    </p>
+   </body>
+</html>

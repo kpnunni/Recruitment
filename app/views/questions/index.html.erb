@@ -1,0 +1,98 @@
+<div class="row" xmlns="http://www.w3.org/1999/html">
+  <div class="span15 offset0">
+
+    <br /><h3 align="right" ><%= link_to image_tag('add.png'), new_question_path  %></h3>
+
+    <h1>Available Questions</h1>
+    <div class="filter_options_container">
+
+
+
+
+     <form class="filter_form">
+        <h5 align="right" >
+
+
+
+
+        </h5>
+
+            <table  cellpadding="5" >
+              <tr>
+                <th>Category:</th>
+                <th>Complexity:</th>
+                <th>Type:</th>
+
+                <th> &emsp;  &emsp;  &emsp;  &emsp;  &emsp; &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp; &emsp; </th>
+                <th>Search:</th>
+                <th></th>
+              </tr>
+
+              <tr>
+               <% if params[:search].nil?  %>
+
+                <td><%= select("search","category_id", @category.collect {|s|
+                [s.category, s.id ] }, { :include_blank => true}) %></td>
+
+                <td><%= select("search","complexity_id", @complexity.collect {|s|
+                [s.complexity, s.id ] }, { :include_blank => true}) %></td>
+
+                <td><%= select("search","type_id", @types.collect {|s|
+                [s.question_type, s.id ] }, { :include_blank => true}) %></td>
+
+               <% else  %>
+
+                  <td><%= select("search","category_id", @category.collect {|s|
+                    [s.category, s.id ] }, { :include_blank => true ,:selected =>params[:search][:category_id]}) %><br />
+                  </td>
+                  <td><%= select("search","complexity_id", @complexity.collect {|s|
+                    [s.complexity, s.id ] }, { :include_blank => true,:selected =>params[:search][:complexity_id]}) %><br />
+                  </td>
+                  <td><%= select("search","type_id", @types.collect {|s|
+                    [s.question_type, s.id ] }, { :include_blank => true,:selected =>params[:search][:type_id]}) %><br />
+                  </td>
+                 <% end  %>
+               <td> <%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+
+
+
+                <% if !params[:search].nil?  %>
+                    <td align="right" ><%= text_field_tag "srch" , params[:srch] %></td>
+                <% else  %>
+                    <td align="right" ><%= text_field_tag "srch"  %></td>
+                <% end  %>
+
+                <td><%=image_submit_tag 'find.png' , :class => 'search' %></td>
+
+
+                </tr>
+           </table>
+
+            </form>
+       </div>
+
+
+    <table border="3" >
+      <tr>
+        <th>question</th>
+        <th>allowed time (in sec)</th>
+        <th>Answer code:</th>
+      </tr>
+
+      <% @questions.each do |question| %>
+          <tr>
+            <td><%= question.question %></td>
+            <td><%= question.allowed_time %></td>
+            <td><%= question.answer_id %></td>
+
+            <td><%= link_to  image_tag('show.png'), question_path(question) %></td>
+            <td><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
+            <td><%= link_to   image_tag('delete.png'), question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+      <% end %>
+    </table>
+    <h4><%= will_paginate @questions ,:container=>false %></h4>
+
+  </div>
+</div>
+

@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="span10 offset0">
+
+    <h1>
+    <%= image_tag 'welcome.png' %>
+
+    </h1>
+    <FONT COLOR="#191970">
+      <h3>
+    Hi
+    <%= @candidate.name %>,
+
+    please fill your details,</h3> </FONT>
+    <div id='flash-notice'   ><%= flash[:notice] %> </div>
+
+
+
+
+
+
+
+    <% if @candidate.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
+
+          <ul>
+            <% @candidate.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <br/>
+    <%= form_for @candidate do |f|%>
+
+
+
+
+        <%= f.label :address %>
+        <%= f.text_area  :address , :rows=>5%>
+
+        <%= f.label :phone_no_1 %>
+        <%= f.text_field :phone1 %>
+
+        <%= f.label :phone_no_2 %>
+        <%= f.text_field :phone2 %>
+
+        <%= f.label :technology %>
+        <%= f.text_field :technology %>
+
+        <%= f.label :certification %>
+        <%= f.text_field :certification %>
+
+        <%= f.label :skills %>
+        <%= f.text_field :skills %>
+
+
+
+
+
+        <br /><br />
+        <%if !@candidate.experiences.empty? %>
+        <h3>Experiences</h3>
+            <% end %>
+        <%= f.fields_for :experiences  do |op| %>
+
+        <%= op.label :from_date %>
+        <%= op.text_field :from_date %> (yyyy-mm-dd)
+
+        <%= op.label :to_date %>
+        <%= op.text_field :to_date %>(yyyy-mm-dd)
+
+        <%= op.label :experience_in %>
+        <%= op.text_field :experience_in %>
+
+        <%= op.label :experience_from %>
+        <%= op.text_field :experience_from %>
+
+
+
+        <% end %>
+        <%if !@candidate.qualifications.empty? %>
+        <br /><br />
+        <h3>Qualifications:</h3>
+        <% end %>
+        <%= f.fields_for :qualifications  do |op| %>
+
+        <%= op.label :qualification_in %>
+        <%= op.text_field :qualification_in %>
+
+        <%= op.label :qualification_from %>
+        <%= op.text_field :qualification_from %>
+
+        <%= op.label :from_date %>
+        <%= op.text_field :from_date %> (yyyy-mm-dd)
+
+        <%= op.label :to_date %>
+        <%= op.text_field :to_date %> (yyyy-mm-dd )
+
+        <%= op.label :mark_percentage %>
+        <%= op.text_field :mark_percentage %>
+
+        <%= op.label :comments %>
+        <%= op.text_field :comments %>
+
+
+        <% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+        <br />
+        <%= f.submit    :name=>"from",:value=>"update",class: "btn btn-large btn-primary" %>
+
+
+    <% end %>
+    <h2><% link_to 'start_exam',new_answer_path %></h2>
+  </div>
+</div>

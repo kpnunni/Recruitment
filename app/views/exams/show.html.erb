@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="span10 offset0">
+                  <h1>Question Details</h1>
+        <b>name:</b><%= @exam.name %> <br />
+        <b>no_of_question:</b><%= @exam.no_of_question  %> <br />
+        <b>description:</b><%= @exam.description  %> <br />
+        <b>Total time:</b><%= @exam.total_time/60.0  %> min <br />
+        <b>created_by:</b><%= @exam.created_by  %>  <br />
+        <b>created_at:</b><%= @exam.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %>  <br />
+        <b>modified_by:</b><%= @exam.modified_by %> <br />
+        <b>modified_at:</b><%= @exam.updated_at.strftime("%b %d %A,%Y at %I:%M%p")  %> <br />
+
+
+     <b>Instructions</b> <br />
+
+    <% @instructions.each do |ins| %>
+       <%= ins.instruction  %>
+
+        <%= link_to image_tag('delete.png'),remove_instruction_exam_path(@exam,:instruction_id =>ins.id )%><br />
+
+    <% end %>
+    <br />
+
+
+
+
+    <b>Question Pattern</b>
+
+    <table border="3" >
+      <tr>
+        <th>Category</th>
+        <th>Complexity</th>
+        <th>no_of_question</th>
+
+      </tr>
+      <% Category.all.each do |cat| %>
+       <% Complexity.all.each do |com| %>
+         <% if @exam.questions.where("category_id=? and complexity_id=?",cat.id,com.id).count!=0 %>
+          <tr>
+            <td><%=cat.category    %></td>
+            <td><%= com.complexity  %></td>
+            <td><%= @exam.questions.where("category_id=? and complexity_id=?",cat.id,com.id).count %></td>
+          </tr>
+         <% end %>
+         <% end %>
+      <% end %>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+    <%= link_to 'question paper'.upcase ,question_paper_exam_path(@exam) %>
+    <br /><%= link_to image_tag('back.png') ,exams_path %>
+
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+  <title>RecruitmentTest</title>
+
+
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= calendar_date_select_includes :style => 'red'  %>
+  <%= csrf_meta_tags %>
+    <%= render 'layouts/shim' %>
+</head>
+<body>
+
+    <%= render 'layouts/header' %>
+    <div class="container">
+	<%= yield %></div>
+      <%= render 'layouts/footer' %>
+    
+</body>
+</html>
+

@@ -1,0 +1,57 @@
+
+  <div class="span10 offset0"><h1>Detail</h1>
+
+        <b>Date:</b><%= @schedule.sh_date.strftime("%b %d %A,%Y") %> <br />
+        <b>Time:</b><%= @schedule.sh_time.strftime("%I:%M%p")   %> <br />
+        <b>Exam:</b><%= @schedule.exam.name  %> <br />
+        <b>created_at:</b><%= @schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %>  <br />
+
+        <%= params[:user_id] %>
+
+    <b>Candidates</b>
+
+         <table border="3"  >
+       <tr>
+         <th>Name</th>
+         <th>Email id</th>
+       </tr>
+
+         <% @schedule.candidates.each do |candidate| %>
+       <tr>
+         <td><%= candidate.name %></td>
+         <td><%= candidate.user.user_email %></td>
+         <td><%= link_to image_tag('delete.png'),remove_schedule_path(@schedule,:candidate_id =>candidate.id )%></td>
+       </tr>
+         <% end %>
+
+     </table>
+
+    <%= link_to image_tag('back.png') ,schedules_path %>
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+<script type = "text/javascript" >
+
+ document.bind("keydown", disableF5);
+
+
+
+</script>
+
+
+
+
+
+
+
+

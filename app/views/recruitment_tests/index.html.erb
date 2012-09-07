@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="span15 offset0"><h1>Results</h1>
+
+    <table border="3" cellpadding="5"  >
+      <tr>
+        <th>name</th>
+        <th>completed?</th>
+        <th>completed_on</th>
+        <th>right answers</th>
+        <th>questions attended</th>
+        <th>no: of questions</th>
+        <th>mark(%)</th>
+        <th>status</th>
+        <th>comments</th>
+      </tr>
+
+      <% @recruitment_tests.each do |recruitment_test| %>
+          <tr>
+            <td><%= recruitment_test.candidate.name %></td>
+            <td><%= recruitment_test.is_completed? ? 'Yes' : 'No' %></td>
+            <td><%= recruitment_test.completed_on.strftime("%b %d,%Y at %I:%M%p")%></td>
+            <td><%= recruitment_test.right_answers%></td>
+            <td><%= recruitment_test.no_of_question_attended%></td>
+            <td><%= recruitment_test.candidate.schedule.exam.questions.count%></td>
+            <td><%= recruitment_test.mark_percentage%></td>
+            <td><%= recruitment_test.is_passed%></td>
+            <td><%= recruitment_test.comments%></td>
+
+            <%if recruitment_test.is_passed=="Pending"%>
+            <td><%= link_to 'selected?', recruitment_test_path(recruitment_test) %></td>
+            <% end %>
+          </tr>
+      <% end %>
+    </table>
+<h4><%= will_paginate @recruitment_tests ,:container=>false %></h4>
+  </div>
+</div>

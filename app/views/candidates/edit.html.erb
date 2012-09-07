@@ -1,0 +1,97 @@
+
+<div class="row">
+  <div class="span10 offset0">
+    <h1>Editing candidate</h1>
+
+<%= form_for  @candidate  do |f| %>
+
+
+   <% if @candidate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
+
+      <ul>
+      <% @candidate.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+
+        <%= f.label :address %>
+        <%= f.text_area  :address , :rows=>5%>
+
+        <%= f.label :phone_no_1 %>
+        <%= f.text_field :phone1 %>
+
+        <%= f.label :phone_no_2 %>
+        <%= f.text_field :phone2 %>
+
+        <%= f.label :technology %>
+        <%= f.text_field :technology %>
+
+        <%= f.label :certification %>
+        <%= f.text_field :certification %>
+
+        <%= f.label :skills %>
+        <%= f.text_field :skills %>
+
+
+        <br /><br />
+        <h3>Experiences</h3>
+        <%= f.fields_for :experiences  do |op| %>
+            
+        <%= op.label :from_date %>
+        <%= op.text_field :from_date %> (yyyy-mm-dd)
+
+        <%= op.label :to_date %>
+        <%= op.text_field :to_date %>(yyyy-mm-dd)
+
+        <%= op.label :experience_in %>
+        <%= op.text_field :experience_in %>
+
+        <%= op.label :experience_from %>
+        <%= op.text_field :experience_from %>
+
+
+
+        <% end %>
+        <br /><br />
+        <h3>Qualifications:</h3>
+        <%= f.fields_for :qualifications  do |op| %>
+
+        <%= op.label :qualification_in %>
+        <%= op.text_field :qualification_in %>
+
+        <%= op.label :qualification_from %>
+        <%= op.text_field :qualification_from %>
+
+        <%= op.label :from_date %>
+        <%= op.text_field :from_date %> (yyyy-mm-dd)
+
+        <%= op.label :to_date %>
+        <%= op.text_field :to_date %> (yyyy-mm-dd )
+
+        <%= op.label :mark_percentage %>
+        <%= op.text_field :mark_percentage %>
+
+        <%= op.label :comments %>
+        <%= op.text_field :comments %>
+
+
+        <% end %>
+
+
+
+
+        <br />
+        <%= f.submit "Update" ,class: "btn btn-large btn-primary" %>
+    <% end %>
+         <%= link_to image_tag('back.png'),candidates_path  %>
+  </div>
+</div>

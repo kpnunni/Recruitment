@@ -1,0 +1,64 @@
+<h1>Editing Question</h1>
+<div class="row">
+  <div class="span10 offset0">
+
+
+<%= form_for  (@question ) do |f1| %>
+
+
+   <% if @question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+      <% @question.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+        <table>
+          <tr>
+            <th>Complexity</th>
+            <th>Category</th>
+          </tr>
+          <tr>
+            <td><%= f1.select("complexity_id", @complexity.collect {|s| [s.complexity, s.id ] }, { :selected => @question.complexity_id}) %></td>
+
+
+
+        <td><%= f1.select("category_id", @category.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
+
+          </tr>
+        </table>
+
+        <%= f1.label :Question %>
+        <%= f1.text_area  :question, :rows=>5 %>
+
+        <%= f1.label :Allowed_time %>
+        <%= f1.text_field :allowed_time,   :class => "text_box" %>(in sec)
+
+
+
+        <table>
+          <tr>
+            <th>Options</th>
+            <th>is right option?</th>
+          </tr>
+        <%= f1.fields_for :options do |op| %>
+              <tr>
+
+           <td><%= op.text_field :option %></td>
+           <td><%= op.check_box :is_right %></td>
+              </tr>
+
+        <% end %>
+
+        </table>
+
+        <%= f1.submit "Update",class: "btn btn-large btn-primary"%>
+    <% end %>
+      <br /><%= link_to  image_tag('back.png')  ,questions_path %>
+  </div>
+</div>

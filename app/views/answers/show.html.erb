@@ -1,0 +1,169 @@
+<div class="row">
+  <div class="span10 offset1">
+
+    <h1>
+      Time Remaining:<br /><br /><div id="count" class="countdown" ></div>
+    </h1>
+
+    <%= form_for  @answer do |f| %>
+
+
+
+
+
+
+        <%=f.hidden_field   :question_id ,:value =>@answer.question.id%>
+
+        <div class="qfont">
+
+        <b><%=@answer.q_no%>.</b><%= @answer.question.question %><br />
+         <br />
+        </div>
+        <table cellpadding="5"  >
+
+          <% if @answer.question.type.question_type=="check_box" %>
+
+              <% @answer.question.options.sort.each do |op| %>
+                  <tr>
+                    <%= f.fields_for :c_option do |c_op| %>
+                        <td><%=  c_op.check_box  op.id %></td>
+                    <% end %>
+                    <td><%= label_tag op.option %></td>
+                  </tr>
+              <% end %>
+
+          <% else %>
+              <% @answer.question.options.sort.each do |op| %>
+                  <tr >
+                    <%= f.fields_for :c_option do |c_op| %>
+                        <td ><%=  c_op.radio_button 1, op.id,:checked => false%></td>
+                    <% end %>
+                    <td >   <%=   op.option %>  </td>
+                  </tr>
+              <% end %>
+
+          <% end %>
+
+
+
+        </table>
+
+        </b><br />
+
+        <%= f.submit   :id =>"procedure_submit_button" , :style => "display: none" ,:remote  => true%>
+        <%= f.submit   :id =>"refresh" ,:name=>"to",:value=>"finish", :style => "display: none" ,:remote  => true%>
+
+       <div align="center">
+        <table cellpadding="10"  ><tr>
+
+          <% if @answer.q_no == @total_question %>
+              <td><%= f.button 'Skip', :name=>"to",:value=>"skip" ,class: "btn btn-large btn-primary" , :style => "display: none" %></td>
+              <td><%= f.button 'Next', :name=>"to",:value=>"next",class: "btn btn-large btn-primary", :style => "display: none" %></td>
+          <% else %>
+              <td><%= f.button 'Skip', :name=>"to",:value=>"skip" ,class: "btn btn-large btn-primary",:with => "'g_iCount='+g_iCount" %></td>
+              <td><%= f.submit  'Next', :name=>"to",:value=>"next",class: "btn btn-large btn-primary" %></td>
+          <% end %>
+
+          <td><%= f.button 'Finish', :name=>"to",:value=>"finish",class: "btn btn-large btn-primary",data: { confirm: 'Do you really want to finish the exam?' } %></td>
+          </tr> </table>   </div>
+
+    <% end %>
+
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript" >
+    window.onload = function()
+    {
+
+         startCountdown(<%=cnt=@answer.question.allowed_time%>)
+
+    }
+</script >
+
+
+
+<script type="text/javascript">
+    function startCountdown(g_iCount)
+    {
+        if((g_iCount) > 0)
+        {
+            var str="green";
+            if (g_iCount<20&&g_iCount>=10)
+            {
+                str="orange"
+            }
+            else if (g_iCount<10)
+            {
+                str="red"
+            }
+
+
+            document.getElementById('count').innerHTML=g_iCount.toString().fontcolor(str);
+
+            g_iCount = g_iCount - 1;
+
+            setTimeout(function() {
+
+                startCountdown(g_iCount);
+
+            }, 1000);
+        }
+        else
+        {
+            document.getElementById('procedure_submit_button').click();
+        }
+    }
+</script>
+
+
+
+<script type="text/javascript">
+    <!--
+
+
+    var message="Function Disabled!";
+
+
+    function clickIE4(){
+        if (event.button==2){
+
+            return false;
+        }
+    }
+
+    function clickNS4(e){
+        if (document.layers||document.getElementById&&!document.all){
+            if (e.which==2||e.which==3){
+
+                return false;
+            }
+        }
+    }
+
+    if (document.layers){
+        document.captureEvents(Event.MOUSEDOWN);
+        document.onmousedown=clickNS4;
+    }
+    else if (document.all&&!document.getElementById){
+        document.onmousedown=clickIE4;
+    }
+
+    document.oncontextmenu=new Function("return false")
+
+    // -->
+</script>
+
+<script language=javascript>
+document.onkeydown = function(e){
+if(e.keyCode == 116)
+        {
+            return false;
+        }
+
+}
+
+</script>

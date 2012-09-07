@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="span10 offset0">
+
+    <%= form_for @exam  do |f| %>
+
+
+           <% if @exam.errors.any? %>
+            <div id="error_explanation">
+             <h2><%= pluralize(@exam.errors.count, "error") %> prohibited this candidate from being saved:</h2>
+
+             <ul>
+             <% @exam.errors.full_messages.each do |msg| %>
+               <li><%= msg %></li>
+             <% end %>
+             </ul>
+              </div>
+          <% end %>
+
+
+
+
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+
+        <%= f.label  :description%>
+        <%= f.text_field :description %>
+
+        <br />Instructions
+        <% Instruction.all.each do |instruction| %>
+            <br />
+            <%= check_box_tag "exam[instruction_ids][]", instruction.id, @exam.instructions.include?(instruction.id)  %>
+            <%= instruction.instruction %>
+        <% end %>
+        <br />
+        <%= link_to 'new_instruction?' , instructions_path  %>
+        <%= f.label :Complexity %>
+        <%= f.select("complex_id", Complexity.all.collect {|s|
+         [s.complexity, s.id ] }, { :include_blank => false, :selected =>
+        @exam.complex_id}) %>
+
+
+
+      <table border="3" >
+      <tr>
+        <th>category</th>
+        <th>no_of_question</th>
+      </tr>
+
+      <% Category.all.each do |category| %>
+          <tr>
+            <td><%= category.category %></td>
+
+
+            <%= f.fields_for :categories do |category_fields| %>
+            <td><%= category_fields.number_field  (category.category ) ,   :class => "text_box"  %></td>
+            <% end %>
+
+
+
+          </tr>
+      <% end %>
+      </table>
+
+
+
+        <br />
+        <%= f.submit "submit" ,class: "button" %>
+
+    <% end %>
+      <br /><%= link_to image_tag('back.png') ,exams_path %>
+  </div>
+</div>

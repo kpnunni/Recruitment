@@ -1,0 +1,33 @@
+    <div class="row">
+      <div class="span20 offset0"><h1>Users</h1>
+
+<table border="3">
+  <tr>
+    <th>User Email</th>
+    <th>User Roles</th>
+    <th>isAlive</th>
+    <th>isDelete</th>
+   </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.user_email %></td>
+    <td>
+      <% user.roles.each do |role| %>
+          <%="|"+ role.role_name+"|" %>
+      <% end %>
+    </td>
+    <td><%= user.isAlive? ? 'Yes' : 'No' %></td>
+    <td><%= user.isDelete? ? 'Yes' : 'No'  %></td>
+    <td><%= link_to image_tag('edit.png'), edit_user_path(user) %></td>
+    <td><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to  image_tag('delete.png'), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+  </tr>
+<% end %>
+</table>
+<h4><%= will_paginate @users ,:container=>false %></h4>
+        <br /><h3><%= link_to image_tag('adduser.png'), new_user_path %></h3>
+
+     </div>
+    </div>

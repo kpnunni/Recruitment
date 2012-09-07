@@ -1,0 +1,50 @@
+    <div class="row">
+      <div class="span10 offset0"><h1>Candidates</h1>
+
+<table border="3">
+  <tr>
+    <th>name</th>
+    <th>email id</th>
+    <th>phone</th>
+    <th>skills</th>
+    <th>Exam Assigned?</th>
+    <th>Exam Completed?</th>
+   </tr>
+
+<% @candidates.each do |candidate| %>
+  <tr>
+    <td><%= candidate.name %></td>
+    <td><%= candidate.user.user_email  %></td>
+    <td><%= candidate.phone1 %></td>
+    <td><%= candidate.skills%></td>
+    <td><%= candidate.schedule.nil? ? 'No' :'Yes'  %></td>
+    <td><%= candidate.recruitment_test.nil?  ? 'No' :'Yes'  %></td>
+    <td><%= link_to image_tag('show.png'), candidate_path(candidate) %></td>
+    <td><%= link_to image_tag('edit.png'), edit_candidate_path(candidate) %></td>
+    <td><%= link_to  image_tag('delete.png'), candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+<h4><%= will_paginate @candidates ,:container=>false %></h4>
+        <br /><h3><%= link_to image_tag('adduser.png'), new_candidate_path  %></h3>
+
+     </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

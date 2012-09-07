@@ -1,0 +1,90 @@
+
+
+
+
+
+<div class="row">
+  <div class="span10 offset0">
+
+    <%= form_for @schedule do |f| %>
+
+
+           <% if @schedule.errors.any? %>
+            <div id="error_explanation">
+             <h2><%= pluralize(@schedule.errors.count, "error") %> prohibited this candidate from being saved:</h2>
+
+             <ul>
+             <% @schedule.errors.full_messages.each do |msg| %>
+               <li><%= msg %></li>
+             <% end %>
+             </ul>
+              </div>
+          <% end %>
+
+
+        <%= f.label :exam%>
+        <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
+
+        <%= f.label :date %>
+        <%#= f.text_field :sh_date %>
+
+
+       <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force %>
+
+        <%= f.label  :time%>
+
+        <%= f.time_select  "sh_time",:minute_step => 15 , :ampm => true  %>
+
+        <% if @candidates.empty?   %>
+
+            <h3><%="No candidates to schedule the exam" %></h3>
+        <% else %>
+
+     <table >
+       <tr>
+         <th>Candidate Name</th>
+         <th>Email id</th>
+         <th>select/not</th>
+       </tr>
+
+         <%= f.fields_for :candidate_ids do |f1| %>
+
+
+
+         <% @candidates.each do |c| %>
+       <tr>
+         <td><%= c.name %></td>
+         <td><%= c.user.user_email %></td>
+         <td align="center" ><%= f1.check_box  c.id%></td>
+
+      </tr>
+
+
+               <% end %>
+         <% end %>
+     </table>
+       <br /><br />
+       <%= f.submit "Schedule" ,class: "btn btn-large btn-primary" %>
+         <% end %>
+
+
+
+
+
+
+
+
+
+
+
+    <% end %>
+       <br /><%= link_to image_tag('back.png') ,schedules_path %>
+  </div>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Hai ,<%= @user.candidate.name %>.  </h1>
+
+    <p>
+      This is your result of suyati recruitment test.<br />
+      <%if @user.candidate.recruitment_test.is_passed=="Passed" %>
+          <%= "you are passed and contact hr team for further details" %>
+      <%else%>
+          <%= "sorry,you are failed.Keep trying" %>
+      <% end %>
+    </p>
+
+  </body>
+</html>
