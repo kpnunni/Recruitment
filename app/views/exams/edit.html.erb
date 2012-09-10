@@ -32,10 +32,10 @@
             <%= instruction.instruction %>
         <% end %>
         <br />
-        <%= f.label :Complexity %>
-        <%= f.select("complex_id", Complexity.all.collect {|s|
+        <%= f.label :Complexity %>    <br />
+        <%= f.select("complexity_id", Complexity.all.collect {|s|
          [s.complexity, s.id ] }, { :include_blank => false, :selected =>
-        @exam.complex_id}) %>
+        @exam.complexity_id}) %>
 
 
 
@@ -50,7 +50,7 @@
             <td><%= category.category %></td>
 
 
-            <%= f.fields_for :categories do |category_fields| %>
+            <%= f.fields_for :subj do |category_fields| %>
             <td><%= category_fields.number_field  (category.category ) , :value=>@exam.questions.where("category_id=?",category.id).count ,   :class => "text_box" %></td>
             <% end %>
 

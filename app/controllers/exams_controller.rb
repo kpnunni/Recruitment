@@ -22,7 +22,7 @@ class ExamsController < ApplicationController
 
   def new
     @exam = Exam.new
-    @exam.categories =Array.new(Category.count)
+    @exam.subj =Array.new(Category.count)
     respond_to do |format|
       format.html 
       format.json { render json: @exam }
@@ -32,7 +32,7 @@ class ExamsController < ApplicationController
 
   def edit
     @exam = Exam.find(params[:id])
-    @exam.categories =Array.new(Category.count)
+    @exam.subj =Array.new(Category.count)
   end
 
 
@@ -41,7 +41,7 @@ class ExamsController < ApplicationController
     @exam.created_by =current_user.user_email
     @q_count=@exam.generate_question_paper
     @exam.modified_by =""
-    @exam.no_of_question= @exam.categories.values.collect {|v| v.to_i}.sum
+    @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
     if @exam.no_of_question!=@q_count
        render 'new'
        return
@@ -64,8 +64,10 @@ class ExamsController < ApplicationController
   def update
     @exam = Exam.find(params[:id])
     @exam.modified_by =current_user .user_email
+    @exam.subj= params[:exam][:subj]
+
     @q_count=@exam.generate_question_paper
-    @exam.no_of_question= @exam.categories.values.collect {|v| v.to_i}.sum
+    @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
     @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
     if @exam.no_of_question!=@q_count
        render 'new'

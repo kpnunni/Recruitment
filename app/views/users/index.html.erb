@@ -19,7 +19,7 @@
     <td><%= user.isAlive? ? 'Yes' : 'No' %></td>
     <td><%= link_to image_tag('edit.png'), edit_user_path(user) %></td>
     <td><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put, data: { confirm: 'Are you sure?' } %></td>
-    <td><%= link_to  image_tag('delete.png'), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to  image_tag('delete.png',:alt => "Delete Entry"), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
   </tr>
 <% end %>
@@ -29,3 +29,13 @@
 
      </div>
     </div>
+
+ <script type="text/javascript ">
+   $(function() {
+  $('img').each( function() {
+    var o = $(this);
+    if( ! o.attr('title') && o.attr('alt') ) o.attr('title', o.attr('alt') );
+  });
+});
+
+ </script>

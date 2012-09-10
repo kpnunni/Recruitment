@@ -1,7 +1,8 @@
 class Exam < ActiveRecord::Base
-  attr_accessor :complex_id ,:categories
-   attr_accessible :name,:description,:created_by, :modified_by,:no_of_question , :instruction_ids , :complex_id ,:categories ,:total_time
+  attr_accessor :subj
+   attr_accessible :name,:description,:created_by, :modified_by,:no_of_question , :instruction_ids , :complexity_id ,:subj ,:total_time
    validates :name, :presence =>true
+  belongs_to  :complexity
   has_and_belongs_to_many :instructions
   has_and_belongs_to_many :questions
 
@@ -9,10 +10,10 @@ class Exam < ActiveRecord::Base
 
   def generate_question_paper
 
-    if self.complex_id.to_i == 2
+    if self.complexity_id.to_i == 2
       h=0.5
       l=0.2
-    elsif self.complex_id.to_i == 3
+    elsif self.complexity_id.to_i == 3
       h=0.33
       l=0.33
     else
@@ -26,8 +27,8 @@ class Exam < ActiveRecord::Base
     #high questions  from each category
     comp_id=Complexity.find_by_complexity(:high).id
     @categorys.each do |category|
-      self.categories[category.category]=0     if self.categories[category.category].nil?
-      nos=(self.categories[category.category].to_i*h).to_i
+      self.subj[category.category]=0     if self.subj[category.category].nil?
+      nos=(self.subj[category.category].to_i*h).to_i
       if nos!=0
         @questions=Question.where("complexity_id = ? AND category_id = ?",comp_id, category.id ).shuffle.first(nos)
          @questions.each {|q| @question_paper<<q }
@@ -37,7 +38,7 @@ class Exam < ActiveRecord::Base
     #medium questions from each category
     comp_id=Complexity.find_by_complexity(:low).id
     @categorys.each do |category|
-      nos=(self.categories[category.category].to_i*l).to_i
+      nos=(self.subj[category.category].to_i*l).to_i
       if nos!=0
         @questions=Question.where("complexity_id = ? AND category_id = ?",comp_id, category.id ).shuffle.first(nos)
         @questions.each {|q| @question_paper<<q }
@@ -47,7 +48,7 @@ class Exam < ActiveRecord::Base
     #low level questions from each category
     comp_id=Complexity.find_by_complexity(:medium).id
     @categorys.each do |category|
-      nos=self.categories[category.category].to_i-((self.categories[category.category].to_i*l).to_i + (self.categories[category.category].to_i*h).to_i)
+      nos=self.subj[category.category].to_i-((self.subj[category.category].to_i*l).to_i + (self.subj[category.category].to_i*h).to_i)
       if nos!=0
         @questions=Question.where("complexity_id = ? AND category_id = ?",comp_id, category.id ).shuffle.first(nos)
         @questions.each {|q| @question_paper<<q }
