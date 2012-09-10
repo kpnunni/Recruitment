@@ -6,7 +6,6 @@
     <th>User Email</th>
     <th>User Roles</th>
     <th>isAlive</th>
-    <th>isDelete</th>
    </tr>
 
 <% @users.each do |user| %>
@@ -18,7 +17,6 @@
       <% end %>
     </td>
     <td><%= user.isAlive? ? 'Yes' : 'No' %></td>
-    <td><%= user.isDelete? ? 'Yes' : 'No'  %></td>
     <td><%= link_to image_tag('edit.png'), edit_user_path(user) %></td>
     <td><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put, data: { confirm: 'Are you sure?' } %></td>
     <td><%= link_to  image_tag('delete.png'), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>

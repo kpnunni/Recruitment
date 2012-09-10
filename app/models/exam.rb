@@ -1,7 +1,7 @@
 class Exam < ActiveRecord::Base
   attr_accessor :complex_id ,:categories
    attr_accessible :name,:description,:created_by, :modified_by,:no_of_question , :instruction_ids , :complex_id ,:categories ,:total_time
-   validates :name,:description, :presence =>true
+   validates :name, :presence =>true
   has_and_belongs_to_many :instructions
   has_and_belongs_to_many :questions
 
@@ -20,11 +20,12 @@ class Exam < ActiveRecord::Base
       l=0.5
     end
 
-    @category=Category.all
+    @categorys = Category.all
     @question_paper=Array.new
+
     #high questions  from each category
     comp_id=Complexity.find_by_complexity(:high).id
-    @category.each do |category|
+    @categorys.each do |category|
       self.categories[category.category]=0     if self.categories[category.category].nil?
       nos=(self.categories[category.category].to_i*h).to_i
       if nos!=0
@@ -35,7 +36,7 @@ class Exam < ActiveRecord::Base
 
     #medium questions from each category
     comp_id=Complexity.find_by_complexity(:low).id
-    @category.each do |category|
+    @categorys.each do |category|
       nos=(self.categories[category.category].to_i*l).to_i
       if nos!=0
         @questions=Question.where("complexity_id = ? AND category_id = ?",comp_id, category.id ).shuffle.first(nos)
@@ -45,7 +46,7 @@ class Exam < ActiveRecord::Base
 
     #low level questions from each category
     comp_id=Complexity.find_by_complexity(:medium).id
-    @category.each do |category|
+    @categorys.each do |category|
       nos=self.categories[category.category].to_i-((self.categories[category.category].to_i*l).to_i + (self.categories[category.category].to_i*h).to_i)
       if nos!=0
         @questions=Question.where("complexity_id = ? AND category_id = ?",comp_id, category.id ).shuffle.first(nos)

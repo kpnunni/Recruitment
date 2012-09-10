@@ -24,11 +24,9 @@ end
 
 gem 'jquery-rails'
 gem 'calendar_date_select', :git => 'http://github.com/paneq/calendar_date_select.git', :branch => 'rails3test'
-
-group :production do
   gem 'thin'
-  gem 'pg'
-end
+
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

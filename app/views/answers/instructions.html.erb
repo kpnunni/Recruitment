@@ -14,7 +14,7 @@
     <% date= DateTime.new(@schedule.sh_date.year, @schedule.sh_date.month, @schedule.sh_date.day,@schedule.sh_time.hour-5, @schedule.sh_time.min-30, @schedule.sh_time.sec)%>
     <br/>
 
-    <% if (time_ago_in_words(date)=~/\.*hour\.*/).nil? %>
+    <% if !(time_ago_in_words(date)=~/\.*hour\.*/).nil? %>
         <h2><%= link_to 'start_exam >>','/signin',:onclick=>"popup()" %>
         </h2>
     <% else %>

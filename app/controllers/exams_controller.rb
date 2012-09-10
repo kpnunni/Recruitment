@@ -32,7 +32,7 @@ class ExamsController < ApplicationController
 
   def edit
     @exam = Exam.find(params[:id])
-     @exam.categories =Array.new(Category.count)
+    @exam.categories =Array.new(Category.count)
   end
 
 

@@ -6,7 +6,7 @@ class CreateQuestions < ActiveRecord::Migration
       t.integer  :complexity_id
       t.integer :answer_id
       t.string :question
-      t.time :allowed_time
+      t.integer :allowed_time
       t.string :created_by
       t.timestamps
     end

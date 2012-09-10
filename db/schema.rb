@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730051927) do
+ActiveRecord::Schema.define(:version => 20120910055307) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
-    t.integer  "questions_id"
+    t.integer  "question_id"
     t.string   "answer"
     t.time     "time_taken"
     t.datetime "created_at",   :null => false
@@ -31,10 +31,13 @@ ActiveRecord::Schema.define(:version => 20120730051927) do
     t.string   "technology"
     t.string   "certification"
     t.string   "skills"
-    t.string   "resume_url"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "resume_file_name"
+    t.string   "resume_content_type"
+    t.string   "resume_file_size"
+    t.integer  "resume"
     t.integer  "schedule_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "categories", :force => true do |t|
@@ -55,9 +58,9 @@ ActiveRecord::Schema.define(:version => 20120730051927) do
     t.string   "created_by"
     t.string   "modified_by"
     t.integer  "no_of_question"
+    t.integer  "total_time"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.integer  "total_time"
   end
 
   create_table "exams_instructions", :force => true do |t|
@@ -114,12 +117,12 @@ ActiveRecord::Schema.define(:version => 20120730051927) do
     t.integer  "type_id"
     t.integer  "category_id"
     t.integer  "complexity_id"
+    t.string   "answer_id"
     t.string   "question"
     t.integer  "allowed_time"
     t.string   "created_by"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.string   "answer_id"
   end
 
   create_table "recruitment_tests", :force => true do |t|
@@ -129,7 +132,7 @@ ActiveRecord::Schema.define(:version => 20120730051927) do
     t.integer  "right_answers"
     t.integer  "no_of_question_attended"
     t.float    "mark_percentage"
-    t.boolean  "is_passed"
+    t.string   "is_passed"
     t.string   "comments"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false

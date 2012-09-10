@@ -65,7 +65,9 @@ class SchedulesController < ApplicationController
 
   def update
     @schedule = Schedule.find(params[:id])
-
+    @exam=Exam.all
+    @candidates=Candidate.all
+    @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
     respond_to do |format|
       if @schedule.update_attributes(params[:schedule])
         format.html { redirect_to @schedule, notice: 'Schedule was successfully updated.' }
