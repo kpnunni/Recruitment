@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  require 'will_paginate/array'
       def index
       @categories = Category.all.paginate(:page => params[:page], :per_page => 20)
       @category = Category.new

@@ -1,5 +1,5 @@
 class ExperiencesController < ApplicationController
-
+  require 'will_paginate/array'
 
   def edit
       @candidate=Candidate.find(params[:candidate_id])

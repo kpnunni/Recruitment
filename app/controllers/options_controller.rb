@@ -1,5 +1,5 @@
 class OptionsController < ApplicationController
-
+  require 'will_paginate/array'
       def index
         @question=Question.find(params[:question_id])
         @options = @question.options.all

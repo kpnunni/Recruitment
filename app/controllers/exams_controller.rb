@@ -1,5 +1,5 @@
 class ExamsController < ApplicationController
-  
+  require 'will_paginate/array'
   def index
     @exams = Exam.all.paginate(:page => params[:page], :per_page => 20)
 

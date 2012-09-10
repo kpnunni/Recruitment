@@ -1,5 +1,5 @@
 class InstructionsController < ApplicationController
-  
+  require 'will_paginate/array'
   def index
     @instructions = Instruction.all.paginate(:page => params[:page], :per_page => 20)
      @instruction = Instruction.new
