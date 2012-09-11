@@ -4,12 +4,12 @@ class UserMailer < ActionMailer::Base
   def welcome_email(user,pass)
     @user = user
     @pass=pass
-    @url  = "http://example.com/login"
+    @url  = "http://recruitment-suyati.herokuapp.com"
     mail(:to => user.user_email, :subject => "Welcome to Suyati online recruitment test Site")
   end
     def schedule_email(user)
     @user = user
-    @url  = "http://example.com/login"
+    @url  = "http://recruitment-suyati.herokuapp.com"
     mail(:to => user.user_email, :subject => "Recruitment test")
     end
    def admin_schedule_email (admin,schedule)

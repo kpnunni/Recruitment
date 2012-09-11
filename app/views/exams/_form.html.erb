@@ -44,6 +44,7 @@
       <tr>
         <th>category</th>
         <th>no_of_question</th>
+        <th>available</th>
       </tr>
 
       <% Category.all.each do |category| %>
@@ -54,7 +55,7 @@
             <%= f.fields_for :subj do |category_fields| %>
             <td><%= category_fields.number_field  (category.category ) ,   :class => "text_box"  %></td>
             <% end %>
-
+            <td><%= category.questions.count %></td>
 
 
           </tr>

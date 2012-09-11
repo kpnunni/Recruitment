@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910074609) do
+ActiveRecord::Schema.define(:version => 20120910055307) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(:version => 20120910074609) do
     t.integer  "total_time"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
-    t.integer  "complexity_id"
   end
 
   create_table "exams_instructions", :force => true do |t|

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  #  before_filter :chk_user
+    before_filter :chk_user, :except => [:profile,:chgpass ,:updatepass]
   require 'will_paginate/array'
 
   def show
@@ -23,8 +23,9 @@ class UsersController < ApplicationController
     @user=User.new(params[:user])
     @user.encrypt_password
 
-    UserMailer.welcome_email(@user,@user.login_password).deliver
+
     if @user.save
+      UserMailer.welcome_email(@user,@user.login_password).deliver
       redirect_to users_path, notice: 'User was successfully created.'
     else
       render action: "new"

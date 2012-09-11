@@ -43,6 +43,7 @@
       <tr>
         <th>category</th>
         <th>no_of_question</th>
+        <th>available</th>
       </tr>
 
       <% Category.all.each do |category| %>
@@ -54,7 +55,7 @@
             <td><%= category_fields.number_field  (category.category ) , :value=>@exam.questions.where("category_id=?",category.id).count ,   :class => "text_box" %></td>
             <% end %>
 
-
+            <td><%= category.questions.count %></td>
 
           </tr>
       <% end %>
