@@ -13,7 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3b03e1eb-cca0-434e-b2f4-827c51a6e5b4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/schedules_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/schedules_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/production.rb" afterPath="$PROJECT_DIR$/config/environments/production.rb" />
     </list>
@@ -53,10 +52,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="production.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="production.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="35" selection-start="1843" selection-end="1843" vertical-scroll-proportion="0.0">
+            <state line="44" column="72" selection-start="1624" selection-end="1624" vertical-scroll-proportion="0.33936653">
               <folding />
             </state>
           </provider>
@@ -82,10 +81,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="application.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="43" selection-start="263" selection-end="263" vertical-scroll-proportion="0.64285713">
+            <state line="12" column="38" selection-start="302" selection-end="302" vertical-scroll-proportion="-4.375">
               <folding />
             </state>
           </provider>
@@ -130,8 +129,8 @@
         <option value="$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
         <option value="$PROJECT_DIR$/app/controllers/schedules_controller.rb" />
-        <option value="$PROJECT_DIR$/config/environments/production.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
+        <option value="$PROJECT_DIR$/config/environments/production.rb" />
       </list>
     </option>
   </component>
@@ -951,7 +950,11 @@
       <created>1347524914107</created>
       <updated>1347524914107</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="precompile3">
+      <created>1347525439836</created>
+      <updated>1347525439836</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1034,7 +1037,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="precompile2" />
+    <option name="LAST_COMMIT_MESSAGE" value="precompile3" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1051,6 +1054,7 @@
     <MESSAGE value="table alt" />
     <MESSAGE value="precompile" />
     <MESSAGE value="precompile2" />
+    <MESSAGE value="precompile3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1073,13 +1077,6 @@
     <entry file="file://$PROJECT_DIR$/app/views/users/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="43" selection-start="211" selection-end="211" vertical-scroll-proportion="0.19582245">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/recruitment_tests/show.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="36" selection-start="180" selection-end="180" vertical-scroll-proportion="-5.0">
           <folding />
         </state>
       </provider>
@@ -1128,13 +1125,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="35" selection-start="1843" selection-end="1843" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/_header.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="31" selection-start="539" selection-end="539" vertical-scroll-proportion="-9.375">
@@ -1165,7 +1155,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="43" selection-start="263" selection-end="263" vertical-scroll-proportion="0.64285713">
+        <state line="12" column="38" selection-start="302" selection-end="302" vertical-scroll-proportion="-4.375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/recruitment_tests/show.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="36" selection-start="180" selection-end="180" vertical-scroll-proportion="-5.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environments/production.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="72" selection-start="1624" selection-end="1624" vertical-scroll-proportion="0.33936653">
           <folding />
         </state>
       </provider>
