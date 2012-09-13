@@ -3,7 +3,7 @@
 
       <div class="span12 offset0"><h1>Candidates</h1>
 
-<table border="3" class="fixed" >
+<table border="3" width="100%"  >
   <tr>
     <th>name</th>
     <th>email id</th>
@@ -18,7 +18,7 @@
     <td width="15%" ><%= candidate.name %></td>
     <td width="20%" ><%= candidate.user.user_email  %></td>
     <td width="10%" ><%= candidate.phone1 %></td>
-    <td width="30%" ><%= candidate.skills%></td>
+    <td width="20%" ><%= candidate.skills%></td>
     <td width="10%" ><%= candidate.schedule.nil? ? 'No' :'Yes'  %></td>
     <td width="10%" ><%= candidate.recruitment_test.nil?  ? 'No' :'Yes'  %></td>
     <td width="5%" ><%= link_to image_tag('show.png'), candidate_path(candidate) %></td>

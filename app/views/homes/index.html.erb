@@ -1,27 +1,34 @@
+    <div class="row">
+      <div class="span12 offset0">
 
-<h1>
-  <div style="text-align: center;">
-   </br></br></br>
-   <%=  image_tag("suyati_logo.png" ) %>
-  </br></br></br>
-  Suyati Online Recruitment Test</div>
+        <div style="float:left" align="right" >
+
+          </br></br></br></br></br></br></br></br></br>
+
+          <h3 align="left" >
+
+            Users:<%= User.count  %></br>
+            Candidates:<%= Candidate.count  %></br>
+            Questions:<%= Question.count  %></br>
+            Exams:<%= Exam.count  %></br>
+            Scheduled Exams:<%= Schedule.where("sh_date >= ?",Date.today).count  %></br>
+            New Results:<%= RecruitmentTest.find_all_by_is_passed("Pending").count   %></br>
+          </h3>
+
+
+        </div>
+
+
+  <div style="float:left" >
+   </br>
+    <h1 align="center" > Suyati Online Recruitment Test</h1>
+   <%=  image_tag("suyatiin.png")  %>
+
+  </div>
   </br>
-</h1>
-  <h3 align="right" >
 
-    Users:<%= User.count  %></br>
-    Candidates:<%= Candidate.count  %></br>
-    Questions:<%= Question.count  %></br>
-    Exams:<%= Exam.count  %></br>
-    Scheduled Exams:<%= Schedule.where("sh_date >= ?",Date.today).count  %></br>
-    New Results:<%= RecruitmentTest.find_all_by_is_passed("Pending").count   %></br>
-  </h3>
 
-   <script type="text/javascript" >
-    window.onload = function()
-    {
 
-        //window.parent.close();
-    }
-</script>
 
+</div>
+    </div>
