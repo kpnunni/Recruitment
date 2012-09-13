@@ -2,6 +2,9 @@ class SessionsController < ApplicationController
   skip_before_filter :authenticate
 
   def new
+    if signed_in?
+      redirect_to '/homes/index'
+    end
   end
 
   def create

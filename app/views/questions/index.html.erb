@@ -1,5 +1,5 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
-  <div class="span15 offset0">
+  <div class="span12 offset0">
 
     <br /><h3 align="right" ><%= link_to image_tag('add.png'), new_question_path  %></h3>
 
@@ -72,7 +72,7 @@
        </div>
 
 
-    <table border="3" >
+    <table border="3" width="100%"  >
       <tr>
         <th>question</th>
         <th>allowed time (in sec)</th>
@@ -81,7 +81,7 @@
 
       <% @questions.each do |question| %>
           <tr>
-            <td><%= question.question %></td>
+            <td class="lft" ><%= question.question %></td>
             <td><%= question.allowed_time %></td>
             <td><%= question.answer_id %></td>
 

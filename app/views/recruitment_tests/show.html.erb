@@ -1,8 +1,10 @@
 <div class="row">
   <div class="span10 offset0"><h1>Candidate:
    <%=@recruitment_test.candidate.name %>
-  </h1>
 
+  </h1>
+    <br/>
+    <%= @recruitment_test.candidate.user.user_email %>
 
 
 
@@ -14,7 +16,7 @@
 
 
 
-    <table border="3"   >
+    <table border="3" width="30%"     >
       <tr>
         <th>Category</th>
         <th>no of questions</th>
@@ -38,7 +40,7 @@
 
     <h2>Answer Paper</h2>
 
-        <table border="3"   >
+        <table border="3" width="100%"    >
           <tr>
             <th>Question</th>
             <th>Answer</th>
@@ -48,7 +50,7 @@
           </tr>
           <% @recruitment_test.candidate.answers.each do |ans| %>
                       <tr>
-                        <td><%=ans.question.question   %></td>
+                        <td class="lft" ><%=ans.question.question   %></td>
                         <td><%= ans.answer  %></td>
                         <td><%=ans.question.answer_id  %></td>
                         <td><%=ans.question.category.category  %></td>

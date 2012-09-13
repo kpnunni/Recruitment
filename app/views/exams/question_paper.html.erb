@@ -1,19 +1,22 @@
     <div class="row">
-      <div class="span10 offset0">
+      <div class="span12 offset0">
         
          <h1>Question Paper</h1>
         
-            <table border="10" bordercolor="green "  r= >
+            <table width="100%"  border="10" bordercolor="green "   >
       <tr>
+        <th>No:</th>
         <th>question</th>
         <th>allowed_time</th>
         <th>category</th>
         <th>Complexity</th>
       </tr>
 
+              <% count=0 %>
       <% @qpaper.each do |qpaper| %>
           <tr>
-            <td><%= qpaper.question %></td>
+            <td><%= count+=1 %></td>
+            <td class="lft" ><%= qpaper.question  %></td>
             <td><%= qpaper.allowed_time %></td>
             <td><%= qpaper.category.category   %></td>
             <td><%= qpaper.complexity.complexity    %></td>

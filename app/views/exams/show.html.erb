@@ -1,6 +1,7 @@
 <div class="row">
-  <div class="span10 offset0">
+  <div class="span12 offset0">
                   <h1>Question Details</h1>
+
         <b>name:</b><%= @exam.name %> <br />
         <b>no_of_question:</b><%= @exam.no_of_question  %> <br />
         <b>Complexity:</b><%= @exam.complexity.complexity  %> <br />
@@ -17,17 +18,18 @@
     <% @instructions.each do |ins| %>
        <%= ins.instruction  %>
 
-        <%= link_to image_tag('delete.png'),remove_instruction_exam_path(@exam,:instruction_id =>ins.id )%><br />
+        <%= link_to image_tag('delete.png'),remove_instruction_exam_path(@exam,:instruction_id =>ins.id ) %><br />
 
     <% end %>
     <br />
 
 
-
+    <h2>    <%= link_to 'question paper'.upcase ,question_paper_exam_path(@exam) %>
+    </h2>
 
     <b>Question Pattern</b>
 
-    <table border="3" >
+    <table border="3" width="50%"  >
       <tr>
         <th>Category</th>
         <th>Complexity</th>
@@ -58,7 +60,6 @@
 
 
 
-    <%= link_to 'question paper'.upcase ,question_paper_exam_path(@exam) %>
     <br /><%= link_to image_tag('back.png') ,exams_path %>
 
   </div>

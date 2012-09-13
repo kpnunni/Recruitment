@@ -1,7 +1,9 @@
     <div class="row">
-      <div class="span20 offset0"><h1>Users</h1>
+      <div class="span12 offset0">
+        <h3 align="right" ><%= link_to image_tag('adduser.png'), new_user_path %></h3>
+        <h1>Users</h1>
 
-<table border="3">
+<table border="3" width="85%" align="center"  >
   <tr>
     <th>User Email</th>
     <th>User Roles</th>
@@ -10,13 +12,13 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.user_email %></td>
-    <td>
+    <td width="50%" class="lft"  ><%= user.user_email %></td>
+    <td width="25%" >
       <% user.roles.each do |role| %>
           <%="|"+ role.role_name+"|" %>
       <% end %>
     </td>
-    <td><%= user.isAlive? ? 'Yes' : 'No' %></td>
+    <td width="15%" ><%= user.isAlive? ? 'Yes' : 'No' %></td>
     <td><%= link_to image_tag('edit.png'), edit_user_path(user) %></td>
     <td><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put, data: { confirm: 'Are you sure?' } %></td>
     <td><%= link_to  image_tag('delete.png',:alt => "Delete Entry"), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -25,7 +27,6 @@
 <% end %>
 </table>
 <h4><%= will_paginate @users ,:container=>false %></h4>
-        <br /><h3><%= link_to image_tag('adduser.png'), new_user_path %></h3>
 
      </div>
     </div>
