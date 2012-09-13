@@ -46,7 +46,7 @@ Test::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-   config.assets.precompile +=  %w( calendar_date_select.js,prototype.js )
+   config.assets.precompile +=  %w( calendar_date_select.js,prototype.js,bootstrap-transition.js,bootstrap-alert.js,bootstrap-button.js,bootstrap-carousel.js,bootstrap-collapse.js,bootstrap-dropdown.js,bootstrap-modal.js,bootstrap-scrollspy.js,bootstrap-tab.js,bootstrap-tooltip.js,bootstrap-popover.js,bootstrap-typeahead.js,bootstrap.js,jquery.js,jquery_ujs.js,answers.js,jquery-1.7.2.min.js,application.js)
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
