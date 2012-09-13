@@ -27,7 +27,9 @@ class AnswersController < ApplicationController
     if !@answer.save
        params[:to]="finish"
     end
-
+    if params[:to]=="timer" && current_user.candidate.answers.count==current_user.candidate.schedule.exam.questions.count
+       params[:to]="finish"
+    end
     if  params[:to]=="finish"
       @answer.save_mark(current_user)
       sign_out
