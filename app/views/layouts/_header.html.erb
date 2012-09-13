@@ -1,8 +1,8 @@
 <header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <%= "Suyati Technology" %>
-	
+
+	   <%= image_tag('suyati1.png', :size => "1600x70")   %>
       <nav>
         <ul class="nav pull-right">
          <%if signed_in? && current_user.has_role?('admin') %>
