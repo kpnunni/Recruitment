@@ -2,7 +2,7 @@ class SchedulesController < ApplicationController
    require 'will_paginate/array'
    before_filter :chk_user
   def index
-    @schedules = Schedule.where("sh_date != ?",Date.today).paginate(:page => params[:page], :per_page => 20)
+    @schedules = Schedule.all.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html 
       format.json { render json: @schedules }
