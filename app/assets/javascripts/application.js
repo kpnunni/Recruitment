@@ -13,8 +13,8 @@
 //= require bootstrap
 //= require bootstrap.js
 //= require bootstrap.min.js
-//= require jquery
-//= require jquery_ujs
+//= require jquery.js
+//= require jquery_ujs.js
 //= require prototype
 //= require_tree .
 
