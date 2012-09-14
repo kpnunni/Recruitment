@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910055307) do
+ActiveRecord::Schema.define(:version => 20120914090057) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
@@ -61,20 +61,17 @@ ActiveRecord::Schema.define(:version => 20120910055307) do
     t.integer  "total_time"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "complexity_id"
   end
 
   create_table "exams_instructions", :force => true do |t|
-    t.integer  "exam_id"
-    t.integer  "instruction_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.integer "exam_id"
+    t.integer "instruction_id"
   end
 
   create_table "exams_questions", :force => true do |t|
-    t.integer  "exam_id"
-    t.integer  "question_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer "exam_id"
+    t.integer "question_id"
   end
 
   create_table "experiences", :force => true do |t|
@@ -118,7 +115,7 @@ ActiveRecord::Schema.define(:version => 20120910055307) do
     t.integer  "category_id"
     t.integer  "complexity_id"
     t.string   "answer_id"
-    t.string   "question"
+    t.text     "question"
     t.integer  "allowed_time"
     t.string   "created_by"
     t.datetime "created_at",    :null => false
@@ -145,10 +142,8 @@ ActiveRecord::Schema.define(:version => 20120910055307) do
   end
 
   create_table "roles_users", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "role_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "user_id"
+    t.integer "role_id"
   end
 
   create_table "schedules", :force => true do |t|
