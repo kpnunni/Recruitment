@@ -52,7 +52,7 @@
                     [s.question_type, s.id ] }, { :include_blank => true,:selected =>params[:search][:type_id]}) %><br />
                   </td>
                  <% end  %>
-               <td> <%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+               <td class="lft"  > <%=image_submit_tag 'filter.png' , :class => 'search' %></td>
 
 
 
@@ -77,6 +77,9 @@
         <th>question</th>
         <th>allowed time (in sec)</th>
         <th>Answer code:</th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
 
       <% @questions.each do |question| %>
@@ -85,9 +88,9 @@
             <td><%= question.allowed_time %></td>
             <td><%= question.answer_id %></td>
 
-            <td><%= link_to  image_tag('show.png'), question_path(question) %></td>
-            <td><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
-            <td><%= link_to   image_tag('delete.png'), question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td width="5%" ><%= link_to  image_tag('show.png'), question_path(question) %></td>
+            <td width="5%" ><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
+            <td width="5%" ><%= link_to   image_tag('delete.png'), question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
       <% end %>
     </table>

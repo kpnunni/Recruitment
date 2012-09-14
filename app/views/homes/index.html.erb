@@ -1,31 +1,37 @@
     <div class="row">
       <div class="span12 offset0">
+        <h1 align="center" > Suyati Online Recruitment Test</h1>
+          </br></br>
 
-        <div style="float:left" align="right" >
+          <table width ="100%" border="4">
 
-          </br></br></br></br></br></br></br></br></br>
+           <tr>
+            <th>Users:</th>
+            <th>Candidates:</th>
+            <th>Questions:</th>
+            <th>Exams:</th></br>
+            <th>Scheduled Exams:</th>
+            <th>New Results:</th>
 
-          <h3 align="left" >
-
-            Users:<%= User.count  %></br>
-            Candidates:<%= Candidate.count  %></br>
-            Questions:<%= Question.count  %></br>
-            Exams:<%= Exam.count  %></br>
-            Scheduled Exams:<%= Schedule.where("sh_date >= ?",Date.today).count  %></br>
-            New Results:<%= RecruitmentTest.find_all_by_is_passed("Pending").count   %></br>
-          </h3>
-
-
-        </div>
+          </tr>
+          <tr>
+            <th><%= User.count  %></th>
+            <th><%= Candidate.count  %></th>
+            <th><%= Question.count  %></th>
+            <th><%= Exam.count  %> </th>
+            <th><%= Schedule.where("sh_date >= ?",Date.today).count  %></th>
+            <th><%= RecruitmentTest.find_all_by_is_passed("Pending").count %></th>
+           </tr>
+          </table>
 
 
-  <div style="float:left" >
-   </br>
-    <h1 align="center" > Suyati Online Recruitment Test</h1>
-   <%=  image_tag("suyatiin.png")  %>
 
-  </div>
-  </br>
+
+
+   <%=  image_tag("suyatiin.png", :width=>"100%" ) %>
+
+
+
 
 
 
