@@ -426,3 +426,15 @@ text-spacing: 5px;
   text-align: left;
 }
 
+table.curvedEdges {
+  border:10px solid RoyalBlue;
+  -webkit-border-radius:13px;
+  -moz-border-radius:13px;
+  -ms-border-radius:13px;
+  -o-border-radius:13px;
+  border-radius:13px;
+}
+table.curvedEdges td, table.curvedEdges th {
+  border-bottom:2px dotted black;
+  padding:5px;
+}
