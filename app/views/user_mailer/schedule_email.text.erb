@@ -5,7 +5,7 @@ Welcome to example.com, <%= @user.candidate.name %>
 
       Test details:
       Scheduled date is: <%= @user.candidate.schedule.sh_date.strftime("%b %d %A,%Y") %>
-      Scheduled time is: <%= @user.candidate.schedule.sh_time.strftime("%I:%M%p") %>
+      Scheduled time is: <%= @user.candidate.schedule.sh_date.strftime("%I:%M%p") %>
 
       To login to the site, just follow this link: <%= @url %>.
 

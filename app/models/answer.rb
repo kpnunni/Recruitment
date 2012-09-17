@@ -12,7 +12,7 @@ class Answer < ActiveRecord::Base
 
     if self.c_option.nil?
       ans="0"
-    elsif question.type=="checkbox"
+    elsif question.type.question_type=="check_box"
      ans=self.c_option.values.join
     else
       question.options.sort.each do |op|

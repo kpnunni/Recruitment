@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120914090057) do
+ActiveRecord::Schema.define(:version => 20120917072044) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
@@ -148,8 +148,7 @@ ActiveRecord::Schema.define(:version => 20120914090057) do
 
   create_table "schedules", :force => true do |t|
     t.integer  "exam_id"
-    t.date     "sh_date"
-    t.time     "sh_time"
+    t.datetime "sh_date"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

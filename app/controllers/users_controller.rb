@@ -97,6 +97,8 @@ class UsersController < ApplicationController
       @user.save
 
       redirect_to profile_user_path(@user)
+    else
+       redirect_to chgpass_user_path(@user), :notice => "invalid new password"
     end
 
   end

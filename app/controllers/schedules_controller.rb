@@ -1,6 +1,7 @@
 class SchedulesController < ApplicationController
    require 'will_paginate/array'
    before_filter :chk_user
+
   def index
     @schedules = Schedule.all.paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
@@ -38,7 +39,7 @@ class SchedulesController < ApplicationController
     @schedule = Schedule. find(params[:id])
     @candidates=Candidate.all
     @candidates.select!  {|c| @schedule.candidates.include?(c) || c.schedule_id.nil?  }
-    @schedule.sh_time=@schedule.sh_time.strftime("%I:%M")
+
   end
 
 
@@ -46,6 +47,7 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.new(params[:schedule])
     @exam=Exam.all
     @candidates=Candidate.all
+
     @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
     respond_to do |format|
       if @schedule.save
@@ -66,6 +68,7 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
     @exam=Exam.all
     @candidates=Candidate.all
+
     @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
     respond_to do |format|
       if @schedule.update_attributes(params[:schedule])

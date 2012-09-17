@@ -1,8 +1,7 @@
 
   <div class="span10 offset0"><h1>Detail</h1>
 
-        <b>Date:</b><%= @schedule.sh_date.strftime("%b %d %A,%Y") %> <br />
-        <b>Time:</b><%= @schedule.sh_time.strftime("%I:%M%p")   %> <br />
+        <b>Date:</b><%= @schedule.sh_date.strftime("%b %d %A,%Y  %I:%M%p") %> <br />
         <b>Exam:</b><%= @schedule.exam.name  %> <br />
         <b>created_at:</b><%= @schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %>  <br />
 

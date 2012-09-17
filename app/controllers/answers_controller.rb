@@ -64,8 +64,7 @@ class AnswersController < ApplicationController
       @instructions=current_user.candidate.schedule.exam.instructions.all
       @schedule=current_user.candidate.schedule
       @exam=@schedule.exam
-      @date= DateTime.new(@schedule.sh_date.year, @schedule.sh_date.month, @schedule.sh_date.day,@schedule.sh_time.hour-6, @schedule.sh_time.min-30, @schedule.sh_time.sec)
-      @diff=(Time.now.to_i-@date.to_i)/60
+       @diff=(Time.now.to_i-@schedule.sh_date.to_i)/60
   end
 
   def chk_user

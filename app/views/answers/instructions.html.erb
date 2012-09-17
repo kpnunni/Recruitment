@@ -15,11 +15,10 @@
     <br/>
 
     <% if @diff>-30 && @diff<30 %>
-        <h2><%= link_to 'start_exam >>','/answers/blank',:onclick=>"popup()" %>
+        <h2><%= link_to 'start_exam >>',blank_answers_path ,:onclick=>"popup()" %>
         </h2>
     <% else %>
-        <h2><%= "Time remaining for your exam:"+ time_ago_in_words(@date)   %></h2>
-        <%= "scheduled time: "+ @schedule.sh_time.strftime("%I:%M%p")   %>
+        <h2><%= "Time remaining for your exam:"+ time_ago_in_words(@schedule.sh_date)   %></h2>
 
         <h2><%=link_to 'sign out', '/signout',method: :delete   %></h2>
     <% end %>
@@ -31,9 +30,9 @@
    function popup()
    {
        var a=window.open('/answers/new',"fullscreen=1",true);
-
-       a.focus();
        self.blur();
+       a.focus();
+
    }
  </script>
 

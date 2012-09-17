@@ -28,7 +28,7 @@
                     <%= f.fields_for :c_option do |c_op| %>
                         <td><%=  c_op.check_box  op.id %></td>
                     <% end %>
-                    <td><%= label_tag op.option %></td>
+                    <td class="lft" ><%= label_tag op.option %></td>
                   </tr>
               <% end %>
 
@@ -38,7 +38,7 @@
                     <%= f.fields_for :c_option do |c_op| %>
                         <td ><%=  c_op.radio_button 1, op.id,:checked => false%></td>
                     <% end %>
-                    <td >   <%=   op.option %>  </td>
+                    <td class="lft"  >   <%=   op.option %>  </td>
                   </tr>
               <% end %>
 
@@ -64,7 +64,7 @@
               <td><%= f.submit  'Next', :name=>"to",:value=>"next",class: "btn btn-large btn-primary" %></td>
           <% end %>
 
-          <td><%= f.button 'Finish', :name=>"to",:value=>"finish",class: "btn btn-large btn-primary",data: { confirm: 'Do you really want to finish the exam?' } %></td>
+          <td><%= f.button 'Finish', :name=>"to",:value=>"finish",class: "btn btn-large btn-primary" %></td>
           </tr> </table>   </div>
 
     <% end %>

@@ -16,14 +16,13 @@
 
       <% @schedules.each do |schedule| %>
           <tr>
-            <%            @date= DateTime.new(schedule.sh_date.year, schedule.sh_date.month, schedule.sh_date.day,schedule.sh_time.hour-6, schedule.sh_time.min-30, schedule.sh_time.sec)            %>
-            <td width="25%" ><%=  schedule.sh_date.strftime("%b %d %A,%Y") %></td>
-            <td width="15%" ><%= schedule.sh_time.strftime("%I:%M%p") %></td>
+             <td width="25%" ><%=  schedule.sh_date.strftime("%b %d %A,%Y") %></td>
+            <td width="15%" ><%= schedule.sh_date.strftime("%I:%M%p") %></td>
             <td width="15%" ><%= schedule.exam.name  %></td>
-            <% if @date.to_i - Time.new.to_i < 0  %>
+            <% if  schedule.sh_date.to_i - Time.new.to_i < 0  %>
                 <td width="30%" ><%= "Time over"  %></td>
             <% else %>
-                <td width="30%" ><%= time_ago_in_words(@date)    %></td>
+                <td width="30%" ><%= time_ago_in_words(schedule.sh_date)    %></td>
             <% end %>
             <td ><%= link_to image_tag('show.png'), schedule_path(schedule) %></td>
             <td><%= link_to image_tag('edit.png'), edit_schedule_path(schedule) %></td>

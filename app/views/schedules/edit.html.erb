@@ -22,11 +22,10 @@
         <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
 
         <%= f.label :date %>
-        <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force %>
+        <%= f.calendar_date_select "sh_date",:time=>true, :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force %>
 
 
-        <%= f.label  :time%>
-        <%= f.time_select  "sh_time",:minute_step => 15 , :ampm => true  %>
+
 
 
 
