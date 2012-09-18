@@ -1,7 +1,7 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
   <div class="span12 offset0">
 
-    <br /><h3 align="right" ><%= link_to image_tag('add.png'), new_question_path  %></h3>
+    <br /><h3 align="right" class="dropt" title="add new question"  ><%= link_to image_tag('add.png'), new_question_path  %></h3>
 
     <h1>Available Questions</h1>
     <div class="filter_options_container">
@@ -52,7 +52,7 @@
                     [s.question_type, s.id ] }, { :include_blank => true,:selected =>params[:search][:type_id]}) %><br />
                   </td>
                  <% end  %>
-               <td class="lft"  > <%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+               <td class="lft" class="dropt" title="filter"   > <%=image_submit_tag 'filter.png' , :class => 'search' %></td>
 
 
 
@@ -62,7 +62,7 @@
                     <td align="right" ><%= text_field_tag "srch"  %></td>
                 <% end  %>
 
-                <td><%=image_submit_tag 'find.png' , :class => 'search' %></td>
+                <td class="dropt" title="search" ><%=image_submit_tag 'find.png' , :class => 'search' %></td>
 
 
                 </tr>
@@ -88,9 +88,9 @@
             <td><%= question.allowed_time %></td>
             <td><%= question.answer_id %></td>
 
-            <td width="5%" ><%= link_to  image_tag('show.png'), question_path(question) %></td>
-            <td width="5%" ><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
-            <td width="5%" ><%= link_to   image_tag('delete.png'), question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td width="5%" class="dropt" title="detail"  ><%= link_to  image_tag('show.png'), question_path(question) %></td>
+            <td width="5%" class="dropt" title="edit"  ><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
+            <td width="5%" class="dropt" title="delete"  ><%= link_to   image_tag('delete.png'), question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
       <% end %>
     </table>

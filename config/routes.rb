@@ -17,6 +17,7 @@ Test::Application.routes.draw do
   resources :schedules do
     member  do
       get :remove
+      get :onecan
     end
   end
 

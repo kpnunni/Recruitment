@@ -28,6 +28,7 @@ class SessionsController < ApplicationController
           sign_in user
           redirect_to '/homes/index'
         else
+          flash[:notice ] = 'Sorry, You can login only after getting date for the exam.'
           render "new"
         end
       else

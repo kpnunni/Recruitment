@@ -72,6 +72,10 @@ class SchedulesController < ApplicationController
     @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
     respond_to do |format|
       if @schedule.update_attributes(params[:schedule])
+        @schedule.candidates.each{|c| UserMailer.update_schedule_email(c.user).deliver }
+        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("admin"))}
+        @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver }
+
         format.html { redirect_to @schedule, notice: 'Schedule was successfully updated.' }
         format.json { head :no_content }
       else
@@ -84,6 +88,10 @@ class SchedulesController < ApplicationController
 
   def destroy
     @schedule = Schedule.find(params[:id])
+        @schedule.candidates.each{|c| UserMailer.cancel_schedule_email(c.user,@schedule).deliver }
+        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("admin"))}
+        @users.each {|admin| UserMailer.cancel_schedule_email(admin,@schedule).deliver }
+
     @schedule.destroy
 
     respond_to do |format|
@@ -99,6 +107,7 @@ class SchedulesController < ApplicationController
       @schedule.destroy if @schedule.candidates.empty?
       redirect_to schedule_path(@schedule) if !@schedule.candidates.empty?
       redirect_to schedules_path if @schedule.candidates.empty?
+      UserMailer.cancel_schedule_email(@candidate.user,@schedule).deliver
   end
 
   def chk_user
@@ -107,4 +116,18 @@ class SchedulesController < ApplicationController
     end
 
   end
+    def onecan
+    @exam=Exam.all
+    @schedule = Schedule.new
+    @candidate=Candidate.find(params[:id])
+     respond_to do |format|
+      format.html
+      format.json { render json: @schedule }
+    end
+  end
+
+
+
+
+
 end

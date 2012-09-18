@@ -20,10 +20,10 @@
        <%= f.fields_for :user do |op| %>
 
         <%= op.label :Email %>
-        <%= op.text_field :user_email,:size => 22 %>
+        <%= op.text_field :user_email ,:value=>"" %>
 
         <%= op.label :password %>
-        <%= op.password_field :login_password %>
+        <%= op.password_field :login_password ,:value=>""%>
 
         <%= op.label :confirm_Password %>
         <%= op.password_field :login_password_confirmation %>

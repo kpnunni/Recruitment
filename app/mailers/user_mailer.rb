@@ -21,4 +21,25 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail(:to => user.user_email, :subject => "Recruitment test result")
   end
+
+  def cancel_schedule_email(user,schedule)
+    @user = user
+    @schedule= schedule
+    @url  = "http://recruitment-suyati.herokuapp.com"
+    mail(:to => user.user_email, :subject => "Scheduled exam canceled")
+  end
+  def update_schedule_email(user)
+    @user = user
+    @url  = "http://recruitment-suyati.herokuapp.com"
+    mail(:to => user.user_email, :subject => "Update schedule")
+  end
+  def admin_update_schedule_email(user,schedule)
+    @user = user
+    @schedule= schedule
+    @url  = "http://recruitment-suyati.herokuapp.com"
+    mail(:to => user.user_email, :subject => "Update schedule")
+  end
+
+
+
 end

@@ -4,31 +4,29 @@
     <table border="3" cellpadding="5" width="100%"  >
       <tr>
         <th>name</th>
-
-        <th>completed?</th>
-        <th>completed_on</th>
+        <th>completed on</th>
         <th>right answers</th>
         <th>questions attended</th>
-        <th>no: of questions</th>
+        <th>total questions</th>
         <th>mark(%)</th>
         <th>status</th>
         <th>comments</th>
+        <th></th>
       </tr>
 
       <% @recruitment_tests.each do |recruitment_test| %>
           <tr>
             <td width="15%" ><%= recruitment_test.candidate.name %></td>
-            <td width="10%" ><%= recruitment_test.is_completed? ? 'Yes' : 'No' %></td>
             <td width="20%" ><%= recruitment_test.completed_on.strftime("%b %d,%Y at %I:%M%p")%></td>
-            <td width="10%" ><%= recruitment_test.right_answers%></td>
+            <td width="5%" ><%= recruitment_test.right_answers%></td>
             <td width="10%" ><%= recruitment_test.no_of_question_attended%></td>
-            <td width="10%" ><%= recruitment_test.candidate.schedule.exam.questions.count%></td>
-            <td width="10%" ><%= recruitment_test.mark_percentage%></td>
+            <td width="5%" ><%= recruitment_test.candidate.schedule.exam.questions.count%></td>
+            <td width="5%" ><%= recruitment_test.mark_percentage%></td>
             <td width="5%" ><%= recruitment_test.is_passed%></td>
-            <td width="20%" ><%= recruitment_test.comments%></td>
+            <td width="30%" ><%= recruitment_test.comments%></td>
 
             <%if recruitment_test.is_passed=="Pending"%>
-            <td><%= link_to 'selected?', recruitment_test_path(recruitment_test) %></td>
+            <td class="dropt" title="validate result" width="5%"><%=link_to image_tag('validate.png') , recruitment_test_path(recruitment_test) %></td>
             <% end %>
           </tr>
       <% end %>

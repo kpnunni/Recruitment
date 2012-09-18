@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+   <p>
+  This is to inform you that scheduled exam has been cancelled.
+</p>
+<p>
+  Test details:<br/>
+  Scheduled date is: <%= @schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>
+  Scheduled time is: <%= @schedule.sh_date.strftime("%I:%M%p") %>.<br/>
+</p>
+</body>
+</html>

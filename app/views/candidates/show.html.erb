@@ -25,15 +25,17 @@
      <b>skills:</b>
      <%=  @candidate.skills %><br />
 
-     <b>resume_url:</b>
-     <%=  @candidate.resume %>
+
      <%# if @candidate.resume.exists? then %>
 	      <%#= image_tag  @candidate.resume.url(:original) %>
      <%#end %>
-
+     <% if !@candidate.resume.to_s.include?("missing.png") %>
+     <b>resume_url:</b>
+     <%=  @candidate.resume %>
      <%=link_to  image_tag('download.png'),@candidate.resume.url(:original,false)%>
-
      <br />
+     <% end %>
+
      <b>Scheduled date:</b>
      <%=  @candidate.schedule.sh_date.strftime("%b %d %A,%Y") if !@candidate.schedule.nil?  %><br />
 

@@ -5,6 +5,7 @@
   </head>
   <body>
     <h2>Hi <%= @user.candidate.name %>,</h2>
+    <p>Your exam date has been changed.</p>
     <p>
       Test details:<br/>
       Scheduled date is: <%= @user.candidate.schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>

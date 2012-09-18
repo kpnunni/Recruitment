@@ -1,5 +1,5 @@
 <div class="row">
-  <h3 align="right" ><%= link_to image_tag('add.png'), new_exam_path %></h3>
+  <h3 align="right" class="dropt" title="add new exam"  ><%= link_to image_tag('add.png'), new_exam_path %></h3>
   <div class="span12 offset0"><h1>Exams</h1>
 
     <table border="3" class="fixed"  >
@@ -17,9 +17,9 @@
             <td width="20%" class="lft"  ><%= exam.name %></td>
             <td width="15%" ><%= exam.no_of_question  %></td>
             <td width="50%" class="lft"   ><%= exam.description  %></td>
-            <td width="5%" ><%= link_to image_tag('show.png'), exam_path(exam) %></td>
-            <td width="5%" ><%= link_to image_tag('edit.png'), edit_exam_path(exam) %></td>
-            <td width="5%" ><%= link_to  image_tag('delete.png'), exam, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td width="5%" class="dropt" title="detail"  ><%= link_to image_tag('show.png'), exam_path(exam) %></td>
+            <td width="5%" class="dropt" title="edit"  ><%= link_to image_tag('edit.png'), edit_exam_path(exam) %></td>
+            <td width="5%" class="dropt" title="delete"  ><%= link_to  image_tag('delete.png'), exam, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
 
           </tr>

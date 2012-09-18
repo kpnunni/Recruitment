@@ -21,10 +21,10 @@
       <div class="span10 offset0">
 
         <%= f.label :Email %>
-        <%= f.text_field :user_email%>
+        <%= f.text_field :user_email,:value=>""%>
 
         <%= f.label :password %>
-        <%= f.password_field :login_password %>
+        <%= f.password_field :login_password,:value=>"" %>
 
         <%= f.label :confirm_Password %>
         <%= f.password_field :login_password_confirmation %>

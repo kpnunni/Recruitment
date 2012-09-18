@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Updated Schedule detail
+     </h1>
+    <p>
+      Scheduled date is: <%= @schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>
+      Scheduled time is: <%= @schedule.sh_date.strftime("%I:%M%p") %>.<br/>
+      Scheduled test is: <%= @schedule.exam.name %>.<br/>
+      Candidates are:.<br/>
+      <% @schedule.candidates.each do |c|%>
+      <%= c.name %><br/>
+      <% end %>
+
+    </p>
+    <p>
+
+    </p>
+
+  </body>
+</html>

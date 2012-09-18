@@ -16,8 +16,14 @@ class Candidate < ActiveRecord::Base
  #      :thumb=> "100x100#",
  #      :small  => "400x400>" }
 
-#  validates_format_of :phone1,:phone2 ,
-#                    :with => /\A[0-9]{10}\Z/
+  validates_format_of :phone1,
+                    :with => /\A[0-9]{10}\Z/  , :if => :there1?
+    validates_format_of :phone1,
+                    :with => /\A[0-9]{10}\Z/  , :if => :there2?
+
+
+
+
   accepts_nested_attributes_for :experiences, :allow_destroy => true
   accepts_nested_attributes_for :qualifications,:allow_destroy => true
   accepts_nested_attributes_for :user
@@ -25,7 +31,14 @@ class Candidate < ActiveRecord::Base
   before_create :set_role
   after_destroy :chk_schedule
 
-  validates_presence_of :address ,:phone1,  :phone2 , :technology , :certification , :if => :id_present?
+  #validates_presence_of :address ,:phone1,  :phone2 , :technology , :certification , :if => :id_present?
+
+   def there1?
+       !self.phone1.blank?
+   end
+   def there2?
+       !self.phone2.blank?
+   end
 
    def id_present?
       !id.nil?
