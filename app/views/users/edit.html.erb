@@ -32,7 +32,7 @@
         <br />
 
         <b>Roles</b>
-        <% Role.all.each do |role| %>
+        <% Role.where("role_name!=?","candidate").each do |role| %>
             <br />
             <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role) %>
             <%= role.role_name %>

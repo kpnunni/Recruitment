@@ -27,6 +27,8 @@
 
             <%if recruitment_test.is_passed=="Pending"%>
             <td class="dropt" title="validate result" width="5%"><%=link_to image_tag('validate.png') , recruitment_test_path(recruitment_test) %></td>
+            <% else %>
+            <td class="dropt" title="validated" width="5%"><%=image_tag('validated.png') %></td>
             <% end %>
           </tr>
       <% end %>
