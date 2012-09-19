@@ -11,10 +11,8 @@
     <bookmark url="file://$PROJECT_DIR$/app/views/questions/index.html.erb" line="66" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b03e1eb-cca0-434e-b2f4-827c51a6e5b4" name="Default" comment="yes/no">
+    <list default="true" id="3b03e1eb-cca0-434e-b2f4-827c51a6e5b4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/candidates/index.html.erb" afterPath="$PROJECT_DIR$/app/views/candidates/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/environments/production.rb" afterPath="$PROJECT_DIR$/config/environments/production.rb" />
     </list>
     <list id="550e5c12-f0db-4b99-a0ad-5154ac1fb4e8" name="Rejected commit: Default" comment="Rejected commit: Default" />
     <ignored path="Test.iws" />
@@ -1199,7 +1197,11 @@
       <created>1348042447346</created>
       <updated>1348042447346</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="false compile">
+      <created>1348044250135</created>
+      <updated>1348044250135</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1282,7 +1284,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="yes/no" />
+    <option name="LAST_COMMIT_MESSAGE" value="false compile" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1318,6 +1320,7 @@
     <MESSAGE value="test11" />
     <MESSAGE value="test2" />
     <MESSAGE value="yes/no" />
+    <MESSAGE value="false compile" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
