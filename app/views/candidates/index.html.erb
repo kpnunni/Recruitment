@@ -24,8 +24,11 @@
     <td width="20%" class="lft"><%= candidate.user.user_email  %></td>
     <td width="10%" class="lft"><%= candidate.phone1 %></td>
     <td width="25%" class="lft"><%= candidate.skills%></td>
-    <td width="10%" class="dropt" title="yes/no" ><%= !candidate.recruitment_test.nil?  ? image_tag('yes.png') :image_tag('no.png')  %></td>
-    <td width="5%" class="dropt" title="detail"  ><%= link_to image_tag('show.png'), candidate_path(candidate) %></td>
+    <% if !candidate.recruitment_test.nil?   %>
+        <td width="15%"><%= image_tag 'green.png', :class=>"dropt", :title=>"yes"%></td>
+    <% else %>
+        <td width="15%"><%= image_tag 'red.png', :class=>"dropt", :title=>"no" %></td>
+    <% end %>    <td width="5%" class="dropt" title="detail"  ><%= link_to image_tag('show.png'), candidate_path(candidate) %></td>
     <td width="5%" class="dropt" title="edit"  ><%= link_to image_tag('edit.png'), edit_candidate_path(candidate) %></td>
     <td width="5%" class="dropt" title="delete"  ><%= link_to  image_tag('delete.png'), candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     <% if candidate.schedule.nil?&&current_user.has_role?('admin')   %>
