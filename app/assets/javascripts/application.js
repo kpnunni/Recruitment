@@ -11,8 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require bootstrap
-//= require bootstrap.js
-//= require bootstrap.min.js
 //= require jquery.js
 //= require jquery_ujs.js
 //= require prototype

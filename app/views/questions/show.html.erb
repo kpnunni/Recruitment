@@ -1,9 +1,9 @@
     <div class="row">
-      <div class="span10 offset0"><h1>Question detail</h1>
+      <div class="span12 offset0"><h1>Question detail</h1>
      <b>Question:</b>
      <%=  @question.question %><br />
 
-        <table  border="3" >
+        <table  border="3" width="50%"   >
           <tr>
             <th>options:</th>
             <th>true/false</th>
@@ -13,8 +13,8 @@
 
         <% @options.each do |op| %>
               <tr>
-            <td><%= op.option %></td>
-            <td><%= op.is_right %></td>
+            <td width="75%" class="lft" ><%= op.option %></td>
+            <td width="10%" ><%= op.is_right %></td>
             <td><%=link_to image_tag('edit.png'),edit_question_option_path(@question,op)  %></td>
             <td><%= link_to image_tag('delete.png') , [@question,op],:method =>  :delete,data: {confirm: 'are you sure'}  %></td>
               </tr>
@@ -30,13 +30,13 @@
      <%=  @question.allowed_time %><br />
 
      <b>Category:</b>
-     <%= Category.find(@question.category_id).category %><br />
+     <%= @question.category.category %><br />
 
      <b>Complexity:</b>
-     <%= Complexity.find(@question.complexity_id).complexity %><br />
+     <%= @question.complexity.complexity %><br />
 
      <b>Type:</b>
-     <%= Type.find(@question.type_id).question_type %><br />
+     <%= @question.type.question_type %><br />
 
      <b>created by:</b>
      <%=  @question.created_by %><br />

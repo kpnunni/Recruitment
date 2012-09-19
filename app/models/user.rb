@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
    has_and_belongs_to_many :roles
    has_one :candidate  ,:dependent => :destroy
    before_create :set_alive
-   before_save :chk_role
+ #  after_save :chk_role
    def set_alive
     self.isAlive= 1
     self.isDelete= 0
@@ -26,7 +26,7 @@ validates :login_password, :presence => true,
                      :length => { :within => 4..20 }
 
    def chk_role
-     if self.roles.blank?
+     if self.roles.count==0
        self.roles.push(Role.find(3))
      end
    end

@@ -16,19 +16,19 @@
 
       <% @recruitment_tests.each do |recruitment_test| %>
           <tr>
-            <td width="15%" ><%= recruitment_test.candidate.name %></td>
+            <td width="15%" class="lft" ><%= recruitment_test.candidate.name %></td>
             <td width="20%" ><%= recruitment_test.completed_on.strftime("%b %d,%Y at %I:%M%p")%></td>
             <td width="5%" ><%= recruitment_test.right_answers%></td>
             <td width="10%" ><%= recruitment_test.no_of_question_attended%></td>
             <td width="5%" ><%= recruitment_test.candidate.schedule.exam.questions.count%></td>
             <td width="5%" ><%= recruitment_test.mark_percentage%></td>
             <td width="5%" ><%= recruitment_test.is_passed%></td>
-            <td width="30%" ><%= recruitment_test.comments%></td>
+            <td width="30%" class="lft"><%= recruitment_test.comments%></td>
 
             <%if recruitment_test.is_passed=="Pending"%>
-            <td class="dropt" title="validate result" width="5%"><%=link_to image_tag('validate.png') , recruitment_test_path(recruitment_test) %></td>
+            <td class="dropt" title="validate result" width="5%"><%=link_to image_tag('validated.png') , recruitment_test_path(recruitment_test) %></td>
             <% else %>
-            <td class="dropt" title="validated" width="5%"><%=image_tag('validated.png') %></td>
+            <td class="dropt" title="result validated" width="5%"><%=image_tag('validate.png') %></td>
             <% end %>
           </tr>
       <% end %>

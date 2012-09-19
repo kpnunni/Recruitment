@@ -6,7 +6,7 @@
   <tr>
     <th>User Email</th>
     <th>User Roles</th>
-    <th>isAlive</th>
+    <th>isAlive?</th>
     <th></th>
     <th></th>
     <th></th>
@@ -20,7 +20,7 @@
           <%="|"+ role.role_name+"|" %>
       <% end %>
     </td>
-    <td width="15%" ><%= user.isAlive? ? 'Yes' : 'No' %></td>
+    <td width="15%" class="dropt" title="yes/no" ><%= user.isAlive? ? image_tag('yes.png') :image_tag('no.png') %></td>
     <td class="dropt" title="edit" ><%= link_to image_tag('edit.png'), edit_user_path(user) %></td>
     <td class="dropt" title="kill" ><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put, data: { confirm: 'Are you sure?' } %></td>
     <td class="dropt" title="delete" ><%= link_to  image_tag('delete.png',:alt => "Delete Entry"), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>

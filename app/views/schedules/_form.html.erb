@@ -39,7 +39,7 @@
             <h3><%="No candidates to schedule the exam" %></h3>
         <% else %>
 
-     <table >
+     <table border="2" width="50%"  >
        <tr>
          <th>Candidate Name</th>
          <th>Email id</th>
@@ -52,9 +52,9 @@
 
          <% @candidates.each do |c| %>
        <tr>
-         <td><%= c.name %></td>
-         <td><%= c.user.user_email %></td>
-         <td align="center" ><%= f1.check_box  c.id%></td>
+         <td width="30%" ><%= c.name %></td>
+         <td width="50%" ><%= c.user.user_email %></td>
+         <td width="20%"  ><%= f1.check_box  c.id%></td>
 
       </tr>
 
