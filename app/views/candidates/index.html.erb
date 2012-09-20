@@ -32,9 +32,9 @@
     <td width="5%" class="dropt" title="edit"  ><%= link_to image_tag('edit.png'), edit_candidate_path(candidate) %></td>
     <td width="5%" class="dropt" title="delete"  ><%= link_to  image_tag('delete.png'), candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     <% if candidate.schedule.nil?&&current_user.has_role?('admin')   %>
-        <td width="5%" class="dropt" title="assign a test"  ><%= link_to  image_tag('schedule.png'), onecan_schedule_path(candidate)%></td>
+        <td width="5%" class="dropt" title="schedule a test"  ><%= link_to  image_tag('schedule.png'), onecan_schedule_path(candidate)%></td>
     <% elsif current_user.has_role?('admin') %>
-        <td width="5%" class="dropt" title="exam assigned"  ><%=image_tag('assigned.png')%></td>
+        <td width="5%" class="dropt" title="test scheduled"  ><%=image_tag('assigned.png')%></td>
     <% end %>
   </tr>
 <% end %>

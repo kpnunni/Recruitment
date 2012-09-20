@@ -6,7 +6,7 @@
         <b>no_of_question:</b><%= @exam.no_of_question  %> <br />
         <b>Complexity:</b><%= @exam.complexity.complexity  %> <br />
         <b>description:</b><%= @exam.description  %> <br />
-        <b>Total time:</b><%= @exam.total_time/60.0  %> min <br />
+        <b>Total time:</b><%= @exam.total_time/1.minute   %> minutes <br />
         <b>created_by:</b><%= @exam.created_by  %>  <br />
         <b>created_at:</b><%= @exam.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %>  <br />
         <b>modified_by:</b><%= @exam.modified_by %> <br />

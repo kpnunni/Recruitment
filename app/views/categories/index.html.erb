@@ -2,6 +2,12 @@
   <div class="span12 offset0">
         <h1>Question Categories</h1>
     <table border="3" width="30%"  >
+
+     <tr>
+       <th>Category name</th>
+       <th></th>
+     </tr>
+
     <% @categories .each do |ctgry| %>
           <tr>
         <td><%= ctgry.category  %></td>

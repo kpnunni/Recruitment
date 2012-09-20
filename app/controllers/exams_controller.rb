@@ -43,6 +43,7 @@ class ExamsController < ApplicationController
     @exam.modified_by =""
     @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
     if @exam.no_of_question!=@q_count
+       flash[:notice]="Not enough questions (category wise/complexity wise)"
        render 'new'
        return
     end
@@ -70,6 +71,7 @@ class ExamsController < ApplicationController
     @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
     @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
     if @exam.no_of_question!=@q_count
+       flash[:notice]="Not enough questions (category wise/complexity wise)"
        render 'new'
        return
     end

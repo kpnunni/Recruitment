@@ -30,9 +30,9 @@
 	      <%#= image_tag  @candidate.resume.url(:original) %>
      <%#end %>
      <% if !@candidate.resume.to_s.include?("missing.png") %>
-     <b>resume_url:</b>
-     <%=  @candidate.resume %>
-     <%=link_to  image_tag('download.png'),@candidate.resume.url(:original,false)%>
+     <b>resume:</b>
+     <%=  @candidate.resume_file_name  %>
+     <%=link_to  image_tag('download.png'),@candidate.resume.url(:original,false), :class=>"dropt", :title=>"download resume" %>
      <br />
      <% end %>
 
@@ -59,12 +59,12 @@
             <td><%= experience.to_date.strftime("%b %d,%Y") %></td>
             <td><%= experience.experience_in %></td>
             <td><%= experience.experience_from%></td>
-            <td><%= link_to image_tag('edit.png'), edit_candidate_experience_path(@candidate,experience ) %></td>
-            <td><%= link_to  image_tag('delete.png'), [@candidate,experience ] , method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to image_tag('edit.png'), edit_candidate_experience_path(@candidate,experience ), :class=>"dropt", :title=>"edit"  %></td>
+            <td><%= link_to  image_tag('delete.png'), [@candidate,experience ] , method: :delete, data: { confirm: 'Are you sure?' }, :class=>"dropt", :title=>"delete"  %></td>
           </tr>
       <% end %>
     </table>
-        <%= link_to  image_tag('addc.png'), new_candidate_experience_path(@candidate) %>
+        <%= link_to  image_tag('addc.png'), new_candidate_experience_path(@candidate), :class=>"dropt", :title=>"add new experience"  %>
 
         <br /><h3>Qualifications</h3>
 
@@ -86,12 +86,12 @@
             <td><%= qualification.to_date.strftime(" %b %d,%Y")%></td>
             <td><%= qualification.mark_percentage%></td>
             <td><%= qualification.comments%></td>
-            <td><%= link_to image_tag('edit.png'), edit_candidate_qualification_path(@candidate,qualification ) %></td>
-            <td><%= link_to  image_tag('delete.png'), [@candidate,qualification ] , method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to image_tag('edit.png'), edit_candidate_qualification_path(@candidate,qualification ), :class=>"dropt", :title=>"edit"  %></td>
+            <td><%= link_to  image_tag('delete.png'), [@candidate,qualification ] , method: :delete, data: { confirm: 'Are you sure?' }, :class=>"dropt", :title=>"delete"  %></td>
           </tr>
       <% end %>
     </table>
-        <%= link_to  image_tag('addc.png'), new_candidate_qualification_path(@candidate) %>
+        <%= link_to  image_tag('addc.png'), new_candidate_qualification_path(@candidate), :class=>"dropt", :title=>"add new qualification"  %>
 
 
         <br />

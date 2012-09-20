@@ -66,10 +66,12 @@
         <%= f.fields_for :experiences  do |op| %>
 
         <%= op.label :from_date %>
-        <%= op.text_field :from_date %> (yyyy-mm-dd)
+        <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force %>
+
 
         <%= op.label :to_date %>
-        <%= op.text_field :to_date %>(yyyy-mm-dd)
+        <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force %>
+
 
         <%= op.label :experience_in %>
         <%= op.text_field :experience_in %>
@@ -93,10 +95,12 @@
         <%= op.text_field :qualification_from %>
 
         <%= op.label :from_date %>
-        <%= op.text_field :from_date %> (yyyy-mm-dd)
+        <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force %>
+
 
         <%= op.label :to_date %>
-        <%= op.text_field :to_date %> (yyyy-mm-dd )
+        <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force %>
+
 
         <%= op.label :mark_percentage %>
         <%= op.text_field :mark_percentage %>

@@ -96,7 +96,7 @@ class UsersController < ApplicationController
       @user.encrypt_password
       @user.save
 
-      redirect_to profile_user_path(@user)
+      redirect_to profile_user_path(@user), :notice => "your password updated successfully"
     else
        redirect_to chgpass_user_path(@user), :notice => "invalid new password"
     end

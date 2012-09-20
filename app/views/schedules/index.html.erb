@@ -25,8 +25,8 @@
                 <td width="30%" ><%= time_ago_in_words(schedule.sh_date)    %></td>
             <% end %>
             <td class="dropt" title="detail"  ><%= link_to image_tag('show.png'), schedule_path(schedule) %></td>
-            <td class="dropt" title="edit" ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule) %></td>
-            <td class="dropt" title="delete" ><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td class="dropt" title="re schedule" ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule) %></td>
+            <td class="dropt" title="cancel schedule" ><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
       <% end %>
     </table>
