@@ -38,7 +38,7 @@ class SchedulesController < ApplicationController
     @exam=Exam.all
     @schedule = Schedule. find(params[:id])
     @candidates=Candidate.all
-    @candidates.select!  {|c| @schedule.candidates.include?(c) || c.schedule_id.nil?  }
+    @candidates.select!  {|c| @schedule.candidates.include?(c) ||( c.schedule_id.nil? && c.user.isAlive) }
 
   end
 
