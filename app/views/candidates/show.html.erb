@@ -51,6 +51,8 @@
         <th>to_date</th>
         <th>experience_in</th>
         <th>experience_from</th>
+        <th></th>
+        <th></th>
       </tr>
 
       <% @candidate.experiences.each   do |experience| %>
@@ -59,8 +61,8 @@
             <td><%= experience.to_date.strftime("%b %d,%Y") %></td>
             <td><%= experience.experience_in %></td>
             <td><%= experience.experience_from%></td>
-            <td><%= link_to image_tag('edit.png'), edit_candidate_experience_path(@candidate,experience ), :class=>"dropt", :title=>"edit"  %></td>
-            <td><%= link_to  image_tag('delete.png'), [@candidate,experience ] , method: :delete, data: { confirm: 'Are you sure?' }, :class=>"dropt", :title=>"delete"  %></td>
+            <td width="5%" ><%= link_to image_tag('edit.png'), edit_candidate_experience_path(@candidate,experience ), :class=>"dropt", :title=>"edit"  %></td>
+            <td width="5%"  ><%= link_to  image_tag('delete.png'), [@candidate,experience ] , method: :delete, data: { confirm: 'Are you sure?' }, :class=>"dropt", :title=>"delete"  %></td>
           </tr>
       <% end %>
     </table>
@@ -76,6 +78,8 @@
         <th>to_date</th>
         <th>mark_percentage</th>
         <th>comments</th>
+        <th width="5%" ></th>
+        <th width="5%" ></th>
       </tr>
 
       <% @candidate.qualifications.each   do |qualification| %>
