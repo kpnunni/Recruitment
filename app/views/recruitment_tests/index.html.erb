@@ -33,38 +33,39 @@
 
     <table border="3" cellpadding="5" width="100%"  >
       <tr>
-        <th>name</th>
-        <th>completed on</th>
-        <th>right answers</th>
-        <th>questions attended</th>
-        <th>total questions</th>
-        <th>mark(%)</th>
-        <th>status</th>
-        <th>comments</th>
-        <th></th>
+        <th width="20%">Candidate Name</th>
+        <th width="10%">Exam</th>
+        <th width="7%" >Total questions</th>
+        <th width="7%" >Questions attended</th>
+        <th width="6%">Right answers</th>
+
+        <th width="10%">Mark(%)</th>
+        <th width="5%">Status</th>
+        <th width="30%">Comments</th>
+        <th width="5%"></th>
       </tr>
 
       <% @recruitment_tests.each do |recruitment_test| %>
           <tr>
-            <td width="15%" class="lft" ><%= recruitment_test.candidate.name %></td>
-            <td width="15%" ><%= recruitment_test.completed_on.strftime("%b %d,%Y at %I:%M%p")%></td>
-            <td width="5%" ><%= recruitment_test.right_answers%></td>
-            <td width="5%" ><%= recruitment_test.no_of_question_attended%></td>
-            <td width="5%" ><%= recruitment_test.candidate.schedule.exam.questions.count%></td>
-            <td width="5%" ><%= recruitment_test.mark_percentage%></td>
+            <td class="lft" ><%= recruitment_test.candidate.name %></td>
+            <td class="lft" ><%= recruitment_test.candidate.schedule.exam.name %></td>
+            <td><%= recruitment_test.candidate.schedule.exam.questions.count%></td>
+            <td><%= recruitment_test.no_of_question_attended%></td>
+            <td  ><%= recruitment_test.right_answers%></td>
+            <td ><%= recruitment_test.mark_percentage%></td>
             <% if recruitment_test.is_passed=="Pending"  %>
-                <td width="15%"><%= image_tag 'yellow.png', :class=>"dropt", :title=>"pending"%></td>
+                <td><%= image_tag 'yellow.png', :class=>"dropt", :title=>"pending"%></td>
             <% elsif recruitment_test.is_passed=="Passed"  %>
-                <td width="15%"><%= image_tag 'green.png', :class=>"dropt", :title=>"passed"%></td>
+                <td><%= image_tag 'green.png', :class=>"dropt", :title=>"passed"%></td>
             <% else %>
-                <td width="15%"><%= image_tag 'red.png', :class=>"dropt", :title=>"failed" %></td>
+                <td><%= image_tag 'red.png', :class=>"dropt", :title=>"failed" %></td>
             <% end %>
-            <td width="30%" class="lft"><%= recruitment_test.comments%></td>
+            <td class="lft"><%= recruitment_test.comments%></td>
 
             <%if recruitment_test.is_passed=="Pending"%>
-            <td class="dropt" title="validate result" width="5%"><%=link_to image_tag('validated.png') , recruitment_test_path(recruitment_test) %></td>
+            <td class="dropt" title="validate result"><%=link_to image_tag('validated.png') , recruitment_test_path(recruitment_test) %></td>
             <% else %>
-            <td class="dropt" title="result validated" width="5%"><%=image_tag('validate.png') %></td>
+            <td class="dropt" title="result validated"><%=image_tag('validate.png') %></td>
             <% end %>
           </tr>
       <% end %>

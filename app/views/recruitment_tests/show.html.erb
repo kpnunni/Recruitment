@@ -1,11 +1,12 @@
 <div class="row">
-  <div class="span10 offset0"><h1>Candidate:
+  <div class="span12 offset0"><h1>Candidate:
    <%=@recruitment_test.candidate.name %>
 
   </h1>
     <br/>
-    <%= @recruitment_test.candidate.user.user_email %>
-
+    <b>Email id:</b><%= @recruitment_test.candidate.user.user_email %><br/>
+    <b>Exam completed on:</b><%= @recruitment_test.completed_on.strftime("%b %d %A,%Y at %I:%M%p")  %> <br/>
+     <br/>
 
 
 
@@ -16,7 +17,7 @@
 
 
 
-    <table border="3" width="30%"     >
+    <table border="3" width="30%"  align="center"       >
       <tr>
         <th>Category</th>
         <th>no of questions</th>
@@ -38,21 +39,35 @@
     </table>
 
 
-    <h2>Answer Paper</h2>
+    <h3 align="left" >Answer Paper:</h3> <br/>
 
-        <table border="3" width="100%"    >
+        <table border="3" width="100%" align="center"     >
           <tr>
-            <th>Question</th>
-            <th>Answer</th>
-            <th>Right answer</th>
-            <th>Category</th>
-            <th>Complexity</th>
+            <th width="60%" >Question</th>
+            <th width="15%" >Candidate's Answer</th>
+            <th width="15%" >Right answer</th>
+            <th width="5%" >Category</th>
+            <th width="5%" >Complexity</th>
           </tr>
           <% @recruitment_test.candidate.answers.each do |ans| %>
                       <tr>
                         <td class="lft" ><%=ans.question.question   %></td>
-                        <td><%= ans.answer  %></td>
-                        <td><%=ans.question.answer_id  %></td>
+                        <% i=0 %>
+                        <td><%ans.question.options.each do |op|  %>
+                                <% if ans.answer[i]=="1" %>
+                                    <%='|'+op.option+'|'  %>
+                                <% end %>
+                              <% i+=1 %>
+                             <% end %>
+                        </td>
+
+                        <%#=ans.question.answer_id  %>
+                        <td><%ans.question.options.each do |op|  %>
+                              <% if op.is_right  %>
+                              <%='|'+op.option+'|'  %>
+                              <% end %>
+                              <% end %>
+                        </td>
                         <td><%=ans.question.category.category  %></td>
                          <td><%=ans.question.complexity.complexity  %></td>
 
@@ -61,12 +76,11 @@
 
 
         </table>
-
-        <%=f.label :Status  %>
-        <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
-        <%=f.label :Comments  %>
-        <%=f.text_field  :comments  %>  <br />
-        <%= f.submit "Submit" ,class: "btn btn-large btn-primary" %>
+         <br/>
+        <b>Decision: <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
+        <%=f.label :Comments  %></b>
+        <%=f.text_area  :comments ,:rows=>"5"%>  <br />
+        <div align="center" ><%= f.submit "Submit" ,class: "btn btn-large btn-primary" %></div>
         <% end %>
          <%= link_to image_tag('back.png'), recruitment_tests_path  %>
 
