@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     if !signed_in?
-       redirect_to root_path
+       redirect_to '/signin'
     end
   end
 end

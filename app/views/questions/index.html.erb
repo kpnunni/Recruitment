@@ -23,7 +23,7 @@
                 <th>Complexity:</th>
                 <th>Type:</th>
 
-                <th> &emsp;  &emsp;  &emsp;  &emsp;  &emsp; &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp; &emsp; </th>
+                <th> &emsp;  &emsp;  &emsp;  &emsp;  &emsp; &emsp; &emsp; &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp;  &emsp; &emsp; </th>
                 <th>Search:</th>
                 <th></th>
               </tr>
@@ -52,7 +52,7 @@
                     [s.question_type, s.id ] }, { :include_blank => true,:selected =>params[:search][:type_id]}) %><br />
                   </td>
                  <% end  %>
-               <td class="lft" class="dropt" title="filter"   > <%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+               <td class="lft"   > <%=image_submit_tag 'filter.png' ,:title=>"filter" , :class => 'search' %></td>
 
 
 

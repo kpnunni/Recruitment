@@ -8,12 +8,15 @@
 
      <h1>Login:</h1>
 
-        <p id="notice"><%= notice %></p>
+        <p id="notice" style="color: #ff0000; " ><%= notice %></p>
       <%= form_for(:session, url: sessions_path) do |f| %>
 
       <%= f.label :email %>
-      <%= f.text_field :email %>
-
+      <% if params[:session].nil?   %>
+        <%= f.text_field :email %>
+      <% else %>
+        <%= f.text_field :email ,:value=>params[:session][:email]  %>
+      <% end %>
       <%= f.label :password %>
       <%= f.password_field :password %><br />
 

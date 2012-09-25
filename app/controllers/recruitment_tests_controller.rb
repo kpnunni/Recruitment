@@ -3,7 +3,7 @@ class RecruitmentTestsController < ApplicationController
      before_filter :chk_user
 
   def index
-    @recruitment_tests = RecruitmentTest.all.paginate(:page => params[:page], :per_page => 20)
+    @recruitment_tests = RecruitmentTest.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
 
     respond_to do |format|
       format.html 

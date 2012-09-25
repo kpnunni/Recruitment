@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users=User.where("id!= ?", current_user.id).paginate(:page => params[:page], :per_page => 20)
+    @users=User.filtered(params[:search],current_user.id).paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html
       format.json { render json: @users }

@@ -1,6 +1,36 @@
 <div class="row">
   <div class="span12 offset0"><h1>Results</h1>
 
+
+     <form class="filter_form">
+
+            <table  cellpadding="5" align="right"  >
+              <tr>
+                <th>Name:</th>
+
+
+
+
+                <% if !params[:search].nil?  %>
+                    <td align="right" ><%= text_field_tag "search" , params[:search] %></td>
+                <% else  %>
+                    <td align="right" ><%= text_field_tag "search"  %></td>
+                <% end  %>
+
+                <td class="dropt" title="search" ><%=image_submit_tag 'find.png' , :class => 'search' %></td>
+
+
+                </tr>
+           </table>
+
+            </form>
+
+
+
+
+
+
+
     <table border="3" cellpadding="5" width="100%"  >
       <tr>
         <th>name</th>

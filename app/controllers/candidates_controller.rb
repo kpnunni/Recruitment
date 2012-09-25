@@ -5,7 +5,7 @@ class CandidatesController < ApplicationController
   end
 
   def index
-      @candidates=Candidate.all.paginate(:page => params[:page], :per_page => 20)
+      @candidates=Candidate.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
 
           respond_to do |format|
             format.html # index.html.erb

@@ -59,6 +59,13 @@ validates :login_password, :presence => true,
            self.remember_token = SecureRandom.urlsafe_base64
         end
 
-
+     def self.filtered search,id
+       if search==""||search.nil?
+         srch=User.where("id!= ? ",id).order('id DESC')
+       else
+          search.gsub('+',' ')
+          srch= User.where("id!= ? and user_email like ?",id,"%#{search}%").order('id DESC')
+       end
+     end
 
 end

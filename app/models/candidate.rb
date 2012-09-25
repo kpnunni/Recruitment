@@ -52,4 +52,12 @@ class Candidate < ActiveRecord::Base
     self.user.roles.push(Role.find(2))
   end
 
+  def self.filtered search
+       if search==""||search.nil?
+         srch=Candidate.all(:order => 'id DESC')
+       else
+          search.gsub('+',' ')
+          srch= Candidate.where("name like ?","%#{search}%").order('id DESC')
+       end
+  end
 end

@@ -1,10 +1,12 @@
 <div class="row">
   <div class="span10 offset1">
 
-    <h1>
-      Time Remaining:<br /><br /><div id="count" class="countdown" ></div>
-    </h1>
+       <b>
+       <div class="countdown1" align="right "  >Time Remaining: &emsp; </div>
 
+       <div id="count" class="countdown" align="right "   ></div> </b>
+
+       <br /><br /><br />
     <%= form_for  @answer do |f| %>
 
 
@@ -64,7 +66,7 @@
               <td><%= f.submit  'Next', :name=>"to",:value=>"next",class: "btn btn-large btn-primary" %></td>
           <% end %>
 
-          <td><%= f.button 'Finish', :name=>"to",:value=>"finish",class: "btn btn-large btn-primary" %></td>
+          <td><%= f.button 'Finish', :name=>"to",:value=>"finish",class: "btn btn-large btn-primary",:title=>"Submit your exam" %></td>
           </tr> </table>   </div>
 
     <% end %>

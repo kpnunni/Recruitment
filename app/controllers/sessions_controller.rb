@@ -8,6 +8,22 @@ class SessionsController < ApplicationController
   end
 
   def create
+
+    if params[:session][:email]==""
+        flash[:notice ] = 'Enter your Email id'
+        render "new"
+        return
+    end
+    if params[:session][:password]==""
+        flash[:notice ] = 'Enter the password'
+        render "new"
+        return
+    end
+    if (params[:session][:email]=~/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i).nil?
+        flash[:notice ] = 'Invalid email id'
+        render "new"
+        return
+    end
     user = User.find_by_user_email(params[:session][:email])
     login_password=params[:session][:password]
 
@@ -31,12 +47,15 @@ class SessionsController < ApplicationController
           flash[:notice ] = 'Sorry, You can login only after getting date for the exam.'
           render "new"
         end
+      elsif user.has_role?('candidate')
+        flash[:notice ] = 'You cant login again. Contact admin.'
+        render "new"
       else
         flash[:notice ] = 'Invalid email/password combination'
         render "new"
       end
     else
-        flash[:notice ] = 'Invalid email/password combination'
+        flash[:notice ] = 'email address not present'
         render "new"
       end
 

@@ -41,5 +41,22 @@ class RecruitmentTest < ActiveRecord::Base
     right_ans=self.each_right_answers(cat)
     mark_p=(right_ans.to_f/q_nos)*100
   end
+
+  def self.filtered search
+       if search==""||search.nil?
+         srch=RecruitmentTest.all(:order => 'id DESC')
+       else
+          search.gsub('+',' ')
+          srch= RecruitmentTest.where(candidate_id: Candidate.where("name like ?","%#{search}%").pluck(:id))
+       end
+  end
+
+
+
+
+
+
+
+
   end
 

@@ -2,6 +2,39 @@
       <div class="span12 offset0">
         <h3 align="right"  ><%= link_to image_tag('adduser.png'), new_user_path, :class=>"dropt", :title=>"add new user" %></h3>
         <h1>Users</h1>
+
+
+        <form class="filter_form">
+
+            <table  cellpadding="5" align="right"  >
+              <tr>
+                <th>Email:</th>
+
+
+
+
+                <% if !params[:search].nil?  %>
+                    <td align="right" ><%= text_field_tag "search" , params[:search] %></td>
+                <% else  %>
+                    <td align="right" ><%= text_field_tag "search"  %></td>
+                <% end  %>
+
+                <td class="dropt" title="search" ><%=image_submit_tag 'find.png' , :class => 'search' %></td>
+
+                <td> &emsp;&emsp;&emsp;&emsp;</td>
+                </tr>
+           </table>
+
+            </form>
+
+
+
+
+
+
+
+
+
 <table border="3" width="85%" align="center"  >
   <tr>
     <th>User Email</th>

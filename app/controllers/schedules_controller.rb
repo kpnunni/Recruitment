@@ -3,7 +3,7 @@ class SchedulesController < ApplicationController
    before_filter :chk_user
 
   def index
-    @schedules = Schedule.all.paginate(:page => params[:page], :per_page => 20)
+    @schedules = Schedule.all(:order => 'id DESC').paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html 
       format.json { render json: @schedules }
@@ -49,6 +49,12 @@ class SchedulesController < ApplicationController
     @candidates=Candidate.all
 
     @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
+
+    if params[:schedule][:candidate_ids].values.join.to_i==0
+      flash[:notice]="Please select at least one candidate. "
+      render action: "new"
+      return
+    end
     respond_to do |format|
       if @schedule.save
         @schedule.candidates.each{|c| UserMailer.schedule_email(c.user).deliver }
@@ -68,7 +74,11 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
     @exam=Exam.all
     @candidates=Candidate.all
-
+    if params[:schedule][:candidate_ids].values.join.to_i==0
+      flash[:notice]="Please select at least one candidate. "
+      render action: "edit"
+      return
+    end
     @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
     respond_to do |format|
       if @schedule.update_attributes(params[:schedule])

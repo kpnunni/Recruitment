@@ -1,7 +1,7 @@
 class ExamsController < ApplicationController
   require 'will_paginate/array'
   def index
-    @exams = Exam.all.paginate(:page => params[:page], :per_page => 20)
+    @exams = Exam.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
 
     respond_to do |format|
       format.html 
@@ -38,10 +38,24 @@ class ExamsController < ApplicationController
 
   def create
     @exam = Exam.new(params[:exam])
+
+    @exam.subj.values.each do |sub|
+      if sub.to_i<0
+        flash[:notice]="number of questions should be a positive number"
+        render 'new'
+        return
+      end
+    end
+    @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
     @exam.created_by =current_user.user_email
     @q_count=@exam.generate_question_paper
     @exam.modified_by =""
-    @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
+    if @q_count <= 0
+       flash[:notice]="Total number of questions should not be '0'."
+       render 'new'
+       return
+    end
+
     if @exam.no_of_question!=@q_count
        flash[:notice]="Not enough questions (category wise/complexity wise)"
        render 'new'
@@ -66,7 +80,7 @@ class ExamsController < ApplicationController
     @exam = Exam.find(params[:id])
     @exam.modified_by =current_user .user_email
     @exam.subj= params[:exam][:subj]
-
+    @exam.complexity_id=params[:exam][:complexity_id]
     @q_count=@exam.generate_question_paper
     @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
     @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum

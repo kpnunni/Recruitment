@@ -59,6 +59,13 @@ class Exam < ActiveRecord::Base
      self.questions=@question_paper
     @question_paper.count
   end
-
+    def self.filtered search
+       if search==""||search.nil?
+         srch=Exam.all(:order => 'id DESC')
+       else
+          search.gsub('+',' ')
+          srch= Exam.where("name like ?","%#{search}%").order('id DESC')
+       end
+  end
 
 end
