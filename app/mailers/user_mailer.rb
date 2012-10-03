@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
     def schedule_email(user)
     @content=Template.find(1)
     @user = user
-    @url  = "http://0.0.0.0:3000/answers/#{user.id}/clogin"
+    @url  = "http://recruitment-suyati.herokuapp.com/answers/#{user.id}/clogin"
     mail(:to => user.user_email, :subject => "Recruitment test")
     end
    def admin_schedule_email (admin,schedule)
@@ -35,7 +35,7 @@ class UserMailer < ActionMailer::Base
   def update_schedule_email(user)
     @content=Template.find(2)
     @user = user
-    @url  = "http://0.0.0.0:3000/answers/#{user.id}/clogin"
+    @url  = "http://recruitment-suyati.herokuapp.com/answers/#{user.id}/clogin"
     mail(:to => user.user_email, :subject => "Update schedule")
   end
   def admin_update_schedule_email(user,schedule)

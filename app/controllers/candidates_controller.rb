@@ -1,6 +1,6 @@
 class CandidatesController < ApplicationController
    require 'will_paginate/array'
-   before_filter :chk_user
+   before_filter :chk_user ,:except => :update
      def chk_user
       if !current_user.has_role?('Manage Candidates')
         redirect_to '/homes/index'
