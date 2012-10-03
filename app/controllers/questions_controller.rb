@@ -1,5 +1,13 @@
 class QuestionsController < ApplicationController
+  before_filter :chk_user
  require 'will_paginate/array'
+
+    def chk_user
+    if !current_user.has_role?('Manage Questions')
+      redirect_to '/homes/index'
+    end
+    end
+
       def index
         @questions= Question.filtered(params[:search],params[:srch]).paginate(:page => params[:page], :per_page => 15)
  #       @questions=Question.paginate(:page => params[:page], :per_page => 10)
@@ -50,7 +58,16 @@ class QuestionsController < ApplicationController
         @question.created_by =current_user.user_email
         @question.answer_id=""
         @question.type_id=""
-
+        flag=0
+        params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
+        if flag==0
+            @complexity=Complexity.all
+            @category=Category.all
+            @types=Type.all
+            flash[:notice]="atleast one option should be true"
+            render action: "new"
+            return
+        end
         respond_to do |format|
           if @question.save
 
@@ -70,7 +87,16 @@ class QuestionsController < ApplicationController
 
       def update
         @question = Question.find(params[:id])
-
+        flag=0
+        params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
+        if flag==0
+            @complexity=Complexity.all
+            @category=Category.all
+            @types=Type.all
+            flash[:notice]="atleast one option should be true"
+            render action: "new"
+            return
+        end
         respond_to do |format|
           if @question.update_attributes(params[:question])
             @question.options.first.save

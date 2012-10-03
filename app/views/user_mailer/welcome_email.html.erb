@@ -4,21 +4,26 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h2>Hi ,</h2>
+    <h2>Hi,</h2>
     <p>
       Your email id is registered in "Suyati online recruitment test". <br/>
-      You are registered as <%  @user.roles.each do |rol| %>
-     <%= rol.role_name  %>
-         <%end  %>
-          .<br/>
     </p>
-
     <p>
       .....................................................<br/>
       username is: <%= @user.user_email %>.<br/>
       password is: <%= @pass %>.<br/>
       .....................................................<br/>
     </p>
+    <p>
+      Your Roles:
+      <%  @user.roles.each_with_index do |role,i| %>
+        <br />
+        <%=(i+1).to_s+"."+role.role_name  %>
+         <%end  %>
+         <br/>
+    </p>
+
+
     <p>
       To login to the site, just follow this link: <%= @url %>
 

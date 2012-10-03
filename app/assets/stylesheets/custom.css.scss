@@ -407,16 +407,18 @@ font-family: "Bank Gothic", "Futura", "Arial";
 font-size:15pt;
 opacity: .9;
 text-shadow: 0 0 30px rgb(0, 200, 255);
-
+  padding-top: 5px;
+  text-align: right;
 }
 
 .countdown1
 {
 font-family: "serif";
 font-size:15pt;
- padding-bottom: 5px;
+ padding-bottom: 0px;
 opacity: .9;
 color: rgb(0, 0, 0);
+  text-align: right;
 }
 
 .qfont

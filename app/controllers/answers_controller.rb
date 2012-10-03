@@ -1,41 +1,67 @@
 class AnswersController < ApplicationController
-  before_filter :chk_user
-  skip_before_filter :authenticate, :only => :congrats
-  skip_before_filter :chk_user , :only => :congrats
+  before_filter :chk_user, :except => [:congrats,:clogin ]
+  skip_before_filter :authenticate, :only => [:congrats ,:clogin ]
+
+  def make
+     @candidate=current_user.candidate
+     if @candidate.answers.empty?
+        @candidate.schedule.exam.questions.shuffle.each do |q|
+        @answer=Answer.new
+        @answer.question=q
+        @answer.candidate=@candidate
+        @answer.time_taken=0
+        @answer.answer="0"
+        @answer.save
+      end
+     end
+    @ans=Answer.where("candidate_id=?",@candidate.id ).first
+     @c_option=Array.new(@ans.question.options.count)
+     redirect_to answer_path(@ans.id)
+
+  end
+
+
   def show
-       @answer = Answer.new
-       @answer.question=Question.find(params[:id])
-       @total_question=current_user.candidate.schedule.exam.questions.count
-       @answer.dec_time = @answer.question.allowed_time
-       @answer.q_no=current_user.candidate.answers.count+1
+     @candidate=current_user.candidate
+     @answer = Answer.find(params[:id])
+     @answer.q_no=current_user.candidate.answers.where("id <= ?",@answer.id ).count
+     @answer.dec_time =Time.now
+     @count=@answer.question.allowed_time-@answer.time_taken
+     @c_option=Array.new(@answer.question.options.count)
+     @tick=Array.new(@answer.question.options.count)
+     @tick.each_with_index do |val,i|
+        @tick[i]= @answer.answer[i]=="1"
+     end
   end
 
-  def new
-    @answer = Answer.new
-    @answer.question=@answer.get_next_question(current_user.candidate)
+  def update
 
-    redirect_to answer_path(@answer.question)
-  end
+    @candidate=current_user.candidate
+    @answer = Answer.find(params[:id])
 
+    @answer.c_option=params[:answer][:c_option]
 
-  def create
-
-
-    @answer = Answer.new(params[:answer])
-    @answer.candidate=current_user.candidate
+    @answer.time_taken=((Time.now.to_f-Time.parse(params[:answer][:dec_time]).to_f).to_i)+@answer.time_taken
     @answer.answer= @answer.get_answer
-    if !@answer.save
+
+    if !@answer.update_attributes(params[:answer])
        params[:to]="finish"
     end
-    if params[:to]=="timer" && current_user.candidate.answers.count==current_user.candidate.schedule.exam.questions.count
+
+    if params[:to]=="timer"
+      if @answer.no_more
        params[:to]="finish"
+      else
+       params[:to]=@answer.get_ans
+      end
     end
     if  params[:to]=="finish"
       @answer.save_mark(current_user)
       sign_out
       redirect_to '/answers/congrats'
     else
-      redirect_to new_answer_path(:q_id=>params[:q_id])
+      @nxt=params[:to]
+      redirect_to answer_path(@nxt)
     end
 
   end
@@ -64,11 +90,13 @@ class AnswersController < ApplicationController
       @instructions=current_user.candidate.schedule.exam.instructions.all
       @schedule=current_user.candidate.schedule
       @exam=@schedule.exam
-       @diff=(Time.now.to_i-@schedule.sh_date.to_i)/60
+      @diff=(Time.now.to_i-@schedule.sh_date.to_i)/60
   end
 
+
+
   def chk_user
-    if !current_user.has_role?('candidate')
+    if !current_user.has_role?('Candidate')
        redirect_to '/homes/index'
     end
 
@@ -79,4 +107,13 @@ class AnswersController < ApplicationController
 
   def blank
   end
+
+  def clogin
+     @user=User.find(params[:id])
+     return if !@user.isAlive||@user.candidate.schedule.nil?
+     sign_in(@user)
+     redirect_to '/answers/candidate_detail'
+  end
+
+
 end

@@ -39,9 +39,9 @@ class UsersController < ApplicationController
 
 
     if @user.update_attributes(params[:user])
-      @user.encrypt_password
+
       @user.save
-      UserMailer.welcome_email(@user,@user.login_password).deliver
+      #UserMailer.welcome_email(@user,@user.login_password).deliver
       redirect_to users_path, notice: 'User was successfully updated.'
     else
       render action: "edit"
@@ -104,9 +104,8 @@ class UsersController < ApplicationController
   end
 
   def chk_user
-    if !current_user.has_role?('admin')
+    if !current_user.has_role?('Manage Users')
       redirect_to '/homes/index'
     end
-
   end
 end

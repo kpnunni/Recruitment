@@ -1,5 +1,13 @@
 class ExamsController < ApplicationController
   require 'will_paginate/array'
+  before_filter :chk_user
+
+    def chk_user
+    if !current_user.has_role?('Manage Exams')
+      redirect_to '/homes/index'
+    end
+    end
+
   def index
     @exams = Exam.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
 

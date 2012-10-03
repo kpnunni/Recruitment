@@ -2,7 +2,7 @@ Test::Application.routes.draw do
   root :to => 'homes#index'
 
   get "homes/index"
-
+  resources :templates
   resources :questions do
     resources :options
   end
@@ -29,9 +29,10 @@ Test::Application.routes.draw do
       get :instructions
       get :congrats
       get :blank
+      get :make
     end
     member  do
-
+      get :clogin
       put :candidate_update
 
     end

@@ -24,9 +24,19 @@
             <% else %>
                 <td width="30%" ><%= time_ago_in_words(schedule.sh_date)    %></td>
             <% end %>
+
             <td class="dropt" title="detail"  ><%= link_to image_tag('show.png'), schedule_path(schedule) %></td>
+
+            <% if current_user.has_role?('Re Schedule') %>
             <td class="dropt" title="re schedule" ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule) %></td>
+            <% else %>
+            <td class="dropt" title="re schedule" ><%=  image_tag('edit.png')%></td>
+            <% end %>
+            <% if current_user.has_role?('Cancel Schedule') %>
             <td class="dropt" title="cancel schedule" ><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% else %>
+            <td class="dropt" title="cancel schedule" ><%=  image_tag('delete.png') %></td>
+            <% end %>
           </tr>
       <% end %>
     </table>

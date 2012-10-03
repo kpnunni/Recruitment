@@ -1,5 +1,13 @@
 class CandidatesController < ApplicationController
    require 'will_paginate/array'
+   before_filter :chk_user
+     def chk_user
+      if !current_user.has_role?('Manage Candidates')
+        redirect_to '/homes/index'
+      end
+     end
+
+
   def show
      @candidate=Candidate.find(params[:id])
   end
@@ -24,7 +32,7 @@ class CandidatesController < ApplicationController
       @candidate.user.encrypt_password
 
       if @candidate.save
-        UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
+     #   UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
         redirect_to candidate_path(@candidate)
       else
          render action: "new"

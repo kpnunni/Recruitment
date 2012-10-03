@@ -1,6 +1,31 @@
 class SchedulesController < ApplicationController
    require 'will_paginate/array'
    before_filter :chk_user
+   before_filter :new_sch ,:only =>  [:new,:create]
+   before_filter :re_sch ,:only =>  [:edit,:update]
+   before_filter :cancel_sch ,:only =>  [:remove,:destroy]
+    def new_sch
+     if !(current_user.has_role?('Schedule'))
+        redirect_to '/homes/index'
+     end
+
+     end
+
+   def re_sch
+    if !(current_user.has_role?('Re Schedule'))
+       redirect_to '/homes/index'
+    end
+
+   end
+
+   def cancel_sch
+    if !(current_user.has_role?('Cancel Schedule'))
+       redirect_to '/homes/index'
+    end
+
+  end
+
+
 
   def index
     @schedules = Schedule.all(:order => 'id DESC').paginate(:page => params[:page], :per_page => 20)
@@ -58,7 +83,7 @@ class SchedulesController < ApplicationController
     respond_to do |format|
       if @schedule.save
         @schedule.candidates.each{|c| UserMailer.schedule_email(c.user).deliver }
-        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("admin"))}
+        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
         @users.each {|admin| UserMailer.admin_schedule_email(admin,@schedule).deliver }
         format.html { redirect_to schedules_path, notice: 'Schedule was successfully created.' }
         format.json { render json: @schedule, status: :created, location: @schedule }
@@ -121,7 +146,7 @@ class SchedulesController < ApplicationController
   end
 
   def chk_user
-    if !current_user.has_role?('admin')
+    if !(current_user.has_role?('Schedule')||current_user.has_role?('Re Schedule')||current_user.has_role?('Cancel Schedule'))
        redirect_to '/homes/index'
     end
 

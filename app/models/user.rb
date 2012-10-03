@@ -23,8 +23,10 @@ validates :user_email,    :presence   => true,
 
 validates :login_password, :presence => true,
                      :confirmation => true,
-                     :length => { :within => 4..20 }
-
+                     :length => { :within => 4..20 } ,:if => :there?
+   def there?
+     self.id.nil?
+   end
    def chk_role
      if self.roles.count==0
        self.roles.push(Role.find(3))
@@ -66,6 +68,8 @@ validates :login_password, :presence => true,
           search.gsub('+',' ')
           srch= User.where("id!= ? and user_email like ?",id,"%#{search}%").order('id DESC')
        end
+       srch.delete_if  {|usr| usr.roles.include?(Role.find(14))}
+
      end
 
 end

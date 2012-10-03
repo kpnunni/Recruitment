@@ -1,20 +1,31 @@
 <div class="row">
   <div class="span10 offset1">
 
-       <b>
-       <div class="countdown1" align="right "  >Time Remaining: &emsp; </div>
-
-       <div id="count" class="countdown" align="right "   ></div> </b>
-
-       <br /><br /><br />
+    <h3>Questions:</h3>
     <%= form_for  @answer do |f| %>
 
 
 
+        <% @candidate.answers.each_with_index do |ans,i| %>
+
+            <% if (ans.question.allowed_time-ans.time_taken)>3 %>
+                <%= f.button  i+1, :name=>"to",:value=>ans.id %>
+            <% end %>
+        <% end %>
 
 
+       <br />
 
-        <%=f.hidden_field   :question_id ,:value =>@answer.question.id%>
+       <table align="right"   ><tr><td>
+
+       <div class="countdown1" align="right"  >Time Remaining:  </div>
+       </td><td>
+       <div id="count" class="countdown" align="right "  ></div>
+       </td></tr></table>
+
+       <br /><br /><br />
+
+        <%=f.hidden_field   :dec_time ,:value =>@answer.dec_time %>
 
         <div class="qfont">
 
@@ -25,20 +36,20 @@
 
           <% if @answer.question.type.question_type=="check_box" %>
 
-              <% @answer.question.options.sort.each do |op| %>
+              <% @answer.question.options.sort.each_with_index do |op,i| %>
                   <tr>
                     <%= f.fields_for :c_option do |c_op| %>
-                        <td><%=  c_op.check_box  op.id %></td>
+                        <td><%=  c_op.check_box  op.id,:checked => @tick[i] %></td>
                     <% end %>
                     <td class="lft" ><%= label_tag op.option %></td>
                   </tr>
               <% end %>
 
           <% else %>
-              <% @answer.question.options.sort.each do |op| %>
+              <% @answer.question.options.sort.each_with_index do |op,i| %>
                   <tr >
                     <%= f.fields_for :c_option do |c_op| %>
-                        <td ><%=  c_op.radio_button 1, op.id,:checked => false%></td>
+                        <td ><%=  c_op.radio_button 1, op.id,:checked => @tick[i]%></td>
                     <% end %>
                     <td class="lft"  >   <%=   op.option %>  </td>
                   </tr>
@@ -53,21 +64,15 @@
         </b><br />
 
         <%= f.submit   :id =>"procedure_submit_button" , :name=>"to",:value=>"timer" , :style => "display: none" ,:remote  => true%>
-        <%= f.submit   :id =>"refresh" ,:name=>"to",:value=>"finish", :style => "display: none" ,:remote  => true%>
 
        <div align="center">
         <table cellpadding="10"  ><tr>
 
-          <% if @answer.q_no == @total_question %>
-              <td><%= f.button 'Skip', :name=>"to",:value=>"skip" ,class: "btn btn-large btn-primary" , :style => "display: none" %></td>
-              <td><%= f.button 'Next', :name=>"to",:value=>"next",class: "btn btn-large btn-primary", :style => "display: none" %></td>
-          <% else %>
-              <td><%= f.button 'Skip', :name=>"to",:value=>"skip" ,class: "btn btn-large btn-primary",:with => "'g_iCount='+g_iCount" %></td>
-              <td><%= f.submit  'Next', :name=>"to",:value=>"next",class: "btn btn-large btn-primary" %></td>
-          <% end %>
-
           <td><%= f.button 'Finish', :name=>"to",:value=>"finish",class: "btn btn-large btn-primary",:title=>"Submit your exam" %></td>
           </tr> </table>   </div>
+
+
+
 
     <% end %>
 
@@ -81,7 +86,7 @@
     window.onload = function()
     {
 
-         startCountdown(<%=cnt=@answer.question.allowed_time%>)
+         startCountdown(<%=cnt=@count%>)
 
     }
 </script >
@@ -161,7 +166,7 @@
 
 <script language=javascript>
 document.onkeydown = function(e){
-if(e.keyCode == 116)
+if(e.keyCode != 0)
         {
             return false;
         }

@@ -1,3 +1,17 @@
+<script type="text/javascript" >
+    function toggle1(source) {
+
+        var checkboxes = document.getElementsByName("user[role_ids][]");
+        for(var i in checkboxes)
+            checkboxes[i].checked = source.checked;
+    }
+</script>
+
+
+
+
+
+
 <%= form_for  (@user) do |f| %>
 
 
@@ -31,14 +45,15 @@
         <br />
 
 
-        <b>Roles</b>
-        <% Role.where("role_name!=?","candidate").each do |role| %>
+        <b>Roles:</b>
+        <% Role.where("role_name!=?","Candidate").each do |role| %>
             <br />
             <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role)%>
             <%= role.role_name %>
         <% end %>
+        <br />
 
-
+        <input type="checkbox" onClick="toggle1(this)" /> Toggle All<br/>
         <br />
 
            <%= f.submit "Register",:id=>"commit", class: "btn btn-large btn-primary" %>
@@ -48,27 +63,6 @@
     </div>
 
 <% end %>
-
-
-
-
-    <script type="text/javascript">
-        function apply()
-        {
-          //  alert(=<%=@user[0]%>);
-            document.getElementById("commit").disabled=true;
-            if(document.getElementById("chk").checked==true)
-            {
-                document.getElementById("commit").disabled=false;
-            }
-            if(document.getElementById("chk").checked==false)
-            {
-                document.getElementById("commit").enabled=false;
-            }
-        }
-    </script>
-
-
 
 
 

@@ -5,51 +5,56 @@
 	   <%= image_tag('suyati1.png', :size => "300x70")   %>
       <nav>
         <ul class="nav pull-right">
-         <%if signed_in? && current_user.has_role?('admin') %>
+          <% @ok= signed_in? && !current_user.has_role?('Candidate') %>
+         <%if @ok %>
 
               <li><%= link_to "Home",   '/homes/index' %></li>
 
-        <li  class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                My Dashboard <b class="caret"></b>
-              </a>
-        <ul class="dropdown-menu">
-          <li><%= link_to "Users", '/users' %></li>
-          <li><%= link_to "Candidates", '/candidates' %></li>
-          <li><%= link_to "Question Bank",  '/questions' %></li>
-          <li><%= link_to "Exams", '/exams' %></li>
-          <li><%= link_to "Scheduling", '/schedules' %></li>
-          <li><%= link_to "Results", '/recruitment_tests' %></li>
-        </ul>
-        </li>
-
-        <li  class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                My Account <b class="caret"></b>
-              </a>
-        <ul class="dropdown-menu">
-            <li> <%= link_to "Profile", profile_user_path(current_user) %></li>
-            <li> <%= link_to "Sign out", '/signout',method: :delete %></li>
-        </ul>
-        </li>
-
-
-
-         <% elsif signed_in? && current_user.has_role?('super_user') %>
-
-             <li><%= link_to "Home",   '/homes/index' %></li>
-
               <li  class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                My Dashboard <b class="caret"></b>
-              </a>
-                   <ul class="dropdown-menu">
-                     <li><%= link_to "Candidates", '/candidates' %></li>
-                     <li><%= link_to "Question Bank",  '/questions' %></li>
-                     <li><%= link_to "Exams", '/exams' %></li>
-                   </ul>
-               </li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  My Dashboard <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <%if current_user.has_role?('Manage Users')   %>
+                  <li><%= link_to "Users", '/users' %></li>
+                  <% end %>
 
+                  <%if current_user.has_role?('Manage Candidates')   %>
+                  <li><%= link_to "Candidates", '/candidates' %></li>
+                  <% end %>
+
+                  <%if current_user.has_role?('Manage Questions')   %>
+                  <li><%= link_to "Question Bank",  '/questions' %></li>
+                   <% end %>
+
+                  <%if current_user.has_role?('Manage Exams')   %>
+                  <li><%= link_to "Exams", '/exams' %></li>
+                  <% end %>
+
+                  <%if current_user.has_role?('Schedule')||current_user.has_role?('Re Schedule')||current_user.has_role?('Cancel Schedule')   %>
+                  <li><%= link_to "Scheduling", '/schedules' %></li>
+                   <% end %>
+
+                  <%if current_user.has_role?('Validate Result')||current_user.has_role?('View Result')   %>
+                  <li><%= link_to "Results", '/recruitment_tests' %></li>
+                   <% end %>
+
+                </ul>
+              </li>
+              <%if current_user.has_role?('Manage Templates')   %>
+              <li  class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  Email Templates <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "New Schedule", '/templates/1' %></li>
+                  <li><%= link_to "Re Schedule", '/templates/2' %></li>
+                  <li><%= link_to "Cancel Schedule",  '/templates/3' %></li>
+                  <li><%= link_to "Result 'Passed'", '/templates/4' %></li>
+                  <li><%= link_to "Result 'Failed'", '/templates/5' %></li>
+                </ul>
+              </li>
+              <% end %>
         <li  class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 My Account <b class="caret"></b>
@@ -59,9 +64,9 @@
             <li> <%= link_to "Sign out", '/signout',method: :delete %></li>
         </ul>
         </li>
-
 
         <% end %>
+
         </ul>
       </nav>
     </div>

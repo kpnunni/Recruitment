@@ -23,16 +23,10 @@
 
         <%= f.label :Email %>
         <%= f.text_field :user_email,:size => 22 %>
-
-        <%= f.label :password %>
-        <%= f.password_field :login_password %>
-
-        <%= f.label :confirm_Password %>
-        <%= f.password_field :login_password_confirmation %>
         <br />
 
         <b>Roles</b>
-        <% Role.where("role_name!=?","candidate").each do |role| %>
+        <% Role.where("role_name!=?","Candidate").each do |role| %>
             <br />
             <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role) %>
             <%= role.role_name %>
@@ -41,8 +35,27 @@
 
 
         <br />
-           <%= f.submit "Register", class: "btn btn-large btn-primary" %>
+
+        <input type="checkbox" onClick="toggle1(this)" /> Toggle All<br/>
+        <br />
+           <%= f.submit "Update", class: "btn btn-large btn-primary" %>
                <br /><%= link_to image_tag('back.png') ,users_path %>
       </div>
     </div>
    <% end %>
+
+
+
+
+
+
+
+<script type="text/javascript" >
+    function toggle1(source) {
+
+        var checkboxes = document.getElementsByName("user[role_ids][]");
+        for(var i in checkboxes)
+            checkboxes[i].checked = source.checked;
+    }
+</script>
+

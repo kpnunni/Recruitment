@@ -34,20 +34,23 @@ class SessionsController < ApplicationController
 
       if ( user.password==login_password && user.isAlive== true && user.isDelete== false  )
 
-        if params[:session][:remember]
-          session[:remember_token] = user.id
+        if params[:session][:remember]=="0"
+          cookies[:remember_token] = user.remember_token
+        else
+          cookies[:remember_token] = { :value => user.remember_token, :expires => 7.days.from_now }
         end
-        if user.has_role?('candidate')&&!user.candidate.schedule.nil?
+        if user.has_role?('Candidate')&&!user.candidate.schedule.nil?
                sign_in user
                redirect_to candidate_detail_answers_path
-        elsif user.has_role?('admin')||user.has_role?('super_user')
-          sign_in user
-          redirect_to '/homes/index'
-        else
+        elsif user.has_role?('Candidate')&&user.candidate.schedule.nil?
           flash[:notice ] = 'Sorry, You can login only after getting date for the exam.'
           render "new"
+        elsif user.has_role?('Manage Users')||user.has_role?('Manage Questions')||user.has_role?('Manage Candidates')||user.has_role?('Manage Exams')||user.has_role?('Schedule')||
+                 user.has_role?('Re Schedule')||user.has_role?('Cancel Schedule')||user.has_role?('Validate Result')||user.has_role?('Manage Templates')||user.has_role?('View Result')
+          sign_in user
+          redirect_to '/homes/index'
         end
-      elsif user.has_role?('candidate')
+      elsif user.has_role?('Candidate')
         flash[:notice ] = 'You cant login again. Contact admin.'
         render "new"
       else

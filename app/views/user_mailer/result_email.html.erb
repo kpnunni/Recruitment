@@ -9,9 +9,13 @@
     <p> <b>
       This is your result of suyati recruitment test.<br />
       <%if @user.candidate.recruitment_test.is_passed=="Passed" %>
-          <%= "you are passed and contact hr team for further details" %>
+          <p>
+            <%=simple_format  @pass.body %>
+          </p>
       <%else%>
-          <%= "sorry,you are failed.Keep trying" %>
+          <p>
+            <%=simple_format  @fail.body %>
+          </p>
       <% end %>
     </b>
     </p>

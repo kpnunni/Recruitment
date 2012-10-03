@@ -35,6 +35,25 @@ class Answer < ActiveRecord::Base
      end
   end
 
+
+  def no_more
+    self.candidate.answers.each do |ans|
+       if (ans.question.allowed_time-ans.time_taken)>3
+          return false
+       end
+    end
+    return true
+  end
+
+  def get_ans
+    self.candidate.answers.each do |ans|
+       if (ans.question.allowed_time-ans.time_taken)>3
+          return ans.id
+       end
+    end
+    return nil
+  end
+
    def save_mark(current_user)
      @recruitment_test=RecruitmentTest.new
      @recruitment_test.candidate=current_user.candidate
@@ -48,4 +67,5 @@ class Answer < ActiveRecord::Base
      @user=User.find(current_user.id)
      @user.update_attribute(:isAlive,0)
    end
+
 end

@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917072044) do
+ActiveRecord::Schema.define(:version => 20120928051834) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
     t.integer  "question_id"
     t.string   "answer"
-    t.time     "time_taken"
+    t.integer  "time_taken"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
@@ -149,6 +149,13 @@ ActiveRecord::Schema.define(:version => 20120917072044) do
   create_table "schedules", :force => true do |t|
     t.integer  "exam_id"
     t.datetime "sh_date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "templates", :force => true do |t|
+    t.string   "name"
+    t.text     "body"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

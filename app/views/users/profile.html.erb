@@ -1,6 +1,7 @@
 <div class="row">
   <div class="span10 offset0">
-    <h1>Profile</h1>
+    <h1><%= image_tag 'Profile.png',:title => 'Profile'  %>
+</h1>
     <div id='flash-notice' style="color: #228b22;"  ><%= flash[:notice] %> </div><br />
     <b>
 
@@ -8,8 +9,9 @@
     <%= @user.user_email %> <br />
      <b>Roles:</b>
 
-     <% @user.roles.each do |role| %>
-        <%= role.role_name+"," %>
+     <% @user.roles.each_with_index do |role,i| %>
+         <br />
+        <%=(i+1).to_s+"."+role.role_name  %>
 
     <% end %>
       <br />
