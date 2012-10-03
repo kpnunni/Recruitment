@@ -28,7 +28,7 @@ class RecruitmentTestsController < ApplicationController
     respond_to do |format|
       if @recruitment_test.update_attributes(params[:recruitment_test])
         UserMailer.result_email(@recruitment_test.candidate.user).deliver
-        if @recruitment_test.status=="Passed"
+        if @recruitment_test.is_passed=="Passed"
           @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Selection Email"))}
           @users.each {|admin| UserMailer.admin_result_email(admin,@recruitment_test.candidate).deliver }
         end
