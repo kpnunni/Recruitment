@@ -111,7 +111,7 @@ class AnswersController < ApplicationController
   def clogin
      @user=User.find(params[:id])
      return if !@user.isAlive||@user.candidate.schedule.nil?
-     cookies[:remember_token] = user.remember_token
+
      sign_in(@user)
      redirect_to '/answers/candidate_detail'
   end
