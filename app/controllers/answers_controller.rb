@@ -35,12 +35,9 @@ class AnswersController < ApplicationController
   end
 
   def update
-
     @candidate=current_user.candidate
     @answer = Answer.find(params[:id])
-
     @answer.c_option=params[:answer][:c_option]
-
     @answer.time_taken=((Time.now.to_f-Time.parse(params[:answer][:dec_time]).to_f).to_i)+@answer.time_taken
     @answer.answer= @answer.get_answer
 
@@ -60,17 +57,11 @@ class AnswersController < ApplicationController
       sign_out
       redirect_to '/answers/congrats'
     else
-      @nxt=params[:to]
+      @nxt=params[:to].to_i
       redirect_to answer_path(@nxt)
     end
 
   end
-
-
-
-
-
-
 
   def candidate_detail
       @candidate=current_user.candidate
@@ -83,7 +74,6 @@ class AnswersController < ApplicationController
       else
         render 'answers/candidate_detail'
       end
-
   end
 
   def instructions
@@ -92,8 +82,6 @@ class AnswersController < ApplicationController
       @exam=@schedule.exam
       @diff=(Time.now.to_i-@schedule.sh_date.to_i)/60
   end
-
-
 
   def chk_user
     if !current_user.has_role?('Candidate')
@@ -111,10 +99,8 @@ class AnswersController < ApplicationController
   def clogin
      @user=User.find(params[:id])
      return if !@user.isAlive||@user.candidate.schedule.nil?
-
      sign_in(@user)
      redirect_to '/answers/candidate_detail'
   end
-
 
 end

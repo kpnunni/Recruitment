@@ -6,10 +6,10 @@
 
 
 
-        <% @candidate.answers.each_with_index do |ans,i| %>
+        <% @candidate.answers.sort.each_with_index do |ans,i| %>
 
             <% if (ans.question.allowed_time-ans.time_taken)>3 %>
-                <%= f.button  i+1, :name=>"to",:value=>ans.id %>
+                <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => ".."%>
             <% end %>
         <% end %>
 
