@@ -2,8 +2,12 @@ Test::Application.routes.draw do
   root :to => 'homes#index'
 
   get "homes/index"
+  get "homes/admin"
   resources :templates
   resources :questions do
+     collection do
+      post :delete_all
+    end
     resources :options
   end
   resources :exams do

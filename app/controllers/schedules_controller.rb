@@ -28,7 +28,9 @@ class SchedulesController < ApplicationController
 
 
   def index
-    @schedules = Schedule.all(:order => 'id DESC').paginate(:page => params[:page], :per_page => 20)
+    @schedules = Schedule.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
+    @users=User.all
+    @users.select! {|usr| Schedule.where(:created_by =>usr.user_email).present?}
     respond_to do |format|
       format.html 
       format.json { render json: @schedules }
@@ -72,7 +74,7 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.new(params[:schedule])
     @exam=Exam.all
     @candidates=Candidate.all
-
+    @schedule.created_by=current_user.user_email
     @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
 
     if params[:schedule][:candidate_ids].values.join.to_i==0
@@ -99,6 +101,8 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
     @exam=Exam.all
     @candidates=Candidate.all
+    params[:schedule][:updated_by]=current_user.user_email
+
     if params[:schedule][:candidate_ids].values.join.to_i==0
       flash[:notice]="Please select at least one candidate. "
       render action: "edit"
@@ -153,8 +157,13 @@ class SchedulesController < ApplicationController
   end
     def onecan
     @exam=Exam.all
-    @schedule = Schedule.new
     @candidate=Candidate.find(params[:id])
+    if @candidate.schedule.nil?
+       @schedule=Schedule.new
+    else
+      @schedule=@candidate.schedule
+    end
+
      respond_to do |format|
       format.html
       format.json { render json: @schedule }

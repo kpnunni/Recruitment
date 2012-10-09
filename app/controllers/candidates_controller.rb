@@ -24,7 +24,10 @@ class CandidatesController < ApplicationController
 
   def edit
       @candidate=Candidate.find(params[:id])
-
+      @candidate.build_recruitment_test if !@candidate.schedule.nil?&&@candidate.recruitment_test.nil?
+      @user=@candidate.user
+      @experiences=@candidate.experiences.all
+      @qualifications=@candidate.qualifications.all
   end
 
   def create
@@ -52,9 +55,15 @@ class CandidatesController < ApplicationController
               end
       else
                  if @candidate.update_attributes(params[:candidate])
-                   redirect_to @candidate, notice: 'Candidate was successfully updated.'
+                   if params[:candidate][:done]=="1"
+
+                   end
+                   redirect_to candidates_path , notice: 'Candidate was successfully updated.'
                  else
-                   render action: "edit"
+                         @user=@candidate.user
+                         @experiences=@candidate.experiences.all
+                         @qualifications=@candidate.qualifications.all
+                         render action: "edit"
                  end
       end
   end

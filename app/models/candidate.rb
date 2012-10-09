@@ -1,12 +1,12 @@
 class Candidate < ActiveRecord::Base
-   attr_accessor  :exp,:qual
+   attr_accessor  :exp,:qual,:done
    has_many :answers  ,:dependent => :destroy
   has_many :experiences   ,:dependent => :destroy
   has_many :qualifications  ,:dependent => :destroy
   belongs_to :user
    belongs_to :schedule
    has_one :recruitment_test  ,:dependent => :destroy
-  attr_accessible :experiences_attributes, :qualifications_attributes ,:user_attributes,:exp,:qual,:name, :address ,:phone1,  :phone2 , :technology , :certification ,
+  attr_accessible :done,:recruitment_test_attributes,:experiences_attributes, :qualifications_attributes ,:user_attributes,:exp,:qual,:name, :address ,:phone1,  :phone2 , :technology , :certification ,
                   :skills ,:resume,:user_id,:resume_file_name,:resume_content_type,:resume_file_size
   validates  :name,:presence =>true
   validates  :user_id ,:uniqueness  =>true
@@ -24,9 +24,11 @@ class Candidate < ActiveRecord::Base
 
 
 
-  accepts_nested_attributes_for :experiences, :allow_destroy => true
-  accepts_nested_attributes_for :qualifications,:allow_destroy => true
+  accepts_nested_attributes_for :experiences, :allow_destroy => true,:reject_if =>  :all_blank
+  accepts_nested_attributes_for :qualifications,:allow_destroy => true,:reject_if => :all_blank
   accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :recruitment_test,:allow_destroy => true,:reject_if => :all_blank
+
   accessible_attributes  :user
   before_create :set_role
   after_destroy :chk_schedule
@@ -53,11 +55,21 @@ class Candidate < ActiveRecord::Base
   end
 
   def self.filtered search
-       if search==""||search.nil?
-         srch=Candidate.all(:order => 'id DESC')
-       else
-          search.gsub('+',' ')
-          srch= Candidate.where("name like ?","%#{search}%").order('id DESC')
-       end
+      if search.nil?
+        return @candidates=Candidate.all
+      end
+       name=email=phone=skil=status=Candidate.all(:order => 'created_at DESC')
+       name.select! {|can| can.name.include?(search[":name"]) }             if  search[":name"]!=""
+       email.select! {|can| can.user.user_email(search[":email"]) }             if  search[":email"]!=""
+       phone.select! {|can| can.phone1.include?(search[":phone"])||can.phone2.include?(search[":phone"]) }   if  search[":phone"]!=""
+       skil.select! {|can| can.skills.include?(search[":skill"]) }             if  search[":skill"]!=""
+      if  search[":status"]!=""&&search[":status"][:type]=="Exam Scheduled"
+        status.select! {|can| !can.schedule.nil?  }
+      elsif  search[":status"]!=""&&search[":status"][:type]=="Exam not Scheduled"
+        status.select! {|can| can.schedule.nil?  }
+      elsif  search[":status"]!=""&&search[":status"][:type]=="Exam Completed"
+        status.select! {|can| !can.recruitment_test.nil?  }
+      end
+      @candidats=name&email&phone&skil&status
   end
 end

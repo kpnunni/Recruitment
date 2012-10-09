@@ -10,7 +10,8 @@ class ExamsController < ApplicationController
 
   def index
     @exams = Exam.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
-
+    @users=User.all
+    @users.select! {|usr| Exam.where(:created_by =>usr.user_email).present?}
     respond_to do |format|
       format.html 
       format.json { render json: @exams }
@@ -20,6 +21,7 @@ class ExamsController < ApplicationController
 
   def show
     @exam = Exam.find(params[:id])
+    @qpaper= @exam.questions.all
     @instructions=@exam .instructions .all
     respond_to do |format|
       format.html 
@@ -30,6 +32,7 @@ class ExamsController < ApplicationController
 
   def new
     @exam = Exam.new
+    @instruction=Instruction.new
     @exam.subj =Array.new(Category.count)
     respond_to do |format|
       format.html 
@@ -41,12 +44,13 @@ class ExamsController < ApplicationController
   def edit
     @exam = Exam.find(params[:id])
     @exam.subj =Array.new(Category.count)
+    @instruction=Instruction.new
   end
 
 
   def create
     @exam = Exam.new(params[:exam])
-
+    @instruction=Instruction.new
     @exam.subj.values.each do |sub|
       if sub.to_i<0
         flash[:notice]="number of questions should be a positive number"
@@ -86,6 +90,7 @@ class ExamsController < ApplicationController
 
   def update
     @exam = Exam.find(params[:id])
+    @instruction=Instruction.new
     @exam.modified_by =current_user .user_email
     @exam.subj= params[:exam][:subj]
     @exam.complexity_id=params[:exam][:complexity_id]

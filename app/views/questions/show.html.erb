@@ -1,27 +1,23 @@
     <div class="row">
-      <div class="span12 offset0"><h1>Question detail</h1>
+      <div class="span12 offset0">
      <b>Question:</b>
      <%=  @question.question %><br /><br />
 
-        <table  border="3" width="50%"   >
+        <table  border="3" width="75%"   >
           <tr>
             <th>options:</th>
             <th>true/false</th>
-            <th>...</th>
-            <th>...</th>
           </tr>
 
         <% @options.each do |op| %>
               <tr>
             <td width="75%" class="lft" ><%= op.option %></td>
             <td width="10%" ><%= op.is_right %></td>
-            <td><%=link_to image_tag('edit.png'),edit_question_option_path(@question,op)  %></td>
-            <td><%= link_to image_tag('delete.png') , [@question,op],:method =>  :delete,data: {confirm: 'are you sure'}  %></td>
-              </tr>
+            </tr>
         <%end %>
 
         </table>
-        <%= link_to  image_tag('addc.png'), new_question_option_path(@question) %>
+        <%#= link_to  image_tag('addc.png'), new_question_option_path(@question) %>
         <br />
         <b>Answer code:</b>
      <%=  @question.answer_id %><br />
@@ -46,7 +42,7 @@
 
 
 
-     <%= link_to image_tag('back.png'), questions_path %>
+     <%#= link_to image_tag('back.png'), questions_path %>
 
       </div>
     </div>

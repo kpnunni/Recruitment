@@ -8,10 +8,14 @@
 
             <table  cellpadding="5" align="right"  >
               <tr>
-                <th>Email:</th>
+                <th>Type:</th>
+                <% if params[:filter].nil?  %>
+                    <td><%= select("filter","type", [["Active",1],["Inactive",0]], { :include_blank => true}) %></td>
+                <% else  %>
+                    <td><%= select("filter","type", [["Active",1],["Inactive",0]], { :include_blank => true,:selected =>params[:filter][:type]}) %></td>
+                 <% end  %>
 
-
-
+                 <th>Email:</th>
 
                 <% if !params[:search].nil?  %>
                     <td align="right" ><%= text_field_tag "search" , params[:search] %></td>
@@ -19,7 +23,7 @@
                     <td align="right" ><%= text_field_tag "search"  %></td>
                 <% end  %>
 
-                <td class="dropt" title="search" ><%=image_submit_tag 'find.png' , :class => 'search' %></td>
+                <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
 
 
                 </tr>
@@ -39,7 +43,7 @@
   <tr>
     <th>User Email</th>
     <th>User Roles</th>
-    <th>isAlive?</th>
+    <th>Alive?</th>
     <th></th>
     <th></th>
     <th></th>
@@ -47,8 +51,8 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td width="30%" class="lft"  ><%= user.user_email %></td>
-    <td width="50%" >
+    <td width="20%" class="lft"  ><%= user.user_email %></td>
+    <td width="60%" class="lft"  >
       <% user.roles.each do |role| %>
           <%="|"+ role.role_name+"|" %>
       <% end %>
@@ -60,7 +64,7 @@
     <% end %>
     <td class="dropt" title="edit" ><%= link_to image_tag('edit.png'), edit_user_path(user) %></td>
     <% if current_user.has_role?('Manage Login')  %>
-        <td class="dropt" title="kill" ><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put, data: { confirm: 'Are you sure?' } %></td>
+        <td class="dropt" title="Make Active/Inactive" ><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put%></td>
     <% else %>
         <td class="dropt" title="kill" ><%= image_tag('kill.png')%></td>
     <% end %>

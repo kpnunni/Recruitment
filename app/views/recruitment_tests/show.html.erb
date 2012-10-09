@@ -79,12 +79,13 @@
 
         </table>
          <br/>
+        <% if @recruitment_test.is_passed=="Pending" %>
         <b>Decision: <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
         <%=f.label :Comments  %></b>
         <%=f.text_area  :comments ,:rows=>"5"%>  <br />
         <div align="center" ><%= f.submit "Submit" ,class: "btn btn-large btn-primary" %></div>
         <% end %>
          <%= link_to image_tag('back.png'), recruitment_tests_path  %>
-
+        <% end %>
   </div>
 </div>

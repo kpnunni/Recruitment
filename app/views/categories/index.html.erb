@@ -5,14 +5,14 @@
 
      <tr>
        <th>Category name</th>
-       <th></th>
+       <th></th>   <th></th>
      </tr>
 
     <% @categories .each do |ctgry| %>
           <tr>
         <td><%= ctgry.category  %></td>
         <td width="10%" ><%= link_to image_tag('edit.png'), edit_category_path(ctgry) %></td>
-         <%#= link_to  image_tag('delete.png'), ctgry, method: :delete, data: { confirm: 'Are you sure?' } %>
+         <td width="10%" ><%= link_to  image_tag('delete.png'), ctgry, method: :delete, data: { confirm: 'Are you sure?If you delete this category all questions belongs to this category will also deleted.' } %></td>
           </tr>
 
 
@@ -23,6 +23,6 @@
 <h4><%= will_paginate @categories ,:container=>false %></h4>
     <br /> <br />
        <%= render 'form' %>
-    <br /><%= link_to image_tag('back.png'),new_question_path %>
+    <br /><%= link_to image_tag('back.png'),questions_path %>
   </div>
 </div>

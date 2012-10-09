@@ -2,28 +2,40 @@
   <div class="span12 offset0"><h1>Results</h1>
 
 
-     <form class="filter_form">
+    <form class="filter_form">
 
-            <table  cellpadding="5" align="right"  >
-              <tr>
-                <th>Name:</th>
+      <table  cellpadding="5" align="right"  >
+        <tr>
+          <th>Mark(min):</th>
+          <th>Mark(max):</th>
+          <th>From:</th>
+          <th>To:</th>
+          <th>Name:</th>
+        </tr>
+        <tr>
+          <% if params[:search].nil?  %>
+
+              <td><%= text_field_tag "search[min]" ,"",:class=>"text_box2" %></td>
+              <td><%= text_field_tag "search[max]" ,"",:class=>"text_box2" %></td>
+              <td><%= calendar_date_select_tag  "search[from]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= calendar_date_select_tag  "search[to]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= text_field_tag "search[name]" ,"",:class=>"text_box2" %></td>
+
+          <% else  %>
+              <td><%= text_field_tag "search[min]",params[:search][:min],:class=>"text_box2"  %></td>
+              <td><%= text_field_tag "search[max]",params[:search][:max],:class=>"text_box2"  %></td>
+              <td><%= calendar_date_select_tag "search[from]",params[:search]["from"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= calendar_date_select_tag  "search[to]",params[:search]["to"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= text_field_tag "search[name]",params[:search][:name] ,:class=>"text_box2" %></td>
+          <% end  %>
+
+          <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
 
 
+        </tr>
+      </table>
 
-
-                <% if !params[:search].nil?  %>
-                    <td align="right" ><%= text_field_tag "search" , params[:search] %></td>
-                <% else  %>
-                    <td align="right" ><%= text_field_tag "search"  %></td>
-                <% end  %>
-
-                <td class="dropt" title="search" ><%=image_submit_tag 'find.png' , :class => 'search' %></td>
-
-
-                </tr>
-           </table>
-
-            </form>
+    </form>
 
 
 

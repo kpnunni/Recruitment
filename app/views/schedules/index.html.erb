@@ -2,30 +2,71 @@
   <div class="span12 offset0">
     <h3 align="right"><%= link_to image_tag('addsh.png'), new_schedule_path, :class=>"dropt", :title=>"new schedule" %></h3>
 
+
+
     <h1>Scheduled Exams</h1>
+
+
+    <form class="filter_form">
+
+      <table  cellpadding="5" align="right"  >
+        <tr>
+          <th>Created by:</th>
+          <th>From:</th>
+          <th>To:</th>
+         </tr>
+        <tr>
+          <% if params[:search].nil?  %>
+
+              <td><%= select("search","by", @users.collect {|s|
+                s.user_email }, { :include_blank => true}) %></td>
+              <td><%= calendar_date_select_tag  "search[from]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= calendar_date_select_tag  "search[to]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+
+          <% else  %>
+              <td><%= select("search","by", @users.collect {|s|
+                s.user_email }, { :include_blank => true,:selected =>params[:search][:by]}) %><br />
+              </td>
+
+              <td><%= calendar_date_select_tag "search[from]",params[:search]["from"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= calendar_date_select_tag  "search[to]",params[:search]["to"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+           <% end  %>
+
+          <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+
+
+        </tr>
+      </table>
+
+    </form>
+
     <table border="3" width="100%" >
       <tr>
-        <th>Date</th>
         <th>Time</th>
         <th>Test</th>
+        <th>Created by</th>
+        <th>Created at</th>
+        <th>Last edited at</th>
         <th>Time Remaining</th>
-        <th></th>
         <th></th>
         <th></th>
       </tr>
 
       <% @schedules.each do |schedule| %>
           <tr>
-             <td width="25%" ><%=  schedule.sh_date.strftime("%b %d %A,%Y") %></td>
-            <td width="15%" ><%= schedule.sh_date.strftime("%I:%M%p") %></td>
-            <td width="15%" ><%= schedule.exam.name  %></td>
+             <td width="25%" ><%=  schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p") %></td>
+             <td width="15%" ><%= schedule.exam.name  %></td>
+             <td width="15%" ><%= schedule.created_by  %></td>
+             <td width="15%" ><%= schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %></td>
+             <td width="15%" ><%= schedule.updated_at.strftime("%b %d %A,%Y at %I:%M%p")  %></td>
+
+
             <% if  schedule.sh_date.to_i - Time.new.to_i < 0  %>
-                <td width="30%" ><%= "Time over"  %></td>
+                <td width="10%" ><%= "Time over"  %></td>
             <% else %>
-                <td width="30%" ><%= time_ago_in_words(schedule.sh_date)    %></td>
+                <td width="10%" ><%= time_ago_in_words(schedule.sh_date)    %></td>
             <% end %>
 
-            <td class="dropt" title="detail"  ><%= link_to image_tag('show.png'), schedule_path(schedule) %></td>
 
             <% if current_user.has_role?('Re Schedule') %>
             <td class="dropt" title="re schedule" ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule) %></td>

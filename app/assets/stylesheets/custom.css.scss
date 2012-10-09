@@ -321,6 +321,22 @@ select {
   width: 50px;
   color: #000000;
 }
+
+.text_box1 {
+  background-color: #ffffff;
+  width: 150px;
+  color: #000000;
+}
+.text_box2 {
+  background-color: #ffffff;
+  width: 100px;
+  color: #000000;
+}
+.text_box3 {
+  background-color: #ffffff;
+  width: 115px;
+  color: #000000;
+}
 .my_button {
 
   border-width: 1px;
@@ -478,13 +494,26 @@ table.curvedEdges td, table.curvedEdges th {
     color: #ddd;
   }
 
+ .right {
+    float: right;
+    width: 45%;
+
+}
+.left {
+    float: left;
+    width: 45%;
+}
 
 
-
-
-
-
-
+.select_home{
+   background-color: #ffffff;
+  width: 200px;
+   color: #000000;
+  padding:2px 10px;
+  box-shadow: 1px 1px 1px #09380f;
+  overflow: hidden;
+  border-radius: 19px 19px 19px 19px;
+}
 
 
 

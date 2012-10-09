@@ -59,13 +59,16 @@ class Exam < ActiveRecord::Base
      self.questions=@question_paper
     @question_paper.count
   end
-    def self.filtered search
-       if search==""||search.nil?
-         srch=Exam.all(:order => 'id DESC')
-       else
-          search.gsub('+',' ')
-          srch= Exam.where("name like ?","%#{search}%").order('id DESC')
-       end
+  
+  def self.filtered search
+      if search.nil?
+        return @exam=Exam.all
+      end
+       name=by=range=Exam.all(:order => 'created_at DESC')
+       name.select! {|xam| xam.name.include?(search["name"]) }             if  search["name"]!=""
+       by.select! {|xam| xam.created_by.include?(search["by"]) }             if  search["by"]!=""
+       range=Question.where(:created_at => (search[:from].to_date)..(search[:to].to_date))     if search["from"]!="" && search["to"]!=""
+      @exams=name&by&range
   end
-
+    
 end

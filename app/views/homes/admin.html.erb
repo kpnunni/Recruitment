@@ -1,0 +1,314 @@
+<div class="row">
+ <div class="span12 offset0">
+        <h1 align="center" > Suyati Online Recruitment Test</h1>
+
+
+   <table width="100%"   cellpadding="5px" border="0" class="curvedEdges"  ><tr><td width="50%" height="300px"  >
+
+
+     <%= select("search","schedule", ["For today","For this week","For this month"],{},:onchange=>"sh_click()",:class=>"select_home") %>
+
+
+
+     <div id="sh1">
+            <table border="3" width="100%">
+       <tr>
+         <td>
+           <h2>Scheduled Exams</h2>
+
+
+         </td>
+       </tr>
+         <% @schedules1.each {|r|  %>
+         <tr>
+           <td class="lft" >
+             <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
+           </td>
+         </tr>
+     <% } %>
+          </table>
+      </div>
+      <div id="sh7">
+              <table border="3" width="100%">
+       <tr>
+         <td>
+          <h2> Scheduled Exams</h2>
+
+
+         </td>
+       </tr>
+         <% @schedules7.each {|r|  %>
+             <tr>
+               <td class="lft" >
+                 <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
+               </td>
+             </tr>
+         <% } %>
+          </table>
+     </div>
+
+     <div id="sh30">
+              <table border="3" width="100%">
+       <tr>
+         <td>
+          <h2> Scheduled Exams </h2>
+
+
+         </td>
+       </tr>
+         <% @schedules30.each {|r|  %>
+             <tr>
+               <td class="lft" >
+                 <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
+               </td>
+             </tr>
+         <% } %>
+         </table>
+     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   </td><td>
+
+     <%= select("search","result", ["For today","For this week","For this month"],{},:onchange=>"rs_click()",:class=>"select_home") %>
+
+     <div id="rs1">
+   <table border="3" width="100%">
+     <tr>
+       <td>
+        <h2> Results</h2>
+
+
+         </td>
+     </tr>
+     <% @results1.each {|r|  %>
+         <tr>
+           <td class="lft" >
+             <%=link_to  r.candidate.name,recruitment_test_path(r)    %>
+           </td>
+         </tr>
+     <% } %>
+   </table>
+    </div>
+
+     <div id="rs7">
+       <table border="3" width="100%">
+         <tr>
+           <td>
+            <h2> Results</h2>
+
+
+           </td>
+         </tr>
+         <% @results7.each {|r|  %>
+             <tr>
+               <td class="lft" >
+                 <%=link_to  r.candidate.name,recruitment_test_path(r)    %>
+               </td>
+             </tr>
+         <% } %>
+       </table>
+     </div>
+
+
+     <div id="rs30">
+       <table border="3" width="100%">
+         <tr>
+           <td>
+            <h2> Results</h2>
+
+
+           </td>
+         </tr>
+         <% @results30.each {|r|  %>
+             <tr>
+               <td class="lft" >
+                 <%=link_to  r.candidate.name,recruitment_test_path(r)    %>
+               </td>
+             </tr>
+         <% } %>
+       </table>
+     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   </td></tr>
+   <tr><td>
+
+   <table border="3" width="100%">
+     <tr>
+       <td>
+         <h2>Recent Questions</h2>
+        </td>
+     </tr>
+     <% @questions.each {|q|  %>
+         <tr>
+           <td class="lft" >
+             <%=link_to  q.question,'#',:onclick=>"window.open('/questions/#{q.id}','fullscreen=1',true)"    %>
+           </td>
+         </tr>
+     <% } %>
+   </table>
+
+     </td><td>
+
+   <table border="3" width="100%">
+     <tr>
+       <td>
+        <h2> Recent passed candidates</h2>
+        </td>
+     </tr>
+     <% @candidates.each {|c|  %>
+         <tr>
+           <td class="lft" >
+             <%=link_to  c.candidate.name,candidate_path(c.candidate)    %>
+           </td>
+         </tr>
+     <% } %>
+   </table>
+
+   </td></tr></table>
+
+
+ </div>
+</div>
+
+
+
+
+ <script type="text/javascript">
+   function sh_click(){
+
+
+       if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For today")
+      {
+
+        document.getElementById('sh1').style.display="";
+        document.getElementById('sh7').style.display='none';
+        document.getElementById('sh30').style.display='none';
+      }
+       else if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For this week")
+      {
+        document.getElementById('sh7').style.display="";
+        document.getElementById('sh1').style.display='none';
+        document.getElementById('sh30').style.display='none';
+      }
+       else if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For this month")
+      {
+        document.getElementById('sh30').style.display="";
+        document.getElementById('sh7').style.display='none';
+        document.getElementById('sh1').style.display='none';
+      }
+   }
+ </script>
+
+ <script type="text/javascript">
+   function rs_click(){
+
+       if(document.getElementById("search_result").options[document.getElementById("search_result").selectedIndex].text=="For today")
+      {
+        document.getElementById('rs1').style.display="";
+        document.getElementById('rs7').style.display='none';
+        document.getElementById('rs30').style.display='none';
+      }
+       else if(document.getElementById("search_result").options[document.getElementById("search_result").selectedIndex].text=="For this week")
+      {
+        document.getElementById('rs7').style.display="";
+        document.getElementById('rs1').style.display='none';
+        document.getElementById('rs30').style.display='none';
+      }
+       else if(document.getElementById("search_result").options[document.getElementById("search_result").selectedIndex].text=="For this month")
+      {
+        document.getElementById('rs30').style.display="";
+        document.getElementById('rs7').style.display='none';
+        document.getElementById('rs1').style.display='none';
+      }
+
+   }
+ </script>
+
+
+
+
+ <script type="text/javascript">
+    window.onload = function()
+    {
+        document.getElementById('rs7').style.display='none';
+        document.getElementById('rs30').style.display='none';
+        document.getElementById('sh7').style.display='none';
+        document.getElementById('sh30').style.display='none';
+    }
+ </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

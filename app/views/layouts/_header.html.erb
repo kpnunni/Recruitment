@@ -7,9 +7,11 @@
         <ul class="nav pull-right">
           <% @ok= signed_in? && !current_user.has_role?('Candidate') %>
          <%if @ok %>
-
+              <% if current_user.roles.count==13 %>
+              <li><%= link_to "Home",   '/homes/admin' %></li>
+               <% else %>
               <li><%= link_to "Home",   '/homes/index' %></li>
-
+               <% end %>
               <li  class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   My Dashboard <b class="caret"></b>
@@ -32,7 +34,7 @@
                   <% end %>
 
                   <%if current_user.has_role?('Schedule')||current_user.has_role?('Re Schedule')||current_user.has_role?('Cancel Schedule')   %>
-                  <li><%= link_to "Scheduling", '/schedules' %></li>
+                  <li><%= link_to "Schedules", '/schedules' %></li>
                    <% end %>
 
                   <%if current_user.has_role?('Validate Result')||current_user.has_role?('View Result')   %>

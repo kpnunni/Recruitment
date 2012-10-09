@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users=User.filtered(params[:search],current_user.id).paginate(:page => params[:page], :per_page => 20)
+    @users=User.filtered(params[:search],params[:filter],current_user.id).paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -21,6 +21,14 @@ class UsersController < ApplicationController
 
   def create
     @user=User.new(params[:user])
+
+
+      if params[:user][:role_ids].nil?
+        flash[:notice]="Select atleast one role"
+        render action:'new'
+        return
+      end
+
     @user.encrypt_password
 
 
@@ -36,7 +44,11 @@ class UsersController < ApplicationController
 
     @user=User.find(params[:id])
     @user.roles.delete_all
-
+      if params[:user][:role_ids].nil?
+        flash[:notice]="Select atleast one role"
+        render action:'new'
+        return
+      end
 
     if @user.update_attributes(params[:user])
 

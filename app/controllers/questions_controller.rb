@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
+  layout false ,:only => :show
   before_filter :chk_user
- require 'will_paginate/array'
+  require 'will_paginate/array'
 
     def chk_user
     if !current_user.has_role?('Manage Questions')
@@ -14,6 +15,9 @@ class QuestionsController < ApplicationController
         @complexity=Complexity.all
         @category=Category.all
         @types=Type.all
+        @users=User.all
+        @ids=Array.new(@questions.count)
+        @users.select! {|usr| Question.where(:created_by =>usr.user_email).present?}
        respond_to do |format|
           format.html
           format.json { render json: @questions }
@@ -34,9 +38,10 @@ class QuestionsController < ApplicationController
       def new
         @question = Question.new
         @complexity=Complexity.all
-        @category=Category.all
+        @categorys=Category.all
+        @category=Category.new
         @types=Type.all
-        4.times { @question.options.build }
+        5.times { @question.options.build }
         respond_to do |format|
           format.html
           format.json { render json: @question }
@@ -46,6 +51,7 @@ class QuestionsController < ApplicationController
 
       def edit
         @question = Question.find(params[:id])
+        @opt=@question.options.all
         @complexity=Complexity.all
         @category=Category.all
         @types=Type.all
@@ -58,26 +64,23 @@ class QuestionsController < ApplicationController
         @question.created_by =current_user.user_email
         @question.answer_id=""
         @question.type_id=""
+        @complexity=Complexity.all
+        @categorys=Category.all
+        @category=Category.new
+        @types=Type.all
         flag=0
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
         if flag==0
-            @complexity=Complexity.all
-            @category=Category.all
-            @types=Type.all
+            5.times { @question.options.build }
             flash[:notice]="atleast one option should be true"
             render action: "new"
             return
         end
         respond_to do |format|
           if @question.save
-
-              format.html { redirect_to question_path(@question) , notice: 'Question was successfully created.' }
-              format.json { render json: @question, status: :created, location: new_question_category_path  }
-
+              format.html { redirect_to questions_path , notice: 'Question was successfully created.' }
           else
-            @complexity=Complexity.all
-            @category=Category.all
-            @types=Type.all
+            5.times { @question.options.build }
             format.html { render action: "new" }
             format.json { render json: @question.errors, status: :unprocessable_entity }
           end
@@ -87,12 +90,14 @@ class QuestionsController < ApplicationController
 
       def update
         @question = Question.find(params[:id])
+        params[:question][:update_by]=current_user.user_email
         flag=0
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
         if flag==0
             @complexity=Complexity.all
             @category=Category.all
             @types=Type.all
+            @opt=@question.options.all
             flash[:notice]="atleast one option should be true"
             render action: "new"
             return
@@ -100,12 +105,13 @@ class QuestionsController < ApplicationController
         respond_to do |format|
           if @question.update_attributes(params[:question])
             @question.options.first.save
-            format.html { redirect_to @question, notice: 'Question was successfully updated.' }
+            format.html { redirect_to questions_path , notice: 'Question was successfully updated.' }
             format.json { head :no_content }
           else
             @complexity=Complexity.all
             @category=Category.all
             @types=Type.all
+            @opt=@question.options.all
             format.html { render action: "edit" }
             format.json { render json: @question.errors, status: :unprocessable_entity }
           end
@@ -122,4 +128,11 @@ class QuestionsController < ApplicationController
           format.json { head :no_content }
         end
       end
+
+  def delete_all
+     params[:to_delete].each do |k,v|
+        Question.find(k.to_i).delete if v.to_i==1
+     end
+    redirect_to questions_path
+  end
 end

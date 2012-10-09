@@ -2,24 +2,35 @@
   <h3 align="right"><%= link_to image_tag('add.png'), new_exam_path, :class=>"dropt", :title=>"add new exam"  %></h3>
   <div class="span12 offset0"><h1>Exams</h1>
 
-
-
        <form class="filter_form">
 
             <table  cellpadding="5" align="right"  >
               <tr>
+                <th>Created by:</th>
+                <th>From:</th>
+                <th>To:</th>
                 <th>Name:</th>
+                </tr>
+                <tr>
+                <% if params[:search].nil?  %>
 
+                    <td><%= select("search","by", @users.collect {|s|
+                    s.user_email }, { :include_blank => true}) %></td>
+                   <td><%= calendar_date_select_tag  "search[from]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+                   <td><%= calendar_date_select_tag  "search[to]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+                    <td align="right" ><%= text_field_tag "search[name]" , params[:search] %></td>
 
-
-
-                <% if !params[:search].nil?  %>
-                    <td align="right" ><%= text_field_tag "search" , params[:search] %></td>
                 <% else  %>
-                    <td align="right" ><%= text_field_tag "search"  %></td>
+                    <td><%= select("search","by", @users.collect {|s|
+                    s.user_email }, { :include_blank => true,:selected =>params[:search][:by]}) %><br />
+                  </td>
+
+                    <td><%= calendar_date_select_tag "search[from]",params[:search]["from"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+                    <td><%= calendar_date_select_tag  "search[to]",params[:search]["to"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+                    <td align="right" ><%= text_field_tag "search[name]",params[:search][:name]  %></td>
                 <% end  %>
 
-                <td class="dropt" title="search" ><%=image_submit_tag 'find.png' , :class => 'search' %></td>
+                <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
 
 
                 </tr>

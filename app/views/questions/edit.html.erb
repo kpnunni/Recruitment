@@ -17,6 +17,11 @@
       </ul>
     </div>
   <% end %>
+
+
+        Last modified by:<%=@question.updated_by   %> <br/>  <br/>
+        Last modified at:<%=@question.updated_at.strftime("%b %d %A,%Y at %I:%M%p")    %> <br/>  <br/>
+
                       <div id='flash-notice' style="color: #8b161a;" ><%= flash[:notice] %> </div>
 
         <table>
@@ -46,18 +51,23 @@
           <tr>
             <th>Options</th>
             <th>is right option?</th>
+            <th></th>
           </tr>
+          <% i=-1 %>
         <%= f1.fields_for :options do |op| %>
               <tr>
-
+             <% i+=1 %>
            <td><%= op.text_field :option %></td>
            <td><%= op.check_box :is_right %></td>
+            <td><%= link_to image_tag('delete.png') , question_option_path(@question,@opt[i].id) ,:method =>  :delete,data: {confirm: 'are you sure'}  %></td>
+
               </tr>
 
         <% end %>
 
         </table>
-
+         <%= link_to  image_tag('addc.png'), new_question_option_path(@question),:title=>"Add one more option" %>
+         <br />
         <%= f1.submit "Update",class: "btn btn-large btn-primary"%>
     <% end %>
       <br /><%= link_to  image_tag('back.png')  ,questions_path %>

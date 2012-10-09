@@ -1,6 +1,16 @@
  <div class="row">
   <div class="span10 offset0">
         <h1>Edit Exam</h1>
+
+    <div id="new_instruction1" class="right" >
+    <%= form_for @instruction   do |f1| %>
+        <b>New Instruction</b><br />
+        <%= f1.text_field :instruction%>
+
+        <%= f1.submit "Add" ,class: "btn btn-large btn-primary",:name=>"by",:value=>"add" %><br />
+    <% end %>
+     </div>
+   <div class="left">
     <%= form_for @exam  do |f| %>
 
 
@@ -32,7 +42,10 @@
             <%= check_box_tag "exam[instruction_ids][]", instruction.id, @exam.instructions.include?(instruction)   %>
             <%= instruction.instruction %>
         <% end %>
+
         <br />
+                <%#= link_to 'new_instruction?' , '#',:onclick=>"show_instruction()"  %>   <br />   <br />
+
         <%= f.label :Complexity %>    <br />
         <%= f.select("complexity_id", Complexity.all.collect {|s|
          [s.complexity, s.id ] }, { :include_blank => false, :selected =>
@@ -68,6 +81,33 @@
         <%= f.submit "Update" ,class: "btn btn-large btn-primary" %>
 
     <% end %>
-      <br /><%= link_to image_tag('back.png') ,exams_path %>
+     <br /><%= link_to image_tag('back.png') ,exams_path %>
+
+   </div>
   </div>
 </div>
+
+
+
+  <script type="text/javascript">
+   function show_instruction()
+   {
+
+       document.getElementById('new_instruction1').toggle();
+   }
+ </script>
+ <script type="text/javascript">
+    window.onload = function()
+    {
+        document.getElementById('new_instruction1').style.display='none';
+    }
+ </script>
+
+
+
+
+
+
+
+
+
