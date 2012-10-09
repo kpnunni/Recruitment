@@ -26,19 +26,26 @@ class SessionsController < ApplicationController
     end
     user = User.find_by_user_email(params[:session][:email])
     login_password=params[:session][:password]
+    if  user.nil?
+        flash[:notice ] = "user doesn't exist"
+        render "new"
+        return
+    end
 
-    if user!=nil
-      login_password=Digest::SHA2.hexdigest("#{user.salt}--#{login_password}")
+    login_password=Digest::SHA2.hexdigest("#{user.salt}--#{login_password}")
 
-  #  render :text => User.find(session[:remember_token]).userEmail
-
-      if ( user.password==login_password && user.isAlive== true && user.isDelete== false  )
+      if !(user.password==login_password && user.isAlive== true && user.isDelete== false)
+        flash[:notice ] = "Invalid password/not alive"
+        render "new"
+        return
+      end
 
         if params[:session][:remember]=="0"
           cookies[:remember_token] = user.remember_token
         else
           cookies[:remember_token] = { :value => user.remember_token, :expires => 7.days.from_now }
         end
+
         if user.has_role?('Candidate')&&!user.candidate.schedule.nil?
                sign_in user
                redirect_to candidate_detail_answers_path
@@ -49,20 +56,11 @@ class SessionsController < ApplicationController
                  user.has_role?('Re Schedule')||user.has_role?('Cancel Schedule')||user.has_role?('Validate Result')||user.has_role?('Manage Templates')||user.has_role?('View Result')
           sign_in user
           redirect_to '/homes/index'
-        end
-      elsif user.has_role?('Candidate')
-        flash[:notice ] = 'You cant login again. Contact admin.'
-        render "new"
       else
-        flash[:notice ] = 'Invalid email/password combination'
+        flash[:notice ] = 'You cant login. Contact admin.'
         render "new"
       end
-    else
-        flash[:notice ] = 'email address not present'
-        render "new"
-      end
-
-  end
+ end
 
   def destroy
     sign_out
