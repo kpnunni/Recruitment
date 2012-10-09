@@ -64,7 +64,7 @@ validates :login_password, :presence => true,
      def self.filtered(search,filter,id)
        filt=User.all(:order => 'created_at DESC')
        if !(filter.nil?||filter[:type]=="")
-          filt.select! {|v| v.isAlive==filter[:type].to_i }
+          filt.select! {|v| v.isAlive==(filter[:type].to_i==1) }
        end
 
        if search==""||search.nil?
