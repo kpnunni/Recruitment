@@ -82,6 +82,7 @@
      <br/><br/><br/><br/><br/>
     <div id='flash-notice' style="color: #0a7113;" ><%= flash[:notice] %> </div>
 
+    <br /> <%= button_to "Delete selected",delete_all_questions_path(:id=>33) %>
 
 
     <%= form_tag("/questions/delete_all", :method => "post") do  %>
@@ -115,7 +116,6 @@
       <% end %>
     </table>
 
-        <br /> <%= button_to "Delete selected",delete_all_questions_path(:id=>33) %>
     <% end %>
      <h4><%= will_paginate @questions ,:container=>false %></h4>
        <%= link_to (image_tag 'category.png'),categories_path ,:title=>"Manage Categories" %>

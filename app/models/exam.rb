@@ -67,7 +67,7 @@ class Exam < ActiveRecord::Base
        name=by=range=Exam.all(:order => 'created_at DESC')
        name.select! {|xam| xam.name.include?(search["name"]) }             if  search["name"]!=""
        by.select! {|xam| xam.created_by.include?(search["by"]) }             if  search["by"]!=""
-       range=Question.where(:created_at => (search[:from].to_date)..(search[:to].to_date))     if search["from"]!="" && search["to"]!=""
+       range=Exam.where(:created_at => (search[:from].to_date)..(search[:to].to_date))     if search["from"]!="" && search["to"]!=""
       @exams=name&by&range
   end
     

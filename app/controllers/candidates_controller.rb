@@ -38,6 +38,8 @@ class CandidatesController < ApplicationController
      #   UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
         redirect_to candidate_path(@candidate)
       else
+         2.times{@candidate.experiences.build }
+         2.times{@candidate.qualifications.build }
          render action: "new"
       end
   end
@@ -77,6 +79,8 @@ class CandidatesController < ApplicationController
 
   def new
       @candidate=Candidate.new
+      2.times{@candidate.experiences.build }
+      2.times{@candidate.qualifications.build }
       @candidate.build_user
       respond_to do |format|
         format.html # new.html.erb
