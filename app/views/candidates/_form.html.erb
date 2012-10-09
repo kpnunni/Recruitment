@@ -22,11 +22,11 @@
         <%= op.label :Email %>
         <%= op.text_field :user_email ,:value=>"" %>
 
-        <%= op.label :password %>
-        <%= op.password_field :login_password ,:value=>""%>
 
-        <%= op.label :confirm_Password %>
-        <%= op.password_field :login_password_confirmation %>
+        <%= op.password_field :login_password ,:value=>"12345",:style=>"display: none"%>
+
+
+        <%= op.password_field :login_password_confirmation,:value=>"12345" ,:style=>"display: none"%>
 
 
         <% end %>

@@ -130,6 +130,7 @@ class QuestionsController < ApplicationController
       end
 
   def delete_all
+
     if !params[:to_delete].nil?
      params[:to_delete].each do |k,v|
         Question.find(k.to_i).delete if v.to_i==1
