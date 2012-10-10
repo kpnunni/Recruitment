@@ -42,6 +42,8 @@
         <%= f1.label :Question %>
         <%= f1.text_area  :question, :rows=>5 ,:class=>"quest"%>
 
+
+        <%=link_to  image_tag(@question.question_image.url(:original)),'#' %>
         <%= f1.label :question_image  %>
         <%= f1.file_field :question_image %>
 

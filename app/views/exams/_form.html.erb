@@ -47,10 +47,9 @@
 
         <%= link_to 'new_instruction?' , '#',:onclick=>"show_instruction()"  %>   <br />   <br />
         <%= f.label :Complexity %>
-        <%= f.select("complexity_id",
-         [["low",1],["high",2],["medium",3],["default",4]] , { :include_blank => false, :selected =>
+        <%= f.select("complexity_id", Complexity.all.collect {|s|
+         [s.complexity, s.id ] }, { :include_blank => false, :selected =>
         @exam.complexity_id}) %>
-
 
 
       <table border="3" >
