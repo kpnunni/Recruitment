@@ -22,9 +22,13 @@ class UserMailer < ActionMailer::Base
     @pass=Template.find(4)
     @fail=Template.find(5)
     @user = user
+     @url  = "http://recruitment-suyati.herokuapp.com"
     mail(:to => user.user_email, :subject => "Recruitment test result")
   end
-
+  def exam_complete_email(user)
+    @user = user
+    mail(:to => user.user_email, :subject => "Result for validation")
+  end
   def cancel_schedule_email(user,schedule)
     @content=Template.find(3)
     @user = user

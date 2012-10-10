@@ -25,7 +25,7 @@
                   <li><%= link_to "Candidates", '/candidates' %></li>
                   <% end %>
 
-                  <%if current_user.has_role?('Manage Questions')   %>
+                  <%if current_user.has_role?('Manage Questions') ||current_user.has_role?('Add Questions')  %>
                   <li><%= link_to "Question Bank",  '/questions' %></li>
                    <% end %>
 

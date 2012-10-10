@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+
+
+    <p>
+      The following is the test:<br />
+       <%= @user.schedule.exam.name    %>  </p>
+      <p> result for the candidate: <%= @user.name    %> , mobile <%= @user.phone1   %>  </p>
+   <p> Test Score: in % <%= @user.recruitment_test.mark_percentage     %> </p>
+   <p> Click here<%= @url %>   to view/validate results  </p>
+   <p> Thanks,
+    Suyati HR Team.
+    </p>
+
+  </body>
+</html>

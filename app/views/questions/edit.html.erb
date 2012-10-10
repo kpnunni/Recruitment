@@ -1,6 +1,6 @@
 <h1>Editing Question</h1>
 <div class="row">
-  <div class="span10 offset0">
+  <div class="span12 offset0">
 
 
 <%= form_for  (@question ) do |f1| %>
@@ -40,7 +40,7 @@
         </table>
 
         <%= f1.label :Question %>
-        <%= f1.text_area  :question, :rows=>5 %>
+        <%= f1.text_area  :question, :rows=>5 ,:class=>"quest"%>
 
         <%= f1.label :Allowed_time %>
         <%= f1.text_field :allowed_time,   :class => "text_box" %>(in sec)

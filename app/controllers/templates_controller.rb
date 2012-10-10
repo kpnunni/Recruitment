@@ -6,7 +6,7 @@ class TemplatesController < ApplicationController
   def update
     @template=Template.find(params[:id])
     if @template.update_attributes(params[:template])
-       redirect_to root_path , notice: 'Candidate was successfully updated.'
+       redirect_to root_path
     else
        render action: "show"
      end

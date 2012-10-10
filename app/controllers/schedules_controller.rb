@@ -35,6 +35,7 @@ class SchedulesController < ApplicationController
       format.html 
       format.json { render json: @schedules }
     end
+
   end
 
 

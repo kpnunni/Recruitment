@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   require 'will_paginate/array'
 
     def chk_user
-    if !current_user.has_role?('Manage Questions')
+    if !current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')
       redirect_to '/homes/index'
     end
     end
@@ -12,7 +12,10 @@ class QuestionsController < ApplicationController
       def index
         @questions= Question.filtered(params[:search],params[:srch]).paginate(:page => params[:page], :per_page => 15)
  #       @questions=Question.paginate(:page => params[:page], :per_page => 10)
-        @complexity=Complexity.all
+        if current_user.has_role?('Add Questions')&&!current_user.has_role?('Manage Questions')
+          @questions.select! {|q| q.created_by==current_user.user_email}
+        end
+        @complexity=Complexity.first(3)
         @category=Category.all
         @types=Type.all
         @users=User.all
@@ -37,7 +40,7 @@ class QuestionsController < ApplicationController
 
       def new
         @question = Question.new
-        @complexity=Complexity.all
+        @complexity=Complexity.first(3)
         @categorys=Category.all
         @category=Category.new
         @types=Type.all
@@ -52,7 +55,7 @@ class QuestionsController < ApplicationController
       def edit
         @question = Question.find(params[:id])
         @opt=@question.options.all
-        @complexity=Complexity.all
+        @complexity=Complexity.first(3)
         @category=Category.all
         @types=Type.all
 
@@ -64,7 +67,7 @@ class QuestionsController < ApplicationController
         @question.created_by =current_user.user_email
         @question.answer_id=""
         @question.type_id=""
-        @complexity=Complexity.all
+        @complexity=Complexity.first(3)
         @categorys=Category.all
         @category=Category.new
         @types=Type.all
@@ -94,7 +97,7 @@ class QuestionsController < ApplicationController
         flag=0
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
         if flag==0
-            @complexity=Complexity.all
+            @complexity=Complexity.first(3)
             @category=Category.all
             @types=Type.all
             @opt=@question.options.all
