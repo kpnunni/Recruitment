@@ -152,4 +152,11 @@ class QuestionsController < ApplicationController
     end
     redirect_to questions_path
   end
+
+  def delete_image
+    @question=Question.find(params[:id])
+    @question.question_image.clear
+    @question.save
+    redirect_to edit_question_path(@question)
+  end
 end

@@ -42,8 +42,10 @@
         <%= f1.label :Question %>
         <%= f1.text_area  :question, :rows=>5 ,:class=>"quest"%>
 
+        <% if !@question.question_image.to_s.include?("missing.png") %>
+        <%=link_to  image_tag(@question.question_image.url(:original)),delete_image_question_path(@question),:title => "delete"   %>
+        <% end %>
 
-        <%=link_to  image_tag(@question.question_image.url(:original)),'#' %>
         <%= f1.label :question_image  %>
         <%= f1.file_field :question_image %>
 

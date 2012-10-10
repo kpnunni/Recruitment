@@ -7,7 +7,12 @@ Test::Application.routes.draw do
   resources :questions do
      collection do
       post :delete_all
+     end
+    member  do
+     get :delete_image
+
     end
+
     resources :options
   end
   resources :exams do
