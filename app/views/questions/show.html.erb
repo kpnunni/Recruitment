@@ -2,7 +2,7 @@
       <div class="span12 offset0">
      <b>Question:</b>
      <%=  @question.question %><br /><br />
-
+       <%= image_tag @question.question_image.url(:original) %>
         <table  border="3" width="75%"   >
           <tr>
             <th>options:</th>

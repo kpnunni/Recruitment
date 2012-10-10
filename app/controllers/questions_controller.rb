@@ -72,6 +72,11 @@ class QuestionsController < ApplicationController
         @category=Category.new
         @types=Type.all
         flag=0
+        if params[:question][:question]==""&&params[:question][:question_image].nil?
+            flash[:notice]="Question or image should not be blank"
+            render action: "new"
+            return
+        end
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
         if flag==0
             5.times { @question.options.build }
@@ -93,14 +98,20 @@ class QuestionsController < ApplicationController
 
       def update
         @question = Question.find(params[:id])
-        params[:question][:update_by]=current_user.user_email
+        params[:question][:updated_by]=current_user.user_email
+        @complexity=Complexity.first(3)
+        @category=Category.all
+        @types=Type.all
+        @opt=@question.options.all
         flag=0
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
+        if params[:question][:question]==""&&params[:question][:question_image].nil?
+            flash[:notice]="Question or image should not be blank"
+            render action: "edit"
+            return
+        end
         if flag==0
-            @complexity=Complexity.first(3)
-            @category=Category.all
-            @types=Type.all
-            @opt=@question.options.all
+
             flash[:notice]="atleast one option should be true"
             render action: "new"
             return

@@ -29,7 +29,9 @@
 
         <div class="qfont">
 
-        <b><%=@answer.q_no%>.</b><%= @answer.question.question %><br />
+        <b><%=@answer.q_no%>.</b>
+          <%= @answer.question.question %><br />
+           <%= image_tag @question.question_image.url(:original) %><br />
          <br />
         </div>
         <table cellpadding="5"  >

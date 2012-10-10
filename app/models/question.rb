@@ -1,7 +1,7 @@
 class Question < ActiveRecord::Base
   attr_accessor :to_delete
-  attr_accessible :updated_by,:to_delete,:options_attributes,:question, :allowed_time, :created_by, :complexity_id,:category_id, :type_id,:answer
-   validates :question, :allowed_time,:presence =>true
+  attr_accessible :question_image, :updated_by,:to_delete,:options_attributes,:question, :allowed_time, :created_by, :complexity_id,:category_id, :type_id,:answer,:question_image_file_name,:question_image_content_type,:question_image_file_size
+   validates :allowed_time,:presence =>true
    validates_numericality_of :allowed_time, :only_integer => true , :in => 21..30
    validates_inclusion_of :allowed_time, :in => 10..200, :message => "can only be between 10 and 200."
    belongs_to :category
@@ -10,6 +10,7 @@ class Question < ActiveRecord::Base
    has_many :answers ,:dependent => :destroy
    has_many :options  ,:dependent => :destroy
    has_and_belongs_to_many :exams
+   has_attached_file :question_image
    accepts_nested_attributes_for :options, :allow_destroy => true,:reject_if => proc { |attributes| attributes['option'].blank? }
 
    accepts_nested_attributes_for :answers

@@ -44,6 +44,9 @@
         <%= f1.label :Question %>
         <%= f1.text_area  :question, :rows=>5,:class=>"quest" %>
 
+        <%= f1.label :question_image  %>
+        <%= f1.file_field :question_image %>
+
         <%= f1.label :Allowed_time %>
         <%= f1.text_field :allowed_time , :value=>30,   :class => "text_box" %>(in sec)
 

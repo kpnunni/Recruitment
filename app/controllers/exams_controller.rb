@@ -69,7 +69,7 @@ class ExamsController < ApplicationController
     end
 
     if @exam.no_of_question!=@q_count
-       flash[:notice]="Not enough questions (category wise/complexity wise)"
+       flash[:notice]="Not enough questions (category wise/complexity wise).do you wish to schedule it for 'default' level instead of other complexity?"
        render 'new'
        return
     end
