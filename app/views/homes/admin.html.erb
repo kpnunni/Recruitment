@@ -183,10 +183,6 @@
 
 
 
-
-
-
-
    </td></tr>
    <tr><td>
 
@@ -199,7 +195,7 @@
      <% @questions.each {|q|  %>
          <tr>
            <td class="lft" >
-             <%=link_to  q.question,'#',:onclick=>"window.open('/questions/#{q.id}','fullscreen=1',true)"    %>
+             <%=link_to  q.question,'#',:onclick=>"window.open('/questions/#{q.id}','Question Details','location=1,status=0,scrollbars=1,width=300,height=400',true)"    %>
            </td>
          </tr>
      <% } %>
@@ -300,11 +296,11 @@
 
 
 
-
-
-
-
-
+    <script>
+  $(document).ready(function() {
+    $("#dialog").dialog();
+  });
+  </script>
 
 
 
