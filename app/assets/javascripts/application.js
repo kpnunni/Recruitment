@@ -10,10 +10,11 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require bootstrap
 //= require jquery.js
 //= require jquery_ujs.js
 //= require prototype
+//= require bootstrap
+
 //= require_tree .
 
 var a,b
@@ -49,5 +50,4 @@ function openFrameless(){
         window.onunload = function(){NFW.close()}
     }
 }
-
 
