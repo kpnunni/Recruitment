@@ -31,8 +31,10 @@
 
         <b><%=@answer.q_no%>.</b>
           <%= @answer.question.question %><br />
+          <% if !@answer.question.question_image.to_s.include?("missing.png") %>
            <%= image_tag @answer.question.question_image.url(:original) %><br />
-         <br />
+          <% end %>
+          <br />
         </div>
         <table cellpadding="5"  >
 
