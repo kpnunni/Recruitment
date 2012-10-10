@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="span10 offset0">
+  <div class="span12 offset0">
 
     <h1>
     <%= image_tag 'welcome.png' %>
@@ -11,13 +11,7 @@
     <%= @candidate.name %>,
 
     please fill your details,</h3> </FONT>
-    <div id='flash-notice'   ><%= flash[:notice] %> </div>
-
-
-
-
-
-
+     <div id='flash-notice' style="color: #8b161a;" ><b><%= flash[:notice] %></b></div>
 
     <% if @candidate.errors.any? %>
         <div id="error_explanation">
@@ -33,89 +27,83 @@
 
     <br/>
     <%= form_for @candidate do |f|%>
+       <table width="75%" >
+         <tr>
+           <td class="rght" >
+                Address<%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+                 <%= f.text_area  :address , :rows=>5%>
+           </td>
+           <td class="rght" >
+                Phone no 1<%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+                <%= f.text_field :phone1 %> <br/>
+                Phone no 2
+                <%= f.text_field :phone2 %> <br/>
+               Technology <%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+               <%= f.text_field :technology %>
+           </td>
 
+         </tr>
 
-
-
-        <%= f.label :address %>
-        <%= f.text_area  :address , :rows=>5%>
-
-        <%= f.label :phone_no_1 %>
-        <%= f.text_field :phone1 %>
-
-        <%= f.label :phone_no_2 %>
-        <%= f.text_field :phone2 %>
-
-        <%= f.label :technology %>
-        <%= f.text_field :technology %>
-
-        <%= f.label :certification %>
-        <%= f.text_field :certification %>
-
-        <%= f.label :skills %>
-        <%= f.text_field :skills %>
-
-
-
-
-
-        <br /><br />
-        <%if !@candidate.experiences.empty? %>
+         <tr>
+           <td class="rght" >
+                Certification <%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+                <%= f.text_field :certification %>
+           </td>
+           <td class="rght" >
+                Skills <%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+                <%= f.text_field :skills %>
+           </td>
+         </tr>
+        </table>
+        <br />
         <h3>Experiences</h3>
-            <% end %>
-        <%= f.fields_for :experiences  do |op| %>
 
-        <%= op.label :from_date %>
-        <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force %>
+        <table border="1"  width="100%"  >
+          <tr>
+            <th>from_date<%= image_tag 'mandatory.png',:title=>"mandatory" %></th>
+            <th>to_date<%= image_tag 'mandatory.png',:title=>"mandatory"  %></th>
+            <th>experience_in<%= image_tag 'mandatory.png',:title=>"mandatory"  %></th>
+            <th>experience_from</th>
 
+          </tr>
+          <%= f.fields_for :experiences  do |op| %>
+              <tr>
+                <td><%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>                </td>
+                <td><%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>                </td>
+                <td><%= op.text_field :experience_in ,:class=>"text_box3"%></td>
+                <td><%= op.text_field :experience_from,:class=>"text_box3" %></td>
 
-        <%= op.label :to_date %>
-        <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force %>
-
-
-        <%= op.label :experience_in %>
-        <%= op.text_field :experience_in %>
-
-        <%= op.label :experience_from %>
-        <%= op.text_field :experience_from %>
-
-
-
-        <% end %>
-        <%if !@candidate.qualifications.empty? %>
-        <br /><br />
-        <h3>Qualifications:</h3>
-        <% end %>
-        <%= f.fields_for :qualifications  do |op| %>
-
-        <%= op.label :qualification_in %>
-        <%= op.text_field :qualification_in %>
-
-        <%= op.label :qualification_from %>
-        <%= op.text_field :qualification_from %>
-
-        <%= op.label :from_date %>
-        <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force %>
+              </tr>
+          <% end %>
+        </table>
 
 
-        <%= op.label :to_date %>
-        <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force %>
+        <br /><h3>Qualifications</h3>
+
+        <table border="1"   width="100%" >
+          <tr>
+            <th>qualification_in<%= image_tag 'mandatory.png',:title=>"mandatory"  %></th>
+            <th>qualification_from</th>
+            <th>from_date<%= image_tag 'mandatory.png',:title=>"mandatory"  %></th>
+            <th>to_date<%= image_tag 'mandatory.png',:title=>"mandatory"  %></th>
+            <th>mark_percentage</th>
+            <th>comments</th>
 
 
-        <%= op.label :mark_percentage %>
-        <%= op.text_field :mark_percentage %>
+          </tr>
+          <%= f.fields_for :qualifications  do |op| %>
+              <tr>
+                <td><%= op.text_field :qualification_in,:class=>"text_box3" %></td>
+                <td><%= op.text_field :qualification_from,:class=>"text_box3" %></td>
+                <td><%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force,:class=>"text_box3" %></td>
+                <td><%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%></td>
+                <td><%= op.text_field :mark_percentage,:class=>"text_box3" %></td>
+                <td><%= op.text_field :comments ,:class=>"text_box3"%></td>
+              </tr>
+          <% end %>
+        </table>
 
-        <%= op.label :comments %>
-        <%= op.text_field :comments %>
-
-
-        <% end %>
-
-
-
-
-
-
+        <br /> <br />
 
 
 

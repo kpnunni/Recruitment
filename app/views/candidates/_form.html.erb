@@ -16,12 +16,13 @@
       </ul>
     </div>
   <% end %>
-
+        <table width="75%" >
+         <tr>
        <%= f.fields_for :user do |op| %>
-
-        <%= op.label :Email %>
+       <td class="rght" >
+         Email:<%= image_tag 'mandatory.png' %>
         <%= op.text_field :user_email ,:value=>"" %>
-
+       </td>
 
         <%= op.password_field :login_password ,:value=>"12345",:style=>"display: none"%>
 
@@ -30,28 +31,39 @@
 
 
         <% end %>
+         <td class="rght" >
+              Name:<%= image_tag 'mandatory.png' %>
+              <%= f.text_field   :name  %>
+            </td>
+         </tr>
 
+          <tr>
+            <td class="rght" >
+              Address:
+              <%= f.text_area  :address , :rows=>5%>
+            </td>
+            <td class="rght" >
+              Phone no 1:
+              <%= f.text_field :phone1 %> <br/>
+              Phone no 2:
+              <%= f.text_field :phone2 %> <br/>
+              Technology:
+              <%= f.text_field :technology %>
+            </td>
 
-        <%= f.label :name %>
-        <%= f.text_field :name %>
+          </tr>
 
-        <%= f.label :address %>
-        <%= f.text_area  :address ,  :rows=>"3"%>
-
-        <%= f.label :phone_no_1 %>
-        <%= f.text_field :phone1 %>
-
-        <%= f.label :phone_no_2 %>
-        <%= f.text_field :phone2 %>
-
-        <%= f.label :technology %>
-        <%= f.text_field :technology %>
-
-        <%= f.label :certification %>
-        <%= f.text_field :certification %>
-
-        <%= f.label :skills %>
-        <%= f.text_field :skills %>
+          <tr>
+            <td class="rght" >
+              Certification:
+              <%= f.text_field :certification %>
+            </td>
+            <td class="rght" >
+              Skills:
+              <%= f.text_field :skills %>
+            </td>
+          </tr>
+        </table>
 
         <%= f.label :resume  %>
         <%= f.file_field :resume %>
@@ -61,9 +73,9 @@
 
         <table border="3" width="100%"  >
           <tr>
-            <th>from_date</th>
-            <th>to_date</th>
-            <th>experience_in</th>
+            <th>from_date<%= image_tag 'mandatory.png' %></th>
+            <th>to_date<%= image_tag 'mandatory.png' %></th>
+            <th>experience_in<%= image_tag 'mandatory.png' %></th>
             <th>experience_from</th>
 
           </tr>
@@ -83,10 +95,10 @@
 
         <table border="3" width="100%" >
           <tr>
-            <th>qualification_in</th>
+            <th>qualification_in<%= image_tag 'mandatory.png' %></th>
             <th>qualification_from</th>
-            <th>from_date</th>
-            <th>to_date</th>
+            <th>from_date<%= image_tag 'mandatory.png' %></th>
+            <th>to_date<%= image_tag 'mandatory.png' %></th>
             <th>mark_percentage</th>
             <th>comments</th>
 

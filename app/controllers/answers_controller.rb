@@ -14,7 +14,10 @@ class AnswersController < ApplicationController
         @answer.save
       end
      end
-    @ans=Answer.where("candidate_id=?",@candidate.id ).first
+    @anss=Answer.where("candidate_id=?",@candidate.id )
+     min=@anss.first.id
+     @anss.each{|v| min=v.id if v.id<min}
+     @ans=Answer.find(min)
      @c_option=Array.new(@ans.question.options.count)
      redirect_to answer_path(@ans.id)
 
@@ -65,6 +68,8 @@ class AnswersController < ApplicationController
 
   def candidate_detail
       @candidate=current_user.candidate
+      2.times{@candidate.experiences.build }    if @candidate.experiences.count==0
+      2.times{@candidate.qualifications.build }  if @candidate.qualifications.count==0
 
   end
   def candidate_update
@@ -72,6 +77,8 @@ class AnswersController < ApplicationController
       if @candidate.update_attributes(params[:candidate])
           redirect_to instructions_answer_path
       else
+        2.times{@candidate.experiences.build }   if @candidate.experiences.first.id.present?
+        2.times{@candidate.qualifications.build }  if @candidate.qualifications.count==0
         render 'answers/candidate_detail'
       end
   end

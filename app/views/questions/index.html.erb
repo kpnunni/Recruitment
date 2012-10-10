@@ -109,7 +109,7 @@
             <td><%= question.allowed_time %></td>
             <td><%= question.created_by %></td>
             <td><%= question.category.category %></td>
-            <td class="dropt" title="detail"  ><%= link_to  image_tag('show.png'), '#',:onclick=>"window.open('/questions/#{question.id}','fullscreen=1',true)" %></td>
+            <td class="dropt" title="detail"  ><%= link_to  image_tag('show.png'), '#',:onclick=>"window.open('/questions/#{question.id}','Question Details','location=1,status=1,scrollbars=1,width=300,height=400',true)" %></td>
             <td class="dropt" title="edit"  ><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
            </tr>
       <% end %>
@@ -118,7 +118,7 @@
         <br /> <%= button_to "Delete selected",delete_all_questions_path(:id=>33) %>
     <% end %>
      <h4><%= will_paginate @questions ,:container=>false %></h4>
-       <%= link_to (image_tag 'category.png'),categories_path  %>
+       <%= link_to (image_tag 'category.png'),categories_path,:title=>"Manage Categories"  %>
   </div>
 </div>
 

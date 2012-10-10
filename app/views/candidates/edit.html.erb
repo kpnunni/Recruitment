@@ -20,35 +20,54 @@
     </div>
   <% end %>
 
-        <%= f.fields_for :user do |op| %>
+        <table width="75%" >
+          <tr>
+            <%= f.fields_for :user do |op| %>
+                <td class="rght" >
+                  Email:<%= image_tag 'mandatory.png' %>
+                  <%= op.text_field :user_email   %>
+                </td>
 
-        <%= op.label :Email %>
-        <%= op.text_field :user_email %>
-
-        <% end %>
+                <%= op.password_field :login_password ,:value=>"12345",:style=>"display: none"%>
 
 
-        <%= f.label :name %>
-        <%= f.text_field :name %>
+                <%= op.password_field :login_password_confirmation,:value=>"12345" ,:style=>"display: none"%>
 
-        <%= f.label :address %>
-        <%= f.text_area  :address , :rows=>"3"%>
 
-        <%= f.label :phone_no_1 %>
-        <%= f.text_field :phone1 %>
+            <% end %>
+            <td class="rght" >
+              Name:<%= image_tag 'mandatory.png' %>
+              <%= f.text_field   :name  %>
+            </td>
+          </tr>
 
-        <%= f.label :phone_no_2 %>
-        <%= f.text_field :phone2 %>
+          <tr>
+            <td class="rght" >
+              Address:
+              <%= f.text_area  :address , :rows=>5%>
+            </td>
+            <td class="rght" >
+              Phone no 1:
+              <%= f.text_field :phone1 %> <br/>
+              Phone no 2:
+              <%= f.text_field :phone2 %> <br/>
+              Technology:
+              <%= f.text_field :technology %>
+            </td>
 
-        <%= f.label :technology %>
-        <%= f.text_field :technology %>
+          </tr>
 
-        <%= f.label :certification %>
-        <%= f.text_field :certification %>
-
-        <%= f.label :skills %>
-        <%= f.text_field :skills %>
-
+          <tr>
+            <td class="rght" >
+              Certification:
+              <%= f.text_field :certification %>
+            </td>
+            <td class="rght" >
+              Skills:
+              <%= f.text_field :skills %>
+            </td>
+          </tr>
+        </table>
         <br />
         <h3>Experiences</h3>
 

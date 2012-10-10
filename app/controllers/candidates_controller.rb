@@ -48,11 +48,20 @@ class CandidatesController < ApplicationController
     @candidate=Candidate.find(params[:id])
 
       if params[:from]=="update"
+              if params[:candidate][:address]==""||params[:candidate][:phone1]==""||params[:candidate][:technology]==""||params[:candidate][:certification]==""||params[:candidate][:skills]==""
+                 2.times{@candidate.experiences.build }   if @candidate.experiences.count==0
+                 2.times{@candidate.qualifications.build }  if @candidate.qualifications.count==0
+                 flash[:notice]="You should fill all mandatory fields"
+                 render  '/answers/candidate_detail'
+              return
+              end
               if @candidate.update_attributes(params[:candidate])
                  if @candidate.update_attributes(params[:candidate])
                  redirect_to  '/answers/instructions'
                  end
               else
+                 2.times{@candidate.experiences.build }   if @candidate.experiences.count==0
+                 2.times{@candidate.qualifications.build }  if @candidate.qualifications.count==0
                 render  '/answers/candidate_detail'
               end
       else
