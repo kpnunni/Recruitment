@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
   attr_accessible :updated_by,:to_delete,:options_attributes,:question, :allowed_time, :created_by, :complexity_id,:category_id, :type_id,:answer
    validates :question, :allowed_time,:presence =>true
    validates_numericality_of :allowed_time, :only_integer => true , :in => 21..30
-   validates_inclusion_of :allowed_time, :in => 10..200, :message => "can only be between 10 and 60."
+   validates_inclusion_of :allowed_time, :in => 10..200, :message => "can only be between 10 and 200."
    belongs_to :category
    belongs_to :complexity
    belongs_to :type
