@@ -23,10 +23,10 @@ class Exam < ActiveRecord::Base
            @questions=Question.where("category_id = ?",category.id ).shuffle.first(nos)
            @questions.each {|q| @question_paper<<q }
         end
-        self.questions=@question_paper
 
-        return   @question_paper.count
-    end
+      end
+      self.questions=@question_paper
+      return   @question_paper.count
     end
     if self.complexity_id.to_i == 2
       h=0.5

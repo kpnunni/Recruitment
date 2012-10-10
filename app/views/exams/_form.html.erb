@@ -34,15 +34,16 @@
         <%= f.label  :description%>
         <%= f.text_field :description %>
 
-        <br />Instructions
+        <br /><b>Instructions</b><br />  <br/>
+          <input type="checkbox" onClick="toggle1(this)" /> Toggle All
+
         <% Instruction.all.each do |instruction| %>
             <br />
             <%= check_box_tag "exam[instruction_ids][]", instruction.id, @exam.instructions.include?(instruction.id)  %>
             <%= instruction.instruction %>
         <% end %>
         <br />
-          <input type="checkbox" onClick="toggle1(this)" /> Toggle All<br/>
-        <br />
+
 
         <%= link_to 'new_instruction?' , '#',:onclick=>"show_instruction()"  %>   <br />   <br />
         <%= f.label :Complexity %>

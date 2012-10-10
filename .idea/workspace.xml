@@ -12,8 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b03e1eb-cca0-434e-b2f4-827c51a6e5b4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/migrate/20121010110008_image_in_question.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/exam.rb" afterPath="$PROJECT_DIR$/app/models/exam.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/exams/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/exams/_form.html.erb" />
     </list>
     <ignored path="Test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,7 +39,37 @@
     <favorites_list name="Test" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="exams_controller.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/exams_controller.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/exams/_form.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="21" selection-start="1886" selection-end="1886" vertical-scroll-proportion="-5.0">
+              <folding>
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="exam.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/exam.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="36" selection-start="926" selection-end="926" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -58,8 +89,6 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/app/controllers/schedules_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/exams/_form.html.erb" />
-        <option value="$PROJECT_DIR$/app/models/exam.rb" />
         <option value="$PROJECT_DIR$/app/views/questions/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/templates_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/homes/admin.html.erb" />
@@ -73,6 +102,8 @@
         <option value="$PROJECT_DIR$/app/views/answers/show.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/questions_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/user_mailer/exam_complete_email.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/exams/_form.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/exam.rb" />
       </list>
     </option>
   </component>
@@ -148,38 +179,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="migrate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1043,7 +1042,11 @@
       <created>1349870254858</created>
       <updated>1349870254858</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="db migration&#10;">
+      <created>1349871962345</created>
+      <updated>1349871962345</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1071,11 +1074,11 @@
     <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23337679" sideWeight="0.43973213" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3285528" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23415264" sideWeight="0.4008439" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25162974" sideWeight="0.67058825" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25162974" sideWeight="0.67058825" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39294118" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26336375" sideWeight="0.21647058" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26336375" sideWeight="0.21647058" order="6" side_tool="true" content_ui="tabs" />
@@ -1126,7 +1129,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rejected commit: Default" />
+    <option name="LAST_COMMIT_MESSAGE" value="db migration&#10;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1139,7 +1142,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="oneday" />
     <MESSAGE value="table width" />
     <MESSAGE value="table width2" />
     <MESSAGE value="search facility" />
@@ -1164,21 +1166,12 @@
     <MESSAGE value="1234" />
     <MESSAGE value="quick changes" />
     <MESSAGE value="Rejected commit: Default" />
+    <MESSAGE value="db migration&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/db/schema.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="46" selection-start="4203" selection-end="4203" vertical-scroll-proportion="0.58171743" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/migrate/20121005080310_addcreateby.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="13" selection-start="237" selection-end="237" vertical-scroll-proportion="0.40106952" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20121010110008_image_in_question.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="1" selection-start="48" selection-end="608" vertical-scroll-proportion="0.4534005" />
@@ -1207,11 +1200,6 @@
     <entry file="file://$PROJECT_DIR$/app/views/questions/_form.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="46" column="0" selection-start="1443" selection-end="1528" vertical-scroll-proportion="-8.125" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/exams_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="115" selection-start="1824" selection-end="1824" vertical-scroll-proportion="0.4570637" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/answers_controller.rb">
@@ -1247,6 +1235,29 @@
     <entry file="file://$PROJECT_DIR$/app/mailers/user_mailer.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="0" selection-start="916" selection-end="916" vertical-scroll-proportion="0.6232687" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/exam.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="36" selection-start="926" selection-end="926" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/exams/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="21" selection-start="1886" selection-end="1886" vertical-scroll-proportion="-5.0">
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/exams_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>
