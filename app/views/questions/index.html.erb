@@ -97,7 +97,7 @@
      <br/><br/><br/><br/><br/>
       <% end %>
 
-    <div id='flash-notice' style="color: #0a7113;" ><%= flash[:notice] %> </div>
+    <div id='flash-notice' style="color: #0a7113;" ><b><%= flash[:notice] %></b></div>
 
 
 
@@ -134,7 +134,7 @@
       <% end %>
     </table>
 
-        <br /> <%= button_to "Delete selected",delete_all_questions_path(:id=>33) %>
+        <br /> <%= button_to "Delete selected",delete_all_questions_path(:id=>33), data: { confirm: 'Are you sure?' } %>
     <% end %>
      <h4><%= will_paginate @questions ,:container=>false %></h4>
   </div>

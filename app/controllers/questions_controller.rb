@@ -147,14 +147,14 @@ class QuestionsController < ApplicationController
       end
 
   def delete_all
-    flag=false
+    flag=0
     if !params[:to_delete].nil?
      params[:to_delete].each do |k,v|
         @question=Question.find(k.to_i)
-        flag=true if !@question.exams.empty?
+        flag=1 if !@question.exams.empty?&&v.to_i==1
         @question.delete if v.to_i==1&&@question.exams.empty?
      end
-     if flag
+     if flag==1
        flash[:notice]="some questions are part of question paper.So you cant delete."
      else
        flash[:notice]="Question's' successfully deleted"

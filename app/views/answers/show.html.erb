@@ -41,7 +41,7 @@
         <div class="qfont">
 
         <b><%=@answer.q_no%>.</b>
-          <%= @answer.question.question %><br />
+          <%=simple_format @answer.question.question %><br />
           <% if !@answer.question.question_image.to_s.include?("missing.png") %>
            <%= image_tag @answer.question.question_image.url(:original) %><br />
           <% end %>

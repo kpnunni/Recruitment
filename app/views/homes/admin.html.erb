@@ -195,7 +195,8 @@
      <% @questions.each {|q|  %>
          <tr>
            <td class="lft" >
-             <%=link_to  q.question,'#',:onclick=>"window.open('/questions/#{q.id}','Question Details','location=1,status=0,scrollbars=1,width=300,height=400',true)"    %>
+             <%=link_to  q.question.slice(0..50),'#',:onclick=>"window.open('/questions/#{q.id}','Question Details','location=1,status=0,scrollbars=1,width=300,height=400',true)"    %>
+             <%= "......" if q.question.length>50 %>
            </td>
          </tr>
      <% } %>

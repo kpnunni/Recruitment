@@ -1,7 +1,7 @@
 class RecruitmentTestsController < ApplicationController
         require 'will_paginate/array'
      before_filter :chk_user
-
+     before_filter :chk_result, :only=> :show
   def index
     @recruitment_tests = RecruitmentTest.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
 
@@ -57,5 +57,9 @@ class RecruitmentTestsController < ApplicationController
     end
 
   end
-
+  def chk_result
+    if !current_user.has_role?('Validate Result')
+       redirect_to '/homes/index'
+    end
+  end
 end

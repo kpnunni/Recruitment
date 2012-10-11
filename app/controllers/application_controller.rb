@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
        redirect_to '/signin'
     else
       if !current_user.isAlive
+        sign_out
         redirect_to '/signin'
       end
     end
