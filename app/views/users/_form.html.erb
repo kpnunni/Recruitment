@@ -47,14 +47,16 @@
 
 
         <b>Roles:</b>
+        <br />
+        <input type="checkbox" onClick="toggle1(this)" /> Select/Un Select All
+
         <% Role.where("role_name!=?","Candidate").each do |role| %>
             <br />
             <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role)%>
             <%= role.role_name %>
         <% end %>
-        <br />
 
-        <input type="checkbox" onClick="toggle1(this)" /> Toggle All<br/>
+
         <br />
 
            <%= f.submit "Register",:id=>"commit", class: "btn btn-large btn-primary" %>
