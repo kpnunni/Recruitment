@@ -1,6 +1,6 @@
 class RecruitmentTestsController < ApplicationController
         require 'will_paginate/array'
-     before_filter :chk_user
+     before_filter :chk_user , :except=> [:update ]
      before_filter :chk_result, :only=> :show
   def index
     @recruitment_tests = RecruitmentTest.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
@@ -27,10 +27,14 @@ class RecruitmentTestsController < ApplicationController
 
     respond_to do |format|
       if @recruitment_test.update_attributes(params[:recruitment_test])
-        UserMailer.result_email(@recruitment_test.candidate.user).deliver
         if @recruitment_test.is_passed=="Passed"
+          UserMailer.result_email(@recruitment_test.candidate.user).deliver
           @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Selection Email"))}
           @users.each {|admin| UserMailer.admin_result_email(admin,@recruitment_test.candidate).deliver }
+        end
+        if @recruitment_test.is_passed=="Pending"
+           redirect_to congrats_answer_path(current_user.id)
+           return
         end
         format.html { redirect_to recruitment_tests_path , notice: 'RecruitmentTest was successfully updated.' }
         format.json { head :no_content }
@@ -62,4 +66,8 @@ class RecruitmentTestsController < ApplicationController
        redirect_to '/homes/index'
     end
   end
+
+
+
+
 end

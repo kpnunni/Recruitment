@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
-  before_filter :chk_user, :except => [:congrats,:clogin ]
-  skip_before_filter :authenticate, :only => [:congrats ,:clogin ]
+  before_filter :chk_user, :except => [:congrats,:clogin,:feed_back  ]
+  skip_before_filter :authenticate, :only => [:congrats ,:clogin,:feed_back  ]
 
   def make
      @candidate=current_user.candidate
@@ -59,8 +59,7 @@ class AnswersController < ApplicationController
       @answer.save_mark(current_user)
       @users=User.all.select {|usr| usr.has_role?("Validate Result")||usr.has_role?("View Result")}
       @users.each {|admin| UserMailer.exam_complete_email(current_user.candidate).deliver }
-      sign_out
-      redirect_to '/answers/congrats'
+      redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
     else
       @nxt=params[:to].to_i
       redirect_to answer_path(@nxt)
@@ -100,6 +99,8 @@ class AnswersController < ApplicationController
   end
 
   def congrats
+     @user=User.find(params[:id])
+
   end
 
   def blank
@@ -110,6 +111,10 @@ class AnswersController < ApplicationController
      return if !@user.isAlive||@user.candidate.schedule.nil?
      sign_in(@user)
      redirect_to '/answers/candidate_detail'
+  end
+
+  def feed_back
+      @recruitment_test = RecruitmentTest.find(params[:id])
   end
 
 end

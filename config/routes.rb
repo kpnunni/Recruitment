@@ -36,14 +36,15 @@ Test::Application.routes.draw do
     collection do
       get :candidate_detail
       get :instructions
-      get :congrats
+
       get :blank
       get :make
     end
     member  do
+      get :congrats
       get :clogin
       put :candidate_update
-
+      get :feed_back
     end
   end
   resources :categories

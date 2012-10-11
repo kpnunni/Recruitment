@@ -1,5 +1,5 @@
 class RecruitmentTest < ActiveRecord::Base
-   attr_accessible :candidate_id, :is_completed,:completed_on,:right_answers,:no_of_question_attended,:mark_percentage,:is_passed,:comments
+   attr_accessible :feedback ,:candidate_id, :is_completed,:completed_on,:right_answers,:no_of_question_attended,:mark_percentage,:is_passed,:comments
 
    belongs_to :candidate
 

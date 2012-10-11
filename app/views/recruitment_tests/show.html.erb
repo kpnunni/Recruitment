@@ -78,6 +78,12 @@
 
 
         </table>
+          <br/>
+        <h3>Feed Back:</h3>
+
+        <%=simple_format  @recruitment_test.feedback %>
+
+
          <br/>
         <% if @recruitment_test.is_passed=="Pending" %>
         <b>Decision: <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
