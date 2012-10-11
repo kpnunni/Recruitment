@@ -66,7 +66,7 @@ class SchedulesController < ApplicationController
     @exam=Exam.all
     @schedule = Schedule. find(params[:id])
     @candidates=Candidate.all
-    @candidates.select!  {|c| @schedule.candidates.include?(c) ||( c.schedule_id.nil? && c.user.isAlive) }
+    @candidates.select!  {|c| (@schedule.candidates.include?(c) && c.user.isAlive) ||( c.schedule_id.nil? && c.user.isAlive) }
 
   end
 
@@ -102,6 +102,7 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
     @exam=Exam.all
     @candidates=Candidate.all
+    @candidates.select!  {|c| (@schedule.candidates.include?(c) && c.user.isAlive) ||( c.schedule_id.nil? && c.user.isAlive) }
     params[:schedule][:updated_by]=current_user.user_email
 
     if params[:schedule][:candidate_ids].values.join.to_i==0
@@ -109,8 +110,8 @@ class SchedulesController < ApplicationController
       render action: "edit"
       return
     end
-    @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
-    respond_to do |format|
+
+     respond_to do |format|
       if @schedule.update_attributes(params[:schedule])
         @schedule.candidates.each{|c| UserMailer.update_schedule_email(c.user).deliver }
         @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("admin"))}

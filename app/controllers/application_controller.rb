@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
   def authenticate
     if !signed_in?
        redirect_to '/signin'
+    else
+      if !current_user.isAlive
+        redirect_to '/signin'
+      end
     end
   end
 end

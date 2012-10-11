@@ -1,9 +1,24 @@
 <div class="row" xmlns="http://www.w3.org/1999/html">
   <div class="span12 offset0">
 
-    <br /><h3 align="right"><%= link_to image_tag('add.png'), new_question_path, :class=>"dropt", :title=>"add new question"   %></h3>
+    <br/>
+    <table width="100%" >
+      <tr>
+        <td class="lft" >
+          <%= link_to (image_tag 'category.png'),categories_path,:title=>"Manage Categories"  %>
+        </td>
+        <td>
+          <h1>Available Questions</h1>
+        </td>
+        <td class="rght" >
+          <%= link_to image_tag('add.png'), new_question_path, :class=>"dropt", :title=>"add new question"   %>
+        </td>
 
-    <h1>Available Questions</h1>
+      </tr>
+    </table>
+
+
+    <% if !(current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')) %>
     <div class="filter_options_container">
 
 
@@ -80,6 +95,8 @@
             </form>
        </div>
      <br/><br/><br/><br/><br/>
+      <% end %>
+
     <div id='flash-notice' style="color: #0a7113;" ><%= flash[:notice] %> </div>
 
 
@@ -105,7 +122,9 @@
             <%=fields_for :to_delete do|del|  %>
             <td><%= del.check_box  question.id %></td>
              <% end %>
-            <td class="lft" ><%= question.question %></td>
+            <td class="lft" ><%= question.question.slice(0..75)%>
+            <%= "......" if question.question.length>75 %>
+            </td>
             <td><%= question.allowed_time %></td>
             <td><%= question.created_by %></td>
             <td><%= question.category.category %></td>
@@ -118,7 +137,6 @@
         <br /> <%= button_to "Delete selected",delete_all_questions_path(:id=>33) %>
     <% end %>
      <h4><%= will_paginate @questions ,:container=>false %></h4>
-       <%= link_to (image_tag 'category.png'),categories_path,:title=>"Manage Categories"  %>
   </div>
 </div>
 

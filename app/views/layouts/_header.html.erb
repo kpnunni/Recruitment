@@ -7,7 +7,7 @@
         <ul class="nav pull-right">
           <% @ok= signed_in? && !current_user.has_role?('Candidate') %>
          <%if @ok %>
-              <% if current_user.roles.count==13 %>
+              <% if current_user.roles.count==15 %>
               <li><%= link_to "Home",   '/homes/admin' %></li>
                <% else %>
               <li><%= link_to "Home",   '/homes/index' %></li>
@@ -25,7 +25,7 @@
                   <li><%= link_to "Candidates", '/candidates' %></li>
                   <% end %>
 
-                  <%if current_user.has_role?('Manage Questions') ||current_user.has_role?('Add Questions')  %>
+                  <%if current_user.has_role?('Add Questions Only') ||current_user.has_role?('Manage Questions') ||current_user.has_role?('Add Questions')  %>
                   <li><%= link_to "Question Bank",  '/questions' %></li>
                    <% end %>
 

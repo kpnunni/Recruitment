@@ -1,5 +1,37 @@
 <h1> Edit Category</h1>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="span10 offset0">
+
+
+<%= form_for  (@category) do |f1| %>
+
+
+        <% if @category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@category.errors.count, "error") %> prohibited this question_category from being saved:</h2>
+
+      <ul>
+      <% @category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+
+        <%= f1.label :category_name %>
+        <%= f1.text_field :category %>
+        <br />
+
+        <%= f1.submit "Update" ,class: "btn btn-large btn-primary" %>
+
+
+    <% end %>
+
+  </div>
+</div>
 
 <br /><%= link_to image_tag('back.png'),categories_path  %>

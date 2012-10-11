@@ -53,7 +53,7 @@ class SessionsController < ApplicationController
           flash[:notice ] = 'Sorry, You can login only after getting date for the exam.'
           render "new"
         elsif user.has_role?('Manage Users')||user.has_role?('Manage Questions')||user.has_role?('Manage Candidates')||user.has_role?('Manage Exams')||user.has_role?('Schedule')||
-                user.has_role?('Add Questions')|| user.has_role?('Re Schedule')||user.has_role?('Cancel Schedule')||user.has_role?('Validate Result')||user.has_role?('Manage Templates')||user.has_role?('View Result')
+               user.has_role?('Add Questions Only')|| user.has_role?('Add Questions')|| user.has_role?('Re Schedule')||user.has_role?('Cancel Schedule')||user.has_role?('Validate Result')||user.has_role?('Manage Templates')||user.has_role?('View Result')
           sign_in user
           redirect_to '/homes/index'
       else

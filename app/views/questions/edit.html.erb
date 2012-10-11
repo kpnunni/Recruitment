@@ -43,7 +43,8 @@
         <%= f1.text_area  :question, :rows=>5 ,:class=>"quest"%>
 
         <% if !@question.question_image.to_s.include?("missing.png") %>
-        <%=link_to  image_tag(@question.question_image.url(:original)),delete_image_question_path(@question),:title => "delete"   %>
+        <%=image_tag @question.question_image.url(:original)   %>
+        <%= link_to image_tag('delete.png') ,  delete_image_question_path(@question) ,data: {confirm: 'are you sure'} ,:title => "delete" %>
         <% end %>
 
         <%= f1.label :question_image  %>

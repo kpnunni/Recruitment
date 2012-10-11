@@ -2,7 +2,9 @@
       <div class="span12 offset0">
      <b>Question:</b>
      <%=  @question.question %><br /><br />
+       <% if !@question.question_image.to_s.include?("missing.png") %>
        <%= image_tag @question.question_image.url(:original) %>
+            <% end %>
         <table  border="3" width="75%"   >
           <tr>
             <th>options:</th>

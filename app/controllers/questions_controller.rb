@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   require 'will_paginate/array'
 
     def chk_user
-    if !current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')
+    if !current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')
       redirect_to '/homes/index'
     end
     end
@@ -14,6 +14,9 @@ class QuestionsController < ApplicationController
  #       @questions=Question.paginate(:page => params[:page], :per_page => 10)
         if current_user.has_role?('Add Questions')&&!current_user.has_role?('Manage Questions')
           @questions.select! {|q| q.created_by==current_user.user_email}
+        end
+        if (current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions'))
+           @questions.select! {|q| q.created_at>=(Time.now-1.minutes) }
         end
         @complexity=Complexity.first(3)
         @category=Category.all
@@ -144,11 +147,19 @@ class QuestionsController < ApplicationController
       end
 
   def delete_all
-
+    flag=false
     if !params[:to_delete].nil?
      params[:to_delete].each do |k,v|
-        Question.find(k.to_i).delete if v.to_i==1
+        @question=Question.find(k.to_i)
+        flag=true if !@question.exams.empty?
+        @question.delete if v.to_i==1&&@question.exams.empty?
      end
+     if flag
+       flash[:notice]="some questions are part of question paper.So you cant delete."
+     else
+       flash[:notice]="Question's' successfully deleted"
+     end
+
     end
     redirect_to questions_path
   end
