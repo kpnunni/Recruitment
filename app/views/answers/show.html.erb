@@ -82,7 +82,9 @@
 
        <div align="center">
         <table cellpadding="10"  ><tr>
-
+          <% if current_user.candidate.answer_ids.include?(@answer.id+1)   %>
+             <td><%= f.button  "Next", :name=>"to",:value=>@answer.id+1, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
+          <% end %>
           <td><%= f.button 'Finish', :name=>"to",:value=>"finish",class: "btn btn-large btn-primary",:title=>"Submit your exam" %></td>
           </tr> </table>   </div>
 
