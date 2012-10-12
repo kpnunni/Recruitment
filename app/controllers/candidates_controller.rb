@@ -32,6 +32,8 @@ class CandidatesController < ApplicationController
 
   def create
       @candidate=Candidate.new(params[:candidate])
+      @candidate.user.login_password="12345"
+      @candidate.user.login_password_confirmation="12345"
       @candidate.user.encrypt_password
 
       if @candidate.save

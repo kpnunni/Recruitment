@@ -23,7 +23,7 @@ class HomesController < ApplicationController
 
   end
   def chk_admin
-    if current_user.roles.count==13
+    if current_user.roles.count==Role.count-1
      @schedules1=Schedule.where("sh_date between ? and ?",Date.today ,Date.tomorrow  )
     @schedules7=Schedule.where("sh_date between ? and ?",Date.today.beginning_of_week,Date.today.end_of_week)
     @schedules30=Schedule.where("sh_date between ? and ?",Date.today.beginning_of_month,Date.today.end_of_month)

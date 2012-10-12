@@ -7,7 +7,7 @@
         <ul class="nav pull-right">
           <% @ok= signed_in? && !current_user.has_role?('Candidate') %>
          <%if @ok %>
-              <% if current_user.roles.count==15 %>
+              <% if current_user.roles.count==Role.count-1 %>
               <li><%= link_to "Home",   '/homes/admin' %></li>
                <% else %>
               <li><%= link_to "Home",   '/homes/index' %></li>
