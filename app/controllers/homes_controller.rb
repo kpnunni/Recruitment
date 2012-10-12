@@ -5,11 +5,11 @@ class HomesController < ApplicationController
   end
   def admin
 
-    @schedules1=Schedule.where("sh_date between ? and ?",Date.today-1.day ,Date.tomorrow  )
+    @schedules1=Schedule.where("sh_date between ? and ?",Date.today ,Date.tomorrow  )
     @schedules7=Schedule.where("sh_date between ? and ?",Date.today.beginning_of_week,Date.today.end_of_week)
     @schedules30=Schedule.where("sh_date between ? and ?",Date.today.beginning_of_month,Date.today.end_of_month)
 
-    @results1 =RecruitmentTest.where("completed_on between ? and ?",Date.today-1.day ,Date.tomorrow  )
+    @results1 =RecruitmentTest.where("completed_on between ? and ?",Date.today ,Date.tomorrow  )
     @results7 =RecruitmentTest.where("completed_on between ? and ?",Date.today.beginning_of_week,Date.today.end_of_week)
     @results30 =RecruitmentTest.where("completed_on between ? and ?",Date.today.beginning_of_month,Date.today.end_of_month)
     @questions=Question.last(10)
@@ -24,11 +24,11 @@ class HomesController < ApplicationController
   end
   def chk_admin
     if current_user.roles.count==13
-     @schedules1=Schedule.where("sh_date between ? and ?",Date.today.day ,Date.tomorrow  )
+     @schedules1=Schedule.where("sh_date between ? and ?",Date.today ,Date.tomorrow  )
     @schedules7=Schedule.where("sh_date between ? and ?",Date.today.beginning_of_week,Date.today.end_of_week)
     @schedules30=Schedule.where("sh_date between ? and ?",Date.today.beginning_of_month,Date.today.end_of_month)
 
-    @results1 =RecruitmentTest.where("completed_on between ? and ?",Date.today.day ,Date.tomorrow  )
+    @results1 =RecruitmentTest.where("completed_on between ? and ?",Date.today ,Date.tomorrow  )
     @results7 =RecruitmentTest.where("completed_on between ? and ?",Date.today.beginning_of_week,Date.today.end_of_week)
     @results30 =RecruitmentTest.where("completed_on between ? and ?",Date.today.beginning_of_month,Date.today.end_of_month)
     @questions=Question.last(10)
