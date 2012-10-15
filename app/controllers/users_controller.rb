@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_filter :authenticate ,:create
-    before_filter :chk_user, :except => [:profile,:chgpass ,:updatepass,:create]
+    before_filter :chk_user, :except => [:profile,:chgpass ,:updatepass]
   require 'will_paginate/array'
 
   def show
@@ -22,20 +21,6 @@ class UsersController < ApplicationController
 
   def create
     @user=User.new(params[:user])
-    if params[:emp]=="Register"
-      if @user.user_email=~/\A[\w+\-.]+@suyati.com+\z/i
-         @user.login_password="suyatiemp"
-         @user.login_password_confirmation="suyatiemp"
-         @user.encrypt_password
-         @user.roles.push(Role.find_by_role_name('Interviewer'))
-         UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save
-         redirect_to  success_sessions_path(:as=>"emp")
-      else
-         flash[:notice]="Invalid Employee Email id"
-         render '/sessions/signup'
-      end
-      return
-    end
 
 
       if params[:user][:role_ids].nil?
