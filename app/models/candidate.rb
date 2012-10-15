@@ -51,7 +51,7 @@ class Candidate < ActiveRecord::Base
    end
 
   def set_role
-    self.user.roles.push(Role.find(14))
+    self.user.roles.push(Role.find_by_role_name('Candidate') )
   end
 
   def self.filtered search

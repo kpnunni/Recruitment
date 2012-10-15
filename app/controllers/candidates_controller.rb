@@ -1,6 +1,7 @@
 class CandidatesController < ApplicationController
    require 'will_paginate/array'
-   before_filter :chk_user ,:except => :update
+   skip_before_filter :authenticate ,:create
+   before_filter :chk_user ,:except =>[ :update ,:create]
      def chk_user
       if !current_user.has_role?('Manage Candidates')
         redirect_to '/homes/index'
@@ -35,7 +36,16 @@ class CandidatesController < ApplicationController
       @candidate.user.login_password="12345"
       @candidate.user.login_password_confirmation="12345"
       @candidate.user.encrypt_password
-
+    if params[:can]=="Register"
+      if @candidate.save
+         redirect_to  success_sessions_path(:as=>"can")
+      else
+         2.times{@candidate.experiences.build }
+         2.times{@candidate.qualifications.build }
+         render  '/sessions/signup'
+      end
+      return
+    end
       if @candidate.save
      #   UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
         redirect_to candidate_path(@candidate)

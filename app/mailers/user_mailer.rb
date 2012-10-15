@@ -55,6 +55,11 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail(:to => user.user_email, :subject => "Test cleared")
   end
+  def sent_password(user,token)
+    @user = user
+    @url  = "http://recruitment-suyati.herokuapp.com/sessions/#{token}/reset_pass"
+     mail(:to => user.user_email, :subject => "Reset password")
 
+  end
 
 end

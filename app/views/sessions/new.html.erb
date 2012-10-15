@@ -27,20 +27,15 @@
             <%= f.submit "Sign in", class: "btn btn-large btn-primary"%>
 
       <% end %>
+                    <%= link_to 'Sign up as Employee',signup_sessions_path(:as=>"emp")  %> <br/>
+                    <%= link_to 'Sign up as Candidate',signup_sessions_path(:as=>"can")  %>  <br/>
+                    <%= link_to 'Forgot password?',forgotpass_sessions_path  %>      <br/>
 
       </div>
     </div>
 
 
 
-
-  <script type="text/javascript">
-  function newwindow()
-  {
-      openFrameless();
-
-  }
-  </script>
 
 
 

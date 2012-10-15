@@ -53,7 +53,7 @@ class SessionsController < ApplicationController
           flash[:notice ] = 'Sorry, You can login only after getting date for the exam.'
           render "new"
         elsif user.has_role?('Manage Users')||user.has_role?('Manage Questions')||user.has_role?('Manage Candidates')||user.has_role?('Manage Exams')||user.has_role?('Schedule')||
-               user.has_role?('Add Questions Only')|| user.has_role?('Add Questions')|| user.has_role?('Re Schedule')||user.has_role?('Cancel Schedule')||user.has_role?('Validate Result')||user.has_role?('Manage Templates')||user.has_role?('View Result')
+               user.has_role?('Interviewer')||user.has_role?('Add Questions Only')|| user.has_role?('Add Questions')|| user.has_role?('Re Schedule')||user.has_role?('Cancel Schedule')||user.has_role?('Validate Result')||user.has_role?('Manage Templates')||user.has_role?('View Result')
           sign_in user
           redirect_to '/homes/index'
       else
@@ -65,5 +65,37 @@ class SessionsController < ApplicationController
   def destroy
     sign_out
     redirect_to root_path
+  end
+  def signup
+     if params[:as]=="emp"
+        @user=User.new
+     else
+        @candidate=Candidate.new
+        2.times{@candidate.experiences.build }
+        2.times{@candidate.qualifications.build }
+        @candidate.build_user
+     end
+  end
+
+  def success
+  end
+
+  def forgotpass
+
+  end
+  def sent_pass
+    @user=User.find_by_user_email(params[:session][:email])
+    if @user.nil?
+      render 'forgotpass'
+      flash[:notice]="Email id doesn't exist."
+      return
+    end
+    token=@user.remember_token
+    UserMailer.sent_password(@user,token).deliver
+  end
+  def reset_pass
+    @user=User.find_by_remember_token(params[:id])
+    sign_in(@user)
+    redirect_to chgpass_user_path(@user.id)
   end
 end

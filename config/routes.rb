@@ -55,6 +55,7 @@ Test::Application.routes.draw do
      get :chgpass
      put :updatepass
     end
+
   end
 
   resources :candidates  do
@@ -62,7 +63,17 @@ Test::Application.routes.draw do
     resources :qualifications
   end
 
-   resources :sessions, only: [:new, :create, :destroy]
+   resources :sessions, only: [:new, :create, :destroy]  do
+     collection do
+      get :signup
+      get :success
+      get :forgotpass
+      post :sent_pass
+     end
+     member do
+       get :reset_pass
+     end
+   end
    match '/signin',  to: 'sessions#new'
    match '/signout', to: 'sessions#destroy', via: :delete
 
