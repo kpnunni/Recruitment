@@ -5,26 +5,26 @@ Test::Application.routes.draw do
   get "homes/admin"
   resources :templates
   resources :questions do
-     collection do
+    collection do
       post :delete_all
-     end
-    member  do
-     get :delete_image
+    end
+    member do
+      get :delete_image
 
     end
 
     resources :options
   end
   resources :exams do
-    member  do
-     get :question_paper
-     get :remove_instruction
+    member do
+      get :question_paper
+      get :remove_instruction
       get :schedule
     end
   end
 
   resources :schedules do
-    member  do
+    member do
       get :remove
       get :onecan
     end
@@ -40,7 +40,7 @@ Test::Application.routes.draw do
       get :blank
       get :make
     end
-    member  do
+    member do
       get :congrats
       get :clogin
       put :candidate_update
@@ -48,30 +48,36 @@ Test::Application.routes.draw do
     end
   end
   resources :categories
-  resources :users  do
-    member  do
-     put :delete
-     get :profile
-     get :chgpass
-     put :updatepass
+  resources :users do
+    member do
+      put :delete
+      get :profile
+      get :chgpass
+      put :updatepass
     end
+
   end
 
-  resources :candidates  do
+  resources :candidates do
     resources :experiences
     resources :qualifications
   end
 
-   resources :sessions, only: [:new, :create, :destroy]
-   match '/signin',  to: 'sessions#new'
-   match '/signout', to: 'sessions#destroy', via: :delete
+  resources :sessions, only: [:new, :create, :destroy] do
+    collection do
+      get :signup
+      get :success
+      get :forgotpass
+      post :sent_pass
+    end
+    member do
+      get :reset_pass
+    end
+  end
+  match '/signin', to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
 
-   match 'assync_get_status' => 'controller#assync_get_status'
-
-
-
-
-
+  match 'assync_get_status' => 'controller#assync_get_status'
 
 
 

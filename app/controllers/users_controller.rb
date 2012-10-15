@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-    before_filter :chk_user, :except => [:profile,:chgpass ,:updatepass]
+  skip_before_filter :authenticate ,:create
+  before_filter :chk_user, :except => [:profile,:chgpass ,:updatepass,:create]
   require 'will_paginate/array'
 
   def show
@@ -21,13 +22,27 @@ class UsersController < ApplicationController
 
   def create
     @user=User.new(params[:user])
-
-
-      if params[:user][:role_ids].nil?
-        flash[:notice]="Select atleast one role"
-        render action:'new'
-        return
+    if params[:emp]=="Register"
+      if @user.user_email=~/\A[\w+\-.]+@suyati.com+\z/i
+        @user.login_password="suyatiemp"
+        @user.login_password_confirmation="suyatiemp"
+        @user.encrypt_password
+        @user.roles.push(Role.find_by_role_name('Interviewer'))
+        UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save
+        redirect_to success_sessions_path(:as=>"emp")
+      else
+        flash[:notice]="Invalid Employee Email id"
+        render '/sessions/signup'
       end
+      return
+    end
+
+
+    if params[:user][:role_ids].nil?
+      flash[:notice]="Select atleast one role"
+      render action:'new'
+      return
+    end
 
     @user.encrypt_password
 
@@ -44,11 +59,11 @@ class UsersController < ApplicationController
 
     @user=User.find(params[:id])
     @user.roles.delete_all
-      if params[:user][:role_ids].nil?
-        flash[:notice]="Select atleast one role"
-        render action:'new'
-        return
-      end
+    if params[:user][:role_ids].nil?
+      flash[:notice]="Select atleast one role"
+      render action:'new'
+      return
+    end
 
     if @user.update_attributes(params[:user])
 
@@ -110,7 +125,7 @@ class UsersController < ApplicationController
 
       redirect_to profile_user_path(@user), :notice => "your password updated successfully"
     else
-       redirect_to chgpass_user_path(@user), :notice => "invalid new password"
+      redirect_to chgpass_user_path(@user), :notice => "invalid new password"
     end
 
   end
