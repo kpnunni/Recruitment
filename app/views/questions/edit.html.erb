@@ -40,7 +40,7 @@
         </table>
 
         <%= f1.label :Question %>
-        <%= f1.text_area  :question, :rows=>5 ,:class=>"quest"%>
+        <%= f1.text_area  :question, :rows=>10 ,:class=>"quest"%>
 
         <% if !@question.question_image.to_s.include?("missing.png") %>
         <%=image_tag @question.question_image.url(:original)   %>

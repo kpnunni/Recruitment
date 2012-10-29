@@ -27,7 +27,7 @@ class UsersController < ApplicationController
         @user.login_password="suyatiemp"
         @user.login_password_confirmation="suyatiemp"
         @user.encrypt_password
-        @user.roles.push(Role.find_by_role_name('Interviewer'))
+        @user.roles.push(Role.find_by_role_name('Add Questions Only'))
         UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save
         redirect_to success_sessions_path(:as=>"emp")
       else
@@ -118,11 +118,20 @@ class UsersController < ApplicationController
 
     if @old_password!=@user.password
       redirect_to chgpass_user_path(@user), :notice => "old password is not correct"
-    elsif @user.update_attributes(params[:user])
+      return
+    end
+    if params[:user][:login_password].length<4
+      redirect_to chgpass_user_path(@user), :notice => "Invalid new password"
+      return
+    end
+    if params[:user][:login_password]!=params[:user][:login_password_confirmation]
+      redirect_to chgpass_user_path(@user), :notice => "Password doesn't match confirmation."
+      return
+    end
+    if @user.update_attributes(params[:user])
 
       @user.encrypt_password
       @user.save
-
       redirect_to profile_user_path(@user), :notice => "your password updated successfully"
     else
       redirect_to chgpass_user_path(@user), :notice => "invalid new password"

@@ -8,7 +8,7 @@
           <%= link_to (image_tag 'category.png'),categories_path,:title=>"Manage Categories"  %>
         </td>
         <td>
-          <h1>Available Questions</h1>
+
         </td>
         <td class="rght" >
           <%= link_to image_tag('add.png'), new_question_path, :class=>"dropt", :title=>"add new question"   %>
@@ -16,7 +16,7 @@
 
       </tr>
     </table>
-
+    <h1>Available Questions</h1>
 
     <% if !(current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')) %>
     <div class="filter_options_container">
@@ -52,7 +52,7 @@
                 [s.question_type, s.id ] }, { :include_blank => true}) %></td>
 
                 <td><%= select("search","by", @users.collect {|s|
-                s.user_email }, { :include_blank => true}) %></td>
+                s.created_by }, { :include_blank => true}) %></td>
 
                 <td><%= calendar_date_select_tag  "search[from]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
                 <td><%= calendar_date_select_tag  "search[to]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
@@ -71,7 +71,7 @@
                     [s.question_type, s.id ] }, { :include_blank => true,:selected =>params[:search][:type_id]}) %><br />
                   </td>
                   <td><%= select("search","by", @users.collect {|s|
-                    s.user_email }, { :include_blank => true,:selected =>params[:search][:by]}) %><br />
+                    s.created_by }, { :include_blank => true,:selected =>params[:search][:by]}) %><br />
                   </td>
 
                     <td><%= calendar_date_select_tag "search[from]",params[:search]["from"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
@@ -108,7 +108,7 @@
 
     <table border="3" width="100%"  >
       <tr>
-        <th width="2%"><input type="checkbox" onClick="toggle1(this)" /></th>
+        <th width="2%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all to delete" /></th>
         <th width="60%">question</th>
         <th  width="6%">allowed time (in sec)</th>
         <th width="12%">Created by:</th>
@@ -128,7 +128,7 @@
             <td><%= question.allowed_time %></td>
             <td><%= question.created_by %></td>
             <td><%= question.category.category %></td>
-            <td class="dropt" title="detail"  ><%= link_to  image_tag('show.png'), '#',:onclick=>"window.open('/questions/#{question.id}','Question Details','location=1,status=0,scrollbars=1,width=300,height=400',true)" %></td>
+            <td class="dropt" title="detail"  ><%= link_to  image_tag('show.png'), '#',:onclick=>"window.open('/questions/#{question.id}','Question Details','location=1,status=0,scrollbars=1,width=500,height=400',true)" %></td>
             <td class="dropt" title="edit"  ><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
            </tr>
       <% end %>
@@ -136,7 +136,9 @@
 
         <br /> <%= button_to "Delete selected",delete_all_questions_path(:id=>33), data: { confirm: 'Are you sure?' } %>
     <% end %>
+    <% if !(current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')) %>
      <h4><%= will_paginate @questions ,:container=>false %></h4>
+    <% end %>
   </div>
 </div>
 

@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
- attr_accessible :category
+ attr_accessible :category,:cutoff
  validates :category,:presence =>true
  validates_uniqueness_of :category
  has_many :questions ,:dependent => :destroy

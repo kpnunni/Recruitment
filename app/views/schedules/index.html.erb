@@ -19,13 +19,13 @@
           <% if params[:search].nil?  %>
 
               <td><%= select("search","by", @users.collect {|s|
-                s.user_email }, { :include_blank => true}) %></td>
+                s.created_by }, { :include_blank => true}) %></td>
               <td><%= calendar_date_select_tag  "search[from]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
               <td><%= calendar_date_select_tag  "search[to]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
 
           <% else  %>
               <td><%= select("search","by", @users.collect {|s|
-                s.user_email }, { :include_blank => true,:selected =>params[:search][:by]}) %><br />
+                s.created_by }, { :include_blank => true,:selected =>params[:search][:by]}) %><br />
               </td>
 
               <td><%= calendar_date_select_tag "search[from]",params[:search]["from"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>

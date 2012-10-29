@@ -14,17 +14,17 @@ class QuestionsController < ApplicationController
  #       @questions=Question.paginate(:page => params[:page], :per_page => 10)
         if current_user.has_role?('Add Questions')&&!current_user.has_role?('Manage Questions')
           @questions.select! {|q| q.created_by==current_user.user_email}
-        end
-        if (current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions'))
-           @questions.select! {|q| q.created_at>=(Time.now-1.minutes) }
+
+        elsif (current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions'))
+           @questions.select! {|q| q.created_at>=(Time.now-1.minutes)&&q.created_by==current_user.user_email }
+
         end
         @complexity=Complexity.first(3)
         @category=Category.all
         @types=Type.all
-        @users=User.all
+        @users=Question.select("created_by").uniq
         @ids=Array.new(@questions.count)
-        @users.select! {|usr| Question.where(:created_by =>usr.user_email).present?}
-       respond_to do |format|
+        respond_to do |format|
           format.html
           format.json { render json: @questions }
         end

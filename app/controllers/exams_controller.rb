@@ -137,5 +137,4 @@ class ExamsController < ApplicationController
      redirect_to exam_path(@exam)
   end
 
-
 end

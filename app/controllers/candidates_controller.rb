@@ -42,7 +42,7 @@ class CandidatesController < ApplicationController
       else
         2.times{@candidate.experiences.build }
         2.times{@candidate.qualifications.build }
-        render '/sessions/signup'
+        redirect_to   '/sessions/signup' ,:notice =>  "Error,Please give correct inputs"
       end
       return
     end

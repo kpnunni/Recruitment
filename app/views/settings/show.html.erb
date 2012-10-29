@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="span12 offset0">
+    <div>
+      <h1>Settings</h1>
+
+
+          <div id='flash-notice' style="color: #8b161a;" ><b><%= flash[:notice] %></b></div>
+
+
+          <h2>Auto result calculation:<%= @setting.auto_result? ? "On" : "Off"  %>
+          </h2>      <br/>
+          <div id="cutoff">
+            <table border="3" width="50%"  >
+              <tr>
+                <th>category</th>
+                <th>Cut off Percentage</th>
+              </tr>
+
+              <% @categories.sort.each do |cat| %>
+                  <tr>
+                    <td><%= cat.category %></td>
+                         <td><%= cat.cutoff   %></td>
+
+                  </tr>
+              <% end %>
+            </table>
+          </div>
+
+
+          <br/>
+                    <%= link_to image_tag('back.png'),edit_setting_path(@setting)  %>
+
+
+
+    </div>
+  </div>
+</div>
+
+

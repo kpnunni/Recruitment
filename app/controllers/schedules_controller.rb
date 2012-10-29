@@ -29,9 +29,8 @@ class SchedulesController < ApplicationController
 
   def index
     @schedules = Schedule.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
-    @users=User.all
-    @users.select! {|usr| Schedule.where(:created_by =>usr.user_email).present?}
-    respond_to do |format|
+    @users=Schedule.select("created_by").uniq
+     respond_to do |format|
       format.html 
       format.json { render json: @schedules }
     end

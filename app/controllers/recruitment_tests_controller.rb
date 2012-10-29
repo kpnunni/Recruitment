@@ -32,7 +32,7 @@ class RecruitmentTestsController < ApplicationController
           @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Selection Email"))}
           @users.each {|admin| UserMailer.admin_result_email(admin,@recruitment_test.candidate).deliver }
         end
-        if @recruitment_test.is_passed=="Pending"
+        if params[:from]=="feedback"
            redirect_to congrats_answer_path(current_user.id)
            return
         end

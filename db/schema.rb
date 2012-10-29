@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121011103148) do
+ActiveRecord::Schema.define(:version => 20121029073405) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20121011103148) do
     t.string   "category"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "cutoff"
   end
 
   create_table "complexities", :force => true do |t|
@@ -159,6 +160,12 @@ ActiveRecord::Schema.define(:version => 20121011103148) do
     t.datetime "updated_at", :null => false
     t.string   "created_by"
     t.string   "updated_by"
+  end
+
+  create_table "settings", :force => true do |t|
+    t.boolean  "auto_result"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "templates", :force => true do |t|

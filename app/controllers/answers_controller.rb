@@ -57,6 +57,7 @@ class AnswersController < ApplicationController
     end
     if  params[:to]=="finish"
       @answer.save_mark(current_user)
+      @answer.make_result(current_user)
       @users=User.all.select {|usr| usr.has_role?("Validate Result")||usr.has_role?("View Result")}
       @users.each {|admin| UserMailer.exam_complete_email(admin,current_user.candidate).deliver }
       redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)

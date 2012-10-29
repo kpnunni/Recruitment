@@ -68,4 +68,19 @@ class Answer < ActiveRecord::Base
      @user.update_attribute(:isAlive,0)
    end
 
+  def make_result(user)
+    return  if !Setting.first.auto_result?
+
+    passed=true
+    Category.all.each do |cat|
+      if user.candidate.recruitment_test.calc_mark(cat)<cat.cutoff
+        passed=false
+      end
+    end
+    if passed
+     user.candidate.recruitment_test.update_attribute(:is_passed,"Passed")
+    else
+     user.candidate.recruitment_test.update_attribute(:is_passed,"Failed")
+    end
+  end
 end

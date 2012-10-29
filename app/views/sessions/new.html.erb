@@ -24,8 +24,8 @@
         <%= f.submit "Sign in", class: "btn btn-large btn-primary"%>
 
     <% end %>
-    <%= link_to 'Sign up as Employee',signup_sessions_path(:as=>"emp") %> <br/>
-    <%= link_to 'Sign up as Candidate',signup_sessions_path(:as=>"can") %> <br/>
+    Sign up as<%= link_to ' Employee',signup_sessions_path(:as=>"emp") %>/
+    <%= link_to ' Candidate',signup_sessions_path(:as=>"can") %> <br/>
     <%= link_to 'Forgot password?',forgotpass_sessions_path %> <br/>
 
   </div>

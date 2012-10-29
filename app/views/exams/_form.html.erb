@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="span10 offset0">
+  <div class="span12 offset0">
     <div id="new_instruction1" class="right"  >
     <%= form_for @instruction   do |f1| %>
          <b>New Instruction</b><br />
@@ -65,7 +65,7 @@
 
 
             <%= f.fields_for :subj do |category_fields| %>
-            <td><%= category_fields.number_field  (category.category ) ,   :class => "text_box"  %></td>
+            <td><%= category_fields.number_field  (category.category ) , :class => "text_box"  %></td>
             <% end %>
             <td><%= category.questions.count %></td>
 

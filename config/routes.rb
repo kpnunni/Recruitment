@@ -3,6 +3,10 @@ Test::Application.routes.draw do
 
   get "homes/index"
   get "homes/admin"
+
+
+  resources :settings
+
   resources :templates
   resources :questions do
     collection do
@@ -13,13 +17,19 @@ Test::Application.routes.draw do
 
     end
 
+
     resources :options
   end
+
   resources :exams do
     member do
       get :question_paper
       get :remove_instruction
       get :schedule
+    end
+    collection do
+      get :settings
+      post :save_settings
     end
   end
 

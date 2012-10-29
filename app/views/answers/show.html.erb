@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="span10 offset1">
+  <div class="span12 offset0">
 
     <h3>Questions:</h3>
     <%= form_for  @answer do |f| %>
@@ -10,7 +10,7 @@
 
             <% if (ans.question.allowed_time-ans.time_taken)>3 %>
 
-                <% if ans.answer!="0" %>
+                <% if ans.answer!="0"&&ans.id!=@answer.id  %>
                   <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>"background-color: #90ee90;"  %>
                 <% elsif ans.id==@answer.id  %>
                   <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 ,:style=>"background-color: orange;" %>
@@ -38,25 +38,28 @@
 
         <%=f.hidden_field   :dec_time ,:value =>@answer.dec_time %>
 
-        <div class="qfont">
 
-        <b><%=@answer.q_no%>.</b>
-          <%=simple_format @answer.question.question %><br />
-          <% if !@answer.question.question_image.to_s.include?("missing.png") %>
-           <%= image_tag @answer.question.question_image.url(:original) %><br />
-          <% end %>
-          <br />
-        </div>
-        <table cellpadding="5"  >
+          <div class="qno"  >
 
+               <b>  <%= label_tag @answer.q_no%></b>
+          </div>
+          <div class="question"  >
+               <%=simple_format @answer.question.question %><br />
+               <% if !@answer.question.question_image.to_s.include?("missing.png") %>
+               <%= image_tag @answer.question.question_image.url(:original) %><br />
+               <% end %>
+          </div>
+
+        <table cellpadding="5"  width="100%" >
+             <br />
           <% if @answer.question.type.question_type=="check_box" %>
 
               <% @answer.question.options.sort.each_with_index do |op,i| %>
                   <tr>
                     <%= f.fields_for :c_option do |c_op| %>
-                        <td><%=  c_op.check_box  op.id,:checked => @tick[i] %></td>
+                        <td width="2%" ><%=  c_op.check_box  op.id,:checked => @tick[i] %></td>
                     <% end %>
-                    <td class="lft" ><%= label_tag op.option %></td>
+                    <td class="lft" ><%=simple_format label_tag op.option %></td>
                   </tr>
               <% end %>
 
@@ -64,9 +67,9 @@
               <% @answer.question.options.sort.each_with_index do |op,i| %>
                   <tr >
                     <%= f.fields_for :c_option do |c_op| %>
-                        <td ><%=  c_op.radio_button 1, op.id,:checked => @tick[i]%></td>
+                        <td width="2%"  ><%=  c_op.radio_button 1, op.id,:checked => @tick[i]%></td>
                     <% end %>
-                    <td class="lft"  >   <%=   op.option %>  </td>
+                    <td class="lft"  >   <%=simple_format   op.option %>  </td>
                   </tr>
               <% end %>
 
@@ -77,7 +80,7 @@
         </table>
 
         </b><br />
-
+        <div align="right "  >Category:<%= @answer.question.category.category %></div>
         <%= f.submit   :id =>"procedure_submit_button" , :name=>"to",:value=>"timer" , :style => "display: none" ,:remote  => true%>
 
        <div align="center">
