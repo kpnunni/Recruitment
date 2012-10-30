@@ -6,8 +6,9 @@
 
         <form class="filter_form">
 
-            <table  cellpadding="5" align="right"  >
+            <table  cellpadding="5" class='filter_table' >
               <tr>
+                <td width="60%" ></td>
                 <th>Type:</th>
                 <% if params[:filter].nil?  %>
                     <td><%= select("filter","type", [["Active",1],["Inactive",0]], { :include_blank => true}) %></td>
@@ -18,12 +19,12 @@
                  <th>Email:</th>
 
                 <% if !params[:search].nil?  %>
-                    <td align="right" ><%= text_field_tag "search" , params[:search] %></td>
+                    <td><%= text_field_tag "search" , params[:search] %></td>
                 <% else  %>
-                    <td align="right" ><%= text_field_tag "search"  %></td>
+                    <td><%= text_field_tag "search"  %></td>
                 <% end  %>
 
-                <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+                <td class="dropt" title="search"><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
 
 
                 </tr>

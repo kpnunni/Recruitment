@@ -20,14 +20,16 @@
     <h1>Exams</h1>
        <form class="filter_form">
 
-            <table  cellpadding="5" align="right"  >
+            <table  cellpadding="5" class="filter_table"  >
               <tr>
+                <td width="60%" ></td>
                 <th>Created by:</th>
-                <th>From:</th>
-                <th>To:</th>
+                <th width="20%" >From:</th>
+                <th width="20%">To:</th>
                 <th>Name:</th>
                 </tr>
                 <tr>
+                  <td width="60%" ></td>
                 <% if params[:search].nil?  %>
 
                     <td><%= select("search","by", @users.collect {|s|

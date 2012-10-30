@@ -27,8 +27,9 @@
       <form class="filter_form">
 
 
-            <table  cellpadding="5" align="right"  >
+            <table  cellpadding="5" class="filter_table"  >
               <tr>
+                <td width="60%" ></td>
                 <th>Category:</th>
                 <th>Complexity:</th>
                 <th>Type:</th>
@@ -40,6 +41,7 @@
               </tr>
 
               <tr>
+                <td width="60%" ></td>
                <% if params[:search].nil?  %>
 
                 <td><%= select("search","category_id", @category.collect {|s|
@@ -94,7 +96,7 @@
 
             </form>
        </div>
-     <br/><br/><br/><br/><br/>
+
       <% end %>
 
     <div id='flash-notice' style="color: #0a7113;" ><b><%= flash[:notice] %></b></div>
