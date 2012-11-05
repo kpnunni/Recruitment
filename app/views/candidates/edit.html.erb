@@ -5,7 +5,7 @@
 
 
 
-<%= form_for  @candidate  do |f| %>
+<%= nested_form_for  @candidate  do |f| %>
 
 
    <% if @candidate.errors.any? %>
@@ -69,46 +69,50 @@
           </tr>
         </table>
         <br />
-        <h3>Experiences</h3>
+        <h3>Experiences:</h3>
 
-        <table border="3" width="100%"  >
+        <table width="75%" >
           <tr>
-            <th>from_date</th>
-            <th>to_date</th>
-            <th>experience_in</th>
-            <th>experience_from</th>
-            <th></th>
+            <th width="20%" >From date:<%= image_tag 'mandatory.png' %></th>
+            <th width="20%">To date:<%= image_tag 'mandatory.png' %></th>
+            <th width="20%">Experience in:<%= image_tag 'mandatory.png' %></th>
+            <th width="20%">Experience_from:</th>
+            <th width="20%"></th>
           </tr>
           <% i=0 %>
-          <%= f.fields_for :experiences  do |op| %>
+           <%= f.fields_for :experiences  do |op| %>
               <tr>
                 <td><%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>                </td>
                 <td><%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>                </td>
                 <td><%= op.text_field :experience_in ,:class=>"text_box3"%></td>
                 <td><%= op.text_field :experience_from,:class=>"text_box3" %></td>
-                <td width="5%"  ><%= link_to  image_tag('delete.png'), [@candidate,@experiences[i] ] , method: :delete, data: { confirm: 'Are you sure?' }, :class=>"dropt", :title=>"delete"  %></td>
+                <%if !@candidate.experiences[i].nil?&& @candidate.experiences[i].id.present? %>
+                    <td><%= link_to image_tag('delete.png',:title =>"Remove" ), candidate_experience_path(@candidate,@candidate.experiences[i]) , method: :delete, data: { confirm: 'Are you sure?' }   %> </td>
+                <% else %>
+                    <td><%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %> </td>
+                <% end %>
+
                 <% i+=1 %>
               </tr>
           <% end %>
         </table>
-        <%= link_to  image_tag('addc.png'), new_candidate_experience_path(@candidate), :class=>"dropt", :title=>"add new experience"  %>
-
+        <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new experience"  ), :experiences %></p>
 
         <br /><h3>Qualifications</h3>
 
-        <table border="3" width="100%" >
+        <table width="96%" >
           <tr>
-            <th>qualification_in</th>
-            <th>qualification_from</th>
-            <th>from_date</th>
-            <th>to_date</th>
-            <th>mark_percentage</th>
-            <th>comments</th>
+            <th width="15%" >Qualification_in<%= image_tag 'mandatory.png' %></th>
+            <th width="15%" >Qualification_from</th>
+            <th width="15%" >From_date<%= image_tag 'mandatory.png' %></th>
+            <th width="15%" >To_date<%= image_tag 'mandatory.png' %></th>
+            <th width="15%" >Mark_percentage</th>
+            <th width="15%" >Comments</th>
+            <th width="10%" ></th>
 
-            <th width="5%" ></th>
           </tr>
           <% i=0 %>
-          <%= f.fields_for :qualifications  do |op| %>
+           <%= f.fields_for :qualifications  do |op| %>
               <tr>
                 <td><%= op.text_field :qualification_in,:class=>"text_box3" %></td>
                 <td><%= op.text_field :qualification_from,:class=>"text_box3" %></td>
@@ -116,12 +120,17 @@
                 <td><%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%></td>
                 <td><%= op.text_field :mark_percentage,:class=>"text_box3" %></td>
                 <td><%= op.text_field :comments ,:class=>"text_box3"%></td>
-                <td><%= link_to  image_tag('delete.png'), [@candidate,@qualifications[i] ] , method: :delete, data: { confirm: 'Are you sure?' }, :class=>"dropt", :title=>"delete"  %></td>
+                <%if !@candidate.qualifications[i].nil?&& @candidate.qualifications[i].id.present? %>
+                    <td><%= link_to image_tag('delete.png',:title =>"Remove" ), candidate_qualification_path(@candidate,@candidate.qualifications[i]) , method: :delete, data: { confirm: 'Are you sure?' }   %> </td>
+                <% else %>
+                    <td><%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %> </td>
+                <% end %>
+
                 <% i+=1 %>
               </tr>
           <% end %>
         </table>
-        <%= link_to  image_tag('addc.png'), new_candidate_qualification_path(@candidate), :class=>"dropt", :title=>"add new qualification"  %>
+                <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
 
 
 

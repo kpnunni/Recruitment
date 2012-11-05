@@ -74,8 +74,6 @@ class SessionsController < ApplicationController
       @user=User.new
     else
       @candidate=Candidate.new
-      2.times{@candidate.experiences.build }
-      2.times{@candidate.qualifications.build }
       @candidate.build_user
     end
   end
@@ -95,7 +93,7 @@ class SessionsController < ApplicationController
     end
     if @user.has_role?('Candidate')
       render 'forgotpass'
-      flash[:notice]="Candidate can't do this."
+      flash[:notice]="Candidate not able to do this."
       return
     end
     if !@user.isAlive?

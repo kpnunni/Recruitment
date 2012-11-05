@@ -2,7 +2,7 @@
   <div class="span12 offset0">
 
 
-<%= form_for  @candidate, :html => { :multipart => true }  do |f| %>
+<%= nested_form_for  @candidate, :html => { :multipart => true }  do |f| %>
 
 
    <% if @candidate.errors.any? %>
@@ -69,15 +69,15 @@
         <%= f.file_field :resume %>
         <br />
                 <br />
-        <h3>Experiences</h3>
+        <h3>Experiences:</h3>
 
-        <table border="3" width="100%"  >
+        <table width="75%" >
           <tr>
-            <th>from_date<%= image_tag 'mandatory.png' %></th>
-            <th>to_date<%= image_tag 'mandatory.png' %></th>
-            <th>experience_in<%= image_tag 'mandatory.png' %></th>
-            <th>experience_from</th>
-
+            <th width="20%" >From date:<%= image_tag 'mandatory.png' %></th>
+            <th width="20%">To date:<%= image_tag 'mandatory.png' %></th>
+            <th width="20%">Experience in:<%= image_tag 'mandatory.png' %></th>
+            <th width="20%">Experience_from:</th>
+            <th width="20%"></th>
           </tr>
            <%= f.fields_for :experiences  do |op| %>
               <tr>
@@ -85,23 +85,23 @@
                 <td><%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>                </td>
                 <td><%= op.text_field :experience_in ,:class=>"text_box3"%></td>
                 <td><%= op.text_field :experience_from,:class=>"text_box3" %></td>
-
+                <td><%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %> </td>
               </tr>
           <% end %>
         </table>
-
+        <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new experience"  ), :experiences %></p>
 
         <br /><h3>Qualifications</h3>
 
-        <table border="3" width="100%" >
+        <table width="96%" >
           <tr>
-            <th>qualification_in<%= image_tag 'mandatory.png' %></th>
-            <th>qualification_from</th>
-            <th>from_date<%= image_tag 'mandatory.png' %></th>
-            <th>to_date<%= image_tag 'mandatory.png' %></th>
-            <th>mark_percentage</th>
-            <th>comments</th>
-
+            <th width="15%" >Qualification_in<%= image_tag 'mandatory.png' %></th>
+            <th width="15%" >Qualification_from</th>
+            <th width="15%" >From_date<%= image_tag 'mandatory.png' %></th>
+            <th width="15%" >To_date<%= image_tag 'mandatory.png' %></th>
+            <th width="15%" >Mark_percentage</th>
+            <th width="15%" >Comments</th>
+            <th width="10%" ></th>
 
           </tr>
            <%= f.fields_for :qualifications  do |op| %>
@@ -112,9 +112,11 @@
                 <td><%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%></td>
                 <td><%= op.text_field :mark_percentage,:class=>"text_box3" %></td>
                 <td><%= op.text_field :comments ,:class=>"text_box3"%></td>
-               </tr>
+                <td><%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %> </td>
+              </tr>
           <% end %>
         </table>
+                <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
 
            <br /> <br />
         <%= f.submit "Register" ,class: "btn btn-large btn-primary" %>

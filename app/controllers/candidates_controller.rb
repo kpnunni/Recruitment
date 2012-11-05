@@ -27,8 +27,8 @@ class CandidatesController < ApplicationController
     @candidate=Candidate.find(params[:id])
     @candidate.build_recruitment_test if !@candidate.schedule.nil?&&@candidate.recruitment_test.nil?
     @user=@candidate.user
-    @experiences=@candidate.experiences.all
-    @qualifications=@candidate.qualifications.all
+  #  @experiences=@candidate.experiences.all
+  #  @qualifications=@candidate.qualifications.all
   end
 
   def create
@@ -40,8 +40,8 @@ class CandidatesController < ApplicationController
       if @candidate.save
         redirect_to success_sessions_path(:as=>"can")
       else
-        2.times{@candidate.experiences.build }
-        2.times{@candidate.qualifications.build }
+       # 2.times{@candidate.experiences.build }
+       # 2.times{@candidate.qualifications.build }
         redirect_to   '/sessions/signup' ,:notice =>  "Error,Please give correct inputs"
       end
       return
@@ -50,9 +50,9 @@ class CandidatesController < ApplicationController
       # UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
       redirect_to candidate_path(@candidate)
     else
-      2.times{@candidate.experiences.build }
-      2.times{@candidate.qualifications.build }
-      render action: "new"
+     # 2.times{@candidate.experiences.build }
+     # 2.times{@candidate.qualifications.build }
+      render "new"
     end
   end
 
@@ -61,8 +61,8 @@ class CandidatesController < ApplicationController
 
     if params[:from]=="update"
       if params[:candidate][:address]==""||params[:candidate][:phone1]==""||params[:candidate][:technology]==""||params[:candidate][:certification]==""||params[:candidate][:skills]==""
-        2.times{@candidate.experiences.build } if @candidate.experiences.count==0
-        2.times{@candidate.qualifications.build } if @candidate.qualifications.count==0
+       # 2.times{@candidate.experiences.build } if @candidate.experiences.count==0
+       # 2.times{@candidate.qualifications.build } if @candidate.qualifications.count==0
         flash[:notice]="You should fill all mandatory fields"
         render '/answers/candidate_detail'
         return
@@ -72,8 +72,8 @@ class CandidatesController < ApplicationController
           redirect_to '/answers/instructions'
         end
       else
-        2.times{@candidate.experiences.build } if @candidate.experiences.count==0
-        2.times{@candidate.qualifications.build } if @candidate.qualifications.count==0
+       # 2.times{@candidate.experiences.build } if @candidate.experiences.count==0
+       # 2.times{@candidate.qualifications.build } if @candidate.qualifications.count==0
         render '/answers/candidate_detail'
       end
     else
@@ -100,8 +100,8 @@ class CandidatesController < ApplicationController
 
   def new
     @candidate=Candidate.new
-    2.times{@candidate.experiences.build }
-    2.times{@candidate.qualifications.build }
+   # 2.times{@candidate.experiences.build }
+   # 2.times{@candidate.qualifications.build }
     @candidate.build_user
     respond_to do |format|
       format.html # new.html.erb

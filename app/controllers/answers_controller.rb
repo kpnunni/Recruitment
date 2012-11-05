@@ -70,8 +70,6 @@ class AnswersController < ApplicationController
 
   def candidate_detail
       @candidate=current_user.candidate
-      2.times{@candidate.experiences.build }    if @candidate.experiences.count==0
-      2.times{@candidate.qualifications.build }  if @candidate.qualifications.count==0
 
   end
   def candidate_update

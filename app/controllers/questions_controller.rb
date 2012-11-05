@@ -47,7 +47,7 @@ class QuestionsController < ApplicationController
         @categorys=Category.all
         @category=Category.new
         @types=Type.all
-        5.times { @question.options.build }
+        4.times { @question.options.build }
         respond_to do |format|
           format.html
           format.json { render json: @question }
@@ -74,6 +74,8 @@ class QuestionsController < ApplicationController
         @categorys=Category.all
         @category=Category.new
         @types=Type.all
+  #      4.times { @question.options.build }
+
         flag=0
         if params[:question][:question]==""&&params[:question][:question_image].nil?
             flash[:notice]="Question or image should not be blank"
@@ -82,7 +84,7 @@ class QuestionsController < ApplicationController
         end
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
         if flag==0
-            5.times { @question.options.build }
+   #         4.times { @question.options.build }
             flash[:notice]="atleast one option should be true"
             render action: "new"
             return
@@ -91,7 +93,7 @@ class QuestionsController < ApplicationController
           if @question.save
               format.html { redirect_to questions_path , notice: 'Question was successfully created.' }
           else
-            5.times { @question.options.build }
+    #        4.times { @question.options.build }
             format.html { render action: "new" }
             format.json { render json: @question.errors, status: :unprocessable_entity }
           end

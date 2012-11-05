@@ -9,7 +9,7 @@
     <% end %>
     </div>
   <div class="left"   >
-    <%= form_for  (@question ) do |f1| %>
+    <%= nested_form_for  (@question ) do |f1| %>
 
 
    <% if @question.errors.any? %>
@@ -55,19 +55,20 @@
         <table>
           <tr>
             <th>Options</th>
-            <th>is right option?</th>
+            <th>Right option?</th>
           </tr>
         <%= f1.fields_for :options do |op| %>
               <tr>
 
            <td><%= op.text_field :option %></td>
-           <td><%= op.check_box :is_right %></td>
+           <td class="lft" ><%= op.check_box :is_right %></td>
+              <td>  <%#= op.link_to_remove image_tag('delete.png')  %> </td>
               </tr>
 
         <% end %>
 
         </table>
-
+        <p><%= f1.link_to_add image_tag('addc.png',:title =>"Add new option"  ), :options %></p>
 
         <%= f1.submit "Create"  ,class: "btn btn-large btn-primary"%>
     <% end %>

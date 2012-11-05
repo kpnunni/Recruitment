@@ -3,7 +3,7 @@
   <div class="span12 offset0">
 
 
-<%= form_for  (@question ) do |f1| %>
+<%= nested_form_for  (@question ) do |f| %>
 
 
    <% if @question.errors.any? %>
@@ -30,53 +30,56 @@
             <th>Category</th>
           </tr>
           <tr>
-            <td><%= f1.select("complexity_id", @complexity.collect {|s| [s.complexity, s.id ] }, { :selected => @question.complexity_id}) %></td>
+            <td><%= f.select("complexity_id", @complexity.collect {|s| [s.complexity, s.id ] }, { :selected => @question.complexity_id}) %></td>
 
 
 
-        <td><%= f1.select("category_id", @category.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
+        <td><%= f.select("category_id", @category.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
 
           </tr>
         </table>
 
-        <%= f1.label :Question %>
-        <%= f1.text_area  :question, :rows=>10 ,:class=>"quest"%>
+        <%= f.label :Question %>
+        <%= f.text_area  :question, :rows=>10 ,:class=>"quest"%>
 
         <% if !@question.question_image.to_s.include?("missing.png") %>
         <%=image_tag @question.question_image.url(:original)   %>
         <%= link_to image_tag('delete.png') ,  delete_image_question_path(@question) ,data: {confirm: 'are you sure'} ,:title => "delete" %>
         <% end %>
 
-        <%= f1.label :question_image  %>
-        <%= f1.file_field :question_image %>
+        <%= f.label :question_image  %>
+        <%= f.file_field :question_image %>
 
-        <%= f1.label :Allowed_time %>
-        <%= f1.text_field :allowed_time,   :class => "text_box" %>(in sec)
+        <%= f.label :Allowed_time %>
+        <%= f.text_field :allowed_time,   :class => "text_box" %>(in sec)
 
 
 
-        <table>
+        <table width="32%" >
           <tr>
             <th>Options</th>
-            <th>is right option?</th>
+            <th>Right option?</th>
             <th></th>
           </tr>
           <% i=-1 %>
-        <%= f1.fields_for :options do |op| %>
+        <%= f.fields_for :options do |op| %>
               <tr>
              <% i+=1 %>
            <td><%= op.text_field :option %></td>
-           <td><%= op.check_box :is_right %></td>
+           <td class="lft" >&nbsp;&nbsp;&nbsp;<%= op.check_box :is_right %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+           <% if @question.options[i].present? %>
             <td><%= link_to image_tag('delete.png') , question_option_path(@question,@opt[i].id) ,:method =>  :delete,data: {confirm: 'are you sure'}  %></td>
-
+           <% else %>
+               <td>  <%= op.link_to_remove  image_tag('delete.png',:title=>"Remove")%> </td>
+           <% end %>
               </tr>
 
         <% end %>
 
         </table>
-         <%= link_to  image_tag('addc.png'), new_question_option_path(@question),:title=>"Add one more option" %>
-         <br />
-        <%= f1.submit "Update",class: "btn btn-large btn-primary"%>
+         <%= f.link_to_add  image_tag('addc.png',:title=>"Add one more option"),:options %>
+         <br/>      <br/>
+        <%= f.submit "Update",class: "btn btn-large btn-primary"%>
     <% end %>
       <br /><%= link_to  image_tag('back.png')  ,questions_path %>
   </div>

@@ -96,7 +96,7 @@
 
 
     <% if candidate.schedule.nil?&&current_user.has_role?('Schedule')   %>
-        <td width="15%" class="dropt" title="schedule a test"  ><%= link_to  image_tag('schedule.png'), onecan_schedule_path(candidate)%></td>
+        <td width="15%" class="dropt" title="schedule a test"  ><%= link_to  'Schedule Now', onecan_schedule_path(candidate)%></td>
     <% elsif current_user.has_role?('Re Schedule')&&candidate.recruitment_test.nil? %>
         <td width="15%" class="lft"  ><%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), onecan_schedule_path(candidate)%></td>
     <% elsif current_user.has_role?('Re Schedule')&&!candidate.recruitment_test.nil? %>
