@@ -5,6 +5,9 @@
   </head>
   <body>
     <h2>Hi <%= @user.candidate.name %>,</h2>
+     <p>
+     <%=simple_format  @content.body %>
+     </p>
     <p>
       Test details:<br/>
       Scheduled date is: <%= @user.candidate.schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>
@@ -13,7 +16,6 @@
     <p>
       To login to the site, just follow this link: <%= @url %>.
     </p>
-      <p>This will be your new schedule for the Suyati online test. If you got any schedule details before you can ignore that. </p>
-    <p>Best wishes..</p>
+
   </body>
 </html>

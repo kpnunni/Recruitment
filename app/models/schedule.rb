@@ -1,6 +1,6 @@
 class Schedule < ActiveRecord::Base
   attr_accessor :candidate_ids
-   attr_accessible  :exam_id,:sh_date,:candidate_ids
+   attr_accessible  :created_by,:updated_by,:exam_id,:sh_date,:candidate_ids
   has_many :candidates
   belongs_to :exam
   accepts_nested_attributes_for :candidates
@@ -28,5 +28,28 @@ class Schedule < ActiveRecord::Base
        end
     end
     self.destroy if self.candidates.empty?
+  end
+
+
+  def self.filtered search
+      if search.nil?
+        return @schedule=Schedule.all(:order => 'created_at DESC')
+      end
+       by=range=Schedule.all(:order => 'created_at DESC')
+       by.select! {|schedul| schedul.created_by.include?(search["by"]) }             if  search["by"]!=""
+       range=Question.where(:created_at => (search[:from].to_date)..(search[:to].to_date))     if search["from"]!="" && search["to"]!=""
+      @schedules=by&range
+  end
+
+  def self.search(search)
+    if search=="For today"
+      where("sh_date between ? and ?",Date.today-1.day ,Date.tomorrow  )
+    elsif search=="For this week"
+     where("sh_date between ? and ?",Date.today.beginning_of_week,Date.today.end_of_week)
+    elsif search=="For this month"
+          where("sh_date between ? and ?",Date.today.beginning_of_month,Date.today.end_of_month)
+    else
+     find(:all)
+   end
   end
 end

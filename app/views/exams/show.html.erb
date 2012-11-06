@@ -1,12 +1,12 @@
 <div class="row">
   <div class="span12 offset0">
-                  <h1>Question Details</h1>
+                  <h1>Exam Details</h1>
 
         <b>name:</b><%= @exam.name %> <br />
         <b>no_of_question:</b><%= @exam.no_of_question  %> <br />
         <b>Complexity:</b><%= @exam.complexity.complexity  %> <br />
         <b>description:</b><%= @exam.description  %> <br />
-        <b>Total time:</b><%= @exam.total_time/60.0  %> min <br />
+        <b>Total time:</b><%= @exam.total_time/1.minute   %> minutes <br />
         <b>created_by:</b><%= @exam.created_by  %>  <br />
         <b>created_at:</b><%= @exam.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %>  <br />
         <b>modified_by:</b><%= @exam.modified_by %> <br />
@@ -24,8 +24,7 @@
     <br />
 
 
-    <h2>    <%= link_to 'question paper'.upcase ,question_paper_exam_path(@exam) %>
-    </h2>
+
 
     <b>Question Pattern</b>
 
@@ -49,6 +48,28 @@
       <% end %>
     </table>
 
+    <h2>    <%='question paper'.upcase %>
+    </h2>
+    <table width="100%"  border="10" bordercolor="green "   >
+      <tr>
+        <th>No:</th>
+        <th>question</th>
+        <th>allowed_time</th>
+        <th>category</th>
+        <th>Complexity</th>
+      </tr>
+
+      <% count=0 %>
+      <% @qpaper.each do |qpaper| %>
+          <tr>
+            <td><%= count+=1 %></td>
+            <td class="lft" ><%= qpaper.question  %></td>
+            <td><%= qpaper.allowed_time %></td>
+            <td><%= qpaper.category.category   %></td>
+            <td><%= qpaper.complexity.complexity    %></td>
+          </tr>
+      <% end %>
+    </table>
 
 
 

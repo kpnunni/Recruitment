@@ -1,11 +1,20 @@
 <div class="row">
-  <div class="span10 offset0">
+  <div class="span12 offset0">
 
 <h3 align="center" > <br /> <br />
-  <%=image_tag 'congrats.png' %><br /><br />
-  You are successfully completed the online recruitment test.  <br /><br />
+
+
+  <% if @user.candidate.recruitment_test.mark_percentage>=70%>
+     Congratulations! you have got good score
+  <% elsif @user.candidate.recruitment_test.mark_percentage<70 &&@user.candidate.recruitment_test.mark_percentage>=50 %>
+       your score is satisfactory
+  <% elsif @user.candidate.recruitment_test.mark_percentage<50&&@user.candidate.recruitment_test.mark_percentage>=25 %>
+         your score is average
+  <% end %>
+  <br /><br />
   Result will be mail to your account soon.     <br /><br />
   Best of luck.  <br />
+          <br /><br />  <h2><%=link_to 'sign out', '/signout',method: :delete   %></h2>
 
 </h3>
 

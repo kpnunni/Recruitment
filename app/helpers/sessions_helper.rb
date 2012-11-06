@@ -1,7 +1,7 @@
 module SessionsHelper
   def sign_in(user)
-    cookies[:remember_token] = {:value =>user.remember_token,:expires => 1.day.from_now }
     self.current_user = user
+    cookies[:remember_token] = user.remember_token if cookies[:remember_token].nil?
   end
 
   def current_user=(user)
@@ -16,6 +16,7 @@ module SessionsHelper
   end
   def sign_out
     self.current_user = nil
+    session[:remember_token]=nil
     cookies.delete(:remember_token)
   end
 

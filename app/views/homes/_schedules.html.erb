@@ -1,0 +1,10 @@
+<table border="3" width="45%" >
+
+           <% @schedules.each {|s|  %>
+               <tr>
+                 <td>
+               <%=link_to  s.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(s)   %>
+                 </td>
+               </tr>
+           <% } %>
+</table>

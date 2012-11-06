@@ -10,9 +10,12 @@
 <% @instructions.each do |instruction| %>
   <tr >
     <td class="lft"  ><%= instruction.instruction %></td>
-    <td width="5%" ><%= link_to image_tag('edit.png'), edit_instruction_path(instruction) %></td>
-    <td width="5%" ><%= link_to  image_tag('delete.png'), instruction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
+    <td width="5%" ><%= link_to image_tag('edit.png'), edit_instruction_path(instruction) , :class=>"dropt", :title=>"edit" %></td>
+    <% if instruction.exams.empty?  %>
+    <td width="5%" ><%= link_to  image_tag('delete.png'), instruction, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"dropt", :title=>"delete"  %></td>
+    <% else %>
+    <td width="5%" ><%=image_tag('delete.png', :title=>"first delete this instruction from exams.")  %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

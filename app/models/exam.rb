@@ -10,6 +10,24 @@ class Exam < ActiveRecord::Base
 
   def generate_question_paper
 
+
+    @categorys = Category.all
+    @question_paper=Array.new
+
+
+    if self.complexity_id.to_i == 4
+      @categorys.each do |category|
+        self.subj[category.category]=0     if self.subj[category.category].nil?
+        nos=self.subj[category.category].to_i
+        if nos!=0
+           @questions=Question.where("category_id = ?",category.id ).shuffle.first(nos)
+           @questions.each {|q| @question_paper<<q }
+        end
+
+      end
+      self.questions=@question_paper
+      return   @question_paper.count
+    end
     if self.complexity_id.to_i == 2
       h=0.5
       l=0.2
@@ -21,8 +39,7 @@ class Exam < ActiveRecord::Base
       l=0.5
     end
 
-    @categorys = Category.all
-    @question_paper=Array.new
+
 
     #high questions  from each category
     comp_id=Complexity.find_by_complexity(:high).id
@@ -59,6 +76,16 @@ class Exam < ActiveRecord::Base
      self.questions=@question_paper
     @question_paper.count
   end
-
-
+  
+  def self.filtered search
+      if search.nil?
+        return @exam=Exam.all
+      end
+       name=by=range=Exam.all(:order => 'created_at DESC')
+       name.select! {|xam| xam.name.include?(search["name"]) }             if  search["name"]!=""
+       by.select! {|xam| xam.created_by.include?(search["by"]) }             if  search["by"]!=""
+       range=Exam.where(:created_at => (search[:from].to_date)..(search[:to].to_date))     if search["from"]!="" && search["to"]!=""
+      @exams=name&by&range
+  end
+    
 end

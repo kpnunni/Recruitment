@@ -1,12 +1,50 @@
     <div class="row">
       <div class="span12 offset0">
-        <h3 align="right" class="dropt" title="add new user"  ><%= link_to image_tag('adduser.png'), new_user_path %></h3>
+        <h3 align="right"  ><%= link_to image_tag('adduser.png'), new_user_path, :class=>"dropt", :title=>"add new user" %></h3>
         <h1>Users</h1>
-<table border="3" width="85%" align="center"  >
+
+
+        <form class="filter_form">
+
+            <table  cellpadding="5" class='filter_table' >
+              <tr>
+                <td width="60%" ></td>
+                <th>Type:</th>
+                <% if params[:filter].nil?  %>
+                    <td><%= select("filter","type", [["Active",1],["Inactive",0]], { :include_blank => true}) %></td>
+                <% else  %>
+                    <td><%= select("filter","type", [["Active",1],["Inactive",0]], { :include_blank => true,:selected =>params[:filter][:type]}) %></td>
+                 <% end  %>
+
+                 <th>Email:</th>
+
+                <% if !params[:search].nil?  %>
+                    <td><%= text_field_tag "search" , params[:search] %></td>
+                <% else  %>
+                    <td><%= text_field_tag "search"  %></td>
+                <% end  %>
+
+                <td class="dropt" title="search"><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+
+
+                </tr>
+           </table>
+
+            </form>
+
+
+
+
+
+
+
+
+
+<table border="3" width="100%" align="center"  >
   <tr>
     <th>User Email</th>
     <th>User Roles</th>
-    <th>isAlive?</th>
+    <th>Alive?</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,15 +52,23 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td width="50%" class="lft"  ><%= user.user_email %></td>
-    <td width="25%" >
+    <td width="20%" class="lft"  ><%= user.user_email %></td>
+    <td width="60%" class="lft"  >
       <% user.roles.each do |role| %>
           <%="|"+ role.role_name+"|" %>
       <% end %>
     </td>
-    <td width="15%" class="dropt" title="yes/no" ><%= user.isAlive? ? image_tag('yes.png') :image_tag('no.png') %></td>
+    <% if user.isAlive?  %>
+    <td width="10%"><%= image_tag 'green.png', :class=>"dropt", :title=>"yes"%></td>
+    <% else %>
+    <td width="10%"><%= image_tag 'red.png', :class=>"dropt", :title=>"no" %></td>
+    <% end %>
     <td class="dropt" title="edit" ><%= link_to image_tag('edit.png'), edit_user_path(user) %></td>
-    <td class="dropt" title="kill" ><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put, data: { confirm: 'Are you sure?' } %></td>
+    <% if current_user.has_role?('Manage Login')  %>
+        <td class="dropt" title="Make Active/Inactive" ><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put%></td>
+    <% else %>
+        <td class="dropt" title="kill" ><%= image_tag('kill.png')%></td>
+    <% end %>
     <td class="dropt" title="delete" ><%= link_to  image_tag('delete.png',:alt => "Delete Entry"), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
   </tr>

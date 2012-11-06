@@ -1,34 +1,85 @@
 <div class="row">
   <div class="span12 offset0"><h1>Results</h1>
 
+
+    <form class="filter_form">
+
+      <table  cellpadding="5" class="filter_table"  >
+        <tr>
+          <td width="60%" ></td>
+          <th>Mark(min):</th>
+          <th>Mark(max):</th>
+          <th width="20%" >From:</th>
+          <th width="20%" >To:</th>
+          <th>Name:</th>
+        </tr>
+        <tr>
+          <td width="60%" ></td>
+          <% if params[:search].nil?  %>
+
+              <td><%= text_field_tag "search[min]" ,"",:class=>"text_box2" %></td>
+              <td><%= text_field_tag "search[max]" ,"",:class=>"text_box2" %></td>
+              <td><%= calendar_date_select_tag  "search[from]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= calendar_date_select_tag  "search[to]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= text_field_tag "search[name]" ,"",:class=>"text_box2" %></td>
+
+          <% else  %>
+              <td><%= text_field_tag "search[min]",params[:search][:min],:class=>"text_box2"  %></td>
+              <td><%= text_field_tag "search[max]",params[:search][:max],:class=>"text_box2"  %></td>
+              <td><%= calendar_date_select_tag "search[from]",params[:search]["from"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= calendar_date_select_tag  "search[to]",params[:search]["to"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
+              <td><%= text_field_tag "search[name]",params[:search][:name] ,:class=>"text_box2" %></td>
+          <% end  %>
+
+          <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+
+
+        </tr>
+      </table>
+
+    </form>
+
+
+
+
+
+
+
     <table border="3" cellpadding="5" width="100%"  >
       <tr>
-        <th>name</th>
-        <th>completed on</th>
-        <th>right answers</th>
-        <th>questions attended</th>
-        <th>total questions</th>
-        <th>mark(%)</th>
-        <th>status</th>
-        <th>comments</th>
-        <th></th>
+        <th width="20%">Candidate Name</th>
+        <th width="10%">Exam</th>
+        <th width="7%" >Total questions</th>
+        <th width="7%" >Questions attended</th>
+        <th width="6%">Right answers</th>
+
+        <th width="10%">Mark(%)</th>
+        <th width="5%">Status</th>
+        <th width="30%">Comments</th>
+        <th width="5%"></th>
       </tr>
 
       <% @recruitment_tests.each do |recruitment_test| %>
           <tr>
-            <td width="15%" class="lft" ><%= recruitment_test.candidate.name %></td>
-            <td width="20%" ><%= recruitment_test.completed_on.strftime("%b %d,%Y at %I:%M%p")%></td>
-            <td width="5%" ><%= recruitment_test.right_answers%></td>
-            <td width="10%" ><%= recruitment_test.no_of_question_attended%></td>
-            <td width="5%" ><%= recruitment_test.candidate.schedule.exam.questions.count%></td>
-            <td width="5%" ><%= recruitment_test.mark_percentage%></td>
-            <td width="5%" ><%= recruitment_test.is_passed%></td>
-            <td width="30%" class="lft"><%= recruitment_test.comments%></td>
+            <td class="lft" ><%= recruitment_test.candidate.name %></td>
+            <td class="lft" ><%= recruitment_test.candidate.schedule.exam.name %></td>
+            <td><%= recruitment_test.candidate.schedule.exam.questions.count%></td>
+            <td><%= recruitment_test.no_of_question_attended%></td>
+            <td  ><%= recruitment_test.right_answers%></td>
+            <td ><%= number_with_precision(recruitment_test.mark_percentage, :precision => 2)%></td>
+            <% if recruitment_test.is_passed=="Pending"  %>
+                <td><%= image_tag 'yellow.png', :class=>"dropt", :title=>"pending"%></td>
+            <% elsif recruitment_test.is_passed=="Passed"  %>
+                <td><%= image_tag 'green.png', :class=>"dropt", :title=>"passed"%></td>
+            <% else %>
+                <td><%= image_tag 'red.png', :class=>"dropt", :title=>"failed" %></td>
+            <% end %>
+            <td class="lft"><%= recruitment_test.comments%></td>
 
             <%if recruitment_test.is_passed=="Pending"%>
-            <td class="dropt" title="validate result" width="5%"><%=link_to image_tag('validated.png') , recruitment_test_path(recruitment_test) %></td>
+            <td class="dropt" title="validate result"><%=link_to image_tag('validated.png') , recruitment_test_path(recruitment_test) %></td>
             <% else %>
-            <td class="dropt" title="result validated" width="5%"><%=image_tag('validate.png') %></td>
+            <td class="dropt" title="result validated"><%=image_tag('validate.png') %></td>
             <% end %>
           </tr>
       <% end %>

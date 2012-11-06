@@ -321,6 +321,23 @@ select {
   width: 50px;
   color: #000000;
 }
+
+.text_box1 {
+  background-color: #ffffff;
+  width: 150px;
+  color: #000000;
+}
+.text_box2 {
+  background-color: #ffffff;
+  width: 100px;
+  color: #000000;
+}
+.text_box3 {
+  background-color: #ffffff;
+  width: 115px;
+  color: #000000;
+
+}
 .my_button {
 
   border-width: 1px;
@@ -403,14 +420,22 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 
 .countdown
 {
-font-family: "serif";
-font-size:25pt;
-display: block;
-height: 100%;
-margin: -20px 0 0 -20px;
+font-family: "Bank Gothic", "Futura", "Arial";
+font-size:15pt;
 opacity: .9;
-color: rgb(255, 255, 255);
 text-shadow: 0 0 30px rgb(0, 200, 255);
+  padding-top: 5px;
+  text-align: right;
+}
+
+.countdown1
+{
+font-family: "serif";
+font-size:15pt;
+ padding-bottom: 0px;
+opacity: .9;
+color: rgb(0, 0, 0);
+  text-align: right;
 }
 
 .qfont
@@ -426,18 +451,192 @@ text-spacing: 5px;
   text-align: left;
 }
 
+.rght{
+  text-align: right;
+}
 table.curvedEdges {
-  border:10px solid RoyalBlue;
+       vertical-align:top;
+     valign: "top";
+  border:10px solid #191970;
   -webkit-border-radius:13px;
   -moz-border-radius:13px;
   -ms-border-radius:13px;
   -o-border-radius:13px;
   border-radius:13px;
+ background-image: url("bg_topbar.gif");
+  text-align: start;
+
 }
-table.curvedEdges td, table.curvedEdges th {
-  border-bottom:2px dotted black;
-  padding:5px;
+table.curvedEdges td{
+       vertical-align:top;
+
+  border-bottom:1px dotted #191970;
+  padding:10px;
+
 }
+table.curvedEdges th{
+  border-bottom:4px dotted #191970;
+  padding:9px;
+         vertical-align:top;
+}
+.pagination {
+    padding: 3px;
+    margin: 3px;
+  }
+  .pagination a {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #aaaadd;
+    text-decoration: none;
+    color: #000099;
+  }
+  .pagination a:hover, .pagination a:active {
+    border: 1px solid #000099;
+    color: #000;
+  }
+  .pagination span.current {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #000099;
+    font-weight: bold;
+    background-color: #000099;
+    color: #FFF;
+  }
+  .pagination span.disabled {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #eee;
+    color: #ddd;
+  }
+
+ .right {
+    float: right;
+    width: 30%;
+
+}
+.left {
+    float: left;
+    width: 70%;
+}
+
+
+.select_home{
+   background-color: #ffffff;
+  width: 200px;
+   color: #000000;
+  padding:2px 10px;
+  box-shadow: 1px 1px 1px #09380f;
+  overflow: hidden;
+  border-radius: 19px 19px 19px 19px;
+}
+
+
+
+ .quest{
+   width: 100%;
+ }
+
+
+  .qno{
+
+    background-image-repeat: no-repeat;
+    text-align: center;
+    padding-top: 7px;
+    float: left;
+    width: 3%;
+    background-image: url('qno.png') ;
+    vertical-align: text-top;
+
+  }
+  .question{
+    font-family:serif;
+    font-size:12pt;
+    text-spacing: 5px;
+    padding-left: 2px;
+    float: right;
+    width: 96%;
+  }
+
+ .home_border{
+     vertical-align:top;
+         valign:top;
+
+ }
+  .home_border.th{
+    vertical-align:top;
+
+
+ }
+   .home_border.td{
+    vertical-align:top;
+     text-align: left;
+    valign:top;
+
+ }
+ .lft_home{
+       vertical-align:top;
+      text-align: left;
+           valign:top;
+ }
+ .filter_table{
+    background-image: url('border.jpg') ;
+    width: 100%;
+    border-radius:10px;
+
+ }
+ .notice{
+   background-color: #cdefff;
+   background-image: url('icon_success_lrg.gif') ;
+   background-repeat:no-repeat;
+   background-position:right;
+  color: #0a7113;
+  border: 1px solid #580eac;
+  padding: 10px;
+  border-radius:10px;
+  font-weight: bold;
+ }
+  .warning{
+  color: #ffb01f;
+  border: 1px solid #580eac;
+  padding: 10px;
+  background-color: #cdefff;
+   background-image: url('icon_warning_lrg.gif') ;
+   background-repeat:no-repeat;
+   background-position:right;
+  border-radius:10px;
+  font-weight: bold;
+ }
+  .error{
+  color: #8b161a;
+  border: 1px solid #580eac;
+  padding: 10px;
+  background-color: #cdefff;
+   background-image: url('icon_error_lrg.gif') ;
+   background-repeat:no-repeat;
+   background-position:right;
+  border-radius:10px;
+  font-weight: bold;
+ }
+  .alert{
+  color: #22c58b;
+  border: 1px solid #580eac;
+  padding: 10px;
+  background-color: #cdefff;
+   background-image: url('icon_warning_lrg.gif') ;
+   background-repeat:no-repeat;
+   background-position:right;
+  border-radius:10px;
+  font-weight: bold;
+ }
+
+
+
+
+
+
+
+
+
 
 
 

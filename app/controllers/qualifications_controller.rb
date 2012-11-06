@@ -8,7 +8,7 @@ class QualificationsController < ApplicationController
     @candidate=Candidate.find(params[:candidate_id])
     @qualification=@candidate.qualifications.build(params[:qualification])
     if @qualification.save
-      redirect_to  candidate_path(@candidate), :action => "new"
+      redirect_to  edit_candidate_path(@candidate), :action => "new"
     else
       render action: "new"
     end
@@ -17,7 +17,7 @@ class QualificationsController < ApplicationController
     @candidate=Candidate.find(params[:candidate_id])
     @qualification=@candidate.qualifications.find(params[:id])
     if @qualification.update_attributes(params[:qualification])
-      redirect_to candidate_path(@candidate) , notice: 'Qualification was successfully updated.'
+      redirect_to edit_candidate_path(@candidate) , notice: 'Qualification was successfully updated.'
     else
       render action: "edit"
     end
@@ -26,7 +26,7 @@ class QualificationsController < ApplicationController
     @candidate=Candidate.find(params[:candidate_id])
     @qualification=@candidate.qualifications.find(params[:id])
     @qualification.destroy
-    redirect_to candidate_path(@candidate) , notice: 'deleted.'
+    redirect_to edit_candidate_path(@candidate) , notice: 'deleted.'
   end
   def new
     @candidate=Candidate.find(params[:candidate_id])

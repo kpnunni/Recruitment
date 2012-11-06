@@ -1,9 +1,9 @@
 class RecruitmentTestsController < ApplicationController
         require 'will_paginate/array'
-     before_filter :chk_user
-
+     before_filter :chk_user , :except=> [:update ]
+     before_filter :chk_result, :only=> :show
   def index
-    @recruitment_tests = RecruitmentTest.all.paginate(:page => params[:page], :per_page => 20)
+    @recruitment_tests = RecruitmentTest.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
 
     respond_to do |format|
       format.html 
@@ -22,45 +22,20 @@ class RecruitmentTestsController < ApplicationController
   end
 
 
-  def new
-    @recruitment_test = RecruitmentTest.new
-
-    respond_to do |format|
-      format.html 
-      format.json { render json: @recruitment_test }
-    end
-  end
-
-
-  def edit
-    @recruitment_test = RecruitmentTest.find(params[:id])
-  end
-
-
-  def create
-
-
-
-    respond_to do |format|
-
-
-      if @recruitment_test.save
-        format.html { redirect_to '/homes/index', notice: 'RecruitmentTest was successfully created.' }
-        format.json { render json: '/homes/index', status: :created, location: @recruitment_test }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @recruitment_test.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-
   def update
     @recruitment_test = RecruitmentTest.find(params[:id])
 
     respond_to do |format|
       if @recruitment_test.update_attributes(params[:recruitment_test])
-        UserMailer.result_email(@recruitment_test.candidate.user).deliver
+        if @recruitment_test.is_passed=="Passed"
+          UserMailer.result_email(@recruitment_test.candidate.user).deliver
+          @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Selection Email"))}
+          @users.each {|admin| UserMailer.admin_result_email(admin,@recruitment_test.candidate).deliver }
+        end
+        if params[:from]=="feedback"
+           redirect_to congrats_answer_path(current_user.id)
+           return
+        end
         format.html { redirect_to recruitment_tests_path , notice: 'RecruitmentTest was successfully updated.' }
         format.json { head :no_content }
       else
@@ -81,10 +56,18 @@ class RecruitmentTestsController < ApplicationController
     end
   end
   def chk_user
-    if !current_user.has_role?('admin')
+    if !(current_user.has_role?('Validate Result')||current_user.has_role?('View Result'))
        redirect_to '/homes/index'
     end
 
   end
+  def chk_result
+    if !current_user.has_role?('Validate Result')
+       redirect_to '/homes/index'
+    end
+  end
+
+
+
 
 end

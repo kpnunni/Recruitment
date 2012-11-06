@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="span10 offset0">
+            <h1>Feed back</h1>
+
+    <%= form_for @recruitment_test   do |f| %>
+
+        <br />
+        Please put your feed back on how the online testing experience.<br />
+        Please mention if you come across any system errors.    <br />
+        If you think the question quality should be improved,<br />
+        if you have suggestions you would hav needed more time.<br />
+        Also note that your feed back is not any way related to your selection process.   <br />
+        It would be only taken towards our system improvment   <br />
+
+        <%= f.text_area :feedback , :row=>"10",:class=>"quest"%>
+
+
+        <br />
+        <%= f.submit "submit", :name=>"from",:value=>"feedback"  ,class: "button" %>
+
+    <% end %>
+
+
+  </div>
+</div>
