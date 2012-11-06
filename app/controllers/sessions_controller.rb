@@ -28,15 +28,15 @@ class SessionsController < ApplicationController
           sign_in user
           redirect_to '/homes/index'
         else
-          flash[:notice ] = 'Sorry, You can login only after getting date for the exam.'
+          flash[:error] = 'Sorry, You can login only after getting date for the exam.'
           render "new"
         end
       else
-        flash[:notice ] = 'Invalid email/password combination'
+        flash[:error] = 'Invalid email/password combination'
         render "new"
       end
     else
-        flash[:notice ] = 'Invalid email/password combination'
+        flash[:error] = 'Invalid email/password combination'
         render "new"
       end
 
