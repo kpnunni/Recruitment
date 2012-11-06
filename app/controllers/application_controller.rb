@@ -5,7 +5,12 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     if !signed_in?
-       redirect_to root_path
+       redirect_to '/signin'
+    else
+      if !current_user.isAlive&&!current_user.has_role?('Candidate')
+        sign_out
+        redirect_to '/signin'
+      end
     end
   end
 end

@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="span12 offset0">
+    <div>
+      <h1>Settings</h1>
+      <%= form_for @setting do |f| %>
+
+
+
+          <%= f.check_box :auto_result,:onClick=>"show_category()" %>Auto result calculation?
+          <div id="cutoff">
+            <table border="3" width="50%"   >
+              <tr>
+                <th>category</th>
+                <th>Cut off Percentage</th>
+              </tr>
+
+              <% @categories.sort.each_with_index do |cat,i| %>
+                  <tr>
+                    <td><%= cat.category %></td>
+                     <%=fields_for :categories_attributes do|del|  %>
+                      <td><%= del.select cat.id , @cut_off ,{ :selected=>cat.cutoff }  %></td>
+                     <% end %>
+
+                  </tr>
+              <% end %>
+            </table>
+          </div>
+
+
+          <br />
+          <%= f.submit "submit" ,class: "button" %>
+
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    function show_category()
+    {
+       if(document.getElementById('setting_auto_result').checked)
+       {
+           document.getElementById('cutoff').toggle();
+       }
+       else
+       {
+           document.getElementById('cutoff').style.display='none';
+       }
+
+    }
+</script>
+<script type="text/javascript">
+    document.ready = function()
+    {
+       if(document.getElementById('setting_auto_result').checked)
+       {
+         //  document.getElementById('cutoff').toggle();
+       }
+       else
+       {
+           document.getElementById('cutoff').style.display='none';
+       }
+
+    }
+</script>

@@ -1,8 +1,15 @@
 <div class="row">
-  <div class="span10 offset0">
+  <div class="span12 offset0">
+  <div id="new_category1" class="right"  >
+    <%= form_for @category   do |f1| %>
+         <b>New Category</b><br />
+        <%= f1.text_field :category%>
 
-
-<%= form_for  (@question ) do |f1| %>
+        <%= f1.submit "Add" ,class: "btn btn-large btn-primary",:name=>"by",:value=>"add" %><br />
+    <% end %>
+    </div>
+  <div class="left"   >
+    <%= nested_form_for  (@question ) do |f1| %>
 
 
    <% if @question.errors.any? %>
@@ -27,14 +34,17 @@
 
 
 
-        <td><%= f1.select("category_id", @category.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
-        <td><%= link_to 'new category',categories_path %>
+        <td><%= f1.select("category_id", @categorys.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
+        <td><%= link_to 'new category', '#',:onclick=>"show_category()"  %> </td>
 
           </tr>
         </table>
 
         <%= f1.label :Question %>
-        <%= f1.text_area  :question, :rows=>5 %>
+        <%= f1.text_area  :question, :rows=>10,:class=>"quest" %>
+
+        <%= f1.label :question_image  %>
+        <%= f1.file_field :question_image %>
 
         <%= f1.label :Allowed_time %>
         <%= f1.text_field :allowed_time , :value=>30,   :class => "text_box" %>(in sec)
@@ -44,23 +54,40 @@
         <table>
           <tr>
             <th>Options</th>
-            <th>is right option?</th>
+            <th>Right option?</th>
           </tr>
         <%= f1.fields_for :options do |op| %>
               <tr>
 
            <td><%= op.text_field :option %></td>
-           <td><%= op.check_box :is_right %></td>
+           <td class="lft" ><%= op.check_box :is_right %></td>
+              <td>  <%#= op.link_to_remove image_tag('delete.png')  %> </td>
               </tr>
 
         <% end %>
 
         </table>
-
+        <p><%= f1.link_to_add image_tag('addc.png',:title =>"Add new option"  ), :options %></p>
 
         <%= f1.submit "Create"  ,class: "btn btn-large btn-primary"%>
     <% end %>
+
       <br /><%= link_to image_tag('back.png') ,questions_path %>
+  </div>
   </div>
 </div>
 
+
+  <script type="text/javascript">
+   function show_category()
+   {
+
+       document.getElementById('new_category1').toggle();
+   }
+ </script>
+ <script type="text/javascript">
+    window.onload = function()
+    {
+        document.getElementById('new_category1').style.display='none';
+    }
+ </script>

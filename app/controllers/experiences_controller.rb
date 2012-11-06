@@ -10,7 +10,7 @@ class ExperiencesController < ApplicationController
       @candidate=Candidate.find(params[:candidate_id])
       @experience=@candidate.experiences.build(params[:experience])
       if @experience.save
-         redirect_to  candidate_path (@candidate ), :action => "new"
+         redirect_to  edit_candidate_path (@candidate ), :action => "new"
       else
          render action: "new"
       end
@@ -20,7 +20,7 @@ class ExperiencesController < ApplicationController
       @candidate=Candidate.find(params[:candidate_id])
       @experience=@candidate.experiences.find(params[:id])
       if @experience.update_attributes(params[:experience])
-        redirect_to candidate_path(@candidate) , notice: 'Experience was successfully updated.'
+        redirect_to edit_candidate_path(@candidate) , notice: 'Experience was successfully updated.'
       else
         render action: "edit"
       end
@@ -30,7 +30,7 @@ class ExperiencesController < ApplicationController
     @candidate=Candidate.find(params[:candidate_id])
     @experience=@candidate.experiences.find(params[:id])
     @experience.destroy
-    redirect_to candidate_path(@candidate) , notice: 'deleted.'
+    redirect_to edit_candidate_path(@candidate) , notice: 'deleted.'
   end
 
   def new

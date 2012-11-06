@@ -29,7 +29,7 @@
         <%#= f.text_field :sh_date %>
 
 
-       <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force %>
+       <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:value=>Time.now.strftime("%b %d %A,%Y at %I:%M%p") %>
 
 
 

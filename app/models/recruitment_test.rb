@@ -1,5 +1,5 @@
 class RecruitmentTest < ActiveRecord::Base
-   attr_accessible :candidate_id, :is_completed,:completed_on,:right_answers,:no_of_question_attended,:mark_percentage,:is_passed,:comments
+   attr_accessible :feedback ,:candidate_id, :is_completed,:completed_on,:right_answers,:no_of_question_attended,:mark_percentage,:is_passed,:comments
 
    belongs_to :candidate
 
@@ -41,5 +41,34 @@ class RecruitmentTest < ActiveRecord::Base
     right_ans=self.each_right_answers(cat)
     mark_p=(right_ans.to_f/q_nos)*100
   end
+
+
+  def self.filtered search
+      if search.nil?
+        return @test=RecruitmentTest.all(:order => 'created_at DESC')
+      end
+       name=range=min=max=RecruitmentTest.all(:order => 'created_at DESC')
+       name.select! {|test| test.candidate.name.include?(search["name"]) }             if  search["by"]!=""
+      min.select! {|test| test.mark_percentage>=search["min"].to_f }             if  search["min"]!=""
+      max.select! {|test| test.mark_percentage<=search["max"].to_f }             if  search["max"]!=""
+      range=RecruitmentTest.where(:created_at => (search[:from].to_date)..(search[:to].to_date))     if search["from"]!="" && search["to"]!=""
+      @test=name&range&min&max
+  end
+
+
+   def self.search(search)
+    if search=="For today"
+      where("completed_on between ? and ?",Date.today-1.day ,Date.tomorrow)
+    elsif search=="For this week"
+     where("completed_on between ? and ?",Date.today.beginning_of_week,Date.today.end_of_week)
+    elsif search=="For this month"
+          where("completed_on between ? and ?",Date.today.beginning_of_month,Date.today.end_of_month)
+    else
+     find(:all)
+   end
+  end
+
+
+
   end
 

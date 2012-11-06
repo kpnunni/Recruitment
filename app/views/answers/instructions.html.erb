@@ -7,19 +7,32 @@
        <%= image_tag 'point.png' %>
           <%= ins.instruction  %><br/>
     <% end %>
+      <%= image_tag 'point.png' %>This Exam contains
+      <% Category.all.each do |cat| %>
+
+         <% if @exam.questions.where("category_id=? ",cat.id ).count!=0 %>
+          <%= @exam.questions.where("category_id=? ",cat.id ).count %>
+          <%=cat.category    %> questions,
+         <% end %>
+        <% end %>
+        <br/>
+
+
         <%= image_tag 'point.png' %>Answering time for each questions may be different.<br/>
-    <%= image_tag 'point.png' %>Total time:<%= number_with_precision(@exam.total_time/60.0,:precision=>2)    %>min<br/>
+    <%= image_tag 'point.png' %>Total time:<%=  @exam.total_time/1.minute   %>minutes<br/>
     <%= image_tag 'point.png' %>Number of questions:<%= @exam.no_of_question %><br/>
     <%= image_tag 'point.png' %>Pop up new window when you click 'start exam'<br/>    </b>
+
+
 
     <br/>
 
     <% if @diff>-30 && @diff<30 %>
-        <h2><%= link_to 'start_exam >>',blank_answers_path ,:onclick=>"popup()" %>
+        <h2><%= link_to 'start_exam >>','/answers/blank' ,:onclick=>"popup()" %>
         </h2>
     <% else %>
         <h2><%= "Time remaining for your exam:"+ time_ago_in_words(@schedule.sh_date)   %></h2>
-
+                <h2><%= "You can start the exam in between 30 minutes before or after the schedule time"  %></h2>
         <h2><%=link_to 'sign out', '/signout',method: :delete   %></h2>
     <% end %>
 
@@ -29,7 +42,7 @@
  <script type="text/javascript">
    function popup()
    {
-       var a=window.open('/answers/new',"fullscreen=1",true);
+       var a=window.open('/answers/make',"Test","fullscreen=1,scrollbars=1",true);
        self.blur();
        a.focus();
 

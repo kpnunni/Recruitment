@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120917072044) do
+ActiveRecord::Schema.define(:version => 20121029073405) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
     t.integer  "question_id"
     t.string   "answer"
-    t.time     "time_taken"
+    t.integer  "time_taken"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20120917072044) do
     t.string   "category"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "cutoff"
   end
 
   create_table "complexities", :force => true do |t|
@@ -118,8 +119,13 @@ ActiveRecord::Schema.define(:version => 20120917072044) do
     t.text     "question"
     t.integer  "allowed_time"
     t.string   "created_by"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.string   "updated_by"
+    t.string   "question_image_file_name"
+    t.string   "question_image_content_type"
+    t.string   "question_image_file_size"
+    t.integer  "question_image"
   end
 
   create_table "recruitment_tests", :force => true do |t|
@@ -133,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20120917072044) do
     t.string   "comments"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
+    t.text     "feedback"
   end
 
   create_table "roles", :force => true do |t|
@@ -149,6 +156,21 @@ ActiveRecord::Schema.define(:version => 20120917072044) do
   create_table "schedules", :force => true do |t|
     t.integer  "exam_id"
     t.datetime "sh_date"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "created_by"
+    t.string   "updated_by"
+  end
+
+  create_table "settings", :force => true do |t|
+    t.boolean  "auto_result"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "templates", :force => true do |t|
+    t.string   "name"
+    t.text     "body"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

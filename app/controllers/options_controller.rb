@@ -39,8 +39,8 @@ class OptionsController < ApplicationController
         @option = @question.options.new(params[:option])
         respond_to do |format|
           if @option.save
-            format.html { redirect_to question_path(@question), notice: 'Option was successfully created.' }
-            format.json { render json: question_path(@question), status: :created, location: @option }
+            format.html { redirect_to edit_question_path(@question), notice: 'Option was successfully created.' }
+            format.json { render json: edit_question_path(@question), status: :created, location: @option }
           else
             format.html { render action: "new" }
             format.json { render json: @option.errors, status: :unprocessable_entity }
@@ -54,7 +54,7 @@ class OptionsController < ApplicationController
 
         respond_to do |format|
           if @option.update_attributes(params[:option])
-            format.html { redirect_to question_path(@question) , notice: 'Option was successfully updated.' }
+            format.html { redirect_to edit_question_path(@question) , notice: 'Option was successfully updated.' }
             format.json { head :no_content }
           else
             format.html { render action: "edit" }
@@ -69,7 +69,7 @@ class OptionsController < ApplicationController
         @option.destroy
 
         respond_to do |format|
-          format.html { redirect_to question_path(@question) }
+          format.html { redirect_to edit_question_path(@question) }
           format.json { head :no_content }
         end
       end

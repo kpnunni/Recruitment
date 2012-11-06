@@ -42,12 +42,17 @@ class InstructionsController < ApplicationController
 
     respond_to do |format|
       if @instruction.save
+        if params[:by]=="add"
+          format.html { redirect_to new_exam_path , notice: 'Instruction was successfully created.' }
+        else
         format.html { redirect_to instructions_path , notice: 'Instruction was successfully created.' }
         format.json { render json: @instructions, status: :created, location: @instructions }
+        end
       else
-        format.html { redirect_to instructions_path }
-        format.json { render json: @instruction.errors, status: :unprocessable_entity }
-      end
+
+        format.html { redirect_to instructions_path }   if params[:by]!="add"
+        format.html { redirect_to new_exam_path }   if params[:by]=="add"
+       end
     end
   end
 

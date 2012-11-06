@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-    before_filter :chk_user, :except => [:profile,:chgpass ,:updatepass]
+  skip_before_filter :authenticate ,:create
+  before_filter :chk_user, :except => [:profile,:chgpass ,:updatepass,:create]
   require 'will_paginate/array'
 
   def show
@@ -7,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users=User.where("id!= ?", current_user.id).paginate(:page => params[:page], :per_page => 20)
+    @users=User.filtered(params[:search],params[:filter],current_user.id).paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
       format.html
       format.json { render json: @users }
@@ -21,6 +22,28 @@ class UsersController < ApplicationController
 
   def create
     @user=User.new(params[:user])
+    if params[:emp]=="Register"
+      if @user.user_email=~/\A[\w+\-.]+@suyati.com+\z/i
+        @user.login_password="suyatiemp"
+        @user.login_password_confirmation="suyatiemp"
+        @user.encrypt_password
+        @user.roles.push(Role.find_by_role_name('Add Questions Only'))
+        UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save
+        redirect_to success_sessions_path(:as=>"emp")
+      else
+        flash[:error]="Invalid Employee Email id"
+        render '/sessions/signup'
+      end
+      return
+    end
+
+
+    if params[:user][:role_ids].nil?
+      flash[:error]="Select atleast one role"
+      render action:'new'
+      return
+    end
+
     @user.encrypt_password
 
 
@@ -36,12 +59,16 @@ class UsersController < ApplicationController
 
     @user=User.find(params[:id])
     @user.roles.delete_all
-
+    if params[:user][:role_ids].nil?
+      flash[:error]="Select atleast one role"
+      render action:'new'
+      return
+    end
 
     if @user.update_attributes(params[:user])
-      @user.encrypt_password
+
       @user.save
-      UserMailer.welcome_email(@user,@user.login_password).deliver
+      #UserMailer.welcome_email(@user,@user.login_password).deliver
       redirect_to users_path, notice: 'User was successfully updated.'
     else
       render action: "edit"
@@ -90,23 +117,35 @@ class UsersController < ApplicationController
     @old_password=Digest::SHA2.hexdigest("#{@user.salt}--#{params[:old_password]}")
 
     if @old_password!=@user.password
-      redirect_to chgpass_user_path(@user), :notice => "old password is not correct"
-    elsif @user.update_attributes(params[:user])
+      flash[:error]= "old password is not correct"
+      redirect_to chgpass_user_path(@user)
+      return
+    end
+    if params[:user][:login_password].length<4
+      flash[:error]="Invalid new password"
+      redirect_to chgpass_user_path(@user)
+      return
+    end
+    if params[:user][:login_password]!=params[:user][:login_password_confirmation]
+      flash[:error]="Password doesn't match confirmation."
+      redirect_to chgpass_user_path(@user)
+      return
+    end
+    if @user.update_attributes(params[:user])
 
       @user.encrypt_password
       @user.save
-
-      redirect_to profile_user_path(@user)
+      redirect_to profile_user_path(@user), :notice => "your password updated successfully"
     else
-       redirect_to chgpass_user_path(@user), :notice => "invalid new password"
+      flash[:error]="invalid new password"
+      redirect_to chgpass_user_path(@user)
     end
 
   end
 
   def chk_user
-    if !current_user.has_role?('admin')
+    if !current_user.has_role?('Manage Users')
       redirect_to '/homes/index'
     end
-
   end
 end

@@ -13,13 +13,14 @@
        <tr>
          <th>Name</th>
          <th>Email id</th>
+          <th></th>
        </tr>
 
          <% @schedule.candidates.each do |candidate| %>
        <tr>
          <td><%= candidate.name %></td>
          <td><%= candidate.user.user_email %></td>
-         <td><%= link_to image_tag('delete.png'),remove_schedule_path(@schedule,:candidate_id =>candidate.id )%></td>
+         <td><%= link_to image_tag('delete.png'),remove_schedule_path(@schedule,:candidate_id =>candidate.id ),data: { confirm: 'Are you sure?' },:class=>"dropt", :title=>"remove" %></td>
        </tr>
          <% end %>
 
