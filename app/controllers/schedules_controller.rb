@@ -78,7 +78,7 @@ class SchedulesController < ApplicationController
     @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
 
     if params[:schedule][:candidate_ids].values.join.to_i==0
-      flash[:notice]="Please select at least one candidate. "
+      flash[:error]="Please select at least one candidate. "
       render action: "new"
       return
     end
@@ -105,7 +105,7 @@ class SchedulesController < ApplicationController
     params[:schedule][:updated_by]=current_user.user_email
 
     if params[:schedule][:candidate_ids].values.join.to_i==0
-      flash[:notice]="Please select at least one candidate. "
+      flash[:error]="Please select at least one candidate. "
       render action: "edit"
       return
     end

@@ -30,7 +30,7 @@ class CategoriesController < ApplicationController
       respond_to do |format|
         if @category.save
          if params[:by]=="add"
-          format.html { redirect_to new_question_path , notice: 'Instruction was successfully created.' }
+          format.html { redirect_to new_question_path , notice: 'Category  was successfully created.' }
         else
           format.html { redirect_to categories_path, notice: 'Category was successfully created.' }
           format.json { render json: @categories, status: :created, location: @category }

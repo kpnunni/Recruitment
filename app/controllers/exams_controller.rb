@@ -53,7 +53,7 @@ class ExamsController < ApplicationController
     @instruction=Instruction.new
     @exam.subj.values.each do |sub|
       if sub.to_i<0
-        flash[:notice]="number of questions should be a positive number"
+        flash[:error]="number of questions should be a positive number"
         render 'new'
         return
       end
@@ -63,13 +63,13 @@ class ExamsController < ApplicationController
     @q_count=@exam.generate_question_paper
     @exam.modified_by =""
     if @q_count <= 0
-       flash[:notice]="Total number of questions should not be '0'."
+       flash[:error]="Total number of questions should not be '0'."
        render 'new'
        return
     end
 
     if @exam.no_of_question!=@q_count
-       flash[:notice]="Not enough questions (category wise/complexity wise).do you wish to schedule it for 'default' level instead of other complexity?"
+       flash[:error]="Not enough questions (category wise/complexity wise).do you wish to schedule it for 'default' level instead of other complexity?"
        render 'new'
        return
     end
@@ -98,7 +98,7 @@ class ExamsController < ApplicationController
     @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
     @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
     if @exam.no_of_question!=@q_count
-       flash[:notice]="Not enough questions (category wise/complexity wise)"
+       flash[:error]="Not enough questions (category wise/complexity wise)"
        render 'new'
        return
     end

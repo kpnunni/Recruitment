@@ -29,7 +29,24 @@
 
     <%= render 'layouts/header' %>
     <div class="container">
-	<%= yield %></div>
+            <% if flash.any? %>
+              <div class="flash">
+                <% if flash[:notice] %>
+                  <div class="notice"><%= flash[:notice] %></div>
+                <% end %>
+                <% if flash[:warning] %>
+                  <div class="warning"><%= flash[:warning] %></div>
+                <% end %>
+                <% if flash[:error] %>
+                  <div class="error"><%= flash[:error] %></div>
+                <% end %>
+                <% if flash[:alert] %>
+                  <div class="alert"><%= flash[:alert] %></div>
+                <% end %>
+              </div>
+            <% end %>
+	    <%= yield %>
+    </div>
       <%= render 'layouts/footer' %>
     
 </body>

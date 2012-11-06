@@ -21,7 +21,6 @@
               </div>
           <% end %>
 
-                       <div id='flash-notice' style="color: #8b161a;" ><%= flash[:notice] %> </div>
 
         <%= f.label :exam%>
         <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>

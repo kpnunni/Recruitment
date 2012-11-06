@@ -31,7 +31,7 @@ class UsersController < ApplicationController
         UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save
         redirect_to success_sessions_path(:as=>"emp")
       else
-        flash[:notice]="Invalid Employee Email id"
+        flash[:error]="Invalid Employee Email id"
         render '/sessions/signup'
       end
       return
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
 
     if params[:user][:role_ids].nil?
-      flash[:notice]="Select atleast one role"
+      flash[:error]="Select atleast one role"
       render action:'new'
       return
     end
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     @user=User.find(params[:id])
     @user.roles.delete_all
     if params[:user][:role_ids].nil?
-      flash[:notice]="Select atleast one role"
+      flash[:error]="Select atleast one role"
       render action:'new'
       return
     end
@@ -117,15 +117,18 @@ class UsersController < ApplicationController
     @old_password=Digest::SHA2.hexdigest("#{@user.salt}--#{params[:old_password]}")
 
     if @old_password!=@user.password
-      redirect_to chgpass_user_path(@user), :notice => "old password is not correct"
+      flash[:error]= "old password is not correct"
+      redirect_to chgpass_user_path(@user)
       return
     end
     if params[:user][:login_password].length<4
-      redirect_to chgpass_user_path(@user), :notice => "Invalid new password"
+      flash[:error]="Invalid new password"
+      redirect_to chgpass_user_path(@user)
       return
     end
     if params[:user][:login_password]!=params[:user][:login_password_confirmation]
-      redirect_to chgpass_user_path(@user), :notice => "Password doesn't match confirmation."
+      flash[:error]="Password doesn't match confirmation."
+      redirect_to chgpass_user_path(@user)
       return
     end
     if @user.update_attributes(params[:user])
@@ -134,7 +137,8 @@ class UsersController < ApplicationController
       @user.save
       redirect_to profile_user_path(@user), :notice => "your password updated successfully"
     else
-      redirect_to chgpass_user_path(@user), :notice => "invalid new password"
+      flash[:error]="invalid new password"
+      redirect_to chgpass_user_path(@user)
     end
 
   end

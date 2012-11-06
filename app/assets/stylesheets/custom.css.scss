@@ -336,6 +336,7 @@ select {
   background-color: #ffffff;
   width: 115px;
   color: #000000;
+
 }
 .my_button {
 
@@ -583,3 +584,77 @@ table.curvedEdges th{
     border-radius:10px;
 
  }
+ .notice{
+   background-color: #cdefff;
+   background-image: url('icon_success_lrg.gif') ;
+   background-repeat:no-repeat;
+   background-position:right;
+  color: #0a7113;
+  border: 1px solid #580eac;
+  padding: 10px;
+  border-radius:10px;
+  font-weight: bold;
+ }
+  .warning{
+  color: #ffb01f;
+  border: 1px solid #580eac;
+  padding: 10px;
+  background-color: #cdefff;
+   background-image: url('icon_warning_lrg.gif') ;
+   background-repeat:no-repeat;
+   background-position:right;
+  border-radius:10px;
+  font-weight: bold;
+ }
+  .error{
+  color: #8b161a;
+  border: 1px solid #580eac;
+  padding: 10px;
+  background-color: #cdefff;
+   background-image: url('icon_error_lrg.gif') ;
+   background-repeat:no-repeat;
+   background-position:right;
+  border-radius:10px;
+  font-weight: bold;
+ }
+  .alert{
+  color: #22c58b;
+  border: 1px solid #580eac;
+  padding: 10px;
+  background-color: #cdefff;
+   background-image: url('icon_warning_lrg.gif') ;
+   background-repeat:no-repeat;
+   background-position:right;
+  border-radius:10px;
+  font-weight: bold;
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

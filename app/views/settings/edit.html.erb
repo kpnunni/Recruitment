@@ -4,7 +4,6 @@
       <h1>Settings</h1>
       <%= form_for @setting do |f| %>
 
-          <div id='flash-notice' style="color: #8b161a;" ><b><%= flash[:notice] %></b></div>
 
 
           <%= f.check_box :auto_result,:onClick=>"show_category()" %>Auto result calculation?

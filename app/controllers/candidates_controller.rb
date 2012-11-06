@@ -42,7 +42,7 @@ class CandidatesController < ApplicationController
       else
        # 2.times{@candidate.experiences.build }
        # 2.times{@candidate.qualifications.build }
-        redirect_to   '/sessions/signup' ,:notice =>  "Error,Please give correct inputs"
+        redirect_to   '/sessions/signup' ,:error =>  "Error,Please give correct inputs"
       end
       return
     end
@@ -63,7 +63,7 @@ class CandidatesController < ApplicationController
       if params[:candidate][:address]==""||params[:candidate][:phone1]==""||params[:candidate][:technology]==""||params[:candidate][:certification]==""||params[:candidate][:skills]==""
        # 2.times{@candidate.experiences.build } if @candidate.experiences.count==0
        # 2.times{@candidate.qualifications.build } if @candidate.qualifications.count==0
-        flash[:notice]="You should fill all mandatory fields"
+        flash[:error]="You should fill all mandatory fields"
         render '/answers/candidate_detail'
         return
       end

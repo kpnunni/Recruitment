@@ -11,9 +11,7 @@
     <%= @candidate.name %>,
 
     please fill your details,</h3> </FONT>
-     <div id='flash-notice' style="color: #8b161a;" ><b><%= flash[:notice] %></b></div>
-
-    <% if @candidate.errors.any? %>
+     <% if @candidate.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
 
@@ -55,54 +53,31 @@
            </td>
          </tr>
         </table>
-        <br />
-        <h3>Experiences:</h3>
+        <br />        <h3>Experiences:</h3>
 
-        <table width="75%" >
-          <tr>
-            <th width="20%" >From date:<%= image_tag 'mandatory.png' %></th>
-            <th width="20%">To date:<%= image_tag 'mandatory.png' %></th>
-            <th width="20%">Experience in:<%= image_tag 'mandatory.png' %></th>
-            <th width="20%">Experience_from:</th>
-            <th width="20%"></th>
-          </tr>
-          <%= f.fields_for :experiences  do |op| %>
-              <tr>
-                <td><%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>                </td>
-                <td><%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>                </td>
-                <td><%= op.text_field :experience_in ,:class=>"text_box3"%></td>
-                <td><%= op.text_field :experience_from,:class=>"text_box3" %></td>
-                <td><%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %> </td>
-              </tr>
-          <% end %>
-        </table>
+        <%= f.fields_for :experiences  do |op| %>
+
+            <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "From date"%>
+            <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "To date"%>
+            <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in"%>
+            <%= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>
+            <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
+        <% end %>
         <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new experience"  ), :experiences %></p>
 
         <br /><h3>Qualifications</h3>
+        <%= f.fields_for :qualifications  do |op| %>
 
-        <table width="96%" >
-          <tr>
-            <th width="15%" >Qualification_in<%= image_tag 'mandatory.png' %></th>
-            <th width="15%" >Qualification_from</th>
-            <th width="15%" >From_date<%= image_tag 'mandatory.png' %></th>
-            <th width="15%" >To_date<%= image_tag 'mandatory.png' %></th>
-            <th width="15%" >Mark_percentage</th>
-            <th width="15%" >Comments</th>
-            <th width="10%" ></th>
+            <%= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in"%>
+            <%= op.text_field :qualification_from,:class=>"text_box3",:placeholder => "Qualification_from" %>
+            <%= op.calendar_date_select "from_date",:placeholder => "From_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force,:class=>"text_box3" %>
+            <%= op.calendar_date_select "to_date",:placeholder => "To_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>
+            <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3" %>
+            <%= op.text_field :comments,:placeholder => "Comments" ,:class=>"text_box3"%>
+            <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
 
-          </tr>
-          <%= f.fields_for :qualifications  do |op| %>
-              <tr>
-                <td><%= op.text_field :qualification_in,:class=>"text_box3" %></td>
-                <td><%= op.text_field :qualification_from,:class=>"text_box3" %></td>
-                <td><%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force,:class=>"text_box3" %></td>
-                <td><%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%></td>
-                <td><%= op.text_field :mark_percentage,:class=>"text_box3" %></td>
-                <td><%= op.text_field :comments ,:class=>"text_box3"%></td>
-                <td><%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %> </td>
-              </tr>
-          <% end %>
-        </table>
+        <% end %>
+
         <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
 
         <br /> <br />
