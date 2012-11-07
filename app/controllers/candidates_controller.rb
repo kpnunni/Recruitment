@@ -38,17 +38,18 @@ class CandidatesController < ApplicationController
     @candidate.user.encrypt_password
     if params[:can]=="Register"
       if @candidate.save
-        redirect_to success_sessions_path(:as=>"can")
+        redirect_to success_sessions_path(:as=>"can"), notice: 'Candidate was successfully created.'
       else
        # 2.times{@candidate.experiences.build }
        # 2.times{@candidate.qualifications.build }
-        redirect_to   '/sessions/signup' ,:error =>  "Error,Please give correct inputs"
+        flash[:error]="Error,Please give correct inputs"
+        redirect_to   '/sessions/signup'
       end
       return
     end
     if @candidate.save
       # UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
-      redirect_to candidate_path(@candidate)
+      redirect_to candidate_path(@candidate), notice: 'Candidate was successfully created.'
     else
      # 2.times{@candidate.experiences.build }
      # 2.times{@candidate.qualifications.build }
@@ -69,7 +70,7 @@ class CandidatesController < ApplicationController
       end
       if @candidate.update_attributes(params[:candidate])
         if @candidate.update_attributes(params[:candidate])
-          redirect_to '/answers/instructions'
+          redirect_to '/answers/instructions', notice: 'Candidate was successfully updated.'
         end
       else
        # 2.times{@candidate.experiences.build } if @candidate.experiences.count==0
@@ -95,7 +96,7 @@ class CandidatesController < ApplicationController
     @candidate=Candidate.find(params[:id])
     @candidate.user.delete
     @candidate.destroy
-    redirect_to candidates_path , notice: 'deleted.'
+    redirect_to candidates_path , notice: 'Candidate was successfully deleted.'
   end
 
   def new

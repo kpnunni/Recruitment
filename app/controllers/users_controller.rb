@@ -29,7 +29,7 @@ class UsersController < ApplicationController
         @user.encrypt_password
         @user.roles.push(Role.find_by_role_name('Add Questions Only'))
         UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save
-        redirect_to success_sessions_path(:as=>"emp")
+        redirect_to success_sessions_path(:as=>"emp"), notice: 'Employee was successfully registered.'
       else
         flash[:error]="Invalid Employee Email id"
         render '/sessions/signup'
@@ -97,11 +97,13 @@ class UsersController < ApplicationController
     if @user.isAlive?
       @user.update_attribute(:isAlive, 0)
       @user.update_attribute(:isDelete, 1)
+      flash[:warning]="User '#{@user.user_email}' is now Inactive"
     else
       @user.update_attribute(:isAlive, 1)
       @user.update_attribute(:isDelete, 0)
+      flash[:notice]="User '#{@user.user_email}' is now Active"
     end
-    redirect_to users_path, notice: 'killed.'
+    redirect_to users_path
   end
 
   def profile
@@ -145,6 +147,7 @@ class UsersController < ApplicationController
 
   def chk_user
     if !current_user.has_role?('Manage Users')
+      flash[:warning]='Unauthorised Access'
       redirect_to '/homes/index'
     end
   end

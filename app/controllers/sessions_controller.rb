@@ -2,7 +2,9 @@ class SessionsController < ApplicationController
   skip_before_filter :authenticate
 
   def new
-    if signed_in?
+    if signed_in?&&current_user.has_role?('Candidate')
+      redirect_to '/homes/default_page'
+    elsif signed_in?
       redirect_to '/homes/index'
     end
   end
@@ -48,6 +50,7 @@ class SessionsController < ApplicationController
 
     if user.has_role?('Candidate')&&!user.candidate.schedule.nil?
       sign_in user
+      cookies[:remember_token] = user.remember_token
       redirect_to candidate_detail_answers_path
     elsif user.has_role?('Candidate')&&user.candidate.schedule.nil?
       flash[:error ] = 'Sorry, You can login only after getting date for the exam.'

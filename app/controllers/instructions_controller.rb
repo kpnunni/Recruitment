@@ -49,7 +49,7 @@ class InstructionsController < ApplicationController
         format.json { render json: @instructions, status: :created, location: @instructions }
         end
       else
-
+        flash[:error]="Instruction is empty /already exists"
         format.html { redirect_to instructions_path }   if params[:by]!="add"
         format.html { redirect_to new_exam_path }   if params[:by]=="add"
        end
@@ -77,7 +77,7 @@ class InstructionsController < ApplicationController
     @instruction.destroy
 
     respond_to do |format|
-      format.html { redirect_to instructions_url }
+      format.html { redirect_to instructions_url, notice: 'Instruction was successfully deleted.' }
       format.json { head :no_content }
     end
   end

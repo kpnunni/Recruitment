@@ -36,6 +36,7 @@ class CategoriesController < ApplicationController
           format.json { render json: @categories, status: :created, location: @category }
          end
         else
+          flash[:error]="Category already exists/empty."
          if params[:by]=="add"
           format.html { redirect_to new_question_path }
          else
@@ -67,7 +68,7 @@ class CategoriesController < ApplicationController
       @category.destroy
 
       respond_to do |format|
-        format.html { redirect_to categories_path }
+        format.html { redirect_to categories_path, notice: 'Category was successfully deleted.' }
         format.json { head :no_content }
       end
   end

@@ -61,8 +61,7 @@
             <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "To date"%>
             <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in"%>
             <%= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>
-            <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
-        <% end %>
+         <% end %>
         <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new experience"  ), :experiences %></p>
 
         <br /><h3>Qualifications</h3>
@@ -74,7 +73,6 @@
             <%= op.calendar_date_select "to_date",:placeholder => "To_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>
             <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3" %>
             <%= op.text_field :comments,:placeholder => "Comments" ,:class=>"text_box3"%>
-            <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
 
         <% end %>
 
