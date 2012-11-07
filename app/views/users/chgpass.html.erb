@@ -1,6 +1,3 @@
-<div class="row">
-  <div class="span10 offset0">
-    <h1>Password changing</h1>
 <%= form_for  (@user) ,:url => updatepass_user_url(@user)  do |f| %>
 
 
@@ -17,8 +14,9 @@
     </div>
   <% end %>
 
-
-        <br />
+    <div class="row">
+      <div class="span10 offset0">
+        <br /><br /><br />
 
 
         <%= f.label :old_password%>
@@ -35,8 +33,6 @@
         <br />
           <%= f.submit 'Change',class: "btn btn-large btn-primary" %>
             <br /><%= link_to image_tag('back.png'), profile_user_path(@user)%>
-
+      </div>
+    </div>
    <% end %>
-
-  </div>
-</div>
