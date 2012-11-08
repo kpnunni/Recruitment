@@ -44,6 +44,9 @@ h1 {
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;  text-shadow: #a9aca9 2px 0.2em 3px;
+  background-image: url("hdr_bg.png");
+  border: 5px solid #a9aca9;
+  border-radius: 5px;
 
 }
 
@@ -635,7 +638,9 @@ table.curvedEdges th{
    margin-left: 100px;
  }
 
-
+ .index_table{
+  background-image: url('tbl_bg2.png') ;
+ }
 
 
 
