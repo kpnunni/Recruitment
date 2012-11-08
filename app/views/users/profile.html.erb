@@ -1,11 +1,13 @@
 <div class="row">
   <div class="span10 offset0">
-    <h1><%= image_tag 'Profile.png',:title => 'Profile'  %>
-</h1>
+     <div align="center">
+       <%= image_tag 'Profile.png',:title => 'Profile'  %>
+     </div>
+
      <b>
 
     User Email:</b>
-    <%= @user.user_email %> <br />
+    <%= @user.user_email %> <br/>
      <b>Roles:</b>
 
      <% @user.roles.each_with_index do |role,i| %>

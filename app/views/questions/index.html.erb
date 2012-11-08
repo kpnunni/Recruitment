@@ -107,15 +107,15 @@
 
 
 
-    <table border="3" width="100%"  >
+    <table border="3" width="100%"  class="index_table" >
       <tr>
-        <th width="2%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all to delete" /></th>
-        <th width="60%">question</th>
-        <th  width="6%">allowed time (in sec)</th>
-        <th width="12%">Created by:</th>
-        <th width="8%">Category:</th>
-        <th width="4%"></th>
-        <th width="4%"></th>
+        <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all to delete" /></th>
+        <th width="50%">question</th>
+        <th  width="7%">allowed time (sec)</th>
+        <th width="15%">Created by:</th>
+        <th width="15%">Category:</th>
+        <th width="5%"></th>
+        <th width="5%"></th>
        </tr>
 
       <% @questions.each_with_index do |question,i| %>

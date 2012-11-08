@@ -79,7 +79,7 @@ class SchedulesController < ApplicationController
 
     if params[:schedule][:candidate_ids].values.join.to_i==0
       flash[:error]="Please select at least one candidate. "
-      render action: "new"
+      redirect_to  new_schedule_path
       return
     end
     respond_to do |format|
@@ -87,10 +87,10 @@ class SchedulesController < ApplicationController
         @schedule.candidates.each{|c| UserMailer.schedule_email(c.user).deliver }
         @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
         @users.each {|admin| UserMailer.admin_schedule_email(admin,@schedule).deliver }
-        format.html { redirect_to schedules_path, notice: 'Schedule was successfully created.' }
+        format.html { redirect_to schedules_path, notice: 'Exam was successfully scheduled.' }
         format.json { render json: @schedule, status: :created, location: @schedule }
       else
-        format.html { render action: "new" }
+        format.html { render "new" }
         format.json { render json: @schedule.errors, status: :unprocessable_entity }
       end
     end
@@ -116,7 +116,7 @@ class SchedulesController < ApplicationController
         @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("admin"))}
         @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver }
 
-        format.html { redirect_to @schedule, notice: 'Schedule was successfully updated.' }
+        format.html { redirect_to @schedule, notice: 'Exam was successfully rescheduled.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -135,7 +135,7 @@ class SchedulesController < ApplicationController
     @schedule.destroy
 
     respond_to do |format|
-      format.html { redirect_to schedules_url }
+      format.html { redirect_to schedules_url, notice: 'Schedule was successfully cancelled.' }
       format.json { head :no_content }
     end
   end

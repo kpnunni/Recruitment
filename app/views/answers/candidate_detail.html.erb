@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="span10 offset0">
+  <div class="span12 offset0">
 
     <h1>
     <%= image_tag 'welcome.png' %>
@@ -11,14 +11,7 @@
     <%= @candidate.name %>,
 
     please fill your details,</h3> </FONT>
-
-
-
-
-
-
-
-    <% if @candidate.errors.any? %>
+     <% if @candidate.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
 
@@ -31,86 +24,61 @@
     <% end %>
 
     <br/>
-    <%= form_for @candidate do |f|%>
+    <%= nested_form_for @candidate do |f|%>
+       <table width="75%" >
+         <tr>
+           <td class="rght" >
+                Address<%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+                 <%= f.text_area  :address , :rows=>5%>
+           </td>
+           <td class="rght" >
+                Phone no 1<%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+                <%= f.text_field :phone1 %> <br/>
+                Phone no 2
+                <%= f.text_field :phone2 %> <br/>
+               Technology <%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+               <%= f.text_field :technology %>
+           </td>
 
+         </tr>
 
+         <tr>
+           <td class="rght" >
+                Certification <%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+                <%= f.text_field :certification %>
+           </td>
+           <td class="rght" >
+                Skills <%= image_tag 'mandatory.png',:title=>"mandatory"  %>
+                <%= f.text_field :skills %>
+           </td>
+         </tr>
+        </table>
+        <br />        <h3>Experiences:</h3>
 
-
-        <%= f.label :address %>
-        <%= f.text_area  :address , :rows=>5%>
-
-        <%= f.label :phone_no_1 %>
-        <%= f.text_field :phone1 %>
-
-        <%= f.label :phone_no_2 %>
-        <%= f.text_field :phone2 %>
-
-        <%= f.label :technology %>
-        <%= f.text_field :technology %>
-
-        <%= f.label :certification %>
-        <%= f.text_field :certification %>
-
-        <%= f.label :skills %>
-        <%= f.text_field :skills %>
-
-
-
-
-
-        <br /><br />
-        <%if !@candidate.experiences.empty? %>
-        <h3>Experiences</h3>
-            <% end %>
         <%= f.fields_for :experiences  do |op| %>
 
-        <%= op.label :from_date %>
-        <%= op.text_field :from_date %> (yyyy-mm-dd)
+            <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "From date"%>
+            <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "To date"%>
+            <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in"%>
+            <%= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>
+         <% end %>
+        <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new experience"  ), :experiences %></p>
 
-        <%= op.label :to_date %>
-        <%= op.text_field :to_date %>(yyyy-mm-dd)
-
-        <%= op.label :experience_in %>
-        <%= op.text_field :experience_in %>
-
-        <%= op.label :experience_from %>
-        <%= op.text_field :experience_from %>
-
-
-
-        <% end %>
-        <%if !@candidate.qualifications.empty? %>
-        <br /><br />
-        <h3>Qualifications:</h3>
-        <% end %>
+        <br /><h3>Qualifications</h3>
         <%= f.fields_for :qualifications  do |op| %>
 
-        <%= op.label :qualification_in %>
-        <%= op.text_field :qualification_in %>
-
-        <%= op.label :qualification_from %>
-        <%= op.text_field :qualification_from %>
-
-        <%= op.label :from_date %>
-        <%= op.text_field :from_date %> (yyyy-mm-dd)
-
-        <%= op.label :to_date %>
-        <%= op.text_field :to_date %> (yyyy-mm-dd )
-
-        <%= op.label :mark_percentage %>
-        <%= op.text_field :mark_percentage %>
-
-        <%= op.label :comments %>
-        <%= op.text_field :comments %>
-
+            <%= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in"%>
+            <%= op.text_field :qualification_from,:class=>"text_box3",:placeholder => "Qualification_from" %>
+            <%= op.calendar_date_select "from_date",:placeholder => "From_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force,:class=>"text_box3" %>
+            <%= op.calendar_date_select "to_date",:placeholder => "To_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>
+            <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3" %>
+            <%= op.text_field :comments,:placeholder => "Comments" ,:class=>"text_box3"%>
 
         <% end %>
 
+        <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
 
-
-
-
-
+        <br /> <br />
 
 
 

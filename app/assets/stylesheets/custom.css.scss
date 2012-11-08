@@ -44,6 +44,9 @@ h1 {
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;  text-shadow: #a9aca9 2px 0.2em 3px;
+  background-image: url("hdr_bg.png");
+  border: 5px solid #a9aca9;
+  border-radius: 5px;
 
 }
 
@@ -464,6 +467,7 @@ table.curvedEdges {
   -o-border-radius:13px;
   border-radius:13px;
  background-image: url("bg_topbar.gif");
+
   text-align: start;
 
 }
@@ -585,21 +589,21 @@ table.curvedEdges th{
 
  }
  .notice{
-   background-color: #cdefff;
+   background-color: #DCEAC8;
    background-image: url('icon_success_lrg.gif') ;
    background-repeat:no-repeat;
    background-position:right;
-  color: #0a7113;
-  border: 1px solid #580eac;
+  color:  #000000;
+  border: 2px solid #8DC63F ;
   padding: 10px;
   border-radius:10px;
   font-weight: bold;
  }
   .warning{
-  color: #ffb01f;
-  border: 1px solid #580eac;
+  color: #000000;
+  border: 1px solid #8b161a;
   padding: 10px;
-  background-color: #cdefff;
+  background-color: #ffd0bc;
    background-image: url('icon_warning_lrg.gif') ;
    background-repeat:no-repeat;
    background-position:right;
@@ -607,30 +611,36 @@ table.curvedEdges th{
   font-weight: bold;
  }
   .error{
-  color: #8b161a;
-  border: 1px solid #580eac;
+  color: #000000;
+  border: 2px solid red;
   padding: 10px;
-  background-color: #cdefff;
+  background-color: pink ;
    background-image: url('icon_error_lrg.gif') ;
    background-repeat:no-repeat;
    background-position:right;
   border-radius:10px;
   font-weight: bold;
+    font-style: oblique;
+    font-case:uper;
  }
   .alert{
-  color: #22c58b;
-  border: 1px solid #580eac;
+  color: #000000;
+  border: 1px solid green;
   padding: 10px;
-  background-color: #cdefff;
+  background-color: #98fb98;
    background-image: url('icon_warning_lrg.gif') ;
    background-repeat:no-repeat;
    background-position:right;
   border-radius:10px;
   font-weight: bold;
  }
+ .btn-large {
+   margin-left: 100px;
+ }
 
-
-
+ .index_table{
+  background-image: url('tbl_bg2.png') ;
+ }
 
 
 

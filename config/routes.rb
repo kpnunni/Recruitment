@@ -3,7 +3,7 @@ Test::Application.routes.draw do
 
   get "homes/index"
   get "homes/admin"
-
+  get "homes/default_page"
 
   resources :settings
 

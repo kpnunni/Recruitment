@@ -9,7 +9,7 @@ class ExamsController < ApplicationController
     end
 
   def index
-    @exams = Exam.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
+    @exams = Exam.filtered(params[:search]).reverse.paginate(:page => params[:page], :per_page => 20)
     @users=User.all
     @users.select! {|usr| Exam.where(:created_by =>usr.user_email).present?}
     respond_to do |format|
@@ -120,7 +120,7 @@ class ExamsController < ApplicationController
     @exam.destroy
 
     respond_to do |format|
-      format.html { redirect_to exams_url }
+      format.html { redirect_to exams_url, notice: 'Exam was successfully deleted.'  }
       format.json { head :no_content }
     end
   end
