@@ -40,14 +40,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+  color: #00007b;
   font-size: 3em;
   letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;  text-shadow: #a9aca9 2px 0.2em 3px;
+  margin-bottom: 20px;
+  text-align: center;
+  text-shadow: #a7a695 -12px 0.2em 3px;
   background-image: url("hdr_bg.png");
-  border: 5px solid #a9aca9;
-  border-radius: 5px;
-
+  border: 10px solid #e7def4;
+  border-radius: 20px 20px 0px 0px;
+  padding: 15px;
 }
 
 .search

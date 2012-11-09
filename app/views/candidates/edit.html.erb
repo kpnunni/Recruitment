@@ -68,6 +68,16 @@
             </td>
           </tr>
         </table>
+
+         <% if !@candidate.resume.to_s.include?("missing.png") %>
+         <b>resume:</b>
+         <%=  @candidate.resume_file_name  %>
+         <%=link_to  image_tag('download.png'),@candidate.resume.url(:original,false), :class=>"dropt", :title=>"download resume" %>
+         <% else %>
+            <%= f.label :resume  %>
+            <%= f.file_field :resume %>
+         <% end %>
+
         <br />
         <h3>Experiences:</h3>
           <% i=0%>
