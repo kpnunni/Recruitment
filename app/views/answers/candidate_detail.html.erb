@@ -1,10 +1,8 @@
-<div class="row">
-  <div class="span12 offset0">
+    <div align="center">
+         <%= image_tag 'welcome.png'  %>
+    </div>
 
-    <h1>
-    <%= image_tag 'welcome.png' %>
 
-    </h1>
     <FONT COLOR="#191970">
       <h3>
     Hi
@@ -24,7 +22,7 @@
     <% end %>
 
     <br/>
-    <%= nested_form_for @candidate do |f|%>
+    <%= nested_form_for @candidate, :url=>"/answers/#{@candidate.id}/candidate_update" do |f|%>
        <table width="75%" >
          <tr>
            <td class="rght" >
@@ -57,9 +55,9 @@
 
         <%= f.fields_for :experiences  do |op| %>
 
-            <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "From date"%>
-            <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "To date"%>
-            <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in"%>
+            <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "From date*"%>
+            <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "To date*"%>
+            <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in*"%>
             <%= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>
          <% end %>
         <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new experience"  ), :experiences %></p>
@@ -67,10 +65,10 @@
         <br /><h3>Qualifications</h3>
         <%= f.fields_for :qualifications  do |op| %>
 
-            <%= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in"%>
+            <%= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in*"%>
             <%= op.text_field :qualification_from,:class=>"text_box3",:placeholder => "Qualification_from" %>
-            <%= op.calendar_date_select "from_date",:placeholder => "From_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force,:class=>"text_box3" %>
-            <%= op.calendar_date_select "to_date",:placeholder => "To_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>
+            <%= op.calendar_date_select "from_date",:placeholder => "From_date*", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force,:class=>"text_box3" %>
+            <%= op.calendar_date_select "to_date",:placeholder => "To_date*", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>
             <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3" %>
             <%= op.text_field :comments,:placeholder => "Comments" ,:class=>"text_box3"%>
 
@@ -91,5 +89,3 @@
 
     <% end %>
     <h2><% link_to 'start_exam',new_answer_path %></h2>
-  </div>
-</div>

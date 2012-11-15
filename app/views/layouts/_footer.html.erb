@@ -1,8 +1,14 @@
 <footer class="footer">
   <small>
           <% if signed_in? %>
-            <%= "login by:" %>
-            <%= current_user.user_email %>
+            login by:<%= current_user.user_email %>
+
+
+            <% if admin? %>
+               <% settings=Setting.all  %>
+                ||||| Auto Result:<%= settings.first.status     %>
+                ||||| Negative mark:<%=settings.last.status  %>
+            <% end %>
           <% end %>
   </small>
 

@@ -24,8 +24,9 @@ class UsersController < ApplicationController
     @user=User.new(params[:user])
     if params[:emp]=="Register"
       if @user.user_email=~/\A[\w+\-.]+@suyati.com+\z/i
-        @user.login_password="suyatiemp"
-        @user.login_password_confirmation="suyatiemp"
+        rand_password=('0'..'z').to_a.shuffle.first(4).join
+        @user.login_password=rand_password
+        @user.login_password_confirmation=rand_password
         @user.encrypt_password
         @user.roles.push(Role.find_by_role_name('Add Questions Only'))
         UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save

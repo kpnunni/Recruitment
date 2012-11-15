@@ -1,6 +1,6 @@
 class Setting < ActiveRecord::Base
   attr_accessor :categories_attributes
-  attr_accessible :auto_result,:categories_attributes
+  attr_accessible :name,:status,:categories_attributes
 
   def set_cutoff(percentages)
      Category.all.each do |cat|

@@ -109,10 +109,10 @@ body {
 /* footer */
 
 footer {
-  margin-top: 245px;
+  margin-top: 20px;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
-  color: #999;
+  color: #191970;
 
 }
 
@@ -556,7 +556,7 @@ table.curvedEdges th{
   }
   .question{
     font-family:serif;
-    font-size:12pt;
+    font-size:11pt;
     text-spacing: 5px;
     padding-left: 2px;
     float: right;
@@ -643,6 +643,12 @@ table.curvedEdges th{
  .index_table{
   background-image: url('tbl_bg2.png') ;
  }
+ tr:hover {
+	background: rgba(255,255,255,0.05);
+}
+	thead tr:hover {
+		background: none;
+	}
 
 
 

@@ -1,6 +1,5 @@
 <h1>Editing Question</h1>
-<div class="row">
-  <div class="span12 offset0">
+
 
 
 <%= nested_form_for  (@question ) do |f| %>
@@ -81,5 +80,3 @@
         <%= f.submit "Update",class: "btn btn-large btn-primary"%>
     <% end %>
       <br /><%= link_to  image_tag('back.png')  ,questions_path %>
-  </div>
-</div>

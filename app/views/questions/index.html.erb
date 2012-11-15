@@ -1,5 +1,3 @@
-<div class="row" xmlns="http://www.w3.org/1999/html">
-  <div class="span12 offset0">
 
     <br/>
     <table width="100%" >
@@ -115,7 +113,6 @@
         <th width="15%">Created by:</th>
         <th width="15%">Category:</th>
         <th width="5%"></th>
-        <th width="5%"></th>
        </tr>
 
       <% @questions.each_with_index do |question,i| %>
@@ -140,8 +137,6 @@
     <% if !(current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')) %>
      <h4><%= will_paginate @questions ,:container=>false %></h4>
     <% end %>
-  </div>
-</div>
 
 
 

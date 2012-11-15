@@ -20,7 +20,7 @@ class HomesController < ApplicationController
   end
 
   def chk_admin
-    if current_user.roles.count!=Role.count-1
+    if !admin?
       redirect_to  '/homes/index'
     end
   end

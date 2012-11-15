@@ -1,6 +1,5 @@
 <h1>Editing option</h1>
-<div class="row">
-  <div class="span10 offset0">
+
 
 
 <%= form_for([@question,@option]) do |f1| %>
@@ -31,5 +30,3 @@
         <%= f1.submit "Update" ,class: "btn btn-large btn-primary" %>
     <% end %>
          <%= link_to image_tag('back.png'),question_path(@question)  %>
-  </div>
-</div>

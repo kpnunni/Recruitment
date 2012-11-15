@@ -5,7 +5,8 @@ Test::Application.routes.draw do
   get "homes/admin"
   get "homes/default_page"
 
-  resources :settings
+  get 'settings/edit'
+  put 'settings/update'
 
   resources :templates
   resources :questions do
@@ -46,7 +47,6 @@ Test::Application.routes.draw do
     collection do
       get :candidate_detail
       get :instructions
-
       get :blank
       get :make
     end
