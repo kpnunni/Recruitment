@@ -1,5 +1,16 @@
+      <link href="/assets/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+	<script src="/assets/jquery-1.8.2.js"></script>
+	<script src="/assets/jquery-ui-1.9.1.custom.js"></script>
 
-  <div id="new_category1" class="right"  >
+    <script type="text/javascript">
+       $(document).ready(function() {
+        $('#show_category').click(function() {
+            $("#new_category1").dialog({ modal: true, title: "Adding new category",width: 260 } );
+        })
+       });
+    </script>
+
+  <div id="new_category1"   style="display: none;"   >
     <%= form_for @category   do |f1| %>
          <b>New Category</b><br />
         <%= f1.text_field :category%>
@@ -7,7 +18,7 @@
         <%= f1.submit "Add" ,class: "btn btn-large btn-primary",:name=>"by",:value=>"add" %><br />
     <% end %>
     </div>
-  <div class="left"   >
+  <div>
     <%= nested_form_for  (@question ) do |f1| %>
 
 
@@ -34,7 +45,7 @@
 
 
         <td><%= f1.select("category_id", @categorys.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
-        <td><%= link_to 'new category', '#',:onclick=>"show_category()"  %> </td>
+        <td><%= link_to 'new category', '#',:id=>"show_category",:remote=>true  %> </td>
 
           </tr>
         </table>
@@ -73,18 +84,3 @@
 
       <br /><%= link_to image_tag('back.png') ,questions_path %>
   </div>
-
-
-  <script type="text/javascript">
-   function show_category()
-   {
-
-       document.getElementById('new_category1').toggle();
-   }
- </script>
- <script type="text/javascript">
-    window.onload = function()
-    {
-        document.getElementById('new_category1').style.display='none';
-    }
- </script>

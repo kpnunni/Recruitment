@@ -11,7 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require sortable.js
-//= require sortable_us.js
 //= require jquery.js
 //= require jquery_ujs.js
 //= require prototype

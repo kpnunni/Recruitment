@@ -12,12 +12,18 @@ class ExamsController < ApplicationController
     @exams = Exam.filtered(params[:search]).reverse.paginate(:page => params[:page], :per_page => 20)
     @users=User.all
     @users.select! {|usr| Exam.where(:created_by =>usr.user_email).present?}
+
+
     respond_to do |format|
       format.html 
       format.json { render json: @exams }
     end
   end
-
+  def instruction
+    @exam=Exam.find(params[:id])
+    @instructions=@exam.instructions.all
+    @ngtv=Setting.find_by_name('negative_mark').status.eql?("on")
+  end
 
   def show
     @exam = Exam.find(params[:id])

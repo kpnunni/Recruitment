@@ -1,4 +1,12 @@
+    <link href="/assets/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+	<script src="/assets/jquery-1.8.2.js"></script>
+	<script src="/assets/jquery-ui-1.9.1.custom.js"></script>
 
+    <script type="text/javascript">
+       function open_instruction(no){
+           $("#"+no+"").dialog({modal: true,width: 600});
+       }
+    </script>
   <h3 align="right"></h3>
 
 
@@ -20,7 +28,7 @@
     <h1>Exams</h1>
        <form class="filter_form">
 
-            <table  cellpadding="5" class="filter_table"  >
+            <table  cellpadding="5" class="filter_table"  width="100%" >
               <tr>
                 <td width="60%" ></td>
                 <th>Created by:</th>
@@ -62,11 +70,12 @@
 
 
 
-    <table border="3"   class="index_table" >
+    <table border="3"   class="index_table"  width="100%">
       <tr>
         <th>name</th>
         <th>no_of_question</th>
         <th>description</th>
+        <th>Preview Instructions</th>
         <th></th>
         <th></th>
         <th></th>
@@ -76,9 +85,48 @@
           <tr>
             <td width="20%" class="lft"  ><%= exam.name %></td>
             <td width="15%" ><%= exam.no_of_question  %></td>
-            <td width="50%" class="lft"   ><%= exam.description  %></td>
-            <td width="5%" class="dropt" title="detail"  ><%= link_to image_tag('show.png'), exam_path(exam) %></td>
-            <td width="5%" class="dropt" title="edit"  ><%= link_to image_tag('edit.png'), edit_exam_path(exam) %></td>
+            <td width="35%" class="lft"   ><%= exam.description  %></td>
+            <td width="15%"><%= link_to 'Show','#',:onclick=>"open_instruction(#{exam.id});" %>
+
+              <div style="display: none;"  id= <%=exam.id%>  >
+                <%@exam = exam  %>
+                <%@ngtv=Setting.find_by_name('negative_mark').status.eql?("on")  %>
+                <%@instructions=@exam .instructions .all  %>
+
+              <h6>Instructions</h6><br/><br/>
+              <b>
+                <% @instructions.each do |ins|%>
+                    <%= image_tag 'point.png' %>
+                    <%= ins.instruction  %><br/>
+                <% end %>
+                <%= image_tag 'point.png' %>This Exam contains
+                <% Category.all.each do |cat| %>
+
+                    <% if @exam.questions.where("category_id=? ",cat.id ).count!=0 %>
+                        <%= @exam.questions.where("category_id=? ",cat.id ).count %>
+                        <%=cat.category    %> questions,
+                    <% end %>
+                <% end %>
+                <br/>
+
+
+                <%= image_tag 'point.png' %>Answering time for each questions may be different.<br/>
+                <%= image_tag 'point.png' %>Total time:<%=  @exam.total_time/1.minute   %>minutes<br/>
+                <%= image_tag 'point.png' %>Number of questions:<%= @exam.no_of_question %><br/>
+                <%= image_tag 'point.png' %>Pop up new window when you click 'start exam'<br/>
+                <% if @ngtv %>
+                    <%= image_tag 'point.png' %>Negative mark will be there(1/4).<br/>
+                <% else %>
+                    <%= image_tag 'point.png' %>No negative mark.<br/>
+                <% end %>
+              </b>
+              <br/>
+
+            </div>
+
+            </td>
+            <td width="5%" ><%= link_to image_tag('show.png'), exam_path(exam),title: "detail" %></td>
+            <td width="5%" ><%= link_to image_tag('edit.png'), edit_exam_path(exam),title: "edit" %></td>
 
             <% if exam.schedules.where("sh_date >= ?",Time.now).empty? %>
             <td width="5%"><%= link_to  image_tag('delete.png'), exam, method: :delete, data: { confirm: 'Are you sure?' } ,:title => "delete" %></td>

@@ -1,3 +1,19 @@
+    <link href="/assets/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+	<script src="/assets/jquery-1.8.2.js"></script>
+	<script src="/assets/jquery-ui-1.9.1.custom.js"></script>
+
+<script type="text/javascript" >
+        function show_box(no){
+            $("#"+no+"").dialog();
+        }
+    function toggle1(source) {
+        var checkboxes = document.getElementsByTagName("input");
+
+        for(var i in checkboxes)
+            if(document.getElementsByTagName("input")[i].type == "checkbox")
+                document.getElementsByTagName("input")[i].checked = source.checked;
+    }
+</script>
 
     <br/>
     <table width="100%" >
@@ -126,9 +142,57 @@
             <td><%= question.allowed_time %></td>
             <td><%= question.created_by %></td>
             <td><%= question.category.category %></td>
-            <td class="dropt" title="detail"  ><%= link_to  image_tag('show.png'), '#',:onclick=>"window.open('/questions/#{question.id}','Question Details','location=1,status=0,scrollbars=1,width=500,height=400',true)" %></td>
+            <td class="dropt" title="detail"  ><%= link_to  image_tag('show.png'), '#',:onclick=>"show_box(#{question.id});",:remote=>true  %>
+              <div style="display: none;"  id= <%=question.id%>  >
+                <b>Question:</b>
+                <%=  question.question %><br /><br />
+                <% if !question.question_image.to_s.include?("missing.png") %>
+                    <%= image_tag question.question_image.url(:original) %>
+                <% end %>
+                <table  border="3" width="75%"   >
+                  <tr>
+                    <th>options:</th>
+                    <th>true/false</th>
+                  </tr>
+
+                  <% question.options.each do |op| %>
+                      <tr>
+                        <td width="75%" class="lft" ><%= op.option %></td>
+                        <td width="10%" ><%= op.is_right %></td>
+                      </tr>
+                  <%end %>
+
+                </table>
+                <br />
+                <b>Answer code:</b>
+                <%=  question.answer_id %><br />
+
+                <b>Time allowed:</b>
+                <%=  question.allowed_time %><br />
+
+                <b>Category:</b>
+                <%= question.category.category %><br />
+
+                <b>Complexity:</b>
+                <%= question.complexity.complexity %><br />
+
+                <b>Type:</b>
+                <%= question.type.question_type %><br />
+
+                <b>created by:</b>
+                <%=  question.created_by %><br />
+
+                <b>created at:</b>
+                <%=  question.created_at.strftime("%b %d %A,%Y at %I:%M%p") %><br />
+
+
+              </div>
+            </td>
             <td class="dropt" title="edit"  ><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
            </tr>
+
+
+
       <% end %>
     </table>
 
@@ -141,12 +205,6 @@
 
 
 
-<script type="text/javascript" >
-    function toggle1(source) {
-        var checkboxes = document.getElementsByTagName("input");
 
-        for(var i in checkboxes)
-         if(document.getElementsByTagName("input")[i].type == "checkbox")
-            document.getElementsByTagName("input")[i].checked = source.checked;
-    }
-</script>
+
+

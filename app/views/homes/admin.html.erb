@@ -1,17 +1,83 @@
+    <link href="/assets/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+	<script src="/assets/jquery-1.8.2.js"></script>
+	<script src="/assets/jquery-ui-1.9.1.custom.js"></script>
 
-        <h1 align="center" > Suyati Online Recruitment Test</h1>
+
+    <script type="text/javascript">
+
+        function show_box(no){
+            $("#"+no+"").dialog();
+        }
+
+        function sh_click(){
 
 
+            if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For today")
+            {
+
+                document.getElementById('sh1').style.display="";
+                document.getElementById('sh7').style.display='none';
+                document.getElementById('sh30').style.display='none';
+            }
+            else if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For this week")
+            {
+                document.getElementById('sh7').style.display="";
+                document.getElementById('sh1').style.display='none';
+                document.getElementById('sh30').style.display='none';
+            }
+            else if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For this month")
+            {
+                document.getElementById('sh30').style.display="";
+                document.getElementById('sh7').style.display='none';
+                document.getElementById('sh1').style.display='none';
+            }
+        }
+
+        function rs_click(){
+
+            if(document.getElementById("search_result").options[document.getElementById("search_result").selectedIndex].text=="For today")
+            {
+                document.getElementById('rs1').style.display="";
+                document.getElementById('rs7').style.display='none';
+                document.getElementById('rs30').style.display='none';
+            }
+            else if(document.getElementById("search_result").options[document.getElementById("search_result").selectedIndex].text=="For this week")
+            {
+                document.getElementById('rs7').style.display="";
+                document.getElementById('rs1').style.display='none';
+                document.getElementById('rs30').style.display='none';
+            }
+            else if(document.getElementById("search_result").options[document.getElementById("search_result").selectedIndex].text=="For this month")
+            {
+                document.getElementById('rs30').style.display="";
+                document.getElementById('rs7').style.display='none';
+                document.getElementById('rs1').style.display='none';
+            }
+
+        }
+    </script>
+
+
+
+
+
+
+
+    <script type="text/javascript" >
+        $(document).ready(function() {
+            $("#rs7").hide();
+            $("#rs30").hide();
+            $("#sh7").hide();
+            $("#sh30").hide();
+        });
+    </script>
+
+
+   <h1 align="center" > Suyati Online Recruitment Test</h1>
    <table width="100%"   cellpadding="5px" border="0" class="home_border"   >
-
    <tr>
      <td width="50%" height="300px"  >
-
-
        <%= select("search","schedule", ["For today","For this week","For this month"],{},:onchange=>"sh_click()",:class=>"select_home") %>
-
-
-
        <div id="sh1">
          <table border="3" width="100%" height="480"  class="curvedEdges" >
            <tr>
@@ -77,30 +143,6 @@
            </tr>
          </table>
        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
      </td><td>
 
@@ -173,37 +215,6 @@
        </table>
      </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
    </td></tr>
    <tr>
      <td>
@@ -215,10 +226,58 @@
         </th>
      </tr>
      <% @questions.each {|q|  %>
+
          <tr>
            <td class="lft_home"  height="0" >
-             <%=link_to  q.question.slice(0..50),'#',:onclick=>"window.open('/questions/#{q.id}','Question Details','location=1,status=0,scrollbars=1,width=500,height=400',true)"    %>
+             <%=link_to  q.question.slice(0..50),'#',:onclick=>"show_box(#{q.id});",:remote=>true %>
              <%= "......" if q.question.length>50 %>
+
+             <div style="display: none;"  id= <%=q.id%>  >
+               <b>Question:</b>
+               <%=  q.question %><br /><br />
+               <% if !q.question_image.to_s.include?("missing.png") %>
+                   <%= image_tag q.question_image.url(:original) %>
+               <% end %>
+               <table  border="3" width="75%"   >
+                 <tr>
+                   <th>options:</th>
+                   <th>true/false</th>
+                 </tr>
+
+                 <% q.options.each do |op| %>
+                     <tr>
+                       <td width="75%" class="lft" ><%= op.option %></td>
+                       <td width="10%" ><%= op.is_right %></td>
+                     </tr>
+                 <%end %>
+
+               </table>
+                <br />
+               <b>Answer code:</b>
+               <%=  q.answer_id %><br />
+
+               <b>Time allowed:</b>
+               <%=  q.allowed_time %><br />
+
+               <b>Category:</b>
+               <%= q.category.category %><br />
+
+               <b>Complexity:</b>
+               <%= q.complexity.complexity %><br />
+
+               <b>Type:</b>
+               <%= q.type.question_type %><br />
+
+               <b>created by:</b>
+               <%=  q.created_by %><br />
+
+               <b>created at:</b>
+               <%=  q.created_at.strftime("%b %d %A,%Y at %I:%M%p") %><br />
+
+
+             </div>
+
+
            </td>
          </tr>
      <% } %>
@@ -251,85 +310,6 @@
 
    </table>
 
-
-
-
-
-
- <script type="text/javascript">
-   function sh_click(){
-
-
-       if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For today")
-      {
-
-        document.getElementById('sh1').style.display="";
-        document.getElementById('sh7').style.display='none';
-        document.getElementById('sh30').style.display='none';
-      }
-       else if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For this week")
-      {
-        document.getElementById('sh7').style.display="";
-        document.getElementById('sh1').style.display='none';
-        document.getElementById('sh30').style.display='none';
-      }
-       else if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For this month")
-      {
-        document.getElementById('sh30').style.display="";
-        document.getElementById('sh7').style.display='none';
-        document.getElementById('sh1').style.display='none';
-      }
-   }
- </script>
-
- <script type="text/javascript">
-   function rs_click(){
-
-       if(document.getElementById("search_result").options[document.getElementById("search_result").selectedIndex].text=="For today")
-      {
-        document.getElementById('rs1').style.display="";
-        document.getElementById('rs7').style.display='none';
-        document.getElementById('rs30').style.display='none';
-      }
-       else if(document.getElementById("search_result").options[document.getElementById("search_result").selectedIndex].text=="For this week")
-      {
-        document.getElementById('rs7').style.display="";
-        document.getElementById('rs1').style.display='none';
-        document.getElementById('rs30').style.display='none';
-      }
-       else if(document.getElementById("search_result").options[document.getElementById("search_result").selectedIndex].text=="For this month")
-      {
-        document.getElementById('rs30').style.display="";
-        document.getElementById('rs7').style.display='none';
-        document.getElementById('rs1').style.display='none';
-      }
-
-   }
- </script>
-
-
-
-
- <script type="text/javascript">
-    window.onload = function()
-    {
-        document.getElementById('rs7').style.display='none';
-        document.getElementById('rs30').style.display='none';
-        document.getElementById('sh7').style.display='none';
-        document.getElementById('sh30').style.display='none';
-    }
- </script>
-
-
-
-
-
-
-    <script>
-  $(document).ready(function() {
-    $("#dialog").dialog();
-  });
-  </script>
 
 
 
