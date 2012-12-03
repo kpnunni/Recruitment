@@ -79,7 +79,7 @@ class Exam < ActiveRecord::Base
   
   def self.filtered search
       if search.nil?
-        return @exam=Exam.all
+        return @exam=Exam.all(:order => 'created_at DESC')
       end
        name=by=range=Exam.all(:order => 'created_at DESC')
        name.select! {|xam| xam.name.include?(search["name"]) }             if  search["name"]!=""

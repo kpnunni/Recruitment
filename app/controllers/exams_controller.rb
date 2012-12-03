@@ -126,7 +126,7 @@ class ExamsController < ApplicationController
     @exam.destroy
 
     respond_to do |format|
-      format.html { redirect_to exams_url, notice: 'Exam was successfully deleted.'  }
+      format.html { redirect_to exams_path , notice: 'Exam was successfully deleted.'  }
       format.json { head :no_content }
     end
   end
