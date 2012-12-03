@@ -75,12 +75,12 @@ class AnswersController < ApplicationController
   def candidate_update
       @candidate=Candidate.find(params[:id])
       if params[:candidate][:address]==""||params[:candidate][:phone1]==""||params[:candidate][:technology]==""||params[:candidate][:certification]==""||params[:candidate][:skills]==""
-        flash[:error]="You should fill all mandatory fields"
+        flash.now[:error]="You should fill all mandatory fields"
         render '/answers/candidate_detail'
         return
       end
       if @candidate.update_attributes(params[:candidate])
-          redirect_to instructions_answers_path,:notice=>"updated"
+          redirect_to instructions_answers_path
       else
         render 'answers/candidate_detail' ,:notice=>"error"
       end
@@ -91,7 +91,7 @@ class AnswersController < ApplicationController
       @schedule=current_user.candidate.schedule
       @exam=@schedule.exam
       @ngtv=Setting.find_by_name('negative_mark').status.eql?("on")
-      @diff=(Time.now.to_i-@schedule.sh_date.to_i)/60
+      @diff=(@schedule.sh_date.to_i-Time.now.to_i)/60
   end
 
   def chk_user
@@ -103,7 +103,7 @@ class AnswersController < ApplicationController
 
   def congrats
      @user=User.find(params[:id])
-
+     sign_out
   end
 
   def blank

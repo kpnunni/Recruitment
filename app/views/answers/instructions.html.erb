@@ -29,24 +29,85 @@
 
     </b>
     <br/>
-
-    <% if @diff>-30 && @diff<30 %>
+    <div id="long_wait" style="display: none;" >
+   <h2>More than one hour is remaining for your exam.
+     <br/>
+     <%=link_to 'sign out', '/signout',method: :delete   %>
+   </h2>
+ </div>
+    <div id="wait" style="display: none;" >
+   <h2>Time remaining for your exam(In minutes),
+     <div id="count" align="center" ></div>
+     <br/><br/>
+     <%=link_to 'sign out', '/signout',method: :delete   %>
+   </h2>
+ </div>
+    <div id="exam" style="display: none;" >
         <h2><%= link_to 'start_exam >>','/answers/blank' ,:onclick=>"popup()" %></h2>
-    <% else %>
-        <h2><%= "Time remaining for your exam:"+ time_ago_in_words(@schedule.sh_date)   %><br/>
-            <%= "You can start the exam in between 30 minutes before or after the schedule time"  %><br/>
-            <%=link_to 'sign out', '/signout',method: :delete   %>
-        </h2>
-    <% end %>
+    </div>
+    <div id="over" style="display: none;" >
+        <h2>Sorry,Time is over.</h2>
+    </div>
+
 
  <script type="text/javascript">
-   function popup()
-   {
-       var a=window.open('/answers/make',"Test","fullscreen=1,scrollbars=1",true);
-       self.blur();
-       a.focus();
+       function popup()
+       {
+           var a=window.open('/answers/make',"Test","fullscreen=1,scrollbars=1",true);
+           self.blur();
+           a.focus();
 
-   }
+       }
+     window.onload = function()
+     {
+         startCountdown(<%=cnt=@diff%>);
+     }
+
+   function startCountdown(g_iCount)
+    {
+        if(g_iCount > 60)
+        {
+          document.getElementById('long_wait').show();
+        }
+        else if(g_iCount < -60)
+        {
+           document.getElementById('exam').hide();
+           document.getElementById('over').show();
+        }
+        else if((g_iCount) > 0)
+        {
+            document.getElementById('long_wait').hide();
+            document.getElementById('wait').show();
+            var str="black";
+            if (g_iCount<20&&g_iCount>=10)
+            {
+                str="blue"
+            }
+            else if (g_iCount<10)
+            {
+                str="green"
+            }
+
+
+            document.getElementById('count').innerHTML=g_iCount.toString().fontcolor(str);
+
+            g_iCount = g_iCount - 1;
+
+            setTimeout(function() {
+
+                startCountdown(g_iCount);
+
+            }, 60000);
+        }
+        else
+        {
+            document.getElementById('wait').hide();
+            document.getElementById('exam').show();
+        }
+    }
+
+
+
  </script>
 
 

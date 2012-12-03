@@ -42,7 +42,7 @@ class CandidatesController < ApplicationController
       else
        # 2.times{@candidate.experiences.build }
        # 2.times{@candidate.qualifications.build }
-        flash[:error]="Error,Please give correct inputs"
+        flash.now[:error]="Error,Please give correct inputs"
         redirect_to   '/sessions/signup'
       end
       return

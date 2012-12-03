@@ -25,7 +25,7 @@
         <%#= f.text_field :sh_date %>
 
 
-       <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force ,:value=>Time.now.strftime("%b %d %A,%Y at %I:%M%p")%>
+       <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force %>
 
 
 
@@ -46,7 +46,7 @@
 
 
 
-    <% end %>
+      <% end %>
        <br /><%= link_to image_tag('back.png') ,candidates_path  %>
 
 

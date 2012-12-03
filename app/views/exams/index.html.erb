@@ -4,7 +4,7 @@
 
     <script type="text/javascript">
        function open_instruction(no){
-           $("#"+no+"").dialog({modal: true,width: 600});
+           $("#"+no+"").dialog({modal: true,width: 800});
        }
     </script>
   <h3 align="right"></h3>
@@ -86,7 +86,7 @@
             <td width="20%" class="lft"  ><%= exam.name %></td>
             <td width="15%" ><%= exam.no_of_question  %></td>
             <td width="35%" class="lft"   ><%= exam.description  %></td>
-            <td width="15%"><%= link_to 'Show','#',:onclick=>"open_instruction(#{exam.id});" %>
+            <td width="15%"><%= link_to 'Show','#',:onclick=>"open_instruction(#{exam.id});" ,:remote=>true%>
 
               <div style="display: none;"  id= <%=exam.id%>  >
                 <%@exam = exam  %>

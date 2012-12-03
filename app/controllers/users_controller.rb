@@ -32,7 +32,7 @@ class UsersController < ApplicationController
         UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save
         redirect_to success_sessions_path(:as=>"emp"), notice: 'Employee was successfully registered.'
       else
-        flash[:error]="Invalid Employee Email id"
+        flash.now[:error]="Invalid Employee Email id"
         render '/sessions/signup'
       end
       return
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 
 
     if params[:user][:role_ids].nil?
-      flash[:error]="Select atleast one role"
+      flash.now[:error]="Select atleast one role"
       render action:'new'
       return
     end
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     @user=User.find(params[:id])
     @user.roles.delete_all
     if params[:user][:role_ids].nil?
-      flash[:error]="Select atleast one role"
+      flash.now[:error]="Select atleast one role"
       render action:'new'
       return
     end
@@ -148,7 +148,7 @@ class UsersController < ApplicationController
 
   def chk_user
     if !current_user.has_role?('Manage Users')
-      flash[:warning]='Unauthorised Access'
+      flash.now[:warning]='Unauthorised Access'
       redirect_to '/homes/index'
     end
   end

@@ -78,14 +78,14 @@ class QuestionsController < ApplicationController
 
         flag=0
         if params[:question][:question]==""&&params[:question][:question_image].nil?
-            flash[:error]="Question or image should not be blank"
+            flash.now[:error]="Question or image should not be blank"
             render action: "new"
             return
         end
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
         if flag==0
    #         4.times { @question.options.build }
-            flash[:error]="atleast one option should be true"
+            flash.now[:error]="atleast one option should be true"
             render action: "new"
             return
         end
@@ -111,13 +111,13 @@ class QuestionsController < ApplicationController
         flag=0
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
         if params[:question][:question]==""&&params[:question][:question_image].nil?
-            flash[:error]="Question or image should not be blank"
+            flash.now[:error]="Question or image should not be blank"
             render action: "edit"
             return
         end
         if flag==0
 
-            flash[:error]="atleast one option should be true"
+            flash.now[:error]="atleast one option should be true"
             render action: "new"
             return
         end
