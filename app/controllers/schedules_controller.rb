@@ -113,7 +113,7 @@ class SchedulesController < ApplicationController
      respond_to do |format|
       if @schedule.update_attributes(params[:schedule])
         @schedule.candidates.each{|c| UserMailer.update_schedule_email(c.user).deliver }
-        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("admin"))}
+        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
         @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver }
 
         format.html { redirect_to @schedule, notice: 'Exam was successfully rescheduled.' }
@@ -129,7 +129,7 @@ class SchedulesController < ApplicationController
   def destroy
     @schedule = Schedule.find(params[:id])
         @schedule.candidates.each{|c| UserMailer.cancel_schedule_email(c.user,@schedule).deliver }
-        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("admin"))}
+        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
         @users.each {|admin| UserMailer.cancel_schedule_email(admin,@schedule).deliver }
 
     @schedule.destroy
@@ -156,23 +156,6 @@ class SchedulesController < ApplicationController
     end
 
   end
-    def onecan
-    @exam=Exam.all
-    @candidate=Candidate.find(params[:id])
-    if @candidate.schedule.nil?
-       @schedule=Schedule.new
-    else
-      @schedule=@candidate.schedule
-    end
-
-     respond_to do |format|
-      format.html
-      format.json { render json: @schedule }
-    end
-  end
-
-
-
 
 
 end

@@ -37,7 +37,7 @@ Test::Application.routes.draw do
   resources :schedules do
     member do
       get :remove
-      get :onecan
+
     end
   end
 
@@ -69,6 +69,9 @@ Test::Application.routes.draw do
   end
 
   resources :candidates do
+     collection  do
+      post :schedule_create
+    end
     resources :experiences
     resources :qualifications
   end

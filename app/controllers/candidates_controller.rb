@@ -15,7 +15,7 @@ class CandidatesController < ApplicationController
 
   def index
     @candidates=Candidate.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
-
+    @exam=Exam.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @candidates }
@@ -40,8 +40,7 @@ class CandidatesController < ApplicationController
       if @candidate.save
         redirect_to success_sessions_path(:as=>"can"), notice: 'Candidate was successfully created.'
       else
-       # 2.times{@candidate.experiences.build }
-       # 2.times{@candidate.qualifications.build }
+
         flash.now[:error]="Error,Please give correct inputs"
         redirect_to   '/sessions/signup'
       end
@@ -49,10 +48,9 @@ class CandidatesController < ApplicationController
     end
     if @candidate.save
       # UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
-      redirect_to candidate_path(@candidate), notice: 'Candidate was successfully created.'
+      redirect_to candidates_path , notice: 'Candidate was successfully created.'
     else
-     # 2.times{@candidate.experiences.build }
-     # 2.times{@candidate.qualifications.build }
+
       render "new"
     end
   end
@@ -90,6 +88,42 @@ class CandidatesController < ApplicationController
     end
 
   end
+  def schedule_create
+    @candidate=Candidate.find(params[:schedule][:candidate_ids].keys.first.to_i)
+    @exam=Exam.all
+    @date=Time.parse(params[:schedule]["sh_date(1i)"]+"-"+params[:schedule]["sh_date(2i)"]+"-"+params[:schedule]["sh_date(3i)"]+" "+params[:schedule]["sh_date(4i)"]+":"+params[:schedule]["sh_date(5i)"])
+    if @date < Time.now
+       flash[:error]='Date and time should be greater than current date and time.'
+       redirect_to candidates_path
+       return
+    end
 
+    #Schedule
+    if @candidate.schedule.nil?
+       @schedule = Schedule.new(params[:schedule])
+       @schedule.created_by=current_user.user_email
+       if @schedule.save
+         UserMailer.schedule_email(@candidate.user).deliver
+         @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
+         @users.each {|admin| UserMailer.admin_schedule_email(admin,@schedule).deliver }
+         flash[:notice]='Exam was successfully scheduled.'
+       else
+         flash[:error]='Error on scheduling.'
+       end
+    #Reschedule
+    else
+       @schedule = @candidate.schedule
+       @schedule.updated_by=current_user.user_email
+       if  @schedule.update_attributes(params[:schedule])
+         UserMailer.update_schedule_email(@candidate.user).deliver
+         @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
+         @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver }
+         flash[:notice]='Exam was successfully re-scheduled.'
+       else
+         flash[:error]='Error on re-scheduling.'
+       end
+    end
+      redirect_to candidates_path
+  end
 
 end
