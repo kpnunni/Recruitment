@@ -124,10 +124,12 @@
     <table border="3" width="100%"  class="index_table" >
       <tr>
         <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all to delete" /></th>
-        <th width="50%">question</th>
+        <th width="45%">question</th>
         <th  width="7%">allowed time (sec)</th>
         <th width="15%">Created by:</th>
         <th width="15%">Category:</th>
+        <th width="5%"></th>
+        <th width="5%"></th>
         <th width="5%"></th>
        </tr>
 
@@ -188,8 +190,9 @@
 
               </div>
             </td>
-            <td class="dropt" title="edit"  ><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
-           </tr>
+            <td  title="edit"  ><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
+            <td  title="delete"  ><%= link_to  image_tag('delete.png'),question , method: :delete, data: { confirm: 'Are you sure?' }  %></td>
+          </tr>
 
 
 

@@ -5,17 +5,10 @@
 <%= nested_form_for  (@question ) do |f| %>
 
 
-   <% if @question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
-
-      <ul>
-      <% @question.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+    <div class="error_msg">
+      <%= render  "shared/error_message", :target => @question  %>
     </div>
-  <% end %>
+
 
 
         Last modified by:<%=@question.updated_by   %> <br/>  <br/>

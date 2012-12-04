@@ -31,7 +31,9 @@ module Test
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
      config.time_zone = 'New Delhi'
-
+     config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+      "<span class='red_colour'>#{html_tag}</span>".html_safe
+     }
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de

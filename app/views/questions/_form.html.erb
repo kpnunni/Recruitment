@@ -22,17 +22,9 @@
     <%= nested_form_for  (@question ) do |f1| %>
 
 
-   <% if @question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
-
-      <ul>
-      <% @question.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+        <div class="error_msg">
+          <%= render  "shared/error_message", :target => @question   %>
+        </div>
 
         <table>
           <tr>
@@ -57,7 +49,7 @@
         <%= f1.file_field :question_image %>
 
         <%= f1.label :Allowed_time %>
-        <%= f1.text_field :allowed_time , :value=>30,   :class => "text_box" %>(in sec)
+        <%= f1.text_field :allowed_time , :value=>params[:question] ? params[:question][:allowed_time] : 50 ,   :class => "text_box" %>(in sec)
 
 
 

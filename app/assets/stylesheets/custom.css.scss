@@ -610,7 +610,7 @@ table.curvedEdges th{
    background-repeat:no-repeat;
    background-position:right;
   border-radius:10px;
-  font-weight: bold;
+
  }
   .error{
   color: #000000;
@@ -621,8 +621,6 @@ table.curvedEdges th{
    background-repeat:no-repeat;
    background-position:right;
   border-radius:10px;
-  font-weight: bold;
-    font-style: oblique;
     font-case:uper;
  }
   .alert{
@@ -649,7 +647,16 @@ table.curvedEdges th{
 	thead tr:hover {
 		background: none;
 	}
-
+ .error_msg{
+   color: #000000;
+   border: 0px solid red;
+   background-color: pink ;
+   background-image: url('icon_error_lrg.gif') ;
+   background-repeat:no-repeat;
+   background-position:right;
+   border-radius:10px;
+   font-case:uper;
+ }
 
 
 

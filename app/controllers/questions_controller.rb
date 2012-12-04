@@ -142,10 +142,8 @@ class QuestionsController < ApplicationController
         @question = Question.find(params[:id])
         @question.destroy
 
-        respond_to do |format|
-          format.html { redirect_to questions_url }
-          format.json { head :no_content }
-        end
+         redirect_to questions_url, notice: 'Question was successfully deleted.'
+
       end
 
   def delete_all
