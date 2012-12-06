@@ -11,8 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b03e1eb-cca0-434e-b2f4-827c51a6e5b4" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/candidates/_schedule.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/candidates/index.html.erb" afterPath="$PROJECT_DIR$/app/views/candidates/index.html.erb" />
     </list>
     <ignored path="Test.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,28 +39,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="application.html.erb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="43" selection-start="179" selection-end="179" vertical-scroll-proportion="0.52401745">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="questions_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/questions_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/questions/index.html.erb">
+        <entry file="file://$PROJECT_DIR$/app/views/candidates/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="28" selection-start="217" selection-end="217" vertical-scroll-proportion="-4.375">
+            <state line="103" column="94" selection-start="3751" selection-end="3751" vertical-scroll-proportion="-3.2083333">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_schedule.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/candidates/_schedule.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="96" selection-start="716" selection-end="716" vertical-scroll-proportion="1.0041841">
               <folding />
             </state>
           </provider>
@@ -84,8 +76,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/assets/javascripts/application.js" />
-        <option value="$PROJECT_DIR$/app/views/questions/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/views/exams/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/views/recruitment_tests/show.html.erb" />
         <option value="$PROJECT_DIR$/app/views/schedules/_form.html.erb" />
@@ -100,6 +90,8 @@
         <option value="$PROJECT_DIR$/app/views/answers/show.html.erb" />
         <option value="$PROJECT_DIR$/app/views/questions/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/candidates/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/candidates/_schedule.html.erb" />
       </list>
     </option>
   </component>
@@ -1272,7 +1264,11 @@
       <created>1354773282316</created>
       <updated>1354773282316</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="jquery problem">
+      <created>1354774092434</created>
+      <updated>1354774092434</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TodoView" selected-index="3">
@@ -1355,7 +1351,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="submitting image" />
+    <option name="LAST_COMMIT_MESSAGE" value="jquery problem" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1368,7 +1364,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="changes in all dashbord8" />
     <MESSAGE value="mandatory image" />
     <MESSAGE value="123" />
     <MESSAGE value="1234" />
@@ -1393,25 +1388,12 @@
     <MESSAGE value="schedule from candidate index" />
     <MESSAGE value="error messages" />
     <MESSAGE value="submitting image" />
+    <MESSAGE value="jquery problem" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/sessions/signup.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="134" selection-start="4763" selection-end="4763" vertical-scroll-proportion="5.682594">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/sessions/sent_pass.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/sessions_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -1470,30 +1452,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/candidates/_form.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="41" selection-start="3670" selection-end="3670" vertical-scroll-proportion="-11.416667">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/candidates/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="125" column="45" selection-start="4949" selection-end="4949" vertical-scroll-proportion="0.33246753">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/candidates/edit.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="151" column="39" selection-start="6528" selection-end="6528" vertical-scroll-proportion="0.33766234">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/questions_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1507,7 +1468,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="43" selection-start="179" selection-end="179" vertical-scroll-proportion="0.52401745">
+        <state line="13" column="52" selection-start="228" selection-end="228" vertical-scroll-proportion="0.4522613">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/questions_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/candidates/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="68" selection-start="3697" selection-end="3728" vertical-scroll-proportion="0.6270718">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/candidates_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/candidates/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="94" selection-start="3751" selection-end="3751" vertical-scroll-proportion="-3.2083333">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/candidates/_schedule.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="96" selection-start="716" selection-end="716" vertical-scroll-proportion="1.0041841">
           <folding />
         </state>
       </provider>

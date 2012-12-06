@@ -1,0 +1,19 @@
+
+  <% @schedule = candidate.schedule.nil? ? Schedule.new : candidate.schedule %>
+  <%= form_for @schedule,:url => '/candidates/schedule_create' ,:method=>"post" do |f| %>
+
+      <%= f.label :exam%>
+      <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
+
+      <%= f.label :date_and_time %>
+
+      <%= f.datetime_select    "sh_date",:prompt=>true, :start_year => Date.today.year , :default =>Time.now() , :ampm => true ,:minute_step=>5 %>
+
+      <%= f.fields_for :candidate_ids do |f1| %>
+          <%= f1.check_box   candidate.id ,:checked=>true,:style=>"display: none"%>
+      <% end %>
+
+      <br /><br />
+      <%= f.submit "Schedule" ,class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %>
+
+  <% end %>

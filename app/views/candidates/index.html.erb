@@ -1,7 +1,7 @@
 <script type="text/javascript">
     jQuery.noConflict(true);
-    function schedule_now(){
-       jQuery('#new_schedule').dialog({ modal: true, title: 'Scheduling',width: 460 } );
+    function schedule_now(id){
+       jQuery('#'+id).dialog({ modal: true, title: 'Scheduling',width: 460 } );
     }
 </script>
 <div align="right" ><%= link_to image_tag('adduser.png'), new_candidate_path, :class=>"dropt", :title=>"add new candidate"   %></div>
@@ -101,31 +101,14 @@
 
     <td width="15%" class="dropt" title="schedule a test"  >
         <% if candidate.schedule.nil?&&current_user.has_role?('Schedule')   %>
-        <%= link_to  'Schedule Now', '#',:remote=>true,:onclick=>"schedule_now();" %>
+        <%= link_to  'Schedule Now', '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %>
         <% elsif current_user.has_role?('Re Schedule')&&candidate.recruitment_test.nil? %>
-             <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now();" %></td>
+             <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %></td>
         <% elsif current_user.has_role?('Re Schedule')&&!candidate.recruitment_test.nil? %>
              <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>
         <% end %>
-      <div id="new_schedule" style="display: none;" >
-        <% @schedule= candidate.schedule.nil? ? Schedule.new : candidate.schedule %>
-        <%= form_for @schedule,:url => '/candidates/schedule_create' ,:method=>"post" do |f| %>
-
-            <%= f.label :exam%>
-            <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
-
-            <%= f.label :date_and_time %>
-
-            <%= f.datetime_select    "sh_date",:prompt=>true, :start_year => Date.today.year , :default =>Time.now() , :ampm => true ,:minute_step=>5 %>
-
-            <%= f.fields_for :candidate_ids do |f1| %>
-                <%= f1.check_box   candidate.id ,:checked=>true,:style=>"display: none"%>
-            <% end %>
-
-            <br /><br />
-            <%= f.submit "Schedule" ,class: "btn btn-large btn-primary" %>
-
-        <% end %>
+      <div id=<%= candidate.id%>  style="display: none;" >
+        <%= render 'schedule', :candidate => candidate  %>
       </div>
     </td>
     <% if !candidate.recruitment_test.nil?%>
