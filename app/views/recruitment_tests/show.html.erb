@@ -92,7 +92,7 @@
         <%=f.label :Comment  %></b>
         <%=f.text_area  :comments ,:rows=>"3" ,:style=>"width: 100%" %>  <br />
 
-        <div align="center" ><%= f.submit "Submit" ,class: "btn btn-large btn-primary" %></div>
+        <div align="center" ><%= f.submit "Submit" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();"%></div>
         <% end %>
 
          <%= link_to image_tag('back.png'), recruitment_tests_path  %>

@@ -1,10 +1,9 @@
-    <link href="/assets/jquery-ui-1.9.1.custom.css" rel="stylesheet">
-	<script src="/assets/jquery-1.8.2.js"></script>
-	<script src="/assets/jquery-ui-1.9.1.custom.js"></script>
+
 
 <script type="text/javascript" >
+    jQuery.noConflict(true);
         function show_box(no){
-            $("#"+no+"").dialog({width: 650});
+            jQuery("#"+no+"").dialog({width: 650,position: {   at: " bottom" }  });
         }
     function toggle1(source) {
         var checkboxes = document.getElementsByTagName("input");

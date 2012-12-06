@@ -1,11 +1,10 @@
-      <link href="/assets/jquery-ui-1.9.1.custom.css" rel="stylesheet">
-	<script src="/assets/jquery-1.8.2.js"></script>
-	<script src="/assets/jquery-ui-1.9.1.custom.js"></script>
+
 
     <script type="text/javascript">
-       $(document).ready(function() {
-        $('#show_category').click(function() {
-            $("#new_category1").dialog({ modal: true, title: "Adding new category",width: 260 } );
+        jQuery.noConflict(true);
+        jQuery(document).ready(function() {
+         jQuery('#show_category').click(function() {
+             jQuery("#new_category1").dialog({ modal: true, title: "Adding new category",width: 260 } );
         })
        });
     </script>
@@ -71,7 +70,7 @@
         </table>
         <p><%= f1.link_to_add image_tag('addc.png',:title =>"Add new option"  ), :options %></p>
 
-        <%= f1.submit "Create"  ,class: "btn btn-large btn-primary"%>
+        <%= f1.submit "Create"  ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting(); "%>
     <% end %>
 
       <br /><%= link_to image_tag('back.png') ,questions_path %>

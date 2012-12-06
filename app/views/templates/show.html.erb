@@ -2,7 +2,7 @@
   <h1>Email Template for <%= @template.name  %></h1>
 <%= form_for  @template  do |f| %>
    <%= f.text_area  :body , :cols => "50", :rows=>"3", :class=>"widgEditor"%>
-   <%= f.submit "Update" ,class: "btn btn-large btn-primary" %>
+   <%= f.submit "Update" ,class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %>
 <% end %>
 
 

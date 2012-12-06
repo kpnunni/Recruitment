@@ -149,7 +149,7 @@
           <% end %>
         </div>
 
-        <%= f.submit "Update" ,class: "btn btn-large btn-primary" %>
+        <%= f.submit "Update" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();"%>
     <% end %>
 
          <%= link_to image_tag('back.png'),candidates_path  %>

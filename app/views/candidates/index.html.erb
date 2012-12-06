@@ -1,9 +1,10 @@
-
-<script src="/assets/jquery-1.8.2.js"></script>
-
-	<script src="/assets/jquery-ui-1.9.1.custom.js"></script>
-
-      <div align="right" ><%= link_to image_tag('adduser.png'), new_candidate_path, :class=>"dropt", :title=>"add new candidate"   %></div>
+<script type="text/javascript">
+    jQuery.noConflict(true);
+    function schedule_now(){
+       jQuery('#new_schedule').dialog({ modal: true, title: 'Scheduling',width: 460 } );
+    }
+</script>
+<div align="right" ><%= link_to image_tag('adduser.png'), new_candidate_path, :class=>"dropt", :title=>"add new candidate"   %></div>
 
 <h1>Candidates</h1>
 
@@ -100,9 +101,9 @@
 
     <td width="15%" class="dropt" title="schedule a test"  >
         <% if candidate.schedule.nil?&&current_user.has_role?('Schedule')   %>
-        <%= link_to  'Schedule Now', '#',:remote=>true,:onclick=>" $('#new_schedule').dialog({ modal: true, title: 'Scheduling',width: 460 } );" %>
+        <%= link_to  'Schedule Now', '#',:remote=>true,:onclick=>"schedule_now();" %>
         <% elsif current_user.has_role?('Re Schedule')&&candidate.recruitment_test.nil? %>
-             <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>" $('#new_schedule').dialog({ modal: true, title: 'Scheduling',width: 460 } );" %></td>
+             <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now();" %></td>
         <% elsif current_user.has_role?('Re Schedule')&&!candidate.recruitment_test.nil? %>
              <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>
         <% end %>
@@ -115,7 +116,7 @@
 
             <%= f.label :date_and_time %>
 
-            <%= f.datetime_select    "sh_date", :start_year => Date.today.year , :default =>Time.now() , :ampm => true ,:minute_step=>5 %>
+            <%= f.datetime_select    "sh_date",:prompt=>true, :start_year => Date.today.year , :default =>Time.now() , :ampm => true ,:minute_step=>5 %>
 
             <%= f.fields_for :candidate_ids do |f1| %>
                 <%= f1.check_box   candidate.id ,:checked=>true,:style=>"display: none"%>

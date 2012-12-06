@@ -1,11 +1,9 @@
-      <link href="/assets/jquery-ui-1.9.1.custom.css" rel="stylesheet">
-	<script src="/assets/jquery-1.8.2.js"></script>
-	<script src="/assets/jquery-ui-1.9.1.custom.js"></script>
 
     <script type="text/javascript">
-       $(document).ready(function() {
-        $('#show_instruction').click(function() {
-            $("#new_instruction").dialog({ modal: true, title: "Adding new instruction",width: 260 } );
+       jQuery.noConflict(true);
+        jQuery(document).ready(function() {
+         jQuery('#show_instruction').click(function() {
+            jQuery("#new_instruction").dialog({ modal: true, title: "Adding new instruction",width: 260 } );
         })
        });
     </script>
@@ -86,7 +84,7 @@
 
 
         <br />
-        <%= f.submit "submit" ,class: "button" %>
+        <%= f.submit "submit" ,class: "button",:onclick=>"show_submitting();" %>
 
     <% end %>
       <br /><%= link_to image_tag('back.png') ,exams_path %>

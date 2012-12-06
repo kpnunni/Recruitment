@@ -1,10 +1,8 @@
-    <link href="/assets/jquery-ui-1.9.1.custom.css" rel="stylesheet">
-	<script src="/assets/jquery-1.8.2.js"></script>
-	<script src="/assets/jquery-ui-1.9.1.custom.js"></script>
 
     <script type="text/javascript">
-       function open_instruction(no){
-           $("#"+no+"").dialog({modal: true,width: 800});
+        jQuery.noConflict(true);
+        function open_instruction(no){
+            jQuery("#"+no+"").dialog({modal: true,width: 800});
        }
     </script>
   <h3 align="right"></h3>

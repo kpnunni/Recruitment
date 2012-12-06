@@ -36,7 +36,7 @@ class CategoriesController < ApplicationController
           format.json { render json: @categories, status: :created, location: @category }
          end
         else
-          flash.now[:error]="Category already exists/empty."
+          flash[:error]="Category already exists/empty."
          if params[:by]=="add"
           format.html { redirect_to new_question_path }
          else

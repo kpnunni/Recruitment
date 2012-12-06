@@ -86,6 +86,6 @@
                 <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
 
            <br /> <br />
-        <%= f.submit "Register" ,class: "btn btn-large btn-primary" %>
+        <%= f.submit "Register" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();"%>
     <% end %>
          <%= link_to image_tag('back.png'),candidates_path  %>

@@ -49,7 +49,7 @@ class InstructionsController < ApplicationController
         format.json { render json: @instructions, status: :created, location: @instructions }
         end
       else
-        flash.now[:error]="Instruction is empty /already exists"
+        flash[:error]="Instruction is empty /already exists"
         format.html { redirect_to instructions_path }   if params[:by]!="add"
         format.html { redirect_to new_exam_path }   if params[:by]=="add"
        end
