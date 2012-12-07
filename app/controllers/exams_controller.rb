@@ -1,6 +1,5 @@
 class ExamsController < ApplicationController
-  require 'will_paginate/array'
-  before_filter :chk_user
+   before_filter :chk_user
 
     def chk_user
     if !current_user.has_role?('Manage Exams')

@@ -1,6 +1,5 @@
 class RecruitmentTestsController < ApplicationController
-        require 'will_paginate/array'
-     before_filter :chk_user , :except=> [:update ]
+      before_filter :chk_user , :except=> [:update ]
      before_filter :chk_result, :only=> :show
   def index
     @recruitment_tests = RecruitmentTest.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)

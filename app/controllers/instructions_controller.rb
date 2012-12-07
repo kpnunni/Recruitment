@@ -1,6 +1,5 @@
 class InstructionsController < ApplicationController
-  require 'will_paginate/array'
-  def index
+   def index
     @instructions = Instruction.all(:order => 'created_at DESC').paginate(:page => params[:page], :per_page => 20)
      @instruction = Instruction.new
     respond_to do |format|

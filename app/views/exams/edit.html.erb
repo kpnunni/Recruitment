@@ -1,29 +1,14 @@
 
         <h1>Edit Exam</h1>
 
-    <div id="new_instruction1" class="right" >
-    <%= form_for @instruction   do |f1| %>
-        <b>New Instruction</b><br />
-        <%= f1.text_field :instruction%>
 
-        <%= f1.submit "Add" ,class: "btn btn-large btn-primary",:name=>"by",:value=>"add" %><br />
-    <% end %>
-     </div>
-   <div class="left">
+
     <%= form_for @exam  do |f| %>
 
 
-           <% if @exam.errors.any? %>
-            <div id="error_explanation">
-             <h2><%= pluralize(@exam.errors.count, "error") %> prohibited this exam from being saved:</h2>
-
-             <ul>
-             <% @exam.errors.full_messages.each do |msg| %>
-               <li><%= msg %></li>
-             <% end %>
-             </ul>
-              </div>
-          <% end %>
+            <div class="error_msg">
+              <%= render  "shared/error_message", :target => @exam   %>
+            </div>
 
 
 
@@ -44,14 +29,14 @@
         <br />
                 <%#= link_to 'new_instruction?' , '#',:onclick=>"show_instruction()"  %>   <br />   <br />
 
-        <%= f.label :Complexity %>    <br />
+        <%= f.label :Complexity %>
         <%= f.select("complexity_id", Complexity.all.collect {|s|
          [s.complexity, s.id ] }, { :include_blank => false, :selected =>
         @exam.complexity_id}) %>
 
 
 
-      <table border="3" >
+      <table  class="index_table" >
       <tr>
         <th>category</th>
         <th>no_of_question</th>
@@ -81,7 +66,7 @@
     <% end %>
      <br /><%= link_to image_tag('back.png') ,exams_path %>
 
-   </div>
+
 
 
 

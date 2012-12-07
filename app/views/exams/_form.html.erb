@@ -20,17 +20,9 @@
     <%= form_for @exam  do |f| %>
 
 
-           <% if @exam.errors.any? %>
-            <div id="error_explanation">
-             <h2><%= pluralize(@exam.errors.count, "error") %> prohibited this exam from being saved:</h2>
-
-             <ul>
-             <% @exam.errors.full_messages.each do |msg| %>
-               <li><%= msg %></li>
-             <% end %>
-             </ul>
-              </div>
-          <% end %>
+          <div class="error_msg">
+            <%= render  "shared/error_message", :target => @exam  %>
+          </div>
 
 
 
@@ -59,7 +51,7 @@
         @exam.complexity_id}) %>
 
 
-      <table border="3" >
+      <table  class="index_table" >
       <tr>
         <th>category</th>
         <th>no_of_question</th>

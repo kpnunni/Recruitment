@@ -1,6 +1,5 @@
 class SchedulesController < ApplicationController
-   require 'will_paginate/array'
-   before_filter :chk_user
+    before_filter :chk_user
    before_filter :new_sch ,:only =>  [:new,:create]
    before_filter :re_sch ,:only =>  [:edit,:update]
    before_filter :cancel_sch ,:only =>  [:remove,:destroy]

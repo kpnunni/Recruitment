@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   skip_before_filter :authenticate ,:create
   before_filter :chk_user, :except => [:profile,:chgpass ,:updatepass,:create]
-  require 'will_paginate/array'
 
   def show
     @user= User.find(params[:id])

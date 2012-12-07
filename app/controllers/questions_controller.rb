@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   layout false ,:only => :show
   before_filter :chk_user
-  require 'will_paginate/array'
+
 
     def chk_user
     if !current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')

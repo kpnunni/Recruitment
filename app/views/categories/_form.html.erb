@@ -3,17 +3,9 @@
 <%= form_for  (@category) do |f1| %>
 
 
-        <% if @category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@category.errors.count, "error") %> prohibited this question_category from being saved:</h2>
-
-      <ul>
-      <% @category.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+    <div class="error_msg">
+      <%= render  "shared/error_message", :target => @category  %>
     </div>
-  <% end %>
 
 
 

@@ -77,7 +77,7 @@
 
 
 
-<table border="3" width="100%"  class="index_table" >
+<table   class="index_table" >
   <tr>
     <th>name</th>
     <th>email id</th>
@@ -107,7 +107,7 @@
         <% elsif current_user.has_role?('Re Schedule')&&!candidate.recruitment_test.nil? %>
              <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>
         <% end %>
-      <div id=<%= candidate.id%>  style="display: none;" >
+      <div id=<%= candidate.id%>  style= "display: none;" >
         <%= render 'schedule', :candidate => candidate  %>
       </div>
     </td>

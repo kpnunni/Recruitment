@@ -1,29 +1,13 @@
 
     <%= form_for @schedule do |f| %>
-
-
-           <% if @schedule.errors.any? %>
-            <div id="error_explanation">
-             <h2><%= pluralize(@schedule.errors.count, "error") %> prohibited this schedule from being saved:</h2>
-
-             <ul>
-             <% @schedule.errors.full_messages.each do |msg| %>
-               <li><%= msg %></li>
-             <% end %>
-             </ul>
-              </div>
-          <% end %>
-
-
-        <%= f.label :exam%>
-        <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
+        <div class="error_msg">
+          <%= render  "shared/error_message", :target => @schedule   %>
+        </div>
 
         <%= f.label :date_and_time %>
-        <%#= f.text_field :sh_date %>
-
-
-       <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force  %>
-
+        <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force  %>
+        <%= f.label :exam%>
+        <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
 
 
 
