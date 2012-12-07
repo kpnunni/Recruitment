@@ -27,6 +27,7 @@ Test::Application.routes.draw do
       get :question_paper
       get :remove_instruction
       get :schedule
+      get :regenerate
     end
     collection do
       get :settings
@@ -82,6 +83,7 @@ Test::Application.routes.draw do
       get :success
       get :forgotpass
       post :sent_pass
+      post :registration
     end
     member do
       get :reset_pass

@@ -15,10 +15,8 @@
      <b>Instructions</b> <br />
 
     <% @instructions.each do |ins| %>
-       <%= ins.instruction  %>
-
-        <%= link_to image_tag('delete.png'),remove_instruction_exam_path(@exam,:instruction_id =>ins.id ) %><br />
-
+        <%= link_to image_tag('delete.png'),remove_instruction_exam_path(@exam,:instruction_id =>ins.id ) , data: { confirm: 'Are you sure?' },:title => "delete" %>
+        <%= ins.instruction  %> <br />
     <% end %>
     <br />
 
@@ -70,8 +68,8 @@
       <% end %>
     </table>
 
-
-
+    <br />
+    <h3><%= link_to 'Regenerate Question Paper' ,regenerate_exam_path , data: { confirm: 'Are you sure?' } %></h3>
 
 
 

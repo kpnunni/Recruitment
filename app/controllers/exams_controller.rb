@@ -97,17 +97,18 @@ class ExamsController < ApplicationController
     @exam = Exam.find(params[:id])
     @instruction=Instruction.new
     @exam.modified_by =current_user .user_email
-    @exam.subj= params[:exam][:subj]
     @exam.complexity_id=params[:exam][:complexity_id]
-    @q_count=@exam.generate_question_paper
-    @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
-    @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
-    if @exam.no_of_question!=@q_count
-       flash.now[:error]="Not enough questions (category wise/complexity wise)"
-       render 'new'
-       return
+    if params[:regenerate]
+      @exam.subj= params[:exam][:subj]
+      @q_count=@exam.generate_question_paper
+      @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
+      @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
+      if @exam.no_of_question!=@q_count
+         flash.now[:error]="Not enough questions (category wise/complexity wise)"
+         render 'new'
+         return
+      end
     end
-
     respond_to do |format|
       if @exam.update_attributes(params[:exam])
         format.html { redirect_to exams_path, notice: 'Exam was successfully updated.' }
@@ -140,6 +141,16 @@ class ExamsController < ApplicationController
      @exam.instructions.delete(Instruction.find params[:instruction_id])
    #  render :text => params[:instruction_id]
      redirect_to exam_path(@exam)
+  end
+  def regenerate
+    @exam=Exam.find(params[:id])
+    @exam.complexity_id=@exam.complexity.id
+    @exam.subj= Hash.new(0)
+    categories=[]
+    @exam.questions.each {|q| categories<<q.category.category }
+    categories.each{ |cat| @exam.subj[cat]+=1 }
+    @exam.generate_question_paper
+    redirect_to  exam_path(@exam)  ,:notice => "Question paper regenerated successfully."
   end
 
 end

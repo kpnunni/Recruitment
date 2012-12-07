@@ -36,16 +36,7 @@ class CandidatesController < ApplicationController
     @candidate.user.login_password="12345"
     @candidate.user.login_password_confirmation="12345"
     @candidate.user.encrypt_password
-    if params[:can]=="Register"
-      if @candidate.save
-        redirect_to success_sessions_path(:as=>"can"), notice: 'Candidate was successfully created.'
-      else
 
-        flash.now[:error]="Error,Please give correct inputs"
-        redirect_to   '/sessions/signup'
-      end
-      return
-    end
     if @candidate.save
       # UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
       redirect_to candidates_path , notice: 'Candidate was successfully created.'

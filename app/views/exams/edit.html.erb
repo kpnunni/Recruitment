@@ -57,10 +57,10 @@
           </tr>
       <% end %>
       </table>
-
-
-
         <br />
+        <%=check_box_tag "regenerate","Yes" %>Regenerate question paper?
+
+        <br /><br />
         <%= f.submit "Update" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();"%>
 
     <% end %>

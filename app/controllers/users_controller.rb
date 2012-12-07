@@ -21,32 +21,12 @@ class UsersController < ApplicationController
 
   def create
     @user=User.new(params[:user])
-    if params[:emp]=="Register"
-      if @user.user_email=~/\A[\w+\-.]+@suyati.com+\z/i
-        rand_password=('0'..'z').to_a.shuffle.first(4).join
-        @user.login_password=rand_password
-        @user.login_password_confirmation=rand_password
-        @user.encrypt_password
-        @user.roles.push(Role.find_by_role_name('Add Questions Only'))
-        UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save
-        redirect_to success_sessions_path(:as=>"emp"), notice: 'Employee was successfully registered.'
-      else
-        flash.now[:error]="Invalid Employee Email id"
-        render '/sessions/signup'
-      end
-      return
-    end
-
-
     if params[:user][:role_ids].nil?
       flash.now[:error]="Select atleast one role"
       render action:'new'
       return
     end
-
     @user.encrypt_password
-
-
     if @user.save
       UserMailer.welcome_email(@user,@user.login_password).deliver
       redirect_to users_path, notice: 'User was successfully created.'
