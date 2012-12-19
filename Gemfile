@@ -24,8 +24,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'calendar_date_select', :git => 'http://github.com/paneq/calendar_date_select.git', :branch => 'rails3test'
-  gem 'thin'
+   gem 'thin'
  group :production do
   gem 'pg'
    gem 'therubyracer-heroku'
