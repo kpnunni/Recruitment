@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   layout false ,:only => :show
   before_filter :chk_user
-  require 'will_paginate/array'
+
 
     def chk_user
     if !current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')
@@ -78,14 +78,14 @@ class QuestionsController < ApplicationController
 
         flag=0
         if params[:question][:question]==""&&params[:question][:question_image].nil?
-            flash[:error]="Question or image should not be blank"
+            flash.now[:error]="Question or image should not be blank"
             render action: "new"
             return
         end
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
         if flag==0
    #         4.times { @question.options.build }
-            flash[:error]="atleast one option should be true"
+            flash.now[:error]="atleast one option should be true"
             render action: "new"
             return
         end
@@ -111,13 +111,13 @@ class QuestionsController < ApplicationController
         flag=0
         params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
         if params[:question][:question]==""&&params[:question][:question_image].nil?
-            flash[:error]="Question or image should not be blank"
+            flash.now[:error]="Question or image should not be blank"
             render action: "edit"
             return
         end
         if flag==0
 
-            flash[:error]="atleast one option should be true"
+            flash.now[:error]="atleast one option should be true"
             render action: "new"
             return
         end
@@ -142,10 +142,8 @@ class QuestionsController < ApplicationController
         @question = Question.find(params[:id])
         @question.destroy
 
-        respond_to do |format|
-          format.html { redirect_to questions_url }
-          format.json { head :no_content }
-        end
+         redirect_to questions_url, notice: 'Question was successfully deleted.'
+
       end
 
   def delete_all

@@ -3,23 +3,22 @@
 <head>
 
 
-  <title>RecruitmentTest</title>
+  <title>SuyatiRecruitmentTest</title>
 
 
   <%= stylesheet_link_tag    "application", :media => "all" %>
-
+     <%= javascript_include_tag "jquery" %>
   <%= javascript_include_tag "application" %>
-   <%= javascript_include_tag :defaults, "nested_form" %>
 
-  <%= javascript_include_tag "jquery" %>
+
+
   <%= javascript_include_tag "prototype" %>
 
-  <%= javascript_include_tag "jquery_ujs" %>
+
   <%#= javascript_include_tag "widgEditor" %>
 
   <%= javascript_include_tag "bootstrap" %>
 
-  <%= calendar_date_select_includes :style => 'red'  %>
 
   <%= csrf_meta_tags %>
    <%= stylesheet_link_tag    "header" %>
@@ -28,7 +27,7 @@
 <body>
 
     <%= render 'layouts/header' %>
-    <div class="container">
+    <div class="container-fluid">
             <% if flash.any? %>
               <div class="flash">
                 <% if flash[:notice] %>
@@ -45,7 +44,16 @@
                 <% end %>
               </div>
             <% end %>
+
+
+
 	    <%= yield %>
+
+        <div id="submitting" style ="display: none;" align=center >
+            <%=  image_tag 'submitting5.gif'%>
+        </div>
+
+
     </div>
       <%= render 'layouts/footer' %>
     

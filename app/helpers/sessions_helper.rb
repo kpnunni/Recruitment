@@ -14,6 +14,9 @@ module SessionsHelper
   def signed_in?
     !current_user.nil?
   end
+  def admin?
+    current_user.roles.count==Role.count-1
+  end
   def sign_out
     self.current_user = nil
     session[:remember_token]=nil

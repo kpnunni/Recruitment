@@ -7,7 +7,7 @@
         <ul class="nav pull-right">
           <% @ok= signed_in? && !current_user.has_role?('Candidate') %>
          <%if @ok %>
-              <% if current_user.roles.count==Role.count-1 %>
+              <% if admin? %>
               <li><%= link_to "Home",   '/homes/admin' %></li>
                <% else %>
               <li><%= link_to "Home",   '/homes/index' %></li>
@@ -62,8 +62,8 @@
                 My Account <b class="caret"></b>
               </a>
         <ul class="dropdown-menu">
-           <%if current_user.roles.count==Role.count-1 %>
-            <li> <%= link_to "Settings",edit_setting_path(1) %></li>
+           <%if admin? %>
+            <li> <%= link_to "Settings",'/settings/edit' %></li>
            <% end %>
              <li> <%= link_to "Profile", profile_user_path(current_user) %></li>
              <li> <%= link_to "Sign out", '/signout',method: :delete %></li>

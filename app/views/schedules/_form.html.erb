@@ -1,36 +1,13 @@
 
-
-
-
-
-<div class="row">
-  <div class="span10 offset0">
-
     <%= form_for @schedule do |f| %>
-
-
-           <% if @schedule.errors.any? %>
-            <div id="error_explanation">
-             <h2><%= pluralize(@schedule.errors.count, "error") %> prohibited this schedule from being saved:</h2>
-
-             <ul>
-             <% @schedule.errors.full_messages.each do |msg| %>
-               <li><%= msg %></li>
-             <% end %>
-             </ul>
-              </div>
-          <% end %>
-
-
-        <%= f.label :exam%>
-        <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
+        <div class="error_msg">
+          <%= render  "shared/error_message", :target => @schedule   %>
+        </div>
 
         <%= f.label :date_and_time %>
-        <%#= f.text_field :sh_date %>
-
-
-       <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:value=>Time.now.strftime("%b %d %A,%Y at %I:%M%p") %>
-
+        <%= f.text_field  "sh_date"  %>
+        <%= f.label :exam%>
+        <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
 
 
 
@@ -39,7 +16,7 @@
             <h3><%="No candidates to schedule the exam" %></h3>
         <% else %>
 
-     <table border="2" width="50%"  >
+     <table class="index_table"  >
        <tr>
          <th>Candidate Name</th>
          <th>Email id</th>
@@ -63,7 +40,7 @@
          <% end %>
      </table>
        <br /><br />
-       <%= f.submit "Schedule" ,class: "btn btn-large btn-primary" %>
+       <%= f.submit "Schedule" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();"%>
          <% end %>
 
 
@@ -78,9 +55,6 @@
 
     <% end %>
        <br /><%= link_to image_tag('back.png') ,schedules_path %>
-  </div>
-</div>
-
 
 
 

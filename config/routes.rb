@@ -5,7 +5,8 @@ Test::Application.routes.draw do
   get "homes/admin"
   get "homes/default_page"
 
-  resources :settings
+  get 'settings/edit'
+  put 'settings/update'
 
   resources :templates
   resources :questions do
@@ -26,6 +27,7 @@ Test::Application.routes.draw do
       get :question_paper
       get :remove_instruction
       get :schedule
+      get :regenerate
     end
     collection do
       get :settings
@@ -36,7 +38,7 @@ Test::Application.routes.draw do
   resources :schedules do
     member do
       get :remove
-      get :onecan
+
     end
   end
 
@@ -46,7 +48,6 @@ Test::Application.routes.draw do
     collection do
       get :candidate_detail
       get :instructions
-
       get :blank
       get :make
     end
@@ -69,6 +70,9 @@ Test::Application.routes.draw do
   end
 
   resources :candidates do
+     collection  do
+      post :schedule_create
+    end
     resources :experiences
     resources :qualifications
   end
@@ -79,6 +83,7 @@ Test::Application.routes.draw do
       get :success
       get :forgotpass
       post :sent_pass
+      post :registration
     end
     member do
       get :reset_pass

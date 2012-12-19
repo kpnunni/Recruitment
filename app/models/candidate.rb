@@ -56,11 +56,11 @@ class Candidate < ActiveRecord::Base
 
   def self.filtered search
     if search.nil?
-      return @candidates=Candidate.all
+      return @candidates=Candidate.all(:order => 'created_at DESC')
     end
     name=email=phone=skil=status=Candidate.all(:order => 'created_at DESC')
     name.select! {|can| can.name.include?(search[":name"]) } if search[":name"]!=""
-    email.select! {|can| can.user.user_email(search[":email"]) } if search[":email"]!=""
+    email.select! {|can| can.user.user_email.include?(search[":email"]) } if search[":email"]!=""
     phone.select! {|can| can.phone1.include?(search[":phone"])||can.phone2.include?(search[":phone"]) } if search[":phone"]!=""
     skil.select! {|can| can.skills.include?(search[":skill"]) } if search[":skill"]!=""
     if search[":status"]!=""&&search[":status"][:type]=="Exam Scheduled"

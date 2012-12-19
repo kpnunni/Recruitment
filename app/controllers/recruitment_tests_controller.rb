@@ -1,6 +1,5 @@
 class RecruitmentTestsController < ApplicationController
-        require 'will_paginate/array'
-     before_filter :chk_user , :except=> [:update ]
+      before_filter :chk_user , :except=> [:update ]
      before_filter :chk_result, :only=> :show
   def index
     @recruitment_tests = RecruitmentTest.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
@@ -32,7 +31,7 @@ class RecruitmentTestsController < ApplicationController
           @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Selection Email"))}
           @users.each {|admin| UserMailer.admin_result_email(admin,@recruitment_test.candidate).deliver }
         end
-        if params[:from]=="feedback"
+        if params[:from]=="my_feedback"
            redirect_to congrats_answer_path(current_user.id)
            return
         end

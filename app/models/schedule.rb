@@ -37,7 +37,7 @@ class Schedule < ActiveRecord::Base
       end
        by=range=Schedule.all(:order => 'created_at DESC')
        by.select! {|schedul| schedul.created_by.include?(search["by"]) }             if  search["by"]!=""
-       range=Question.where(:created_at => (search[:from].to_date)..(search[:to].to_date))     if search["from"]!="" && search["to"]!=""
+       range=Schedule.where(:created_at => (search[:from].to_date)..(search[:to].to_date))     if search["from"]!="" && search["to"]!=""
       @schedules=by&range
   end
 

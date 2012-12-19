@@ -1,5 +1,4 @@
-<div class="row">
-  <div class="span12 offset0">
+
                   <h1>Exam Details</h1>
 
         <b>name:</b><%= @exam.name %> <br />
@@ -16,10 +15,8 @@
      <b>Instructions</b> <br />
 
     <% @instructions.each do |ins| %>
-       <%= ins.instruction  %>
-
-        <%= link_to image_tag('delete.png'),remove_instruction_exam_path(@exam,:instruction_id =>ins.id ) %><br />
-
+        <%= link_to image_tag('delete.png'),remove_instruction_exam_path(@exam,:instruction_id =>ins.id ) , data: { confirm: 'Are you sure?' },:title => "delete" %>
+        <%= ins.instruction  %> <br />
     <% end %>
     <br />
 
@@ -28,7 +25,7 @@
 
     <b>Question Pattern</b>
 
-    <table border="3" width="50%"  class="index_table" >
+    <table   class="index_table" >
       <tr>
         <th>Category</th>
         <th>Complexity</th>
@@ -50,7 +47,7 @@
 
     <h2>    <%='question paper'.upcase %>
     </h2>
-    <table width="100%"  border="10" bordercolor="green "   class="index_table" >
+    <table   class="index_table" >
       <tr>
         <th>No:</th>
         <th>question</th>
@@ -71,8 +68,8 @@
       <% end %>
     </table>
 
-
-
+    <br />
+    <h3><%= link_to 'Regenerate Question Paper' ,regenerate_exam_path , data: { confirm: 'Are you sure?' } %></h3>
 
 
 
@@ -83,5 +80,3 @@
 
     <br /><%= link_to image_tag('back.png') ,exams_path %>
 
-  </div>
-</div>

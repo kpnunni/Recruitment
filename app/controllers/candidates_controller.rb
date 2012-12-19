@@ -15,7 +15,7 @@ class CandidatesController < ApplicationController
 
   def index
     @candidates=Candidate.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
-
+    @exam=Exam.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @candidates }
@@ -36,48 +36,18 @@ class CandidatesController < ApplicationController
     @candidate.user.login_password="12345"
     @candidate.user.login_password_confirmation="12345"
     @candidate.user.encrypt_password
-    if params[:can]=="Register"
-      if @candidate.save
-        redirect_to success_sessions_path(:as=>"can"), notice: 'Candidate was successfully created.'
-      else
-       # 2.times{@candidate.experiences.build }
-       # 2.times{@candidate.qualifications.build }
-        flash[:error]="Error,Please give correct inputs"
-        redirect_to   '/sessions/signup'
-      end
-      return
-    end
+
     if @candidate.save
       # UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
-      redirect_to candidate_path(@candidate), notice: 'Candidate was successfully created.'
+      redirect_to candidates_path , notice: 'Candidate was successfully created.'
     else
-     # 2.times{@candidate.experiences.build }
-     # 2.times{@candidate.qualifications.build }
+
       render "new"
     end
   end
 
   def update
     @candidate=Candidate.find(params[:id])
-
-    if params[:from]=="update"
-      if params[:candidate][:address]==""||params[:candidate][:phone1]==""||params[:candidate][:technology]==""||params[:candidate][:certification]==""||params[:candidate][:skills]==""
-       # 2.times{@candidate.experiences.build } if @candidate.experiences.count==0
-       # 2.times{@candidate.qualifications.build } if @candidate.qualifications.count==0
-        flash[:error]="You should fill all mandatory fields"
-        render '/answers/candidate_detail'
-        return
-      end
-      if @candidate.update_attributes(params[:candidate])
-        if @candidate.update_attributes(params[:candidate])
-          redirect_to '/answers/instructions', notice: 'Candidate was successfully updated.'
-        end
-      else
-       # 2.times{@candidate.experiences.build } if @candidate.experiences.count==0
-       # 2.times{@candidate.qualifications.build } if @candidate.qualifications.count==0
-        render '/answers/candidate_detail'
-      end
-    else
       if @candidate.update_attributes(params[:candidate])
         if params[:candidate][:done]=="1"
 
@@ -89,7 +59,6 @@ class CandidatesController < ApplicationController
         @qualifications=@candidate.qualifications.all
         render action: "edit"
       end
-    end
   end
 
   def destroy
@@ -110,6 +79,47 @@ class CandidatesController < ApplicationController
     end
 
   end
+  def schedule_create
+    @candidate=Candidate.find(params[:schedule][:candidate_ids].keys.first.to_i)
+    @exam=Exam.all
+    if params[:schedule]["sh_date(1i)"].empty?||params[:schedule]["sh_date(2i)"].empty?||params[:schedule]["sh_date(3i)"].empty?||params[:schedule]["sh_date(4i)"].empty?||params[:schedule]["sh_date(5i)"].empty?
+       flash[:error]='Invalid date and time.'
+       redirect_to candidates_path
+       return
+    end
+    @date=Time.parse(params[:schedule]["sh_date(1i)"]+"-"+params[:schedule]["sh_date(2i)"]+"-"+params[:schedule]["sh_date(3i)"]+" "+params[:schedule]["sh_date(4i)"]+":"+params[:schedule]["sh_date(5i)"])
+    if @date < Time.now
+       flash[:error]='Date and time should be greater than current date and time.'
+       redirect_to candidates_path
+       return
+    end
 
+    #Schedule
+    if @candidate.schedule.nil?
+       @schedule = Schedule.new(params[:schedule])
+       @schedule.created_by=current_user.user_email
+       if @schedule.save
+         UserMailer.schedule_email(@candidate.user).deliver
+         @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
+         @users.each {|admin| UserMailer.admin_schedule_email(admin,@schedule).deliver }
+         flash[:notice]='Exam was successfully scheduled.'
+       else
+         flash[:error]='Error on scheduling.'
+       end
+    #Reschedule
+    else
+       @schedule = @candidate.schedule
+       @schedule.updated_by=current_user.user_email
+       if  @schedule.update_attributes(params[:schedule])
+         UserMailer.update_schedule_email(@candidate.user).deliver
+         @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
+         @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver }
+         flash[:notice]='Exam was successfully re-scheduled.'
+       else
+         flash[:error]='Error on re-scheduling.'
+       end
+    end
+      redirect_to candidates_path
+  end
 
 end

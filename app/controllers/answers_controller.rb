@@ -42,7 +42,7 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
     @answer.c_option=params[:answer][:c_option]
     @answer.time_taken=((Time.now.to_f-Time.parse(params[:answer][:dec_time]).to_f).to_i)+@answer.time_taken
-    @answer.answer= @answer.get_answer
+    @answer.answer= @answer.set_answer
 
     if !@answer.update_attributes(params[:answer])
        params[:to]="finish"
@@ -55,7 +55,7 @@ class AnswersController < ApplicationController
        params[:to]=@answer.get_ans
       end
     end
-    if  params[:to]=="finish"
+    if  params[:to]=="finish"||params[:to].nil?
       @answer.save_mark(current_user)
       @answer.make_result(current_user)
       @users=User.all.select {|usr| usr.has_role?("Validate Result")||usr.has_role?("View Result")}
@@ -73,13 +73,16 @@ class AnswersController < ApplicationController
 
   end
   def candidate_update
-      @candidate=Candidate.find(:id)
+      @candidate=Candidate.find(params[:id])
+      if params[:candidate][:address]==""||params[:candidate][:phone1]==""||params[:candidate][:technology]==""||params[:candidate][:certification]==""||params[:candidate][:skills]==""
+        flash.now[:error]="You should fill all mandatory fields"
+        render '/answers/candidate_detail'
+        return
+      end
       if @candidate.update_attributes(params[:candidate])
-          redirect_to instructions_answer_path
+          redirect_to instructions_answers_path
       else
-        2.times{@candidate.experiences.build }   if @candidate.experiences.first.id.present?
-        2.times{@candidate.qualifications.build }  if @candidate.qualifications.count==0
-        render 'answers/candidate_detail'
+        render 'answers/candidate_detail' ,:notice=>"error"
       end
   end
 
@@ -87,7 +90,8 @@ class AnswersController < ApplicationController
       @instructions=current_user.candidate.schedule.exam.instructions.all
       @schedule=current_user.candidate.schedule
       @exam=@schedule.exam
-      @diff=(Time.now.to_i-@schedule.sh_date.to_i)/60
+      @ngtv=Setting.find_by_name('negative_mark').status.eql?("on")
+      @diff=(@schedule.sh_date.to_i-Time.now.to_i)/60
   end
 
   def chk_user
@@ -99,7 +103,7 @@ class AnswersController < ApplicationController
 
   def congrats
      @user=User.find(params[:id])
-
+     sign_out
   end
 
   def blank

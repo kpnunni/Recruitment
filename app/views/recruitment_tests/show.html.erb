@@ -1,5 +1,4 @@
-<div class="row">
-  <div class="span12 offset0"><h1>Candidate:
+<h1>Candidate:
    <%=@recruitment_test.candidate.name %>
 
   </h1>
@@ -17,11 +16,13 @@
 
 
 
-    <table border="3" width="30%"  align="center"       >
+    <table   class="index_table"      >
       <tr>
         <th>Category</th>
         <th>no of questions</th>
         <th>Right answers</th>
+        <th>Wrong answers</th>
+        <th>Mark</th>
         <th>Mark(%)</th>
       </tr>
          <% Category.all.each do |cat| %>
@@ -31,8 +32,9 @@
             <td><%=cat.category    %></td>
             <td><%= @recruitment_test.candidate.schedule.exam.questions.where("category_id=?",cat.id).count %></td>
             <td><%= @recruitment_test.each_right_answers(cat) %></td>
+            <td><%= @recruitment_test.each_wrong_answers(cat) %></td>
             <td><%= @recruitment_test.calc_mark(cat)  %></td>
-
+            <td><%= number_with_precision(@recruitment_test.calc_mark_percentage(cat),:precision=>2)  %></td>
           </tr>
           <% end %>
           <% end %>
@@ -41,7 +43,7 @@
 
     <h3 align="left" >Answer Paper:</h3> <br/>
 
-        <table border="3" width="100%" align="center"     >
+        <table  class="index_table"      >
           <tr>
             <th width="60%" >Question</th>
             <th width="15%" >Candidate's Answer</th>
@@ -69,7 +71,7 @@
                               <% end %>
                               <% end %>
                         </td>
-                        <td><%=ans.question.allowed_time-ans.time_taken %></td>
+                        <td><%=(a=ans.question.allowed_time-ans.time_taken)>0?a:0 %></td>
                         <td><%=ans.question.category.category  %></td>
                          <td><%=ans.question.complexity.complexity  %></td>
 
@@ -87,11 +89,11 @@
          <br/>
         <% if @recruitment_test.is_passed=="Pending" %>
         <b>Decision: <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
-        <%=f.label :Comments  %></b>
-        <%=f.text_area  :comments ,:rows=>"5"%>  <br />
-        <div align="center" ><%= f.submit "Submit" ,class: "btn btn-large btn-primary" %></div>
+        <%=f.label :Comment  %></b>
+        <%=f.text_area  :comments ,:rows=>"3" ,:style=>"width: 100%" %>  <br />
+
+        <div align="center" ><%= f.submit "Submit" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();"%></div>
         <% end %>
+
          <%= link_to image_tag('back.png'), recruitment_tests_path  %>
         <% end %>
-  </div>
-</div>

@@ -1,6 +1,5 @@
-<div class="row">
-  <div class="span12 offset0">
-  <div id="new_category1" class="right"  >
+
+  <div id="new_category1"   style="display: none;"   >
     <%= form_for @category   do |f1| %>
          <b>New Category</b><br />
         <%= f1.text_field :category%>
@@ -8,21 +7,13 @@
         <%= f1.submit "Add" ,class: "btn btn-large btn-primary",:name=>"by",:value=>"add" %><br />
     <% end %>
     </div>
-  <div class="left"   >
+  <div>
     <%= nested_form_for  (@question ) do |f1| %>
 
 
-   <% if @question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
-
-      <ul>
-      <% @question.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+        <div class="error_msg">
+          <%= render  "shared/error_message", :target => @question   %>
+        </div>
 
         <table>
           <tr>
@@ -35,7 +26,7 @@
 
 
         <td><%= f1.select("category_id", @categorys.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
-        <td><%= link_to 'new category', '#',:onclick=>"show_category()"  %> </td>
+        <td><%= link_to 'new category', '#',:remote=>true ,:onclick=>"jQuery('#new_category1').dialog({ modal: true, title: 'Adding new category',width: 260 } );" %> </td>
 
           </tr>
         </table>
@@ -47,7 +38,7 @@
         <%= f1.file_field :question_image %>
 
         <%= f1.label :Allowed_time %>
-        <%= f1.text_field :allowed_time , :value=>30,   :class => "text_box" %>(in sec)
+        <%= f1.text_field :allowed_time , :value=>params[:question] ? params[:question][:allowed_time] : 50 ,   :class => "text_box" %>(in sec)
 
 
 
@@ -69,25 +60,8 @@
         </table>
         <p><%= f1.link_to_add image_tag('addc.png',:title =>"Add new option"  ), :options %></p>
 
-        <%= f1.submit "Create"  ,class: "btn btn-large btn-primary"%>
+        <%= f1.submit "Create"  ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting(); "%>
     <% end %>
 
       <br /><%= link_to image_tag('back.png') ,questions_path %>
   </div>
-  </div>
-</div>
-
-
-  <script type="text/javascript">
-   function show_category()
-   {
-
-       document.getElementById('new_category1').toggle();
-   }
- </script>
- <script type="text/javascript">
-    window.onload = function()
-    {
-        document.getElementById('new_category1').style.display='none';
-    }
- </script>

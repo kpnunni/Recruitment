@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029073405) do
+ActiveRecord::Schema.define(:version => 20121114063714) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
@@ -163,9 +163,10 @@ ActiveRecord::Schema.define(:version => 20121029073405) do
   end
 
   create_table "settings", :force => true do |t|
-    t.boolean  "auto_result"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.string   "name"
+    t.string   "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "templates", :force => true do |t|

@@ -1,7 +1,6 @@
 class CategoriesController < ApplicationController
-  require 'will_paginate/array'
-      def index
-      @categories = Category.all.paginate(:page => params[:page], :per_page => 20)
+       def index
+      @categories = Category.all(:order => 'created_at DESC').paginate(:page => params[:page], :per_page => 20)
       @category = Category.new
       respond_to do |format|
         format.html

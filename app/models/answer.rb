@@ -6,7 +6,7 @@ class Answer < ActiveRecord::Base
   belongs_to :question
 
 
-  def  get_answer
+  def  set_answer
      question=self.question
     ans=""
 
@@ -23,7 +23,7 @@ class Answer < ActiveRecord::Base
         end
       end
     end
-     ans
+    ans.include?("1") ? ans : "0"
   end
 
   def get_next_question(candidate)
@@ -46,7 +46,7 @@ class Answer < ActiveRecord::Base
   end
 
   def get_ans
-    self.candidate.answers.each do |ans|
+    self.candidate.answers.sort.each do |ans|
        if (ans.question.allowed_time-ans.time_taken)>3
           return ans.id
        end
@@ -69,7 +69,7 @@ class Answer < ActiveRecord::Base
    end
 
   def make_result(user)
-    return  if !Setting.first.auto_result?
+    return  if Setting.find_by_name('auto_result').status=="off"
 
     passed=true
     Category.all.each do |cat|

@@ -15,24 +15,11 @@
 <%= form_for  (@user) do |f| %>
 
 
-   <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+    <div class="error_msg">
+      <%= render  "shared/error_message", :target => @user  %>
     </div>
-  <% end %>
 
 
-
-
-
-    <div class="row">
-      <div class="span10 offset0">
 
         <%= f.label :Email %>
         <%= f.text_field :user_email,:value=>"",:placeholder => "Eg:abc@gmail.com"%>
@@ -58,11 +45,9 @@
 
         <br />  <br />
 
-           <%= f.submit "Register",:id=>"commit", class: "btn btn-large btn-primary" %>
+           <%= f.submit "Register",:id=>"commit", class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %>
 
               <br />  <br /><%= link_to image_tag('back.png') ,users_path %>
-      </div>
-    </div>
 
 <% end %>
 

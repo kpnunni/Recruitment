@@ -18,14 +18,32 @@ class RecruitmentTest < ActiveRecord::Base
    end
 
    def find_mark_percentage(user)
-       self.mark_percentage= (self.right_answers.to_f/user.candidate.schedule.exam.no_of_question)*100
-   end
+     q_attent=self.no_of_question_attended
+     right_ans=self.right_answers.to_f
+     total_q=user.candidate.schedule.exam.no_of_question
+     wrong_ans=q_attent-right_ans
+     if Setting.find_by_name('negative_mark').status.eql?("off")
+       self.mark_percentage= (right_ans/total_q)*100
+     else
+      self.mark_percentage= ((right_ans-(wrong_ans/4.0))/total_q)*100
+     end
 
+   end
    def each_right_answers(cat)
       count=0
       candidate=self.candidate
       candidate.answers.where(question_id: Question.where("category_id=?",cat.id).pluck(:id)).each do |ans|
          if ans.answer==ans.question.answer_id
+            count+=1
+         end
+      end
+      count
+   end
+      def each_wrong_answers(cat)
+      count=0
+      candidate=self.candidate
+      candidate.answers.where(question_id: Question.where("category_id=?",cat.id).pluck(:id)).each do |ans|
+         if ans.answer!=ans.question.answer_id&&ans.answer!="0"
             count+=1
          end
       end
@@ -39,9 +57,28 @@ class RecruitmentTest < ActiveRecord::Base
   def calc_mark(cat)
     q_nos=self.candidate.schedule.exam.questions.where("category_id = ?",cat.id).count
     right_ans=self.each_right_answers(cat)
-    mark_p=(right_ans.to_f/q_nos)*100
+    wrong_ans=self.each_wrong_answers(cat)/4.0
+    total_q=self.candidate.schedule.exam.no_of_question
+    if ((self.right_answers.to_f/total_q)*100-self.mark_percentage)>1
+      right_ans-wrong_ans
+    else
+       right_ans
+    end
+
   end
 
+    def calc_mark_percentage(cat)
+    q_nos=self.candidate.schedule.exam.questions.where("category_id = ?",cat.id).count
+    right_ans=self.each_right_answers(cat).to_f
+    wrong_ans=self.each_wrong_answers(cat)/4.0
+    total_q=self.candidate.schedule.exam.no_of_question
+    if ((self.right_answers.to_f/total_q)*100-self.mark_percentage)>1     #negative mark is there in his exam
+      mark_p=((right_ans-wrong_ans)/q_nos)*100
+    else
+      mark_p=(right_ans/q_nos)*100
+    end
+
+  end
 
   def self.filtered search
       if search.nil?

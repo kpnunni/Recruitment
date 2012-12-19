@@ -1,30 +1,18 @@
 
-<div class="row">
-  <div class="span12 offset0">
     <h1>Edit instruction</h1>
     <%= form_for @instruction do |f| %>
 
 
-           <% if @instruction.errors.any? %>
-            <div id="error_explanation">
-             <h2><%= pluralize(@instruction.errors.count, "error") %> prohibited this candidate from being saved:</h2>
-
-             <ul>
-             <% @instruction.errors.full_messages.each do |msg| %>
-               <li><%= msg %></li>
-             <% end %>
-             </ul>
-              </div>
-          <% end %>
+        <div class="error_msg">
+          <%= render  "shared/error_message", :target => @instruction   %>
+        </div>
 
         <br /><br />
         <b>New Instruction?</b><br />
         <%= f.text_field :instruction%>
 
-        <%= f.submit "Update" ,class: "btn btn-large btn-primary" %><br />
+        <%= f.submit "Update" ,class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %><br />
     <% end %>
 
 
 <br /><%= link_to image_tag('back.png'), instructions_path %>
-  </div>
-</div>

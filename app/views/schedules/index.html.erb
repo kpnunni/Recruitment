@@ -1,5 +1,4 @@
-<div class="row">
-  <div class="span12 offset0">
+
     <h3 align="right"><%= link_to image_tag('addsh.png'), new_schedule_path, :class=>"dropt", :title=>"new schedule" %></h3>
 
 
@@ -12,36 +11,21 @@
         <tr>
           <td width="60%" ></td>
           <th>Created by:</th>
-          <th width="20%" >From:</th>
-          <th width="20%">To:</th>
+          <th>From:</th>
+          <th>To:</th>
          </tr>
         <tr>
           <td width="60%" ></td>
-          <% if params[:search].nil?  %>
-
-              <td><%= select("search","by", @users.collect {|s|
-                s.created_by }, { :include_blank => true}) %></td>
-              <td><%= calendar_date_select_tag  "search[from]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-              <td><%= calendar_date_select_tag  "search[to]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-
-          <% else  %>
-              <td><%= select("search","by", @users.collect {|s|
-                s.created_by }, { :include_blank => true,:selected =>params[:search][:by]}) %><br />
-              </td>
-
-              <td><%= calendar_date_select_tag "search[from]",params[:search]["from"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-              <td><%= calendar_date_select_tag  "search[to]",params[:search]["to"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-           <% end  %>
-
+              <td><%= select("search","by", @users.collect {|s| s.created_by }, { :include_blank => true,:selected => params[:search] ? params[:search][:by] :"" }) %></td>
+              <td><%= text_field_tag   "search[from]",params[:search] ? params[:search]["from"] : "",  :class=>"text_box2" %></td>
+              <td><%= text_field_tag  "search[to]",params[:search] ? params[:search]["to"] : "",:class=>"text_box2" %></td>
           <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
-
-
         </tr>
       </table>
 
     </form>
 
-    <table border="3" width="100%"  class="index_table">
+    <table  class="index_table">
       <tr>
         <th>Time</th>
         <th>Test</th>
@@ -69,21 +53,18 @@
             <% end %>
 
 
-            <% if current_user.has_role?('Re Schedule') %>
-            <td class="dropt" title="re schedule" ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule) %></td>
+            <% if !current_user.has_role?('Re Schedule')||schedule.sh_date.to_i - Time.new.to_i >= 0 %>
+            <td ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule),:title=>"Re schedule" %></td>
             <% else %>
-            <td class="dropt" title="re schedule" ><%=  image_tag('edit.png')%></td>
+            <td ><%=  image_tag 'edit_x.png' ,:title => "can't re schedule" %></td>
             <% end %>
-            <% if current_user.has_role?('Cancel Schedule') %>
-            <td class="dropt" title="cancel schedule" ><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% if !current_user.has_role?('Cancel Schedule')||schedule.sh_date.to_i - Time.new.to_i >= 0 %>
+            <td ><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } ,:title=>"cancel schedule"%></td>
             <% else %>
-            <td class="dropt" title="cancel schedule" ><%=  image_tag('delete.png') %></td>
+            <td ><%=  image_tag 'delete_x.png' , :title=>"can't cancel schedule"%></td>
             <% end %>
           </tr>
       <% end %>
     </table>
 <h4><%= will_paginate @schedules ,:container=>false %></h4>
-
-  </div>
-</div>
 

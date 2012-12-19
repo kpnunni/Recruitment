@@ -1,7 +1,6 @@
-    <div class="row">
-      <div class="span12 offset0"><h1>Instructions</h1>
+<h1>Instructions</h1>
 
-<table border="3" width="100%"   class="index_table" >
+<table class="index_table" >
   <tr>
     <th>Instruction</th>
     <th></th><th></th>
@@ -14,7 +13,7 @@
     <% if instruction.exams.empty?  %>
     <td width="5%" ><%= link_to  image_tag('delete.png'), instruction, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"dropt", :title=>"delete"  %></td>
     <% else %>
-    <td width="5%" ><%=image_tag('delete.png', :title=>"first delete this instruction from exams.")  %></td>
+    <td width="5%" ><%=image_tag('delete_x.png', :title=>"first delete this instruction from exams.")  %></td>
     <% end %>
   </tr>
 <% end %>
@@ -23,5 +22,3 @@
               <%= render 'form' %>
 
         <%= link_to image_tag('back.png') , exams_path  %>
-     </div>
-    </div>

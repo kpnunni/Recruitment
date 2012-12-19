@@ -1,6 +1,5 @@
 class ExamsController < ApplicationController
-  require 'will_paginate/array'
-  before_filter :chk_user
+   before_filter :chk_user
 
     def chk_user
     if !current_user.has_role?('Manage Exams')
@@ -9,15 +8,18 @@ class ExamsController < ApplicationController
     end
 
   def index
-    @exams = Exam.filtered(params[:search]).reverse.paginate(:page => params[:page], :per_page => 20)
-    @users=User.all
-    @users.select! {|usr| Exam.where(:created_by =>usr.user_email).present?}
+    @exams = Exam.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
+    @users=Exam.select(:created_by).uniq
     respond_to do |format|
       format.html 
       format.json { render json: @exams }
     end
   end
-
+  def instruction
+    @exam=Exam.find(params[:id])
+    @instructions=@exam.instructions.all
+    @ngtv=Setting.find_by_name('negative_mark').status.eql?("on")
+  end
 
   def show
     @exam = Exam.find(params[:id])
@@ -53,7 +55,7 @@ class ExamsController < ApplicationController
     @instruction=Instruction.new
     @exam.subj.values.each do |sub|
       if sub.to_i<0
-        flash[:error]="number of questions should be a positive number"
+        flash.now[:error]="number of questions should be a positive number"
         render 'new'
         return
       end
@@ -63,13 +65,13 @@ class ExamsController < ApplicationController
     @q_count=@exam.generate_question_paper
     @exam.modified_by =""
     if @q_count <= 0
-       flash[:error]="Total number of questions should not be '0'."
+       flash.now[:error]="Total number of questions should not be '0'."
        render 'new'
        return
     end
 
     if @exam.no_of_question!=@q_count
-       flash[:error]="Not enough questions (category wise/complexity wise).do you wish to schedule it for 'default' level instead of other complexity?"
+       flash.now[:error]="Not enough questions (category wise/complexity wise).do you wish to schedule it for 'default' level instead of other complexity?"
        render 'new'
        return
     end
@@ -92,17 +94,18 @@ class ExamsController < ApplicationController
     @exam = Exam.find(params[:id])
     @instruction=Instruction.new
     @exam.modified_by =current_user .user_email
-    @exam.subj= params[:exam][:subj]
     @exam.complexity_id=params[:exam][:complexity_id]
-    @q_count=@exam.generate_question_paper
-    @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
-    @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
-    if @exam.no_of_question!=@q_count
-       flash[:error]="Not enough questions (category wise/complexity wise)"
-       render 'new'
-       return
+    if params[:regenerate]
+      @exam.subj= params[:exam][:subj]
+      @q_count=@exam.generate_question_paper
+      @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
+      @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
+      if @exam.no_of_question!=@q_count
+         flash.now[:error]="Not enough questions (category wise/complexity wise)"
+         render 'new'
+         return
+      end
     end
-
     respond_to do |format|
       if @exam.update_attributes(params[:exam])
         format.html { redirect_to exams_path, notice: 'Exam was successfully updated.' }
@@ -120,7 +123,7 @@ class ExamsController < ApplicationController
     @exam.destroy
 
     respond_to do |format|
-      format.html { redirect_to exams_url, notice: 'Exam was successfully deleted.'  }
+      format.html { redirect_to exams_path , notice: 'Exam was successfully deleted.'  }
       format.json { head :no_content }
     end
   end
@@ -135,6 +138,16 @@ class ExamsController < ApplicationController
      @exam.instructions.delete(Instruction.find params[:instruction_id])
    #  render :text => params[:instruction_id]
      redirect_to exam_path(@exam)
+  end
+  def regenerate
+    @exam=Exam.find(params[:id])
+    @exam.complexity_id=@exam.complexity.id
+    @exam.subj= Hash.new(0)
+    categories=[]
+    @exam.questions.each {|q| categories<<q.category.category }
+    categories.each{ |cat| @exam.subj[cat]+=1 }
+    @exam.generate_question_paper
+    redirect_to  exam_path(@exam)  ,:notice => "Question paper regenerated successfully."
   end
 
 end
