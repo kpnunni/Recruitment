@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
-
+gem "delayed_job", "~> 3.0.4"
 gem "nested_form"
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -24,8 +24,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'calendar_date_select', :git => 'http://github.com/paneq/calendar_date_select.git', :branch => 'rails3test'
-  gem 'thin'
+   gem 'thin'
  group :production do
   gem 'pg'
    gem 'therubyracer-heroku'

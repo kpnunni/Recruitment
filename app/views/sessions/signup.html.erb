@@ -57,12 +57,13 @@
             <%= f.label :resume %>
             <%= f.file_field :resume %>
             <br />
-            <br />        <h3>Experiences:</h3>
+            <br />    <br />
+            <h3>Experiences:</h3>
 
             <%= f.fields_for :experiences  do |op| %>
 
-                <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "From date*"%>
-                <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "To date*"%>
+                <%= op.text_field "from_date",:class=>"calendar",:placeholder => "From date*" %>
+                <%= op.text_field "to_date",:class=>"calendar",:placeholder => "To date*" %>
                 <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in*"%>
                 <%= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>
                 <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
@@ -74,17 +75,16 @@
 
                 <%= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in*"%>
                 <%= op.text_field :qualification_from,:class=>"text_box3",:placeholder => "Qualification_from" %>
-                <%= op.calendar_date_select "from_date",:placeholder => "From_date*", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force,:class=>"text_box3" %>
-                <%= op.calendar_date_select "to_date",:placeholder => "To_date*", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>
-                <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3" %>
+                <%= op.text_field "from_date",:placeholder => "From_date*", :class=>"calendar" %>
+                <%= op.text_field "to_date",:placeholder => "To_date*"  ,:class=>"calendar"%>
+                <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3",:style=>"width:110px" %>
                 <%= op.text_field :comments,:placeholder => "Comments" ,:class=>"text_box3"%>
                 <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
 
             <% end %>
 
             <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
-
-            <br /> <br />
+            <br />
             <%= f.submit "Register" ,:name=>'can',:value=>'Register',class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %>
         <% end %>
 

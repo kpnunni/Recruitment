@@ -69,43 +69,29 @@
          <% end %>
 
         <br />
-        <h3>Experiences:</h3>
-          <% i=0%>
-        <%= f.fields_for :experiences  do |op| %>
+                <h3>Experiences:</h3>
 
-            <%= op.calendar_date_select "from_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "From date*"%>
-            <%= op.calendar_date_select "to_date", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3",:placeholder => "To date*"%>
-            <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in*"%>
-            <%= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>
-            <%if !@candidate.experiences[i].nil?&& @candidate.experiences[i].id.present? %>
-                    <%= link_to image_tag('delete.png',:title =>"Remove" ), candidate_experience_path(@candidate,@candidate.experiences[i]) , method: :delete, data: { confirm: 'Are you sure?' }   %>
-            <% else %>
-                    <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
-            <% end %>
+           <%= f.fields_for :experiences  do |op| %>
 
-                <% i+=1 %>
-
+                <%= op.text_field "from_date",:class=>"calendar",:placeholder => "From date*" %>
+                <%= op.text_field "to_date",:class=>"calendar",:placeholder => "To date*" %>
+                <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in*"%>
+                <%= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>
+                <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
           <% end %>
 
         <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new experience"  ), :experiences %></p>
 
-        <br /><h3>Qualifications</h3>
-            <% i=0 %>
+                 <br /><h3>Qualifications</h3>
            <%= f.fields_for :qualifications  do |op| %>
 
                 <%= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in*"%>
                 <%= op.text_field :qualification_from,:class=>"text_box3",:placeholder => "Qualification_from" %>
-                <%= op.calendar_date_select "from_date",:placeholder => "From_date*", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force,:class=>"text_box3" %>
-                <%= op.calendar_date_select "to_date",:placeholder => "To_date*", :valid_date_check => "date < (new Date()).stripTime()"  , :popup => :force ,:class=>"text_box3"%>
-                <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3" %>
+                <%= op.text_field "from_date",:placeholder => "From_date*", :class=>"calendar" %>
+                <%= op.text_field "to_date",:placeholder => "To_date*"  ,:class=>"calendar"%>
+                <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3",:style=>"width:110px" %>
                 <%= op.text_field :comments,:placeholder => "Comments" ,:class=>"text_box3"%>
-                <%if !@candidate.qualifications[i].nil?&& @candidate.qualifications[i].id.present? %>
-                     <%= link_to image_tag('delete.png',:title =>"Remove" ), candidate_qualification_path(@candidate,@candidate.qualifications[i]) , method: :delete, data: { confirm: 'Are you sure?' }   %>
-                <% else %>
-                     <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
-                <% end %>
-
-                <% i+=1 %>
+                <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
 
           <% end %>
 
@@ -134,7 +120,7 @@
                 </tr>
                 <tr>
                   <td><%= f1.select :is_completed,[["Yes",1],["No",0]],  { :include_blank => true,:selected =>:is_completed} %></td>
-                  <td><%= f1.calendar_date_select  :completed_on,:month_year => "label" , :valid_date_check => "date <= (new Date()).stripTime()"  ,:time=>true, :popup => :force,:class=>"text_box3" %></td>
+                  <td><%= f1.text_field  :completed_on, :class=>"calendar" %></td>
                   <td><%= f1.text_field :right_answers,:class=>"text_box3" %></td>
                   <td><%= f1.text_field :no_of_question_attended,:class=>"text_box3" %></td>
                   <td><%= f1.text_field :mark_percentage,:class=>"text_box3" %></td>

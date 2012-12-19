@@ -33,3 +33,6 @@
     function open_instruction(no){
         jQuery("#"+no+"").dialog({modal: true,width: 800});
     }
+       jQuery('.calendar').live('click', function() {
+         jQuery(this).datepicker({showOn:'focus', changeMonth: true ,changeYear: true,dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, maxDate: "+0d"}).focus();
+      });
