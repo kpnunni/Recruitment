@@ -1,13 +1,4 @@
 
-    <script type="text/javascript">
-       jQuery.noConflict(true);
-        jQuery(document).ready(function() {
-         jQuery('#show_instruction').click(function() {
-            jQuery("#new_instruction").dialog({ modal: true, title: "Adding new instruction",width: 260 } );
-        })
-       });
-    </script>
-
   <div id="new_instruction"   style="display: none;"   >
     <%= form_for @instruction   do |f1| %>
          <b>New Instruction</b><br />
@@ -44,7 +35,7 @@
         <br />
 
 
-        <%= link_to 'new_instruction?' , '#',:id=>"show_instruction" ,:remote=>true %>   <br />   <br />
+        <%= link_to 'new_instruction?' , '#' ,:remote=>true,:onclick=> "jQuery('#new_instruction').dialog({ modal: true, title: 'Adding new instruction',width: 260 } );"%>   <br />   <br />
         <%= f.label :Complexity %>
         <%= f.select("complexity_id", Complexity.all.collect {|s|
          [s.complexity, s.id ] }, { :include_blank => false, :selected =>

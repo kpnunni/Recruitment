@@ -1,147 +1,76 @@
-<script type="text/javascript">
-    jQuery.noConflict(true);
-    function schedule_now(id){
-       jQuery('#'+id).dialog({ modal: true, title: 'Scheduling',width: 460 } );
-    }
-</script>
 <div align="right" ><%= link_to image_tag('adduser.png'), new_candidate_path, :class=>"dropt", :title=>"add new candidate"   %></div>
 
 <h1>Candidates</h1>
 
-
-
        <form class="filter_form">
 
             <table  cellpadding="1" width="100%"  class="filter_table"   >
-              <tr>
-                <th>Name:</th>
-                <th>Email:</th>
-                <th>Phone:</th>
-                <th>Skills:</th>
-                <th>Status:</th>
+               <tr>
+                    <th>Name:</th>
+                    <th>Email:</th>
+                    <th>Phone:</th>
+                    <th>Skills:</th>
+                    <th>Status:</th>
                </tr>
                <tr>
-
-
-                <% if !params[:search].nil?&&!params[:search][":name"].nil?  %>
-                    <td align="right" ><%= text_field_tag "search[:name]" , params[:search][":name"], :class => "text_box1" %></td>
-                <% else  %>
-                    <td align="right" ><%= text_field_tag "search[:name]","", :class => "text_box1"   %></td>
-                <% end  %>
-
-                <% if !params[:search].nil?&&!params[:search][":email"].nil?  %>
-                    <td align="right" ><%= text_field_tag "search[:email]" , params[:search][":email"], :class => "text_box1" %></td>
-                <% else  %>
-                    <td align="right" ><%= text_field_tag "search[:email]","", :class => "text_box1"   %></td>
-                <% end  %>
-
-
-                <% if !params[:search].nil?&&!params[:search][":phone"].nil?  %>
-                    <td align="right" ><%= text_field_tag "search[:phone]" , params[:search][":phone"], :class => "text_box1"  %></td>
-                <% else  %>
-                    <td align="right" ><%= text_field_tag "search[:phone]","", :class => "text_box1"   %></td>
-                <% end  %>
-
-                <% if !params[:search].nil?&&!params[:search][":skill"].nil?  %>
-                    <td align="right" ><%= text_field_tag "search[:skill]" , params[:search][":skill"], :class => "text_box1" %></td>
-                <% else  %>
-                    <td align="right" ><%= text_field_tag "search[:skill]","", :class => "text_box1"   %></td>
-                <% end  %>
-
-                <% if !params[:search].nil?&&!params[:search][":status"].nil?  %>
-                    <td align="right" ><%= select("search[:status]" ,"type", ["Exam Scheduled","Exam not Scheduled","Exam Completed"], { :include_blank => true,:selected =>params[:search][":status"][:type]}) %></td>
-                <% else  %>
-                    <td align="right" ><%= select("search[:status]" ,"type", ["Exam Scheduled","Exam not Scheduled","Exam Completed"], { :include_blank => true}) %></td>
-                <% end  %>
-
-                <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
-
-
-
-                </tr>
+                    <td align="right" ><%= text_field_tag "search[:name]" , params[:search]? params[:search][":name"]:"", :class => "text_box1" %></td>
+                    <td align="right" ><%= text_field_tag "search[:email]" ,params[:search]? params[:search][":email"]:"", :class => "text_box1" %></td>
+                    <td align="right" ><%= text_field_tag "search[:phone]" ,params[:search]? params[:search][":phone"]:"", :class => "text_box1"  %></td>
+                    <td align="right" ><%= text_field_tag "search[:skill]" ,params[:search]? params[:search][":skill"]:"", :class => "text_box1" %></td>
+                    <td align="right" ><%= select("search[:status]" ,"type", ["Exam Scheduled","Exam not Scheduled","Exam Completed"], { :include_blank => true,:selected =>params[:search]?params[:search][":status"][:type]:""}) %></td>
+                    <td title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+               </tr>
            </table>
 
-            </form>
+       </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<table   class="index_table" >
-  <tr>
-    <th>name</th>
-    <th>email id</th>
-    <th>phone</th>
-    <th>skills</th>
-    <th>Scheduled?</th>
-    <th>Exam Status</th>
-    <th></th>
-
-    <% if current_user.has_role?('Schedule')   %>
+    <table   class="index_table" >
+      <tr>
+        <th>name</th>
+        <th>email id</th>
+        <th>phone</th>
+        <th>skills</th>
+        <th>Scheduled?</th>
+        <th>Exam Status</th>
         <th></th>
-    <% end %>
-   </tr>
 
-<% @candidates.each do |candidate| %>
-  <tr>
-    <td width="15%" class="lft"  ><%= candidate.name %></td>
-    <td width="20%" class="lft"><%= candidate.user.user_email  %></td>
-    <td width="10%" class="lft"><%= candidate.phone1 %></td>
-    <td width="20%" class="lft"><%= candidate.skills%></td>
-
-    <td width="15%" class="dropt" title="schedule a test"  >
-        <% if candidate.schedule.nil?&&current_user.has_role?('Schedule')   %>
-        <%= link_to  'Schedule Now', '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %>
-        <% elsif current_user.has_role?('Re Schedule')&&candidate.recruitment_test.nil? %>
-             <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %></td>
-        <% elsif current_user.has_role?('Re Schedule')&&!candidate.recruitment_test.nil? %>
-             <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>
+        <% if current_user.has_role?('Schedule')   %>
+            <th></th>
         <% end %>
-      <div id=<%= candidate.id%>  style= "display: none;" >
-        <%= render 'schedule', :candidate => candidate  %>
-      </div>
-    </td>
-    <% if !candidate.recruitment_test.nil?%>
-        <td width="10%"><%="Completed"%></td>
-    <% elsif !candidate.schedule.nil?&&candidate.schedule.created_at==candidate.schedule.updated_at%>
-        <td width="10%"><%="Scheduled"%></td>
-    <% elsif !candidate.schedule.nil?%>
-        <td width="10%"><%="Re Scheduled"%></td>
-    <% else %>
-        <td width="10%"><%= "Cancelled/Not scheduled" %></td>
+       </tr>
+
+    <% @candidates.each do |candidate| %>
+      <tr>
+        <td width="15%" class="lft"  ><%= candidate.name %></td>
+        <td width="20%" class="lft"><%= candidate.user.user_email  %></td>
+        <td width="10%" class="lft"><%= candidate.phone1 %></td>
+        <td width="20%" class="lft"><%= candidate.skills%></td>
+
+        <td width="15%" class="dropt" title="schedule a test"  >
+            <% if candidate.schedule.nil?&&current_user.has_role?('Schedule')   %>
+            <%= link_to  'Schedule Now', '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %>
+            <% elsif current_user.has_role?('Re Schedule')&&candidate.recruitment_test.nil? %>
+                 <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %></td>
+            <% elsif current_user.has_role?('Re Schedule')&&!candidate.recruitment_test.nil? %>
+                 <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>
+            <% end %>
+          <div id=<%= candidate.id%>  style="display: none;" >
+            <%= render 'schedule', :candidate => candidate  %>
+          </div>
+        </td>
+        <% if !candidate.recruitment_test.nil?%>
+            <td width="10%"><%="Completed"%></td>
+        <% elsif !candidate.schedule.nil?&&candidate.schedule.created_at==candidate.schedule.updated_at%>
+            <td width="10%"><%="Scheduled"%></td>
+        <% elsif !candidate.schedule.nil?%>
+            <td width="10%"><%="Re Scheduled"%></td>
+        <% else %>
+            <td width="10%"><%= "Cancelled/Not scheduled" %></td>
+        <% end %>
+         <td width="5%" class="dropt" title="edit"  ><%= link_to image_tag('edit.png'), edit_candidate_path(candidate) %></td>
+        <td width="5%" class="dropt" title="delete"  ><%= link_to  image_tag('delete.png'), candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+      </tr>
     <% end %>
-     <td width="5%" class="dropt" title="edit"  ><%= link_to image_tag('edit.png'), edit_candidate_path(candidate) %></td>
-    <td width="5%" class="dropt" title="delete"  ><%= link_to  image_tag('delete.png'), candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
-  </tr>
-<% end %>
-</table>
+    </table>
 <h4><%= will_paginate @candidates ,:container=>false %></h4>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

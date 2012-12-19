@@ -1,14 +1,4 @@
 
-
-    <script type="text/javascript">
-        jQuery.noConflict(true);
-        jQuery(document).ready(function() {
-         jQuery('#show_category').click(function() {
-             jQuery("#new_category1").dialog({ modal: true, title: "Adding new category",width: 260 } );
-        })
-       });
-    </script>
-
   <div id="new_category1"   style="display: none;"   >
     <%= form_for @category   do |f1| %>
          <b>New Category</b><br />
@@ -36,7 +26,7 @@
 
 
         <td><%= f1.select("category_id", @categorys.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
-        <td><%= link_to 'new category', '#',:id=>"show_category",:remote=>true  %> </td>
+        <td><%= link_to 'new category', '#',:remote=>true ,:onclick=>"jQuery('#new_category1').dialog({ modal: true, title: 'Adding new category',width: 260 } );" %> </td>
 
           </tr>
         </table>

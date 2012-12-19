@@ -14,22 +14,11 @@
         </tr>
         <tr>
           <td width="60%" ></td>
-          <% if params[:search].nil?  %>
-
-              <td><%= text_field_tag "search[min]" ,"",:class=>"text_box2" %></td>
-              <td><%= text_field_tag "search[max]" ,"",:class=>"text_box2" %></td>
-              <td><%= calendar_date_select_tag  "search[from]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-              <td><%= calendar_date_select_tag  "search[to]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-              <td><%= text_field_tag "search[name]" ,"",:class=>"text_box2" %></td>
-
-          <% else  %>
-              <td><%= text_field_tag "search[min]",params[:search][:min],:class=>"text_box2"  %></td>
-              <td><%= text_field_tag "search[max]",params[:search][:max],:class=>"text_box2"  %></td>
-              <td><%= calendar_date_select_tag "search[from]",params[:search]["from"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-              <td><%= calendar_date_select_tag  "search[to]",params[:search]["to"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-              <td><%= text_field_tag "search[name]",params[:search][:name] ,:class=>"text_box2" %></td>
-          <% end  %>
-
+              <td><%= text_field_tag "search[min]",params[:search]?params[:search][:min]:"",:class=>"text_box2"  %></td>
+              <td><%= text_field_tag "search[max]",params[:search]?params[:search][:max]:"",:class=>"text_box2"  %></td>
+              <td><%= text_field_tag  "search[from]",params[:search]?params[:search]["from"]:"" ,:class=>"text_box2" %></td>
+              <td><%= text_field_tag   "search[to]",params[:search]?params[:search]["to"]:"", :class=>"text_box2" %></td>
+              <td><%= text_field_tag "search[name]",params[:search]?params[:search][:name]:"" ,:class=>"text_box2" %></td>
           <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
 
 
@@ -47,15 +36,13 @@
     <table  class="index_table" >
       <tr>
         <th width="20%">Candidate Name</th>
-        <th width="10%">Exam</th>
+        <th width="15%">Exam</th>
         <th width="7%" >Total questions</th>
         <th width="7%" >Questions attended</th>
         <th width="6%">Right answers</th>
-
         <th width="10%">Mark(%)</th>
-        <th width="5%">Status</th>
         <th width="30%">Comments</th>
-        <th width="5%"></th>
+        <th width="5%">Status</th>
       </tr>
 
       <% @recruitment_tests.each do |recruitment_test| %>
@@ -66,20 +53,15 @@
             <td><%= recruitment_test.no_of_question_attended%></td>
             <td  ><%= recruitment_test.right_answers%></td>
             <td ><%= number_with_precision(recruitment_test.mark_percentage, :precision => 2)%></td>
-            <% if recruitment_test.is_passed=="Pending"  %>
-                <td><%= image_tag 'yellow.png', :class=>"dropt", :title=>"pending"%></td>
-            <% elsif recruitment_test.is_passed=="Passed"  %>
-                <td><%= image_tag 'green.png', :class=>"dropt", :title=>"passed"%></td>
-            <% else %>
-                <td><%= image_tag 'red.png', :class=>"dropt", :title=>"failed" %></td>
-            <% end %>
             <td class="lft"><%= recruitment_test.comments%></td>
-
-            <%if recruitment_test.is_passed=="Pending"%>
-            <td class="dropt" title="validate result"><%=link_to image_tag('validated.png') , recruitment_test_path(recruitment_test) %></td>
+            <% if recruitment_test.is_passed=="Pending"  %>
+                <td><%=link_to "Pending", recruitment_test_path(recruitment_test)%></td>
+            <% elsif recruitment_test.is_passed=="Passed"  %>
+                <td style="background-color: #adff2f;" ><%= link_to "Passed", recruitment_test_path(recruitment_test)%></td>
             <% else %>
-            <td class="dropt" title="result validated"><%=image_tag('validate.png') %></td>
+                <td style="background-color: #f08080;" ><%= link_to "Failed", recruitment_test_path(recruitment_test)%></td>
             <% end %>
+
           </tr>
       <% end %>
     </table>

@@ -5,7 +5,7 @@
         </div>
 
         <%= f.label :date_and_time %>
-        <%= f.calendar_date_select "sh_date", :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force  %>
+        <%= f.text_field  "sh_date"  %>
         <%= f.label :exam%>
         <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
 
@@ -16,7 +16,7 @@
             <h3><%="No candidates to schedule the exam" %></h3>
         <% else %>
 
-     <table border="2" width="50%"  >
+     <table class="index_table"  >
        <tr>
          <th>Candidate Name</th>
          <th>Email id</th>

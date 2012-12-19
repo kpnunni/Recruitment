@@ -1,4 +1,4 @@
-
+    <%= "Candidate:"+candidate.name %>
   <% @schedule = candidate.schedule.nil? ? Schedule.new : candidate.schedule %>
   <%= form_for @schedule,:url => '/candidates/schedule_create' ,:method=>"post" do |f| %>
 
@@ -7,13 +7,16 @@
 
       <%= f.label :date_and_time %>
 
-      <%= f.datetime_select    "sh_date",:prompt=>true, :start_year => Date.today.year , :default =>Time.now() , :ampm => true ,:minute_step=>5 %>
+      <%= f.datetime_select    "sh_date",:prompt=>true, :start_year => Date.today.year   ,:minute_step=>5 %>
 
       <%= f.fields_for :candidate_ids do |f1| %>
           <%= f1.check_box   candidate.id ,:checked=>true,:style=>"display: none"%>
       <% end %>
 
-      <br /><br />
-      <%= f.submit "Schedule" ,class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %>
-
+      <br/><br/>
+      <%= f.submit "Schedule" ,class: "btn btn-large btn-primary",:disable_with=>"Scheduling.." ,:onclick=>"getElementById('#{'sh'+candidate.id.to_s}').show();"%>
+      <br/><br/>
   <% end %>
+  <div id= <%= "sh"+candidate.id.to_s %> style ="display: none;" align=center >
+    <%=  image_tag 'submitting5.gif'%>
+  </div>

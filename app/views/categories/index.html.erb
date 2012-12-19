@@ -9,12 +9,12 @@
 
     <% @categories .each do |ctgry| %>
           <tr>
-        <td><%= ctgry.category  %></td>
+        <td class="lft" ><%= ctgry.category  %></td>
         <td width="10%" ><%= link_to image_tag('edit.png'), edit_category_path(ctgry) %></td>
          <% if ctgry.questions.empty?  %>
             <td width="10%" ><%= link_to  image_tag('delete.png',:title=>"delete"), ctgry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
          <% else %>
-            <td width="10%" ><%= image_tag 'delete.png',:title=>"If you want to delete this category first you should delete all questions belongs to this category." %></td>
+            <td width="10%" ><%= image_tag 'delete_x.png',:title=>"If you want to delete this category first you should delete all questions belongs to this category." %></td>
          <% end %>
           </tr>
 

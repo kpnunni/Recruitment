@@ -1,10 +1,7 @@
 
 
 <script type="text/javascript" >
-    jQuery.noConflict(true);
-        function show_box(no){
-            jQuery("#"+no+"").dialog({width: 650,position: {   at: " bottom" }  });
-        }
+
     function toggle1(source) {
         var checkboxes = document.getElementsByTagName("input");
 
@@ -33,13 +30,7 @@
 
     <% if !(current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')) %>
     <div class="filter_options_container">
-
-
-
-
       <form class="filter_form">
-
-
             <table  cellpadding="5" class="filter_table"  >
               <tr>
                 <td width="60%" ></td>
@@ -52,62 +43,20 @@
                 <th>Question:</th>
                 <th></th>
               </tr>
-
               <tr>
-                <td width="60%" ></td>
-               <% if params[:search].nil?  %>
-
-                <td><%= select("search","category_id", @category.collect {|s|
-                [s.category, s.id ] }, { :include_blank => true}) %></td>
-
-                <td><%= select("search","complexity_id", @complexity.collect {|s|
-                [s.complexity, s.id ] }, { :include_blank => true}) %></td>
-
-                <td><%= select("search","type_id", @types.collect {|s|
-                [s.question_type, s.id ] }, { :include_blank => true}) %></td>
-
-                <td><%= select("search","by", @users.collect {|s|
-                s.created_by }, { :include_blank => true}) %></td>
-
-                <td><%= calendar_date_select_tag  "search[from]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-                <td><%= calendar_date_select_tag  "search[to]","", :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-
-
-
-               <% else  %>
-
-                  <td><%= select("search","category_id", @category.collect {|s|
-                    [s.category, s.id ] }, { :include_blank => true ,:selected =>params[:search][:category_id]}) %><br />
-                  </td>
-                  <td><%= select("search","complexity_id", @complexity.collect {|s|
-                    [s.complexity, s.id ] }, { :include_blank => true,:selected =>params[:search][:complexity_id]}) %><br />
-                  </td>
-                  <td><%= select("search","type_id", @types.collect {|s|
-                    [s.question_type, s.id ] }, { :include_blank => true,:selected =>params[:search][:type_id]}) %><br />
-                  </td>
-                  <td><%= select("search","by", @users.collect {|s|
-                    s.created_by }, { :include_blank => true,:selected =>params[:search][:by]}) %><br />
-                  </td>
-
-                    <td><%= calendar_date_select_tag "search[from]",params[:search]["from"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-                    <td><%= calendar_date_select_tag  "search[to]",params[:search]["to"], :valid_date_check => "date <= (new Date()).stripTime()" , :month_year => "label" , :popup => :force,:class=>"text_box2" %></td>
-
-              <% end  %>
-
-
-                <% if !params[:search].nil?  %>
-                    <td align="right" ><%= text_field_tag "srch" , params[:srch],:class=>"text_box2"  %></td>
-                <% else  %>
-                    <td align="right" ><%= text_field_tag "srch","",:class=>"text_box2"   %></td>
-                <% end  %>
-
-                <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
-
-
-                </tr>
+                  <td width="60%" ></td>
+                  <td><%= select("search","category_id", @category.collect {|s| [s.category, s.id ] }, { :include_blank => true ,:selected =>params[:search]?params[:search][:category_id]:""}) %></td>
+                  <td><%= select("search","complexity_id", @complexity.collect {|s| [s.complexity, s.id ] }, { :include_blank => true,:selected =>params[:search]?params[:search][:complexity_id]:""}) %></td>
+                  <td><%= select("search","type_id", @types.collect {|s| [s.question_type, s.id ] }, { :include_blank => true,:selected =>params[:search]?params[:search][:type_id]:""}) %></td>
+                  <td><%= select("search","by", @users.collect {|s| s.created_by }, { :include_blank => true,:selected =>params[:search]?params[:search][:by]:""}) %></td>
+                  <td><%= text_field_tag  "search[from]",params[:search]?params[:search]["from"]:""  , :class=>"text_box2" %></td>
+                  <td><%= text_field_tag  "search[to]",params[:search]?params[:search]["to"]:"" , :class=>"text_box2" %></td>
+                  <td align="right" ><%= text_field_tag "srch" , params[:srch]?params[:srch]:"",:class=>"text_box2"  %></td>
+                  <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+              </tr>
            </table>
 
-            </form>
+       </form>
        </div>
 
       <% end %>
@@ -123,11 +72,10 @@
     <table  class="index_table" >
       <tr>
         <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all to delete" /></th>
-        <th width="45%">question</th>
+        <th width="50%">question</th>
         <th  width="7%">allowed time (sec)</th>
         <th width="15%">Created by:</th>
         <th width="15%">Category:</th>
-        <th width="5%"></th>
         <th width="5%"></th>
         <th width="5%"></th>
        </tr>
@@ -137,13 +85,8 @@
             <%=fields_for :to_delete do|del|  %>
             <td><%= del.check_box  question.id %></td>
              <% end %>
-            <td class="lft" ><%= question.question.slice(0..75)%>
+            <td class="lft" ><%=link_to   question.question.slice(0..75), '#',:onclick=>"show_box(#{question.id});",:remote=>true, :title=>"detail" %>
             <%= "......" if question.question.length>75 %>
-            </td>
-            <td><%= question.allowed_time %></td>
-            <td><%= question.created_by %></td>
-            <td><%= question.category.category %></td>
-            <td class="dropt" title="detail"  ><%= link_to  image_tag('show.png'), '#',:onclick=>"show_box(#{question.id});",:remote=>true  %>
               <div style="display: none;"  id= <%=question.id%>  >
                 <b>Question:</b>
                 <%=  question.question %><br /><br />
@@ -189,8 +132,17 @@
 
               </div>
             </td>
+            <td><%= question.allowed_time %></td>
+            <td><%= question.created_by %></td>
+            <td><%= question.category.category %></td>
             <td  title="edit"  ><%= link_to  image_tag('edit.png'), edit_question_path(question) %></td>
-            <td  title="delete"  ><%= link_to  image_tag('delete.png'),question , method: :delete, data: { confirm: 'Are you sure?' }  %></td>
+            <td >
+             <% if question.exams.empty?  %>
+              <%= link_to  image_tag('delete.png'),question , method: :delete, data: { confirm: 'Are you sure?' } ,:title=>"delete"  %>
+             <% else %>
+                <%=   image_tag 'delete_x.png' ,:title=>"Can't delete.This question is part of some question paper!" %>
+             <% end %>
+            </td>
           </tr>
 
 

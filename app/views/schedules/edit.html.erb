@@ -8,7 +8,7 @@
              </div>
 
              <%= f.label :date %>
-             <%= f.calendar_date_select "sh_date",:time=>true, :valid_date_check => "date >= (new Date()).stripTime()" , :month_year => "label" , :popup => :force %>
+             <%= f.text_field  "sh_date" %>
 
              <%= f.label :exam %>
              <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
@@ -19,31 +19,31 @@
             <h3><%="No candidates to schedule the exam" %></h3>
         <% else %>
 
-     <table border="2" width="50%"  >
-       <tr>
-         <th>Candidate Name</th>
-         <th>Email id</th>
-         <th>select/not</th>
-       </tr>
+           <table class="index_table"  >
+               <tr>
+                 <th>Candidate Name</th>
+                 <th>Email id</th>
+                 <th>select/not</th>
+               </tr>
 
-         <%= f.fields_for :candidate_ids do |f1| %>
-
-
-
-         <% @candidates.each do |c| %>
-       <tr>
-         <td width="30%"><%= c.name %></td>
-         <td width="50%"><%= c.user.user_email %></td>
-         <td width="20%"><%= f1.check_box  c.id  ,:checked=>@schedule.candidates.include?(c) %></td>
-       </tr>
+                 <%= f.fields_for :candidate_ids do |f1| %>
 
 
-               <% end %>
-         <% end %>
-     </table>
-       <br /><br />
-       <%= f.submit "Re Schedule" ,class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %>
-         <% end %>
+
+                 <% @candidates.each do |c| %>
+               <tr>
+                 <td width="30%"><%= c.name %></td>
+                 <td width="50%"><%= c.user.user_email %></td>
+                 <td width="20%"><%= f1.check_box  c.id  ,:checked=>@schedule.candidates.include?(c) %></td>
+               </tr>
+
+
+                       <% end %>
+                 <% end %>
+             </table>
+           <br /><br />
+           <%= f.submit "Re Schedule" ,class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %>
+        <% end %>
 
 
 

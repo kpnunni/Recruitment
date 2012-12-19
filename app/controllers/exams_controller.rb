@@ -9,10 +9,7 @@ class ExamsController < ApplicationController
 
   def index
     @exams = Exam.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
-    @users=User.all
-    @users.select! {|usr| Exam.where(:created_by =>usr.user_email).present?}
-
-
+    @users=Exam.select(:created_by).uniq
     respond_to do |format|
       format.html 
       format.json { render json: @exams }

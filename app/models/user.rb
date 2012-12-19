@@ -24,6 +24,10 @@ validates :user_email,    :presence   => true,
 validates :login_password, :presence => true,
                      :confirmation => true,
                      :length => { :within => 4..20 } ,:if => :there?
+   def admin?
+     self.roles.count==Role.count-1
+   end
+
    def there?
      self.id.nil?
    end

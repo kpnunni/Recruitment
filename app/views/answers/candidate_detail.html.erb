@@ -1,25 +1,16 @@
     <div align="center">
          <%= image_tag 'welcome.png'  %>
     </div>
-
+    <div class="error_msg">
+      <%= render  "shared/error_message", :target => @candidate  %>
+    </div>
 
     <FONT COLOR="#191970">
       <h3>
-    Hi
-    <%= @candidate.name %>,
 
-    please fill your details,</h3> </FONT>
-     <% if @candidate.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
 
-          <ul>
-            <% @candidate.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+      Fill your details.</h3> </FONT>
+
 
     <br/>
     <%= nested_form_for @candidate, :url=>"/answers/#{@candidate.id}/candidate_update" do |f|%>
