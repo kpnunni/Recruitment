@@ -27,8 +27,8 @@ class UsersController < ApplicationController
       return
     end
     @user.encrypt_password
+
     if @user.save
-      UserMailer.welcome_email(@user,@user.login_password).deliver
       redirect_to users_path, notice: 'User was successfully created.'
     else
       render action: "new"

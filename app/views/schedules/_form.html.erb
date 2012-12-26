@@ -1,57 +1,43 @@
-
+<% if @candidates.empty?   %>
+    <h3><%="No candidates to schedule the exam" %></h3>
+    <%= link_to image_tag('adduser.png'), new_candidate_path,  :title=>"add new candidate"   %>
+<% else %>
     <%= form_for @schedule do |f| %>
         <div class="error_msg">
           <%= render  "shared/error_message", :target => @schedule   %>
         </div>
 
-        <%= f.label :date_and_time %>
-        <%= f.text_field  "sh_date"  %>
+
         <%= f.label :exam%>
-        <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%>
+        <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%><br/>
 
 
 
-        <% if @candidates.empty?   %>
 
-            <h3><%="No candidates to schedule the exam" %></h3>
-        <% else %>
-
+      <br/> <h3>Candidates:</h3><br/>
      <table class="index_table"  >
        <tr>
+         <th>select/not</th>
          <th>Candidate Name</th>
          <th>Email id</th>
-         <th>select/not</th>
        </tr>
 
          <%= f.fields_for :candidate_ids do |f1| %>
-
-
-
-         <% @candidates.each do |c| %>
-       <tr>
-         <td width="30%" ><%= c.name %></td>
-         <td width="50%" ><%= c.user.user_email %></td>
-         <td width="20%"  ><%= f1.check_box  c.id%></td>
-
-      </tr>
-
-
-               <% end %>
+             <% @candidates.each do |c| %>
+           <tr>
+             <td width="20%"  ><%= f1.check_box  c.id , :checked=> !@schedule.candidates.empty?  ? @schedule.candidates.include?(c) : false %></td>
+             <td width="30%" ><%= c.name %></td>
+             <td width="50%" ><%= c.user.user_email %></td>
+          </tr>
          <% end %>
      </table>
-       <br /><br />
+       <br />
+           <%= f.label :date_and_time %>
+           <%= f.text_field  :sh_date %>
+           <br />
        <%= f.submit "Schedule" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();"%>
          <% end %>
-
-
-
-
-
-
-
-
-
-
+<% end %>
 
     <% end %>
        <br /><%= link_to image_tag('back.png') ,schedules_path %>

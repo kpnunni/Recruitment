@@ -42,6 +42,10 @@ GEM
     daemons (1.1.9)
     delayed_job (3.0.4)
       activesupport (~> 3.0)
+    delayed_job_active_record (0.3.3)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
+    delayed_task (0.1.4)
     erubis (2.7.0)
     eventmachine (1.0.0)
     execjs (1.4.0)
@@ -132,7 +136,8 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 2.0.2)
   coffee-rails (~> 3.2.1)
-  delayed_job (~> 3.0.4)
+  delayed_job_active_record
+  delayed_task (= 0.1.4)
   jquery-rails
   jquery-ui-rails
   jquery_datepicker

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
    has_and_belongs_to_many :roles
    has_one :candidate  ,:dependent => :destroy
    before_create :set_alive
+   before_create :sent_welcome_email
  #  after_save :chk_role
    def set_alive
     self.isAlive= 1
@@ -42,6 +43,10 @@ validates :login_password, :presence => true,
      self.roles.where(:role_name =>role_names ).present?
    end
 
+   def sent_welcome_email
+     @user=self
+     UserMailer.welcome_email(@user,@user.login_password).deliver
+   end
 
 
         def encrypt_password

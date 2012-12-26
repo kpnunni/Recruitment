@@ -15,8 +15,19 @@
 //= require_tree .
       jQuery.noConflict(true);
         jQuery(document).ready(function() {
+
+
+            jQuery("#rs7").hide();
+            jQuery("#rs30").hide();
+            jQuery("#sh7").hide();
+            jQuery("#sh30").hide();
          jQuery('#datePicker1').datepicker();
-         jQuery('#schedule_sh_date').datepicker({dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, minDate: "-0d"});
+         jQuery('#schedule_sh_date').datetimepicker({dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, minDate: 0,stepMinute : 5,
+             beforeShow: function(input, inst)
+                {
+                    inst.dpDiv.css({marginTop: '50px'});
+                }
+         });
          jQuery('#search_from').datepicker({ changeMonth: true ,changeYear: true,dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, maxDate: "+0d"});
          jQuery('#search_to').datepicker({changeMonth: true ,changeYear: true,dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, maxDate: "+0d" });
        });

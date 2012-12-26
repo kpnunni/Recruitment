@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
-gem "delayed_job", "~> 3.0.4"
+gem "delayed_job_active_record"
+gem "delayed_task", "0.1.4"
 gem "nested_form"
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
