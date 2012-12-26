@@ -45,7 +45,6 @@ validates :login_password, :presence => true,
 
    def sent_welcome_email
      @user=self
-     UserMailer.welcome_email(@user,@user.login_password).deliver
    end
 
 
