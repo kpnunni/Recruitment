@@ -61,7 +61,7 @@
         <%=check_box_tag "regenerate","Yes" %>Regenerate question paper?
 
         <br /><br />
-        <%= f.submit "Update" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();"%>
+        <%= f.submit "Update" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();",:disable_with=>"Updating.."%>
 
     <% end %>
      <br /><%= link_to image_tag('back.png') ,exams_path %>

@@ -22,7 +22,7 @@
             jQuery("#sh7").hide();
             jQuery("#sh30").hide();
          jQuery('#datePicker1').datepicker();
-         jQuery('#schedule_sh_date').datetimepicker({dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, minDate: 0,stepMinute : 5,
+         jQuery('#schedule_sh_date').datetimepicker({dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, minDate: 0,stepMinute : 5,timeFormat: "hh:mm tt", hourGrid: 6,minuteGrid: 10,
              beforeShow: function(input, inst)
                 {
                     inst.dpDiv.css({marginTop: '50px'});
@@ -30,7 +30,17 @@
          });
          jQuery('#search_from').datepicker({ changeMonth: true ,changeYear: true,dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, maxDate: "+0d"});
          jQuery('#search_to').datepicker({changeMonth: true ,changeYear: true,dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, maxDate: "+0d" });
-       });
+
+                jQuery('td input[type="checkbox"]').click(function(){
+                    if (jQuery(this).is(':checked')){
+                          jQuery(this).parent().addClass('highlighted');
+                          jQuery(this).parent().siblings().addClass('highlighted');
+                    } else if(jQuery(this).parent().is('.highlighted')) {
+                         jQuery(this).parent().removeClass('highlighted');
+                         jQuery(this).parent().siblings().removeClass('highlighted');
+                    }
+                });
+        });
     function show_submitting()
     {
         document.getElementById('submitting').show();

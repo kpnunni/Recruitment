@@ -1,5 +1,5 @@
 
-  <div class="span10 offset0"><h1>Detail</h1>
+   <h1>Detail</h1>
 
         <b>Date:</b><%= @schedule.sh_date.strftime("%b %d %A,%Y  %I:%M%p") %> <br />
         <b>Exam:</b><%= @schedule.exam.name  %> <br />
@@ -9,7 +9,7 @@
 
     <b>Candidates</b>
 
-         <table border="3"  >
+         <table border="3" width="100%"  >
        <tr>
          <th>Name</th>
          <th>Email id</th>
@@ -28,12 +28,6 @@
 
     <%= link_to image_tag('back.png') ,schedules_path %>
 
-
-
-
-
-
-  </div>
 
 
 

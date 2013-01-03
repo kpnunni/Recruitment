@@ -36,9 +36,7 @@
       <% if user.admin? %>
           Admin
       <% else %>
-          <% user.roles.each do |role| %>
-              <%="|"+ role.role_name+"|" %>
-          <% end %>
+          <%= user.roles.pluck(:role_name).join(",") %>
      <% end %>
     </td>
     <td width="10%"><%=user.isAlive? ? (image_tag 'green.png',  :title=>"yes") :( image_tag 'red.png', :title=>"no")%></td>

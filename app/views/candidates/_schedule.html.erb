@@ -14,7 +14,7 @@
       <% end %>
 
       <br/><br/>
-      <%= f.submit "Schedule" ,class: "btn btn-large btn-primary",:disable_with=>"Scheduling.." ,:onclick=>"getElementById('#{'sh'+candidate.id.to_s}').show();"%>
+      <%= f.submit "Schedule" ,class: "btn btn-large btn-primary",:disable_with=>"Scheduling.." ,:onclick=>"getElementById('#{'sh'+candidate.id.to_s}').show();this.hide();"%>
       <br/><br/>
   <% end %>
   <div id= <%= "sh"+candidate.id.to_s %> style ="display: none;" align=center >

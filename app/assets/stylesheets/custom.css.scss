@@ -642,7 +642,6 @@ table.curvedEdges th{
    width: 100%;
   background-image: url('tbl_bg2.png') ;
    border-radius: 10px;
-
  }
  table.index_table tr:nth-child(even){
    background-color: #cbcab9;
@@ -683,8 +682,9 @@ table.curvedEdges th{
 .ui-timepicker-rtl dl { text-align: right; }
 .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
 
-
-
+.highlighted{
+  background-color: #98fb98;
+}
 
 
 

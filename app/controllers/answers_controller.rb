@@ -111,7 +111,7 @@ class AnswersController < ApplicationController
 
   def clogin
      @user=User.find_by_salt(params[:id])
-     return if !@user.isAlive||@user.candidate.schedule.nil?
+     return if @user.nil?||!@user.isAlive||@user.candidate.schedule.nil?
      sign_in(@user)
      redirect_to '/answers/candidate_detail'
   end

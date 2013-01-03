@@ -1,9 +1,8 @@
 
   <div id="new_category1"   style="display: none;"   >
-    <%= form_for @category   do |f1| %>
+    <%= form_for Category.new   do |f1| %>
          <b>New Category</b><br />
         <%= f1.text_field :category%>
-
         <%= f1.submit "Add" ,class: "btn btn-large btn-primary",:name=>"by",:value=>"add" %><br />
     <% end %>
     </div>
@@ -14,6 +13,11 @@
         <div class="error_msg">
           <%= render  "shared/error_message", :target => @question   %>
         </div>
+        <% if @question.updated_at && @question.updated_at!=@question.created_at %>
+            <b>Last modified by:</b><%=@question.updated_by   %>
+            at <%=@question.updated_at.strftime("%b %d %A,%Y at %I:%M%p")    %> <br/>  <br/>
+         <br/>
+        <% end %>
 
         <table>
           <tr>
@@ -26,7 +30,7 @@
 
 
         <td><%= f1.select("category_id", @categorys.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
-        <td><%= link_to 'new category', '#',:remote=>true ,:onclick=>"jQuery('#new_category1').dialog({ modal: true, title: 'Adding new category',width: 260 } );" %> </td>
+        <td><%= link_to 'new category?', '#',:remote=>true ,:onclick=>"jQuery('#new_category1').dialog({ modal: true, title: 'Adding new category',width: 260 } );" %> </td>
 
           </tr>
         </table>
@@ -34,33 +38,43 @@
         <%= f1.label :Question %>
         <%= f1.text_area  :question, :rows=>10,:class=>"quest" %>
 
-        <%= f1.label :question_image  %>
-        <%= f1.file_field :question_image %>
+        <% if @question.question_image && !@question.question_image.to_s.include?("missing.png") %>
+            <%=image_tag @question.question_image.url(:original)   %>
+            <%= link_to image_tag('delete.png') ,  delete_image_question_path(@question) ,data: {confirm: 'are you sure'} ,:title => "delete" %>
+        <% end %>
 
-        <%= f1.label :Allowed_time %>
-        <%= f1.text_field :allowed_time , :value=>params[:question] ? params[:question][:allowed_time] : 50 ,   :class => "text_box" %>(in sec)
-
-
-
+         <div>
+            <div class="left" >
+            Question Image:
+            <%= f1.file_field :question_image %>
+            </div>
+            <div class="right" >
+            Allowed_time:
+            <%= f1.text_field :allowed_time , :value=>params[:question] ? params[:question][:allowed_time] : 50 ,   :class => "text_box" %> seconds
+            </div>
+         </div>
+         <br/>      <br/>
         <table>
-          <tr>
-            <th>Options</th>
+          <tr bgcolor="orange" >
+            <th width="240px" >Options</th>
             <th>Right option?</th>
+            <th> &emsp;Remove</th>
           </tr>
+         </table>
         <%= f1.fields_for :options do |op| %>
-              <tr>
 
-           <td><%= op.text_field :option %></td>
-           <td class="lft" ><%= op.check_box :is_right %></td>
-              <td>  <%#= op.link_to_remove image_tag('delete.png')  %> </td>
-              </tr>
+
+           <%= op.text_field :option %>
+           &emsp;&emsp;&emsp;&emsp;<%= op.check_box :is_right %>
+           &emsp;&emsp;&emsp;  <%= op.link_to_remove image_tag('delete.png'), data: { confirm: 'Are you sure?' }   %>
+
 
         <% end %>
 
-        </table>
+
         <p><%= f1.link_to_add image_tag('addc.png',:title =>"Add new option"  ), :options %></p>
 
-        <%= f1.submit "Create"  ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting(); "%>
+        <%= f1.submit (@question.new_record? ? "Create" :"Update") ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting(); ",:disable_with=>"Submitting.." %>
     <% end %>
 
       <br /><%= link_to image_tag('back.png') ,questions_path %>

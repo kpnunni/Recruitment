@@ -7,7 +7,7 @@
         <%= f.label :email %>
         <%= f.text_field :email %><br/>
 
-        <%= f.submit "Send password", class: "btn btn-large btn-primary",:onclick=>"show_submitting();"%>
+        <%= f.submit "Send password", class: "btn btn-large btn-primary",:onclick=>"show_submitting();",:disable_with=>"Sending.."%>
 
     <% end %>
 

@@ -45,9 +45,7 @@ class QuestionsController < ApplicationController
         @question = Question.new
         @complexity=Complexity.first(3)
         @categorys=Category.all
-        @category=Category.new
         @types=Type.all
-        4.times { @question.options.build }
         respond_to do |format|
           format.html
           format.json { render json: @question }
@@ -59,7 +57,7 @@ class QuestionsController < ApplicationController
         @question = Question.find(params[:id])
         @opt=@question.options.all
         @complexity=Complexity.first(3)
-        @category=Category.all
+        @categorys=Category.all
         @types=Type.all
 
       end
@@ -72,7 +70,6 @@ class QuestionsController < ApplicationController
         @question.type_id=""
         @complexity=Complexity.first(3)
         @categorys=Category.all
-        @category=Category.new
         @types=Type.all
   #      4.times { @question.options.build }
 
@@ -105,7 +102,7 @@ class QuestionsController < ApplicationController
         @question = Question.find(params[:id])
         params[:question][:updated_by]=current_user.user_email
         @complexity=Complexity.first(3)
-        @category=Category.all
+        @categorys=Category.all
         @types=Type.all
         @opt=@question.options.all
         flag=0

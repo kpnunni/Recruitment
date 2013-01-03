@@ -85,7 +85,7 @@
 
             <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
             <br />
-            <%= f.submit "Register" ,:name=>'can',:value=>'Register',class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %>
+            <%= f.submit "Register" ,:name=>'can',:value=>'Register',class: "btn btn-large btn-primary",:onclick=>"show_submitting();",:disable_with=>"Registering.." %>
         <% end %>
 
 
@@ -95,7 +95,7 @@
         <h1>Employee Registration</h1>
          <%= form_for @user,:url=>'/sessions/registration' do |f| %>
             Email id: <%= f.text_field :user_email %><br/>
-            <%= f.submit 'Register',:name=>'emp',:value=>'Register',:class=>'btn btn-large btn-primary'%>
+            <%= f.submit 'Register',:name=>'emp',:value=>'Register',:class=>'btn btn-large btn-primary',:disable_with=>"Registering.."%>
         <% end %>
 
     <% end %>

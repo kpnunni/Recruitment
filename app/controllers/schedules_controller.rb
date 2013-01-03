@@ -63,6 +63,7 @@ class SchedulesController < ApplicationController
   def edit
     @exam=Exam.all
     @schedule = Schedule. find(params[:id])
+    @schedule.sh_date=@schedule.sh_date.strftime("%b-%d-%Y  %I:%M%p")
     @candidates=Candidate.all
     @candidates.select!  {|c| (@schedule.candidates.include?(c) && c.user.isAlive) ||( c.schedule_id.nil? && c.user.isAlive) }
 
