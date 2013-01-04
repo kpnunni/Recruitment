@@ -45,28 +45,32 @@
 
          <div>
             <div class="left" >
-            Question Image:
+            Question Image(if any):
             <%= f1.file_field :question_image %>
             </div>
             <div class="right" >
-            Allowed_time:
+            Allowed time*:
             <%= f1.text_field :allowed_time ,   :class => "text_box" %> seconds
             </div>
          </div>
          <br/>      <br/>
-        <table>
+        <table width="1000px" >
           <tr bgcolor="#b8860b " >
-            <th width="240px" >Options</th>
+            <th width="600px" >Options</th>
             <th>Right option?</th>
             <th> &emsp;Remove</th>
           </tr>
          </table>
+        <br/>
+
         <%= f1.fields_for :options do |op| %>
 
 
-           <%= op.text_field :option %>
-           &emsp;&emsp;&emsp;&emsp;<%= op.check_box :is_right %>
-           &emsp;&emsp;&emsp;  <%= op.link_to_remove image_tag('delete.png'), data: { confirm: 'Are you sure?' }   %>
+           <%= op.text_field :option , :class=>"txt_option" %>
+           &emsp;&emsp;&emsp;&emsp;
+            <%= op.check_box :is_right%>
+           &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+            <%= op.link_to_remove image_tag('delete.png'), data: { confirm: 'Are you sure?' }   %>
 
 
         <% end %>
@@ -77,5 +81,5 @@
         <%= f1.submit (@question.new_record? ? "Create" :"Update") ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting(); ",:disable_with=>"Submitting.." %>
     <% end %>
 
-      <br /><%= link_to image_tag('back.png') ,questions_path %>
+      <br/><%= link_to image_tag('back.png') ,questions_path %>
   </div>

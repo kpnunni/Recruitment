@@ -22,7 +22,7 @@
             jQuery("#sh7").hide();
             jQuery("#sh30").hide();
          jQuery('#datePicker1').datepicker();
-         jQuery('#schedule_sh_date').datetimepicker({dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, minDate: 0,stepMinute : 5,timeFormat: "hh:mm tt", hourGrid: 6,minuteGrid: 10,
+         jQuery('#schedule_sh_date').datetimepicker({dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, minDate: 0,timeFormat: "hh:mm tt", hourGrid: 6,minuteGrid: 10,
              beforeShow: function(input, inst)
                 {
                     inst.dpDiv.css({marginTop: '50px'});
@@ -57,3 +57,21 @@
        jQuery('.calendar').live('click', function() {
          jQuery(this).datepicker({showOn:'focus', changeMonth: true ,changeYear: true,dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, maxDate: "+0d"}).focus();
       });
+       jQuery('.c_calendar').live('click', function() {
+         jQuery(this).datetimepicker({showOn:'focus', dateFormat: "dd-mm-yy", hideIfNoPrevNext: true, minDate: 0,timeFormat: "hh:mm tt", hourGrid: 6,minuteGrid: 10,
+                beforeShow: function(input, inst)
+                {
+                    inst.dpDiv.css({marginTop: '250px'});
+                }
+         }).focus();
+      });
+
+
+
+
+
+
+
+
+
+

@@ -82,17 +82,17 @@ class CandidatesController < ApplicationController
   def schedule_create
     @candidate=Candidate.find(params[:schedule][:candidate_ids].keys.first.to_i)
     @exam=Exam.all
-    if params[:schedule]["sh_date(1i)"].empty?||params[:schedule]["sh_date(2i)"].empty?||params[:schedule]["sh_date(3i)"].empty?||params[:schedule]["sh_date(4i)"].empty?||params[:schedule]["sh_date(5i)"].empty?
-       flash[:error]='Invalid date and time.'
-       redirect_to candidates_path
-       return
-    end
-    @date=Time.parse(params[:schedule]["sh_date(1i)"]+"-"+params[:schedule]["sh_date(2i)"]+"-"+params[:schedule]["sh_date(3i)"]+" "+params[:schedule]["sh_date(4i)"]+":"+params[:schedule]["sh_date(5i)"])
-    if @date < Time.now
-       flash[:error]='Date and time should be greater than current date and time.'
-       redirect_to candidates_path
-       return
-    end
+#    if params[:schedule]["sh_date(1i)"].empty?||params[:schedule]["sh_date(2i)"].empty?||params[:schedule]["sh_date(3i)"].empty?||params[:schedule]["sh_date(4i)"].empty?||params[:schedule]["sh_date(5i)"].empty?
+#       flash[:error]='Invalid date and time.'
+#       redirect_to candidates_path
+#       return
+#    end
+#    @date=Time.parse(params[:schedule]["sh_date(1i)"]+"-"+params[:schedule]["sh_date(2i)"]+"-"+params[:schedule]["sh_date(3i)"]+" "+params[:schedule]["sh_date(4i)"]+":"+params[:schedule]["sh_date(5i)"])
+#    if @date < Time.now
+#       flash[:error]='Date and time should be greater than current date and time.'
+#       redirect_to candidates_path
+#       return
+#    end
 
     #Schedule
     if @candidate.schedule.nil?
