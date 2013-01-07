@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.6'
 gem "delayed_job_active_record"
 gem "delayed_task", "0.1.4"
+gem "daemons"
 gem "nested_form"
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -25,7 +26,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-   gem 'thin'
+ #  gem 'thin'
  group :production do
   gem 'pg'
    gem 'therubyracer-heroku'

@@ -99,9 +99,9 @@ class CandidatesController < ApplicationController
        @schedule = Schedule.new(params[:schedule])
        @schedule.created_by=current_user.user_email
        if @schedule.save
-         UserMailer.schedule_email(@candidate.user).deliver
+         UserMailer.delay.schedule_email(@candidate.user)
          @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
-         @users.each {|admin| UserMailer.admin_schedule_email(admin,@schedule).deliver }
+         @users.each {|admin| UserMailer.delay.admin_schedule_email(admin,@schedule)  }
          flash[:notice]='Exam was successfully scheduled.'
        else
          flash[:error]='Error on scheduling.'
@@ -111,9 +111,9 @@ class CandidatesController < ApplicationController
        @schedule = @candidate.schedule
        @schedule.updated_by=current_user.user_email
        if  @schedule.update_attributes(params[:schedule])
-         UserMailer.update_schedule_email(@candidate.user).deliver
+         UserMailer.delay.update_schedule_email(@candidate.user)
          @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
-         @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver }
+         @users.each {|admin| UserMailer.delay.admin_update_schedule_email(admin,@schedule)  }
          flash[:notice]='Exam was successfully re-scheduled.'
        else
          flash[:error]='Error on re-scheduling.'

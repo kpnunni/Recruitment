@@ -58,8 +58,14 @@ class AnswersController < ApplicationController
     if  params[:to]=="finish"||params[:to].nil?
       @answer.save_mark(current_user)
       @answer.make_result(current_user)
-      @users=User.all.select {|usr| usr.has_role?("Validate Result")||usr.has_role?("View Result")}
-      @users.each {|admin| UserMailer.exam_complete_email(admin,current_user.candidate).deliver }
+      if @candidate.recruitment_test.is_passed=="Passed"
+          UserMailer.delay.result_email(@candidate.user)
+          @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Selection Email"))}
+          @users.each {|admin| UserMailer.delay.admin_result_email(admin,@candidate)  }
+      else
+          @users=User.all.select {|usr| usr.has_role?("Validate Result")||usr.has_role?("View Result")}
+          @users.each {|admin| UserMailer.delay.exam_complete_email(admin,current_user.candidate) }
+      end
       redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
     else
       @nxt=params[:to].to_i

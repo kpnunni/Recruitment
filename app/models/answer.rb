@@ -72,15 +72,15 @@ class Answer < ActiveRecord::Base
     return  if Setting.find_by_name('auto_result').status=="off"
 
     passed=true
-    Category.all.each do |cat|
-      if user.candidate.recruitment_test.calc_mark(cat)<cat.cutoff
+    user.candidate.schedule.exam.questions.all(:select=>:category_id,:group =>"category_id").each do |q|
+      if user.candidate.recruitment_test.calc_mark(q.category)<q.category.cutoff
         passed=false
       end
     end
     if passed
      user.candidate.recruitment_test.update_attribute(:is_passed,"Passed")
     else
-     user.candidate.recruitment_test.update_attribute(:is_passed,"Failed")
+     user.candidate.recruitment_test.update_attribute(:is_passed,"Pending")
     end
   end
 end

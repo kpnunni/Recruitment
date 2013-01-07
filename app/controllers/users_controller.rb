@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     @user.encrypt_password
 
     if @user.save
-      UserMailer.welcome_email(@user,@user.login_password).deliver
+      UserMailer.delay.welcome_email(@user,@user.login_password)
       redirect_to users_path, notice: 'User was successfully created.'
     else
       render action: "new"

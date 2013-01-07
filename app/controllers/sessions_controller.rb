@@ -105,7 +105,7 @@ class SessionsController < ApplicationController
       return
     end
     token=@user.remember_token
-    UserMailer.sent_password(@user,token).deliver
+    UserMailer.delay.sent_password(@user,token)
   end
   def reset_pass
     @user=User.find_by_remember_token(params[:id])
@@ -131,7 +131,7 @@ class SessionsController < ApplicationController
           @user.login_password_confirmation=rand_password
           @user.encrypt_password
           @user.roles.push(Role.find_by_role_name('Add Questions Only'))
-          UserMailer.welcome_email(@user,@user.login_password).deliver if @user.save
+          UserMailer.delay.welcome_email(@user,@user.login_password)  if @user.save
           redirect_to success_sessions_path(:as=>"emp"), notice: 'Employee was successfully registered.'
         else
           flash.now[:error]="Invalid Employee Email id"
