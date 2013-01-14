@@ -85,8 +85,10 @@ class SchedulesController < ApplicationController
     respond_to do |format|
       if @schedule.save
         @schedule.candidates.each{|c| UserMailer.delay.schedule_email(c.user)  }
+        @schedule.candidates.each{|c| UserMailer.schedule_email(c.user).deliver  }
         @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
         @users.each {|admin| UserMailer.delay.admin_schedule_email(admin,@schedule) }
+        @users.each {|admin| UserMailer.admin_schedule_email(admin,@schedule).deliver }
         format.html { redirect_to schedules_path, notice: 'Exam was successfully scheduled.' }
         format.json { render json: @schedule, status: :created, location: @schedule }
       else
@@ -113,8 +115,10 @@ class SchedulesController < ApplicationController
      respond_to do |format|
       if @schedule.update_attributes(params[:schedule])
         @schedule.candidates.each{|c| UserMailer.delay.update_schedule_email(c.user) }
+        @schedule.candidates.each{|c| UserMailer.update_schedule_email(c.user).deliver }
         @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
         @users.each {|admin| UserMailer.delay.admin_update_schedule_email(admin,@schedule) }
+        @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver }
 
         format.html { redirect_to @schedule, notice: 'Exam was successfully rescheduled.' }
         format.json { head :no_content }
@@ -147,7 +151,7 @@ class SchedulesController < ApplicationController
       @schedule.destroy if @schedule.candidates.empty?
       redirect_to schedule_path(@schedule) if !@schedule.candidates.empty?
       redirect_to schedules_path if @schedule.candidates.empty?
-      UserMailer.delay.cancel_schedule_email(@candidate.user,@schedule)
+      UserMailer.cancel_schedule_email(@candidate.user,@schedule)
   end
 
   def chk_user

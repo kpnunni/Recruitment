@@ -28,8 +28,10 @@ class RecruitmentTestsController < ApplicationController
       if @recruitment_test.update_attributes(params[:recruitment_test])
         if @recruitment_test.is_passed=="Passed"
           UserMailer.delay.result_email(@recruitment_test.candidate.user)
+          UserMailer.result_email(@recruitment_test.candidate.user).deliver
           @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Selection Email"))}
           @users.each {|admin| UserMailer.delay.admin_result_email(admin,@recruitment_test.candidate)  }
+          @users.each {|admin| UserMailer.admin_result_email(admin,@recruitment_test.candidate).deliver  }
         end
         if params[:from]=="my_feedback"
            redirect_to congrats_answer_path(current_user.id)

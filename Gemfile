@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.11'
 gem "delayed_job_active_record"
 gem "delayed_task", "0.1.4"
 gem "daemons"

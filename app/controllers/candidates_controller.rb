@@ -1,7 +1,7 @@
 class CandidatesController < ApplicationController
   require 'will_paginate/array'
-  skip_before_filter :authenticate ,:create
-  before_filter :chk_user ,:except =>[ :update ,:create]
+ # skip_before_filter :authenticate ,:create
+ # before_filter :chk_user ,:except =>[ :update ,:create]
   def chk_user
     if !current_user.has_role?('Manage Candidates')
       redirect_to '/homes/index'
@@ -100,8 +100,10 @@ class CandidatesController < ApplicationController
        @schedule.created_by=current_user.user_email
        if @schedule.save
          UserMailer.delay.schedule_email(@candidate.user)
+         UserMailer.schedule_email(@candidate.user).deliver
          @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
          @users.each {|admin| UserMailer.delay.admin_schedule_email(admin,@schedule)  }
+         @users.each {|admin| UserMailer.admin_schedule_email(admin,@schedule).deliver  }
          flash[:notice]='Exam was successfully scheduled.'
        else
          flash[:error]='Error on scheduling.'
@@ -112,8 +114,10 @@ class CandidatesController < ApplicationController
        @schedule.updated_by=current_user.user_email
        if  @schedule.update_attributes(params[:schedule])
          UserMailer.delay.update_schedule_email(@candidate.user)
+         UserMailer.update_schedule_email(@candidate.user).deliver
          @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
          @users.each {|admin| UserMailer.delay.admin_update_schedule_email(admin,@schedule)  }
+         @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver  }
          flash[:notice]='Exam was successfully re-scheduled.'
        else
          flash[:error]='Error on re-scheduling.'

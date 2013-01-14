@@ -47,16 +47,22 @@
         <td width="20%" class="lft"><%= candidate.skills%></td>
 
         <td width="15%" class="dropt" title="schedule a test"  >
-            <% if candidate.schedule.nil?&&current_user.has_role?('Schedule')   %>
+            <% if candidate.schedule.nil?  %>
             <%= link_to  'Schedule Now', '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %>
-            <% elsif current_user.has_role?('Re Schedule')&&candidate.recruitment_test.nil? %>
-                 <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %></td>
-            <% elsif current_user.has_role?('Re Schedule')&&!candidate.recruitment_test.nil? %>
+            <% elsif candidate.recruitment_test.nil? %>
+              <% if candidate.schedule.candidates.count<2 %>
+                 <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %>
+              <% else %>
+                 <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), edit_schedule_path(candidate.schedule.id) %>
+              <% end %>
+            <% elsif candidate.recruitment_test %>
                  <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>
             <% end %>
+
           <div id=<%= candidate.id%>  style="display: none;" >
             <%= render 'schedule', :candidate => candidate  %>
           </div>
+
         </td>
         <% if !candidate.recruitment_test.nil?%>
             <td width="10%"><%="Completed"%></td>
