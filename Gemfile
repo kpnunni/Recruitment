@@ -29,7 +29,7 @@ gem 'jquery-rails'
  #  gem 'thin'
  group :production do
   gem 'pg'
-   gem 'therubyracer-heroku'
+ # gem 'therubyracer-heroku'
 end
 
 # To use ActiveModel has_secure_password
