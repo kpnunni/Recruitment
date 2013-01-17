@@ -25,7 +25,7 @@ class CandidatesController < ApplicationController
 
   def edit
     @candidate=Candidate.find(params[:id])
-    @candidate.build_recruitment_test if !@candidate.schedule.nil?&&@candidate.recruitment_test.nil?
+    @candidate.build_recruitment_test if @candidate.schedule && @candidate.recruitment_test.nil?
     @user=@candidate.user
   #  @experiences=@candidate.experiences.all
   #  @qualifications=@candidate.qualifications.all
@@ -33,8 +33,8 @@ class CandidatesController < ApplicationController
 
   def create
     @candidate=Candidate.new(params[:candidate])
-    @candidate.user.login_password="12345"
-    @candidate.user.login_password_confirmation="12345"
+    @candidate.user.login_password="Suyati123"
+    @candidate.user.login_password_confirmation="Suyati123"
     @candidate.user.encrypt_password
 
     if @candidate.save

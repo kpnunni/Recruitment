@@ -2,7 +2,7 @@
     <h3><%="No candidates to schedule the exam" %></h3>
     <%= link_to image_tag('adduser.png'), new_candidate_path,  :title=>"add new candidate"   %>
 <% else %>
-    <%= form_for @schedule do |f| %>
+    <%= form_for @schedule, :html => { :onsubmit=>"show_submitting();" } do |f| %>
         <div class="error_msg">
           <%= render  "shared/error_message", :target => @schedule   %>
         </div>
@@ -33,9 +33,9 @@
      </table>
        <br />
            <%= f.label :date_and_time %>
-           <%= f.text_field  :sh_date %>
+           <%= f.text_field  :sh_date  ,required:{}%>
            <br />
-       <%= f.submit "Schedule" ,class: "btn btn-large btn-primary",:disable_with=>"Scheduling" ,:onclick=>"show_submitting();"%>
+       <%= f.submit "Schedule" ,class: "btn btn-large btn-primary",:disable_with=>"Scheduling"  %>
          <% end %>
 <% end %>
 

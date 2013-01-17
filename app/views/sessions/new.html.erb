@@ -6,16 +6,11 @@
     <%= form_for(:session, url: sessions_path) do |f| %>
 
         <%= f.label :email %>
-        <% if params[:session].nil? %>
-            <%= f.text_field :email %>
-        <% else %>
-            <%= f.text_field :email ,:value=>params[:session][:email] %>
-        <% end %>
+        <%= f.text_field :email ,:value=>(params[:session]? params[:session][:email] : "") ,required:{}%>
         <%= f.label :password %>
-        <%= f.password_field :password %><br />
+        <%= f.password_field :password ,required:{}%><br />
 
-        <%= f.check_box :remember %>
-        <%= f.label :remember_me %>
+        <%= f.check_box :remember%>Remember_me<br />
 
 
         <%= f.submit "Sign in", class: "btn btn-large btn-primary"%>

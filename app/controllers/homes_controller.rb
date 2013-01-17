@@ -3,6 +3,12 @@ class HomesController < ApplicationController
   before_filter  :chk_admin ,:only => :admin
   skip_before_filter :authenticate,:only => :default_page
   def index
+    @question=Question.count
+    @candidate=Candidate.count
+    @exam=Exam.count
+    @user=User.count-@candidate
+    @schedule=Schedule.where("sh_date >= ?",Date.today).count
+    @result=RecruitmentTest.find_all_by_is_passed("Pending").count
   end
   def admin
 

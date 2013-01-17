@@ -43,7 +43,7 @@ class UsersController < ApplicationController
     @user.roles.delete_all
     if params[:user][:role_ids].nil?
       flash.now[:error]="Select atleast one role"
-      render action:'new'
+      render action:'edit'
       return
     end
 

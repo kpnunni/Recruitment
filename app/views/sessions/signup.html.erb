@@ -5,7 +5,7 @@
         <h1>Candidate Registration</h1>
 
 
-         <%= nested_form_for @candidate ,:url=>'/sessions/registration', :html => { :multipart => true } do |f| %>
+         <%= nested_form_for @candidate ,:url=>'/sessions/registration', :html => { :onsubmit=>"show_submitting();" , :multipart => true } do |f| %>
 
 
             <div class="error_msg">
@@ -16,28 +16,28 @@
                 <%= f.fields_for :user do |op| %>
                     <td class="rght" >
                       Email:<%= image_tag 'mandatory.png' %>
-                      <%= op.text_field :user_email ,:value=>"" %>
+                      <%= op.text_field :user_email , :value=>(@candidate.new_record? ? ((params[:candidate]&&params[:candidate][:user_attributes]) ? params[:candidate][:user_attributes][:user_email]: "") : @candidate.user.user_email) ,required:{} %>
                     </td>
 
                 <% end %>
                 <td class="rght" >
                   Name:<%= image_tag 'mandatory.png' %>
-                  <%= f.text_field :name %>
+                  <%= f.text_field :name ,required:{} %>
                 </td>
               </tr>
 
               <tr>
                 <td class="rght" >
                   Address:
-                  <%= f.text_area :address , :rows=>5%>
+                  <%= f.text_area :address , :rows=>5 ,required:{}%>
                 </td>
                 <td class="rght" >
                   Phone no 1:
-                  <%= f.text_field :phone1 %> <br/>
+                  <%= f.text_field :phone1  ,required:{}%> <br/>
                   Phone no 2:
                   <%= f.text_field :phone2 %> <br/>
                   Technology:
-                  <%= f.text_field :technology %>
+                  <%= f.text_field :technology  ,required:{}%>
                 </td>
 
               </tr>
@@ -45,26 +45,26 @@
               <tr>
                 <td class="rght" >
                   Certification:
-                  <%= f.text_field :certification %>
+                  <%= f.text_field :certification  ,required:{}%>
                 </td>
                 <td class="rght" >
                   Skills:
-                  <%= f.text_field :skills %>
+                  <%= f.text_field :skills  ,required:{}%>
                 </td>
               </tr>
             </table>
 
-            <%= f.label :resume %>
-            <%= f.file_field :resume %>
-            <br />
+            <%#= f.label :resume %>
+            <%#= f.file_field :resume %>
+
             <br />    <br />
             <h3>Experiences:</h3>
 
             <%= f.fields_for :experiences  do |op| %>
 
-                <%= op.text_field "from_date",:class=>"calendar",:placeholder => "From date*" %>
-                <%= op.text_field "to_date",:class=>"calendar",:placeholder => "To date*" %>
-                <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in*"%>
+                <%= op.text_field "from_date",:class=>"calendar",:placeholder => "From date*"  ,required:{}%>
+                <%= op.text_field "to_date",:class=>"calendar",:placeholder => "To date*" ,required:{} %>
+                <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in*" ,required:{}%>
                 <%= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>
                 <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
             <% end %>
@@ -73,10 +73,10 @@
             <br /><h3>Qualifications</h3>
             <%= f.fields_for :qualifications  do |op| %>
 
-                <%= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in*"%>
-                <%= op.text_field :qualification_from,:class=>"text_box3",:placeholder => "Qualification_from" %>
-                <%= op.text_field "from_date",:placeholder => "From_date*", :class=>"calendar" %>
-                <%= op.text_field "to_date",:placeholder => "To_date*"  ,:class=>"calendar"%>
+                <%= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in*" ,required:{}%>
+                <%= op.text_field :qualification_from,:class=>"text_box3",:placeholder => "Qualification_from"   %>
+                <%= op.text_field "from_date",:placeholder => "From_date*", :class=>"calendar"  ,required:{}%>
+                <%= op.text_field "to_date",:placeholder => "To_date*"  ,:class=>"calendar" ,required:{}%>
                 <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3",:style=>"width:110px" %>
                 <%= op.text_field :comments,:placeholder => "Comments" ,:class=>"text_box3"%>
                 <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
@@ -85,7 +85,7 @@
 
             <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
             <br />
-            <%= f.submit "Register" ,:name=>'can',:value=>'Register',class: "btn btn-large btn-primary",:onclick=>"show_submitting();",:disable_with=>"Registering.." %>
+            <%= f.submit "Register" ,:name=>'can',:value=>'Register',class: "btn btn-large btn-primary" ,:disable_with=>"Registering.." %>
         <% end %>
 
 
@@ -94,7 +94,7 @@
 
         <h1>Employee Registration</h1>
          <%= form_for @user,:url=>'/sessions/registration' do |f| %>
-            Email id: <%= f.text_field :user_email %><br/>
+            Email id: <%= f.text_field :user_email ,:value=>(params[:user]?params[:user][:user_email]:""),required:{} %><br/>
             <%= f.submit 'Register',:name=>'emp',:value=>'Register',:class=>'btn btn-large btn-primary',:disable_with=>"Registering.."%>
         <% end %>
 

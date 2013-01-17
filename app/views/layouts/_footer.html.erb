@@ -1,5 +1,5 @@
 <footer class="footer">
-  <small>
+  <h4>
           <% if signed_in? %>
             login by:<%= current_user.user_email %>
 
@@ -11,7 +11,7 @@
                 ||||| Negative mark=><%= @negative_mark.status  %>
             <% end %>
           <% end %>
-  </small>
+  </h4>
 
 
 

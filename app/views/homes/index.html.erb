@@ -12,12 +12,12 @@
             <th>New Results:</th>
           </tr>
           <tr>
-            <th><%= User.count  %></th>
-            <th><%= Candidate.count  %></th>
-            <th><%= Question.count  %></th>
-            <th><%= Exam.count  %> </th>
-            <th><%= Schedule.where("sh_date >= ?",Date.today).count  %></th>
-            <th><%= RecruitmentTest.find_all_by_is_passed("Pending").count %></th>
+            <th><%= @user   %></th>
+            <th><%= @candidate   %></th>
+            <th><%= @question   %></th>
+            <th><%= @exam  %> </th>
+            <th><%= @schedule   %></th>
+            <th><%= @result %></th>
            </tr>
           </table>
 

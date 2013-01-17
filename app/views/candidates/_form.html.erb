@@ -1,5 +1,5 @@
 
-<%= nested_form_for  @candidate, :html => { :multipart => true }  do |f| %>
+<%= nested_form_for  @candidate, :html => { :multipart => true,:onsubmit=>"show_submitting();" }  do |f| %>
 
     <div class="error_msg">
           <%= render  "shared/error_message", :target => @candidate  %>
@@ -10,19 +10,13 @@
        <%= f.fields_for :user do |op| %>
        <td class="rght" >
          Email:<%= image_tag 'mandatory.png' %>
-        <%= op.text_field :user_email ,:value=>"" %>
+        <%= op.text_field :user_email ,:value=>(@candidate.new_record? ? ((params[:candidate]&&params[:candidate][:user_attributes]) ? params[:candidate][:user_attributes][:user_email]: "") : @candidate.user.user_email) ,required:{} %>
        </td>
-
-        <%= op.password_field :login_password ,:value=>"",:style=>"display: none"%>
-
-
-        <%= op.password_field :login_password_confirmation,:value=>"" ,:style=>"display: none"%>
-
 
         <% end %>
          <td class="rght" >
               Name:<%= image_tag 'mandatory.png' %>
-              <%= f.text_field   :name  %>
+              <%= f.text_field   :name  ,required:{} %>
             </td>
          </tr>
 
@@ -54,9 +48,9 @@
           </tr>
         </table>
 
-        <%= f.label :resume  %>
-        <%= f.file_field :resume %>
-        <br />
+        <%#= f.label :resume  %>
+        <%#= f.file_field :resume %>
+
                 <br />
         <h3>Experiences:</h3>
 
@@ -84,8 +78,42 @@
           <% end %>
 
                 <p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
+    <br />
+    <% if  @candidate.schedule && @candidate.recruitment_test.new_record?   %>
+        <%= f.check_box  "done",:onclick=>"document.getElementById('result').toggle()" %>Exam Completed?
+    <% end %>
+    <br />
 
+    <div id="result" style="display: none;"   >
+      <%= f.fields_for :recruitment_test     do |f1| %>
+
+          <table border="3">
+            <tr>
+              <th>completed?</th>
+              <th>completed on</th>
+              <th>right answers</th>
+              <th>no of question attended</th>
+              <th>mark percentage</th>
+              <th>status</th>
+              <th>comments</th>
+            </tr>
+            <tr>
+              <td><%= f1.select :is_completed,[["Yes",1],["No",0]],  { :include_blank => true,:selected =>:is_completed} %></td>
+              <td><%= f1.text_field  :completed_on, :class=>"calendar" %></td>
+              <td><%= f1.text_field :right_answers,:class=>"text_box3" %></td>
+              <td><%= f1.text_field :no_of_question_attended,:class=>"text_box3" %></td>
+              <td><%= f1.text_field :mark_percentage,:class=>"text_box3" %></td>
+              <td><%= f1.select  :is_passed , ["Pending","Passed","Failed"], { :include_blank => true}%></td>
+              <td><%= f1.text_field :comments,:class=>"text_box3" %></td>
+            </tr>
+
+          </table>
+
+          <br />
+          <%#= f1.submit "Submit" ,class: "btn btn-large btn-primary",:name=>"by",:value=>"Submit_result" %><br />
+      <% end %>
+    </div>
            <br /> <br />
-        <%= f.submit "Register" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();",:disable_with=>"Registering.."%>
+        <%= f.submit "Register" ,class: "btn btn-large btn-primary" , :disable_with=>"Registering.."%>
     <% end %>
          <%= link_to image_tag('back.png'),candidates_path  %>

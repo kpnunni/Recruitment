@@ -2,12 +2,12 @@
 
     <h1>Forgot password:</h1>
 
-     <%= form_for(:session, url: '/sessions/sent_pass') do |f| %>
+     <%= form_for(:session, url: '/sessions/sent_pass', :html => { :onsubmit=>"show_submitting();" }) do |f| %>
 
         <%= f.label :email %>
-        <%= f.text_field :email %><br/>
+        <%= f.text_field :email ,:value=>(params[:session]?params[:session][:email]:""),required:{}%><br/>
 
-        <%= f.submit "Send password", class: "btn btn-large btn-primary",:onclick=>"show_submitting();",:disable_with=>"Sending.."%>
+        <%= f.submit "Send password", class: "btn btn-large btn-primary",:disable_with=>"Sending.."%>
 
     <% end %>
 

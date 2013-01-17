@@ -12,7 +12,7 @@
 
 
 
-<%= form_for  (@user) do |f| %>
+<%= form_for @user, :html => { :onsubmit=>"show_submitting();" } do |f| %>
 
 
     <div class="error_msg">
@@ -22,16 +22,17 @@
 
 
         <%= f.label :Email %>
-        <%= f.text_field :user_email,:value=>"",:placeholder => "Eg:abc@gmail.com"%>
+        <%= f.text_field :user_email,:autocomplete=>"off",:placeholder => "Eg:abc@gmail.com"  ,required:{}%>
 
+    <% if @user.new_record? %>
         <%= f.label :password %>
-        <%= f.password_field :login_password,:value=>"",:placeholder => "****" %>
+        <%= f.password_field :login_password,:placeholder => "****",:autocomplete=>"off" ,required:{}, :value=>(params[:user] ? params[:user][:login_password] : "") %>
 
         <%= f.label :confirm_Password %>
-        <%= f.password_field :login_password_confirmation,:placeholder => "****"  %>
-        <br />
+        <%= f.password_field :login_password_confirmation,:autocomplete=>"off",:placeholder => "****", :value=>(params[:user] ? params[:user][:login_password_confirmation] : "") ,required:{} %>
 
-
+    <% end %>
+         <br />
         <b>Roles:</b>
         <br />
         <input type="checkbox" onClick="toggle1(this)" /> Select/Un Select All
@@ -45,7 +46,7 @@
 
         <br />  <br />
 
-           <%= f.submit "Register",:id=>"commit", class: "btn btn-large btn-primary",:onclick=>"show_submitting();",:disable_with=>"Registering..." %>
+           <%= f.submit (@user.new_record? ? "Register" :"Update"),:id=>"commit", class: "btn btn-large btn-primary" ,:disable_with=>"Submitting..." %>
 
               <br />  <br /><%= link_to image_tag('back.png') ,users_path %>
 

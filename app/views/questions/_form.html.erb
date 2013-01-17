@@ -7,7 +7,7 @@
     <% end %>
     </div>
   <div>
-    <%= nested_form_for  (@question ) do |f1| %>
+    <%= nested_form_for @question, :html => { :onsubmit=>"show_submitting();" }  do |f1| %>
 
 
         <div class="error_msg">
@@ -50,7 +50,7 @@
             </div>
             <div class="right" >
             Allowed time*:
-            <%= f1.text_field :allowed_time ,   :class => "text_box" %> seconds
+            <%= f1.text_field :allowed_time ,   :class => "text_box"  ,required:{}%> seconds
             </div>
          </div>
          <br/>      <br/>
@@ -66,7 +66,7 @@
         <%= f1.fields_for :options do |op| %>
 
 
-           <%= op.text_field :option , :class=>"txt_option" %>
+           <%= op.text_field :option , :class=>"txt_option" ,required:{} %>
            &emsp;&emsp;&emsp;&emsp;
             <%= op.check_box :is_right%>
            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -78,7 +78,7 @@
 
         <p><%= f1.link_to_add image_tag('addc.png',:title =>"Add new option"  ), :options %></p>
 
-        <%= f1.submit (@question.new_record? ? "Create" :"Update") ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting(); ",:disable_with=>"Submitting.." %>
+        <%= f1.submit (@question.new_record? ? "Create" :"Update") ,class: "btn btn-large btn-primary"  ,:disable_with=>"Submitting.." %>
     <% end %>
 
       <br/><%= link_to image_tag('back.png') ,questions_path %>
