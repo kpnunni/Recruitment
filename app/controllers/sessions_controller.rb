@@ -55,7 +55,7 @@ class SessionsController < ApplicationController
     elsif user.has_role?('Candidate')&&user.candidate.schedule.nil?
       flash.now[:error ] = 'Sorry, You can login only after getting date for the exam.'
       render "new"
-    elsif user.roles.count==Role.count-1
+    elsif user.admin?
       sign_in user
       redirect_to '/homes/admin'
     elsif user.has_role?('Manage Users')||user.has_role?('Manage Questions')||user.has_role?('Manage Candidates')||user.has_role?('Manage Exams')||user.has_role?('Schedule')||

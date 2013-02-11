@@ -27,9 +27,9 @@
             </td>
             <td class="rght" >
               Phone no 1:
-              <%= f.text_field :phone1 %> <br/>
+              <%= f.text_field :phone1 ,:maxlength=>12%> <br/>
               Phone no 2:
-              <%= f.text_field :phone2 %> <br/>
+              <%= f.text_field :phone2 ,:maxlength=>12%> <br/>
               Technology:
               <%= f.text_field :technology %>
             </td>

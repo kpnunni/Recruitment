@@ -1,5 +1,4 @@
 class CandidatesController < ApplicationController
-  require 'will_paginate/array'
  # skip_before_filter :authenticate ,:create
  # before_filter :chk_user ,:except =>[ :update ,:create]
   def chk_user

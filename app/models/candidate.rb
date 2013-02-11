@@ -10,7 +10,7 @@ class Candidate < ActiveRecord::Base
                   :skills ,:resume,:user_id,:resume_file_name,:resume_content_type,:resume_file_size
   validates :name,:presence =>true
   validates :user_id ,:uniqueness =>true
-  validates_format_of :name, :with => /^[^0-9`!@#\$%\^&*+_=]+$/
+#  validates_format_of :name, :with => /^[^0-9`!@#\$%\^&*+_=]+$/
   has_attached_file :resume
   # :styles => {
   # :thumb=> "100x100#",

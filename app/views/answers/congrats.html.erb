@@ -10,11 +10,11 @@
 <h3 align="center" > <br /> <br />
 
 
-  <% if @user.candidate.recruitment_test.mark_percentage>=70%>
+  <% if @candidate.recruitment_test.mark_percentage>=70%>
      Congratulations! you have got good score
-  <% elsif @user.candidate.recruitment_test.mark_percentage<70 &&@user.candidate.recruitment_test.mark_percentage>=50 %>
+  <% elsif @candidate.recruitment_test.mark_percentage<70 &&@candidate.recruitment_test.mark_percentage>=50 %>
        your score is satisfactory
-  <% elsif @user.candidate.recruitment_test.mark_percentage<50&&@user.candidate.recruitment_test.mark_percentage>=25 %>
+  <% elsif @candidate.recruitment_test.mark_percentage<50&&@candidate.recruitment_test.mark_percentage>=25 %>
          your score is average
   <% end %>
   <br /><br />

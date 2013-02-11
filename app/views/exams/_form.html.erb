@@ -37,9 +37,7 @@
 
         <%= link_to 'new_instruction?' , '#' ,:remote=>true,:onclick=> "jQuery('#new_instruction').dialog({ modal: true, title: 'Adding new instruction',width: 260 } );"%>   <br />   <br />
         <%= f.label :Complexity %>
-        <%= f.select("complexity_id", Complexity.all.collect {|s|
-         [s.complexity, s.id ] }, { :include_blank => false, :selected =>
-        @exam.complexity_id}) %>
+        <%= f.select("complexity_id", Complexity.all.collect {|s| [s.complexity, s.id ] }, { :selected =>@exam.complexity_id}) %>
 
 
       <table  class="index_table" >
@@ -50,17 +48,15 @@
       </tr>
 
       <% Category.all.each do |category| %>
+        <% if !category.questions.empty?  %>
           <tr>
             <td><%= category.category %></td>
-
-
             <%= f.fields_for :subj do |category_fields| %>
             <td><%= category_fields.number_field  (category.category ) , :class => "text_box"  %></td>
             <% end %>
             <td><%= category.questions.count %></td>
-
-
           </tr>
+        <% end %>
       <% end %>
       </table>
 

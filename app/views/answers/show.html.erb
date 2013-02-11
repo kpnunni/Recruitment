@@ -48,8 +48,8 @@
                   <tr>
                     <%= f.fields_for :c_option do |c_op| %>
                         <td width="2%" ><%=  c_op.check_box  op.id,:checked => @tick[i] %></td>
+                        <td class="lft" ><%= c_op.label op.id,op.option %></td>
                     <% end %>
-                    <td class="lft" ><%=simple_format label_tag op.option %></td>
                   </tr>
               <% end %>
 
@@ -58,8 +58,8 @@
                   <tr >
                     <%= f.fields_for :c_option do |c_op| %>
                         <td width="2%"  ><%=  c_op.radio_button 1, op.id,:checked => @tick[i]%></td>
-                    <% end %>
-                    <td class="lft"  >   <%=simple_format   op.option %>  </td>
+                        <td class="lft"  >   <%=  c_op.label op.id,op.option %>  </td>
+                     <% end %>
                   </tr>
               <% end %>
 

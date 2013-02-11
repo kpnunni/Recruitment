@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121224072843) do
+ActiveRecord::Schema.define(:version => 20130211063011) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
@@ -177,6 +177,16 @@ ActiveRecord::Schema.define(:version => 20121224072843) do
     t.string   "created_by"
     t.string   "updated_by"
   end
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "settings", :force => true do |t|
     t.string   "name"

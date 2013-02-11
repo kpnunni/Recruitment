@@ -545,12 +545,15 @@ table.curvedEdges th{
 
   .qno{
 
-    background-image-repeat: no-repeat;
+   // background-image-repeat: no-repeat;
     text-align: center;
     padding-top: 7px;
     float: left;
     width: 3%;
-    background-image: url('qno.png') ;
+    background-color: #00ced1;
+    border: 1px solid #8a2be2;
+    border-radius: 9px 9px 9px 9px;
+  //  background-image: url('qno.png') ;
     vertical-align: text-top;
 
   }

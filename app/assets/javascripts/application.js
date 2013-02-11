@@ -14,6 +14,18 @@
 //= require bootstrap.js
 //= require_tree .
       jQuery.noConflict(true);
+
+//tool tip to animated title
+        jQuery(document ).tooltip({
+            show: {
+                effect: "slideDown",delay: 250
+            },
+            hide: {
+             //   effect: "explode", delay: 100
+            },
+            track: true
+        });
+
         jQuery(document).ready(function() {
 
 
