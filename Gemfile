@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.11'
 gem "delayed_job_active_record"
 gem "delayed_task", "0.1.4"
+gem 'hirefire'
 gem "daemons"
 gem "nested_form"
 # Bundle edge Rails instead:
@@ -35,6 +36,9 @@ group :test, :development do
   gem "webrat"
   gem "capybara"
   gem "rspec-rails", "~> 2.0"
+  gem 'cucumber-rails', :require => false
+  # database_cleaner is not required, but highly recommended
+  gem 'database_cleaner'
 end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

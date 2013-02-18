@@ -81,7 +81,7 @@ validates :login_password, :presence => true,
           srch= User.where("user_email like ?","%#{search}%").order('id DESC')
        end
        users=srch&filt
-       users.delete_if  {|usr| usr.roles.include?(Role.find(14))||usr.id==id}
+       users.delete_if  {|usr| usr.id==id}
 
      end
 

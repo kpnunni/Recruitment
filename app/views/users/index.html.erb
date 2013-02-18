@@ -40,7 +40,9 @@
      <% end %>
     </td>
     <td width="10%"><%=user.isAlive? ? (image_tag 'green.png',  :title=>"yes") :( image_tag 'red.png', :title=>"no")%></td>
-    <td class="dropt" title="edit" ><%= link_to image_tag('edit.png'), edit_user_path(user) %></td>
+    <td class="dropt" title="edit" >
+      <%= link_to image_tag('edit.png'),(user.has_role?('Candidate') ? edit_candidate_path(user.candidate) : edit_user_path(user)) %>
+    </td>
     <% if current_user.has_role?('Manage Login')  %>
         <td class="dropt" title="Make Active/Inactive" ><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put%></td>
     <% else %>

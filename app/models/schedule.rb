@@ -7,7 +7,7 @@ class Schedule < ActiveRecord::Base
   after_save :select_candidate
   before_destroy :delete_cid
   validates_presence_of :sh_date,:candidate_ids
-
+  after_update :clear_odl_test_details
 
   def delete_cid
     self.candidates.each do |c|
@@ -51,5 +51,12 @@ class Schedule < ActiveRecord::Base
     else
      find(:all)
    end
+  end
+
+  def clear_odl_test_details
+    self.candidates.each do |c|
+      c.answers.delete_all  if !c.answers.empty?
+      c.recruitment_test.delete if c.recruitment_test
+    end
   end
 end

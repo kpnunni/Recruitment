@@ -39,7 +39,7 @@
 
       <% @schedules.each do |schedule| %>
           <tr>
-             <td width="25%" ><%=  schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p") %></td>
+             <td width="25%" ><%= link_to schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p") , schedule_path(schedule) %></td>
              <td width="15%" ><%= schedule.exam.name  %></td>
              <td width="15%" ><%= schedule.created_by  %></td>
              <td width="15%" ><%= schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %></td>
@@ -53,12 +53,12 @@
             <% end %>
 
 
-            <% if !current_user.has_role?('Re Schedule')||schedule.sh_date.to_i - Time.new.to_i >= 0 %>
+            <% if current_user.has_role?('Re Schedule') %>
             <td ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule),:title=>"Re schedule" %></td>
             <% else %>
             <td ><%=  image_tag 'edit_x.png' ,:title => "can't re schedule" %></td>
             <% end %>
-            <% if !current_user.has_role?('Cancel Schedule')||schedule.sh_date.to_i - Time.new.to_i >= 0 %>
+            <% if current_user.has_role?('Cancel Schedule') %>
             <td ><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } ,:title=>"cancel schedule"%></td>
             <% else %>
             <td ><%=  image_tag 'delete_x.png' , :title=>"can't cancel schedule"%></td>
