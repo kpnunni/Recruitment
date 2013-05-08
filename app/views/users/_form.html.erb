@@ -46,9 +46,9 @@
 
         <br />  <br />
 
-           <%= f.submit (@user.new_record? ? "Register" :"Update"),:id=>"commit", class: "btn btn-large btn-primary" ,:disable_with=>"Submitting..." %>
+           <%= f.submit :id=>"commit", class: "btn btn-large btn-success" ,:disable_with=>"Submitting..." %>
 
-              <br />  <br /><%= link_to image_tag('back.png') ,users_path %>
+            <%= link_to "Cancel",users_path ,class: "btn btn-large btn-warning"%>
 
 <% end %>
 

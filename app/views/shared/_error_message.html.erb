@@ -1,8 +1,9 @@
 <% if target.errors.any? %>
-    <br/>
-    <b>Please fix the following errors:</b><br/>
-    <% target.errors.full_messages.each do |msg| %>
-      <ul><%= msg %></ul><br/>
+    <!--<b>Please fix the following errors:</b><br/>-->
+    <% target.errors.full_messages.uniq.each do |msg| %>
+       <% msg.include?("User user") ? msg.gsub!("User user ","") : msg%>
+       <% msg.include?("Experiences experience") ? msg.gsub!("Experiences ","") : msg%>
+       <% msg.include?("Qualifications qualification") ? msg.gsub!("Qualifications ","") : msg%>
+     <%= msg.slice(0,1).capitalize + msg.slice(1..-1)  %>.<br/>
     <% end %>
-    <br/>
 <% end %>

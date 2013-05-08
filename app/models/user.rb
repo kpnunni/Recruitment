@@ -25,6 +25,13 @@ validates :user_email,    :presence   => true,
 validates :login_password, :presence => true,
                      :confirmation => true,
                      :length => { :within => 4..20 } ,:if => :there?
+   validate :include_role
+
+   def include_role
+     if self.roles.empty?
+       self.errors[:base]<<"Select atleast one role"
+     end
+   end
    def admin?
      self.roles.count==Role.count-1
    end

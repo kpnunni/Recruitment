@@ -659,14 +659,29 @@ table.curvedEdges th{
 	background-color:  #f5f5f5;
 }
  .error_msg{
-   color: #000000;
-   border: 0px solid red;
-   background-color: pink ;
+    display:table-cell;
+    empty-cells:hide;
+   width: 960px;
+   //color: #000000;
+   //border: 1px solid red;
+   //background-color: pink ;
+
+   //border-radius:10px;
+   //font-case:uper;
+
+    padding:2px 4px;
+    margin:0px;
+    border:solid 1px #FBD3C6;
+    background:#FDE4E1;
+    color:#CB4721;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:bold;
+    //text-align:center;
    background-image: url('icon_error_lrg.gif') ;
    background-repeat:no-repeat;
    background-position:right;
-   border-radius:10px;
-   font-case:uper;
+
  }
 .calendar{
   background-color: #ffffff;

@@ -21,11 +21,6 @@ class UsersController < ApplicationController
 
   def create
     @user=User.new(params[:user])
-    if params[:user][:role_ids].nil?
-      flash.now[:error]="Select atleast one role"
-      render action:'new'
-      return
-    end
     @user.encrypt_password
 
     if @user.save
@@ -41,12 +36,6 @@ class UsersController < ApplicationController
 
     @user=User.find(params[:id])
     @user.roles.delete_all
-    if params[:user][:role_ids].nil?
-      flash.now[:error]="Select atleast one role"
-      render action:'edit'
-      return
-    end
-
     if @user.update_attributes(params[:user])
 
       @user.save
@@ -77,12 +66,14 @@ class UsersController < ApplicationController
   def delete
     @user=User.find(params[:id])
     if @user.isAlive?
-      @user.update_attribute(:isAlive, 0)
-      @user.update_attribute(:isDelete, 1)
+      @user.isAlive= false
+      @user.isDelete= true
+      @user.save
       flash[:warning]="User '#{@user.user_email}' is now Inactive"
     else
-      @user.update_attribute(:isAlive, 1)
-      @user.update_attribute(:isDelete, 0)
+      @user.isAlive=  true
+      @user.isDelete=  false
+      @user.save
       flash[:notice]="User '#{@user.user_email}' is now Active"
     end
     redirect_to users_path

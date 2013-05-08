@@ -30,7 +30,7 @@ class Candidate < ActiveRecord::Base
   accepts_nested_attributes_for :recruitment_test,:allow_destroy => true,:reject_if => :all_blank
 
   accessible_attributes :user
-  before_create :set_role
+  #before_create :set_role
   after_destroy :chk_schedule
 
   #validates_presence_of :address ,:phone1, :phone2 , :technology , :certification , :if => :id_present?

@@ -35,7 +35,7 @@ class CandidatesController < ApplicationController
     @candidate.user.login_password="Suyati123"
     @candidate.user.login_password_confirmation="Suyati123"
     @candidate.user.encrypt_password
-
+    @candidate.user.roles.push(Role.find_by_role_name('Candidate'))
     if @candidate.save
       # UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
       redirect_to candidates_path , notice: 'Candidate was successfully created.'

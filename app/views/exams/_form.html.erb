@@ -3,7 +3,7 @@
     <%= form_for @instruction   do |f1| %>
          <b>New Instruction</b><br />
         <%= f1.text_field :instruction%>
-        <%= f1.submit "Add" ,class: "btn btn-large btn-primary",:name=>"by",:value=>"add" %><br />
+        <%= f1.submit "Add" ,class: "btn btn-large btn-success",:name=>"by",:value=>"add" %><br />
     <% end %>
     </div>
 
@@ -63,10 +63,10 @@
 
 
         <br />
-        <%= f.submit "submit" ,class: "button",:onclick=>"show_submitting();",:disable_with=>"Submitting.." %>
-
+        <%= f.submit  class: "btn btn-large btn-success",:onclick=>"show_submitting();",:disable_with=>"Submitting.." %>
+        <%= link_to "Cancel",exams_path,class: "btn btn-large btn-warning" %>
     <% end %>
-      <br /><%= link_to image_tag('back.png') ,exams_path %>
+
 
     </div>
 

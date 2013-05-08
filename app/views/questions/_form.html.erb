@@ -3,7 +3,7 @@
     <%= form_for Category.new   do |f1| %>
          <b>New Category</b><br />
         <%= f1.text_field :category%>
-        <%= f1.submit "Add" ,class: "btn btn-large btn-primary",:name=>"by",:value=>"add" %><br />
+        <%= f1.submit "Add" ,class: "btn btn-large btn-success",:name=>"by",:value=>"add" %><br />
     <% end %>
     </div>
   <div>
@@ -78,8 +78,7 @@
 
         <p><%= f1.link_to_add image_tag('addc.png',:title =>"Add new option"  ), :options %></p>
 
-        <%= f1.submit (@question.new_record? ? "Create" :"Update") ,class: "btn btn-large btn-primary"  ,:disable_with=>"Submitting.." %>
+        <%= f1.submit class: "btn btn-large btn-success"  ,:disable_with=>"Submitting.." %>
+        <%= link_to "Cancel",questions_path  ,class: "btn btn-large btn-warning"%>
     <% end %>
-
-      <br/><%= link_to image_tag('back.png') ,questions_path %>
   </div>

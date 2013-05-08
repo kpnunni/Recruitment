@@ -31,7 +31,7 @@
 
 
         <br />
-          <%= f.submit 'Change',class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %>
-            <br /><%= link_to image_tag('back.png'), profile_user_path(@user)%>
+          <%= f.submit 'Change',class: "btn btn-large btn-success",:onclick=>"show_submitting();" %>
+           <%= link_to  "Cancel" , profile_user_path(@user) ,class: "btn btn-large btn-warning"%>
 
    <% end %>
