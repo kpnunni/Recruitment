@@ -17,9 +17,9 @@ class Candidate < ActiveRecord::Base
   # :small => "400x400>" }
 
   validates_format_of :phone1,
-                      :with => /\A[0-9]{10}\Z/ , :if => :there1?
-  validates_format_of :phone1,
-                      :with => /\A[0-9]{10}\Z/ , :if => :there2?
+                      :with => /\A[0-9]{10}\Z/  , :allow_blank => true
+  validates_format_of :phone2,
+                      :with => /\A[0-9]{10}\Z/  , :allow_blank => true
 
 
 
@@ -35,12 +35,6 @@ class Candidate < ActiveRecord::Base
 
   #validates_presence_of :address ,:phone1, :phone2 , :technology , :certification , :if => :id_present?
 
-  def there1?
-    !self.phone1.blank?
-  end
-  def there2?
-    !self.phone2.blank?
-  end
 
   def id_present?
     !id.nil?

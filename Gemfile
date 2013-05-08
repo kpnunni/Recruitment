@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.11'
 gem "delayed_job_active_record"
 gem "delayed_task", "0.1.4"
-gem 'hirefire', :git => 'git://github.com/etrepat/hirefire.git', :branch => 'develop'
+#gem 'hirefire', :git => 'git://github.com/etrepat/hirefire.git', :branch => 'develop'
 #gem "hirefireapp"
 #gem "hirefire-resource"
 gem "daemons"

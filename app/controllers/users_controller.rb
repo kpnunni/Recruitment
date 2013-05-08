@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :authenticate ,:create
+  #skip_before_filter :authenticate ,:create
   before_filter :chk_user, :except => [:profile,:chgpass ,:updatepass,:create]
 
   def show

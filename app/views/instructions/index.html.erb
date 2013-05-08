@@ -1,6 +1,6 @@
 <h1>Instructions</h1>
 
-<table class="index_table" >
+<table class="table table-striped table-bordered" >
   <tr>
     <th>Instruction</th>
     <th></th><th></th>
@@ -9,11 +9,11 @@
 <% @instructions.each do |instruction| %>
   <tr >
     <td class="lft"  ><%= instruction.instruction %></td>
-    <td width="5%" ><%= link_to image_tag('edit.png'), edit_instruction_path(instruction) , :class=>"dropt", :title=>"edit" %></td>
+    <td width="5%" ><%= link_to 'Edit', edit_instruction_path(instruction) , :class=>"btn btn-mini", :title=>"edit" %></td>
     <% if instruction.exams.empty?  %>
-    <td width="5%" ><%= link_to  image_tag('delete.png'), instruction, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"dropt", :title=>"delete"  %></td>
+    <td width="5%" ><%= link_to  'Delete', instruction, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"btn btn-mini btn-danger", :title=>"delete"  %></td>
     <% else %>
-    <td width="5%" ><%=image_tag('delete_x.png', :title=>"first delete this instruction from exams.")  %></td>
+    <td width="5%" ><%=link_to  "Delete", '#', :title=>"first delete this instruction from exams.", class: "btn btn-mini btn-inverse" ,remote: true %></td>
     <% end %>
   </tr>
 <% end %>

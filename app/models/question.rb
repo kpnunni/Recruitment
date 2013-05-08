@@ -2,8 +2,9 @@ class Question < ActiveRecord::Base
   attr_accessor :to_delete
   attr_accessible :question_image, :updated_by,:to_delete,:options_attributes,:question, :allowed_time, :created_by, :complexity_id,:category_id, :type_id,:answer,:question_image_file_name,:question_image_content_type,:question_image_file_size
    validates :allowed_time,:presence =>true
-   validates_numericality_of :allowed_time, :only_integer => true , :in => 21..30
+   #validates_numericality_of :allowed_time, :only_integer => true , :in => 21..30
    validates_inclusion_of :allowed_time, :in => 10..200, :message => "can only be between 10 and 200."
+   validate :options_status
    belongs_to :category
    belongs_to :complexity
    belongs_to :type
@@ -19,7 +20,14 @@ class Question < ActiveRecord::Base
 
 
 
-
+   def options_status
+     if self.question.empty? && self.question_image_file_name.nil?
+       self.errors[:base]<<"Question or image should not be blank"
+     end
+     if self.options.empty?
+       self.errors[:base]<<"Options can't be empty"
+     end
+   end
 
    def self.filtered ids,search
      if ids!=nil

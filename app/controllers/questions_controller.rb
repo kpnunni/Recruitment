@@ -71,30 +71,12 @@ class QuestionsController < ApplicationController
         @complexity=Complexity.first(3)
         @categorys=Category.all
         @types=Type.all
-  #      4.times { @question.options.build }
-
-        flag=0
-        if params[:question][:question]==""&&params[:question][:question_image].nil?
-            flash.now[:error]="Question or image should not be blank"
-            render action: "new"
-            return
-        end
-        params[:question]['options_attributes'].each {|k,v| flag=1 if v['is_right']=='1'}
-        if flag==0
-   #         4.times { @question.options.build }
-            flash.now[:error]="atleast one option should be true"
-            render action: "new"
-            return
-        end
-        respond_to do |format|
           if @question.save
-              format.html { redirect_to questions_path , notice: 'Question was successfully created.' }
+              redirect_to questions_path , notice: 'Question was successfully created.'
           else
     #        4.times { @question.options.build }
-            format.html { render action: "new" }
-            format.json { render json: @question.errors, status: :unprocessable_entity }
+              render action: "new"
           end
-        end
       end
 
 
@@ -171,7 +153,7 @@ class QuestionsController < ApplicationController
   def delete_image
     @question=Question.find(params[:id])
     @question.question_image.clear
-    @question.save
+    @question.save(validate: false)
     redirect_to edit_question_path(@question)
   end
 end
