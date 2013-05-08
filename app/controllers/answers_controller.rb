@@ -102,7 +102,6 @@ class AnswersController < ApplicationController
 
   def congrats
      @candidate=User.find(params[:id]).candidate
-
      #if @candidate.recruitment_test.is_passed=="Passed"
        #UserMailer.result_email(@candidate.user).deliver
        #  UserMailer.delay.result_email(@candidate.user)
