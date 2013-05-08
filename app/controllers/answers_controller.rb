@@ -116,7 +116,6 @@ class AnswersController < ApplicationController
 
      sign_out
   end
-
   def blank
   end
 
