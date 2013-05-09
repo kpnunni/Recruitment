@@ -95,7 +95,7 @@ class ExamsController < ApplicationController
     @instruction=Instruction.new
     @exam.modified_by =current_user .user_email
     @exam.complexity_id=params[:exam][:complexity_id]
-    if params[:regenerate]
+    if regenerate_question_paper?
       @exam.subj= params[:exam][:subj]
       @q_count=@exam.generate_question_paper
       @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
@@ -148,6 +148,19 @@ class ExamsController < ApplicationController
     categories.each{ |cat| @exam.subj[cat]+=1 }
     @exam.generate_question_paper
     redirect_to  exam_path(@exam)  ,:notice => "Question paper regenerated successfully."
+  end
+
+  def regenerate_question_paper?
+     categories = @exam.questions.group(:category_id).count
+     subjects = {}
+     categories.each{|k,v| subjects[Category.find(k).category]=v.to_s}
+     new_subjects = params[:exam][:subj]
+     new_subjects.delete_if {|k,v| v=="0"}
+     if subjects == new_subjects
+       false
+     else
+       true
+     end
   end
 
 end

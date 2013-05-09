@@ -58,9 +58,7 @@
       <% end %>
       </table>
         <br />
-        <%=check_box_tag "regenerate","Yes" %>Regenerate question paper?
-
-        <br /><br />
+        <%#=check_box_tag "regenerate","Yes" %>
         <%= f.submit class: "btn btn-large btn-success" ,:onclick=>"show_submitting();",:disable_with=>"Updating.."%>
           <%= link_to  "Cancel" ,exams_path ,class: "btn btn-large btn-warning"%>
     <% end %>

@@ -46,10 +46,15 @@ h1 {
   margin-bottom: 20px;
   text-align: center;
   text-shadow: #a7a695 -12px 0.2em 3px;
-  background-image: url("hdr_bg.png");
-  border: 10px solid #e7def4;
-  border-radius: 20px 20px 0px 0px;
+  //background-image: url("hdr_bg.png");
+  //border: 10px solid #e7def4;
+  //border-radius: 20px 20px 0px 0px;
   padding: 15px;
+    color: #fff;
+	text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+	font: 50px 'ChunkFiveRegular';
+
+
 }
 
 .search
@@ -717,8 +722,10 @@ table.curvedEdges th{
 //  background-image: url('bg8.jpg') ;
 }
 
-
-
+a:link    { color: #a50ea3} /* unvisited links */
+a:visited { color: #006700}  /* visited links   */
+a:hover   { color: #00c }  /* user hovers     */
+a:active  { color: #ccc }  /* active links    */
 
 
 
