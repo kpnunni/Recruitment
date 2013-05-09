@@ -78,18 +78,22 @@ validates :login_password, :presence => true,
 
      def self.filtered(search,filter,id)
        filt=User.all(:order => 'created_at DESC')
+       role=User.all(:order => 'created_at DESC')
        if !(filter.nil?||filter[:type]=="")
-          filt.select! {|v| v.isAlive==(filter[:type].to_i==1) }
+         filt.select! {|v| v.isAlive==(filter[:type].to_i==1) }
        end
+
+     if !(filter.nil?||filter[:role]=="")
+       role.select! {|v| v.role_ids.include?(filter[:role].to_i) }
+     end
 
        if search==""||search.nil?
          srch=User.all(:order => 'created_at DESC')
        else
           srch= User.where("user_email like ?","%#{search}%").order('id DESC')
        end
-       users=srch&filt
+       users=srch&filt&role
        users.delete_if  {|usr| usr.id==id}
-
      end
 
 end

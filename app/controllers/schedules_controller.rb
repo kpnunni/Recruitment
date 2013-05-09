@@ -86,7 +86,8 @@ class SchedulesController < ApplicationController
       if @schedule.save
         @schedule.candidates.each{|c| UserMailer.delay.schedule_email(c.user)  }
         @schedule.candidates.each{|c| UserMailer.schedule_email(c.user).deliver  }
-        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
+        @users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
+        #@users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
         @users.each {|admin| UserMailer.delay.admin_schedule_email(admin,@schedule) }
         @users.each {|admin| UserMailer.admin_schedule_email(admin,@schedule).deliver }
         format.html { redirect_to schedules_path, notice: 'Exam was successfully scheduled.' }
@@ -116,7 +117,8 @@ class SchedulesController < ApplicationController
       if @schedule.update_attributes(params[:schedule])
         @schedule.candidates.each{|c| UserMailer.delay.update_schedule_email(c.user) }
         @schedule.candidates.each{|c| UserMailer.update_schedule_email(c.user).deliver }
-        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
+        @users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
+        #@users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
         @users.each {|admin| UserMailer.delay.admin_update_schedule_email(admin,@schedule) }
         @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver }
 
@@ -133,7 +135,8 @@ class SchedulesController < ApplicationController
   def destroy
     @schedule = Schedule.find(params[:id])
         @schedule.candidates.each{|c| UserMailer.cancel_schedule_email(c.user,@schedule).deliver }
-        @users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
+        #@users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
+        @users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
         @users.each {|admin| UserMailer.cancel_schedule_email(admin,@schedule).deliver }
 
     @schedule.destroy

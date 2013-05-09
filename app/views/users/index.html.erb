@@ -8,9 +8,11 @@
             <table  cellpadding="5" class='filter_table' >
               <tr>
                 <td width="60%" ></td>
+                <th>Role:</th>
+                <td><%= select("filter","role", Role.all.collect {|s| [s.role_name, s.id ] }, { :include_blank => true,:selected =>params[:filter] ? params[:filter][:role]:""}) %></td>
                 <th>Type:</th>
-                    <td><%= select("filter","type", [["Active",1],["Inactive",0]], { :include_blank => true,:selected =>params[:filter] ? params[:filter][:type]:""}) %></td>
-                 <th>Email:</th>
+                <td><%= select("filter","type", [["Active",1],["Inactive",0]], { :include_blank => true,:selected =>params[:filter] ? params[:filter][:type]:""}) %></td>
+                <th>Email:</th>
                     <td><%= text_field_tag "search" , params[:search] ? params[:search] : ""%></td>
 
                 <td class="dropt" title="search"><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
