@@ -23,6 +23,19 @@ module SessionsHelper
     cookies.delete(:remember_token)
   end
   def my_roles
-    @my_roles ||= current_user.roles.map(&:role_name)
+    if current_user
+      @my_roles ||=  current_user.roles.map(&:role_name)
+    else
+     @my_roles ||=[]
+    end
   end
+
+  def negative
+    @negative ||= Setting.find_by_name('negative_mark')
+  end
+  def auto_result
+     @auto_result ||= Setting.find_by_name('auto_result')
+  end
+
+
 end

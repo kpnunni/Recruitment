@@ -2,7 +2,7 @@
   <div class="navbar-inner">
     <div class="container">
 
-	   <%= link_to image_tag('suyati1.png', :size => "300x70"),'/homes/index'   %>
+	   <%= link_to image_tag('suyati1.png', :size => "300x70"),!my_roles.include?('Candidate') ? '/homes/index' : '#'  %>
       <nav>
         <ul class="nav pull-right">
           <% @ok = signed_in? && !my_roles.include?('Candidate') %>

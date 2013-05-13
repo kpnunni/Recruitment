@@ -5,10 +5,8 @@
 
 
             <% if admin? %>
-               <% @negative_mark=Setting.find_by_name('negative_mark')  %>
-               <% @auto_result=Setting.find_by_name('auto_result') %>
-                ||||| Auto Result=><%=@auto_result.status   %>
-                ||||| Negative mark=><%= @negative_mark.status  %>
+                ||||| Auto Result=><%= auto_result.status  %>
+                ||||| Negative mark=><%= negative.status %>
             <% end %>
           <% end %>
   </h4>

@@ -29,6 +29,11 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
+    better_errors (0.8.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.1)
+      debug_inspector (>= 0.0.1)
     bootstrap-sass (2.0.4.2)
     builder (3.0.4)
     capybara (2.0.2)
@@ -41,6 +46,7 @@ GEM
     childprocess (0.3.8)
       ffi (~> 1.0, >= 1.0.11)
     cocaine (0.4.2)
+    coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -59,6 +65,7 @@ GEM
       nokogiri (>= 1.5.0)
     daemons (1.1.9)
     database_cleaner (0.9.1)
+    debug_inspector (0.0.2)
     delayed_job (3.0.5)
       activesupport (~> 3.0)
     delayed_job_active_record (0.4.1)
@@ -179,6 +186,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  better_errors
+  binding_of_caller
   bootstrap-sass (~> 2.0.2)
   capybara
   coffee-rails (~> 3.2.1)

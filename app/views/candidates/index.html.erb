@@ -13,11 +13,11 @@
                     <th>Status:</th>
                </tr>
                <tr>
-                    <td align="right" ><%= text_field_tag "search[:name]" , params[:search]? params[:search][":name"]:"", :class => "text_box1" %></td>
-                    <td align="right" ><%= text_field_tag "search[:email]" ,params[:search]? params[:search][":email"]:"", :class => "text_box1" %></td>
-                    <td align="right" ><%= text_field_tag "search[:phone]" ,params[:search]? params[:search][":phone"]:"", :class => "text_box1"  %></td>
-                    <td align="right" ><%= text_field_tag "search[:skill]" ,params[:search]? params[:search][":skill"]:"", :class => "text_box1" %></td>
-                    <td align="right" ><%= select("search[:status]" ,"type", ["Exam Scheduled","Exam not Scheduled","Exam Completed"], { :include_blank => true,:selected =>params[:search]?params[:search][":status"][:type]:""}) %></td>
+                    <td align="right" ><%= text_field_tag "search[name]" , params[:search]? params[:search]["name"]:"", :class => "text_box1" %></td>
+                    <td align="right" ><%= text_field_tag "search[email]" ,params[:search]? params[:search]["email"]:"", :class => "text_box1" %></td>
+                    <td align="right" ><%= text_field_tag "search[phone]" ,params[:search]? params[:search]["phone"]:"", :class => "text_box1"  %></td>
+                    <td align="right" ><%= text_field_tag "search[skill]" ,params[:search]? params[:search]["skill"]:"", :class => "text_box1" %></td>
+                    <td align="right" ><%= select("search[status]" ,"type", ["Exam Scheduled","Exam not Scheduled","Exam Completed"], { :include_blank => true,:selected =>params[:search]?params[:search]["status"][:type]:""}) %></td>
                     <td title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
                </tr>
            </table>

@@ -29,26 +29,28 @@
 
     </b>
     <br/>
-    <div id="long_wait" style="display: none;" >
-   <h2>More than one hour is remaining for your exam.
-     <br/>
-     <%=link_to 'sign out', '/signout',method: :delete   %>
-   </h2>
- </div>
-    <div id="wait" style="display: none;" >
-   <h2>Time remaining for your exam(In minutes),
-     <div id="count" align="center" ></div>
-     <br/><br/>
-     <%=link_to 'sign out', '/signout',method: :delete   %>
-   </h2>
- </div>
-    <div id="exam" style="display: none;" >
-        <h2><%= link_to 'start_exam >>','/answers/blank' ,:onclick=>"popup()" %></h2>
-    </div>
-    <div id="over" style="display: none;" >
-        <h2>Sorry,Time is over.</h2>
-    </div>
-
+            <% if @diff > 30 %>
+                <div id="long_wait" style="display: none;" >
+               <h2>More than one hour is remaining for your exam.
+                 <br/>
+                 <%=link_to 'sign out', '/signout',method: :delete   %>
+               </h2>
+             </div>
+            <% else %>
+                <div id="wait" style="display: none;" >
+               <h2>Time remaining for your exam(In minutes),
+                 <div id="count" align="center" ></div>
+                 <br/><br/>
+                 <%=link_to 'sign out', '/signout',method: :delete   %>
+               </h2>
+             </div>
+                <div id="exam" style="display: none;" >
+                    <h2><%= link_to 'start_exam >>','/answers/blank' ,:onclick=>"popup()" %></h2>
+                </div>
+                <div id="over" style="display: none;" >
+                    <h2>Sorry,Time is over.</h2>
+                </div>
+            <% end %>
 
  <script type="text/javascript">
        function popup()
@@ -67,7 +69,7 @@
     {
         if(g_iCount > 60)
         {
-          document.getElementById('long_wait').show();
+//          document.getElementById('long_wait').show();
         }
         else if(g_iCount < -60)
         {
@@ -76,7 +78,7 @@
         }
         else if((g_iCount) > 0)
         {
-            document.getElementById('long_wait').hide();
+//            document.getElementById('long_wait').hide();
             document.getElementById('wait').show();
             var str="black";
             if (g_iCount<20&&g_iCount>=10)
