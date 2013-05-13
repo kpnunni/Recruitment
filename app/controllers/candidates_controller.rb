@@ -2,7 +2,7 @@ class CandidatesController < ApplicationController
  # skip_before_filter :authenticate ,:create
  # before_filter :chk_user ,:except =>[ :update ,:create]
   def chk_user
-    if !current_user.has_role?('Manage Candidates')
+    if !my_roles.include?('Manage Candidates')
       redirect_to '/homes/index'
     end
   end

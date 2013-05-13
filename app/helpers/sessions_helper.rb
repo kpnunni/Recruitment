@@ -15,12 +15,14 @@ module SessionsHelper
     !current_user.nil?
   end
   def admin?
-    current_user.roles.count==Role.count-1
+    my_roles.count == 16
   end
   def sign_out
     self.current_user = nil
     session[:remember_token]=nil
     cookies.delete(:remember_token)
   end
-
+  def my_roles
+    @my_roles ||= current_user.roles.map(&:role_name)
+  end
 end

@@ -28,7 +28,7 @@
     </table>
     <h1>Available Questions</h1>
 
-    <% if !(current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')) %>
+    <% if !(my_roles.include?('Add Questions Only')&&!my_roles.include?('Manage Questions')&&!my_roles.include?('Add Questions')) %>
     <div class="filter_options_container">
       <form class="filter_form">
             <table  cellpadding="5" class="filter_table"  >
@@ -152,7 +152,7 @@
 
         <br /> <%= button_to "Delete selected",delete_all_questions_path(:id=>33), data: { confirm: 'Are you sure?' } %>
     <% end %>
-    <% if !(current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')) %>
+    <% if !(my_roles.include?('Add Questions Only')&&!my_roles.include?('Manage Questions')&&!my_roles.include?('Add Questions')) %>
      <h4><%= will_paginate @questions ,:container=>false %></h4>
     <% end %>
 

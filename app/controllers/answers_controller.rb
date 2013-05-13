@@ -94,7 +94,7 @@ class AnswersController < ApplicationController
   end
 
   def chk_user
-    if !current_user.has_role?('Candidate')
+    if !my_roles.include?('Candidate')
        redirect_to '/homes/index'
     end
 

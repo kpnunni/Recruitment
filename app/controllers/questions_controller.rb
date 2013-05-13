@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
 
 
     def chk_user
-    if !current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions')
+    if !current_user.has_role?('Add Questions Only','Manage Questions','Add Questions')
       redirect_to '/homes/index'
     end
     end
@@ -12,10 +12,10 @@ class QuestionsController < ApplicationController
       def index
         @questions= Question.filtered(params[:search],params[:srch]).paginate(:page => params[:page], :per_page => 15)
  #       @questions=Question.paginate(:page => params[:page], :per_page => 10)
-        if current_user.has_role?('Add Questions')&&!current_user.has_role?('Manage Questions')
+        if my_roles.include?('Add Questions')&&!my_roles.include?('Manage Questions')
           @questions.select! {|q| q.created_by==current_user.user_email}
 
-        elsif (current_user.has_role?('Add Questions Only')&&!current_user.has_role?('Manage Questions')&&!current_user.has_role?('Add Questions'))
+        elsif (my_roles.include?('Add Questions Only')&&!my_roles.include?('Manage Questions')&&!my_roles.include?('Add Questions'))
            @questions.select! {|q| q.created_at>=(Time.now-1.minutes)&&q.created_by==current_user.user_email }
 
         end

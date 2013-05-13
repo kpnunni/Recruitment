@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
        redirect_to '/signin'
     else
       #To forcefully make signout 'remember me' users when isalive==false.
-      if !current_user.isAlive&&!current_user.has_role?('Candidate')
+      if !current_user.isAlive&&!my_roles.include?('Candidate')
         sign_out
         redirect_to '/signin'
       end

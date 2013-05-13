@@ -119,7 +119,7 @@ class UsersController < ApplicationController
   end
 
   def chk_user
-    if !current_user.has_role?('Manage Users')
+    if !my_roles.include?('Manage Users')
       flash.now[:warning]='Unauthorised Access'
       redirect_to '/homes/index'
     end

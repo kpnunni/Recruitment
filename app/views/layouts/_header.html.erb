@@ -5,7 +5,7 @@
 	   <%= link_to image_tag('suyati1.png', :size => "300x70"),'/homes/index'   %>
       <nav>
         <ul class="nav pull-right">
-          <% @ok= signed_in? && !current_user.has_role?('Candidate') %>
+          <% @ok = signed_in? && !my_roles.include?('Candidate') %>
          <%if @ok %>
               <% if admin? %>
               <li><%= link_to "Home",   '/homes/admin' %></li>
@@ -17,33 +17,33 @@
                   My Dashboard <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                  <%if current_user.has_role?('Manage Users')   %>
+                  <%if my_roles.include?('Manage Users')   %>
                   <li><%= link_to "Users", '/users' %></li>
                   <% end %>
 
-                  <%if current_user.has_role?('Manage Candidates')   %>
+                  <%if my_roles.include?('Manage Candidates')   %>
                   <li><%= link_to "Candidates", '/candidates' %></li>
                   <% end %>
 
-                  <%if current_user.has_role?('Add Questions Only') ||current_user.has_role?('Manage Questions') ||current_user.has_role?('Add Questions')  %>
+                  <%if my_roles.include?('Add Questions Only') ||my_roles.include?('Manage Questions') ||my_roles.include?('Add Questions')  %>
                   <li><%= link_to "Question Bank",  '/questions' %></li>
                    <% end %>
 
-                  <%if current_user.has_role?('Manage Exams')   %>
+                  <%if my_roles.include?('Manage Exams')   %>
                   <li><%= link_to "Exams", '/exams' %></li>
                   <% end %>
 
-                  <%if current_user.has_role?('Schedule')||current_user.has_role?('Re Schedule')||current_user.has_role?('Cancel Schedule')   %>
+                  <%if my_roles.include?('Schedule')||my_roles.include?('Re Schedule')||my_roles.include?('Cancel Schedule')   %>
                   <li><%= link_to "Schedules", '/schedules' %></li>
                    <% end %>
 
-                  <%if current_user.has_role?('Validate Result')||current_user.has_role?('View Result')   %>
+                  <%if my_roles.include?('Validate Result')||my_roles.include?('View Result')   %>
                   <li><%= link_to "Results", '/recruitment_tests' %></li>
                    <% end %>
 
                 </ul>
               </li>
-              <%if current_user.has_role?('Manage Templates')   %>
+              <%if my_roles.include?('Manage Templates')   %>
               <li  class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   Email Templates <b class="caret"></b>

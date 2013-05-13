@@ -57,13 +57,13 @@ class RecruitmentTestsController < ApplicationController
     end
   end
   def chk_user
-    if !(current_user.has_role?('Validate Result')||current_user.has_role?('View Result'))
+    if !(my_roles.include?('Validate Result')||my_roles.include?('View Result'))
        redirect_to '/homes/index'
     end
 
   end
   def chk_result
-    if !current_user.has_role?('Validate Result')
+    if !my_roles.include?('Validate Result')
        redirect_to '/homes/index'
     end
   end

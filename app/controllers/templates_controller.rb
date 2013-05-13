@@ -13,7 +13,7 @@ class TemplatesController < ApplicationController
   end
 
     def chk_user
-    if !current_user.has_role?('Manage Templates')
+    if !my_roles.include?('Manage Templates')
       redirect_to '/homes/index'
     end
 

@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_filter :authenticate
 
   def new
-    if signed_in?&&current_user.has_role?('Candidate')
+    if signed_in?&&my_roles.include?('Candidate')
       redirect_to '/homes/default_page'
     elsif signed_in?
       redirect_to '/homes/index'

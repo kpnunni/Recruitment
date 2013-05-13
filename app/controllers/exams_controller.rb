@@ -2,7 +2,7 @@ class ExamsController < ApplicationController
    before_filter :chk_user
 
     def chk_user
-    if !current_user.has_role?('Manage Exams')
+    if !my_roles.include?('Manage Exams')
       redirect_to '/homes/index'
     end
     end

@@ -34,7 +34,7 @@
         <th>Exam Status</th>
         <th></th>
 
-        <% if current_user.has_role?('Schedule')   %>
+        <% if my_roles.include?('Schedule')   %>
             <th></th>
         <% end %>
        </tr>

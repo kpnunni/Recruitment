@@ -4,21 +4,21 @@ class SchedulesController < ApplicationController
    before_filter :re_sch ,:only =>  [:edit,:update]
    before_filter :cancel_sch ,:only =>  [:remove,:destroy]
     def new_sch
-     if !(current_user.has_role?('Schedule'))
+     if !(my_roles.include?('Schedule'))
         redirect_to '/homes/index'
      end
 
      end
 
    def re_sch
-    if !(current_user.has_role?('Re Schedule'))
+    if !(my_roles.include?('Re Schedule'))
        redirect_to '/homes/index'
     end
 
    end
 
    def cancel_sch
-    if !(current_user.has_role?('Cancel Schedule'))
+    if !(my_roles.include?('Cancel Schedule'))
        redirect_to '/homes/index'
     end
 
@@ -158,7 +158,7 @@ class SchedulesController < ApplicationController
   end
 
   def chk_user
-    if !(current_user.has_role?('Schedule')||current_user.has_role?('Re Schedule')||current_user.has_role?('Cancel Schedule'))
+    if !current_user.has_role?('Schedule','Re Schedule','Cancel Schedule')
        redirect_to '/homes/index'
     end
 

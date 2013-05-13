@@ -53,12 +53,12 @@
             <% end %>
 
 
-            <% if current_user.has_role?('Re Schedule') %>
+            <% if my_roles.include?('Re Schedule') %>
             <td ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule),:title=>"Re schedule" %></td>
             <% else %>
             <td ><%=  image_tag 'edit_x.png' ,:title => "can't re schedule" %></td>
             <% end %>
-            <% if current_user.has_role?('Cancel Schedule') %>
+            <% if my_roles.include?('Cancel Schedule') %>
             <td ><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } ,:title=>"cancel schedule"%></td>
             <% else %>
             <td ><%=  image_tag 'delete_x.png' , :title=>"can't cancel schedule"%></td>
