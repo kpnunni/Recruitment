@@ -1,7 +1,7 @@
 class HomesController < ApplicationController
   attr_accessor  :mail,:pass
   before_filter  :chk_admin ,:only => :admin
-  before_filter  :chk_user ,:only => :index
+  #before_filter  :chk_user ,:only => :index
   skip_before_filter :authenticate,:only => :default_page
   def index
     @question=Question.count

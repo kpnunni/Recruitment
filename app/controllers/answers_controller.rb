@@ -121,9 +121,14 @@ class AnswersController < ApplicationController
 
   def clogin
      @user=User.find_by_salt(params[:id])
+     @diff=(@user.candidate.sh_date.to_i-Time.now.to_i)/60
      return if @user.nil?||!@user.isAlive||@user.candidate.schedule.nil?
      sign_in(@user)
-     redirect_to '/answers/candidate_detail'
+     if @diff > 1
+       redirect_to '/homes/index'
+     else
+       redirect_to '/answers/candidate_detail'
+     end
   end
 
   def feed_back
