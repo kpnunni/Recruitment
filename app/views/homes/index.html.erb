@@ -40,15 +40,16 @@
         The global economic downturn of 2009, while very challenging, gave Mukund an opportunity to create a new venture during one of the toughest economic times. The founding team seized this opportunity and created Suyati. Suyati purchased Ind-Sigma’s high-end infrastructure, equipment and facilities when Ind-Sigma decided to downsize its operations in Kochi, and founded a full fledged operating enterprise. The Suyati team, apart from acquiring many new clients, continues to provide a wide range of software development, technical, HR and administrative services to FifthGear in the United States and its subsidiary in India.
 
         Suyati’s primary vision is to help small and medium companies leverage excellent technical and managerial talent from India to build software in a cost effective way. Based on Mukund and his team’s experience in building specialty teams in India, Suyati is able to provide competitive and unique software related services with flexible models of engagement.
+        <h2>
         <% if my_roles.include?("Candidate") %>
-            <% @diff=(current_user.schedule.sh_date.to_i-Time.now.to_i)/60 %>
+            <% @diff=(current_user.candidate.schedule.sh_date.to_i-Time.now.to_i)/60 %>
            <% if @diff < 1 %>
                <%= "Your exam will start by "+ current_user.schedule.sh_date.strftime("%b-%d-%Y  %I:%M%p")%>
            <% else %>
                 You can start exam by clicking <%= link_to "here",'/answers/candidate_detail' %>
            <% end %>
         <% end %>
-
+        </h2>
 
 
 

@@ -121,7 +121,7 @@ class AnswersController < ApplicationController
 
   def clogin
      @user=User.find_by_salt(params[:id])
-     @diff=(@user.candidate.sh_date.to_i-Time.now.to_i)/60
+     @diff=(@user.candidate.schedule.sh_date.to_i-Time.now.to_i)/60
      return if @user.nil?||!@user.isAlive||@user.candidate.schedule.nil?
      sign_in(@user)
      if @diff > 1
