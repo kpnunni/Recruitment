@@ -30,25 +30,26 @@
     </b>
     <br/>
             <% if @diff > 30 %>
-                <div id="long_wait" style="display: none;" >
-               <h2>More than one hour is remaining for your exam.
+                <div id="long_wait" style="" >
+               <h2>More than half an hour is remaining for your exam.
                  <br/>
                  <%=link_to 'sign out', '/signout',method: :delete   %>
                </h2>
              </div>
+            <% elsif @diff < -30 %>
+                 <div id="over">
+                   <h2>Sorry,Time is over.</h2>
+                 </div>
             <% else %>
-                <div id="wait" style="display: none;" >
-               <h2>Time remaining for your exam(In minutes),
-                 <div id="count" align="center" ></div>
-                 <br/><br/>
-                 <%=link_to 'sign out', '/signout',method: :delete   %>
-               </h2>
-             </div>
-                <div id="exam" style="display: none;" >
-                    <h2><%= link_to 'start_exam >>','/answers/blank' ,:onclick=>"popup()" %></h2>
+                <div id="wait"  >
+                   <h2>Time remaining for your exam(In minutes),
+                     <div id="count" align="center" ></div>
+                     <br/><br/>
+                     <%=link_to 'sign out', '/signout',method: :delete   %>
+                   </h2>
                 </div>
-                <div id="over" style="display: none;" >
-                    <h2>Sorry,Time is over.</h2>
+                <div id="exam" style="display: none;">
+                    <h2><%= link_to 'start_exam >>','/answers/blank' ,:onclick=>"popup()" %></h2>
                 </div>
             <% end %>
 
@@ -67,19 +68,19 @@
 
    function startCountdown(g_iCount)
     {
-        if(g_iCount > 60)
-        {
-//          document.getElementById('long_wait').show();
-        }
-        else if(g_iCount < -60)
-        {
-           document.getElementById('exam').hide();
-           document.getElementById('over').show();
-        }
-        else if((g_iCount) > 0)
+//        if(g_iCount > 60)
+//        {
+////          document.getElementById('long_wait').show();
+//        }
+//        else if(g_iCount < -60)
+//        {
+//           document.getElementById('exam').hide();
+//           document.getElementById('over').show();
+//        }
+        if((g_iCount) > 0)
         {
 //            document.getElementById('long_wait').hide();
-            document.getElementById('wait').show();
+//            document.getElementById('wait').show();
             var str="black";
             if (g_iCount<20&&g_iCount>=10)
             {

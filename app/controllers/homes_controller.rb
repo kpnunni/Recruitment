@@ -1,6 +1,7 @@
 class HomesController < ApplicationController
   attr_accessor  :mail,:pass
   before_filter  :chk_admin ,:only => :admin
+  before_filter  :chk_user ,:only => :index
   skip_before_filter :authenticate,:only => :default_page
   def index
     @question=Question.count
@@ -28,6 +29,11 @@ class HomesController < ApplicationController
   def chk_admin
     if !admin?
       redirect_to  '/homes/index'
+    end
+  end
+  def chk_user
+    if my_roles.include?("Candidate")
+      redirect_to  '/homes/default_page'
     end
   end
   def default_page
