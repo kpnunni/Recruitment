@@ -45,7 +45,8 @@
             <% @diff=(current_user.candidate.schedule.sh_date.to_i-Time.now.to_i)/60 %>
            <% if @diff > 1 %>
                <%= "Your exam will start by "+ current_user.candidate.schedule.sh_date.strftime("%b-%d-%Y  %I:%M%p")%>
-           <% else %>
+                  <%=link_to 'sign out', '/signout',method: :delete   %>
+        <% else %>
                 You can start exam by clicking <%= link_to "here",'/answers/candidate_detail' %>
            <% end %>
         <% end %>

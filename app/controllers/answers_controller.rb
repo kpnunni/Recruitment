@@ -73,7 +73,7 @@ class AnswersController < ApplicationController
   end
   def candidate_update
       @candidate=Candidate.find(params[:id])
-      if params[:candidate][:address]==""||params[:candidate][:phone1]==""||params[:candidate][:technology]==""||params[:candidate][:certification]==""||params[:candidate][:skills]==""
+      if params[:candidate][:address]==""||params[:candidate][:phone1]==""||params[:candidate][:technology]==""||params[:candidate][:skills]==""
         flash.now[:error]="You should fill all mandatory fields"
         render '/answers/candidate_detail'
         return
