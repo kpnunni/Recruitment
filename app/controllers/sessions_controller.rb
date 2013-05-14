@@ -119,6 +119,7 @@ class SessionsController < ApplicationController
        @candidate.user.login_password="12345"
        @candidate.user.login_password_confirmation="12345"
        @candidate.user.encrypt_password
+       @candidate.user.roles.push(Role.find_by_role_name('Candidate'))
       if @candidate.save
         redirect_to success_sessions_path(:as=>"can"), notice: 'Candidate was successfully created.'
       else

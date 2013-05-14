@@ -95,6 +95,7 @@ class ExamsController < ApplicationController
     @instruction=Instruction.new
     @exam.modified_by =current_user .user_email
     @exam.complexity_id=params[:exam][:complexity_id]
+    @exam.instructions.delete_all
     if regenerate_question_paper?
       @exam.subj= params[:exam][:subj]
       @q_count=@exam.generate_question_paper
