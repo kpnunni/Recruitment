@@ -79,12 +79,12 @@
           <% if current_user.candidate.answer_ids.include?(@answer.id+1)   %>
              <td><%= f.button  "Next", :name=>"to",:value=>@answer.id+1, :disable_with => "Next",class: "btn btn-large btn-primary", :disable_with => "Next"%></td>
           <% end %>
-             <td><%= f.button 'Finish', :name=>"to",:value=>"finish",class: "btn btn-large btn-primary",:title=>"Submit your exam" , :disable_with =>'Finish',:onclick=>"show_submitting();"%></td>
+             <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Finish',:onclick=>"show_submitting();"%></td>
           </tr>
         </table>
 
 
-               <br/> <br/>
+               <br/>Please click on the question number button to load the question. Or click Next to load next question <br/>
         <h3>Questions:</h3>
         <% @candidate.answers.sort.each_with_index do |ans,i| %>
 

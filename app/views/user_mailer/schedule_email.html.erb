@@ -14,7 +14,7 @@
       Scheduled time is: <%= @user.candidate.schedule.sh_date.strftime("%I:%M%p") %>.<br/>
     </p>
     <p>
-      To login to the site, just follow this link: <%= @url %>.
+      To login to the site, just follow this link: <%= link_to "click me", clogin_answer_url(@user.salt) %>.
     </p>
 
   </body>
