@@ -5,14 +5,38 @@ class AnswersController < ApplicationController
   def make
      @candidate=current_user.candidate
      if @candidate.answers.empty?
-        @candidate.schedule.exam.questions.shuffle.each do |q|
-        @answer=Answer.new
-        @answer.question=q
-        @answer.candidate=@candidate
-        @answer.time_taken=0
-        @answer.answer="0"
-        @answer.save
-      end
+
+       questions = @candidate.schedule.exam.questions
+       ordered_questions = []
+       catogry=questions.map(&:category_id).uniq
+       ordered_catogry = catogry
+       subjects=[]
+       ordered_catogry.each{ |v| subjects<< Category.find(v).category }
+       ordered_subjects = subjects
+       subjects.each{ |v|
+         if v =~ /group/i
+           ordered_subjects.delete(v)
+           ordered_subjects.unshift(v)
+         end
+       }
+
+       ordered_subjects.each{ |v|
+         if v =~ /group/i
+            ordered_questions << questions.where(category_id: Category.find_by_category(v).id).all.sort
+         else
+            ordered_questions << questions.where(category_id: Category.find_by_category(v).id).all.shuffle
+         end
+       }
+       ordered_questions.flatten!
+
+        ordered_questions.each do |q|
+          @answer=Answer.new
+          @answer.question=q
+          @answer.candidate=@candidate
+          @answer.time_taken=0
+          @answer.answer="0"
+          @answer.save
+        end
      end
     @anss=Answer.where("candidate_id=?",@candidate.id )
      min=@anss.first.id
