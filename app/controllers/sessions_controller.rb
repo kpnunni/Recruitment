@@ -116,8 +116,8 @@ class SessionsController < ApplicationController
   def registration
     if params[:can]=="Register"
        @candidate=Candidate.new(params[:candidate])
-       @candidate.user.login_password="12345"
-       @candidate.user.login_password_confirmation="12345"
+       @candidate.user.login_password="suyati123"
+       @candidate.user.login_password_confirmation="suyati123"
        @candidate.user.encrypt_password
        @candidate.user.roles.push(Role.find_by_role_name('Candidate'))
       if @candidate.save
