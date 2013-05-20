@@ -655,7 +655,7 @@ table.curvedEdges th{
    background-color: #cbcab9;
  }
  table.index_table th{
-   background-color: #580eac;
+   background-color: #21a164;
    border-radius: 5px;
    color: white;
 
@@ -727,7 +727,19 @@ a:visited { color: #006700}  /* visited links   */
 a:hover   { color: #00c }  /* user hovers     */
 a:active  { color: #ccc }  /* active links    */
 
+.pretty th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
 
+.pretty th .asc {
+  background-image: url(/images/arrow-up.gif);
+}
+
+.pretty th .desc {
+  background-image: url(/assets/arrow-down.gif);
+}
 
 
 

@@ -1,6 +1,5 @@
 class RecruitmentTest < ActiveRecord::Base
    attr_accessible :feedback ,:candidate_id, :is_completed,:completed_on,:right_answers,:no_of_question_attended,:mark_percentage,:is_passed,:comments
-   attr_accessor :to_sent
    belongs_to :candidate
 
    def calc_right_answers(user)
@@ -80,11 +79,11 @@ class RecruitmentTest < ActiveRecord::Base
 
   end
 
-  def self.filtered search
+  def self.filtered(search,sort)
       if search.nil?
-        return @test=RecruitmentTest.all(:order => 'created_at DESC')
+        return @test=RecruitmentTest.order(sort)
       end
-       name=range=min=max=RecruitmentTest.all(:order => 'created_at DESC')
+       name=range=min=max=RecruitmentTest.order(sort)
        name.select! {|test| test.candidate.name.include?(search["name"]) }             if  search["by"]!=""
       min.select! {|test| test.mark_percentage>=search["min"].to_f }             if  search["min"]!=""
       max.select! {|test| test.mark_percentage<=search["max"].to_f }             if  search["max"]!=""
