@@ -1,7 +1,7 @@
 
    <div id="question_answer" style="min-height: 300px;">
 
-    <%= form_for  @answer do |f| %>
+    <%= form_for  @answer, html: { onsubmit: "set_flag();"} do |f| %>
 
 
        <table align="right"  width="100%"  >
@@ -77,7 +77,7 @@
         <table cellpadding="5" align="center"   >
           <tr>
           <% if current_user.candidate.answer_ids.include?(@answer.id+1)   %>
-             <td><%= f.button  "Next", :name=>"to",:value=>@answer.id+1, :disable_with => "Next",class: "btn btn-large btn-primary", :disable_with => "Next"%></td>
+             <td><%= f.button  "Next", :name=>"to",:value=>@answer.id+1, :disable_with => "Next",class: "btn btn-large btn-primary", :disable_with => "Next", confirm: "as"%></td>
           <% end %>
              <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Finish',:onclick=>"show_submitting();"%></td>
           </tr>
@@ -97,7 +97,8 @@
                 <% else %>
                     <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 %>
                 <% end %>
-
+             <% else %>
+                 <%= f.button  i+1, disabled: true  %>
             <% end %>
         <% end %>
 
@@ -106,94 +107,81 @@
        <br/> Please call: 0484 4242800 for immediate assistance <br/>
     <% end %>
 
-
-
 <script type="text/javascript" >
-    window.onload = function()
-    {
+     window.onload = function()
+     {
          startCountdown(<%=cnt=@count%>)
-    }
-</script >
+     }
+
+     var flag=0;
+     function set_flag(){
+         flag = 1;
+     }
+     function startCountdown(g_iCount)
+     {
+     if((g_iCount) > 0)
+     {
+     var str="green";
+     if (g_iCount<20&&g_iCount>=10)
+     {
+     str="orange"
+     }
+     else if (g_iCount<10)
+     {
+     str="red"
+     }
 
 
+     document.getElementById('count').innerHTML=g_iCount.toString().fontcolor(str);
 
-<script type="text/javascript">
-    function startCountdown(g_iCount)
-    {
-        if((g_iCount) > 0)
-        {
-            var str="green";
-            if (g_iCount<20&&g_iCount>=10)
-            {
-                str="orange"
-            }
-            else if (g_iCount<10)
-            {
-                str="red"
-            }
+     g_iCount = g_iCount - 1;
+     if (flag == 0){
+     setTimeout(function() {startCountdown(g_iCount); }, 1000);
+     }
+     else{
+     return;
+     }
+     }
+     else
+     {
+     document.getElementById('procedure_submit_button').click();
+     }
+     }
 
-
-            document.getElementById('count').innerHTML=g_iCount.toString().fontcolor(str);
-
-            g_iCount = g_iCount - 1;
-
-            setTimeout(function() {
-
-                startCountdown(g_iCount);
-
-            }, 1000);
-        }
-        else
-        {
-            document.getElementById('procedure_submit_button').click();
-        }
-    }
-</script>
+     var message="Function Disabled!";
 
 
+     function clickIE4(){
+     if (event.button!=0){
 
-<script type="text/javascript">
-    <!--
+     return false;
+     }
+     }
 
+     function clickNS4(e){
+     if (document.layers||document.getElementById&&!document.all){
+     if (e.which==2||e.which==3){
 
-    var message="Function Disabled!";
+     return false;
+     }
+     }
+     }
 
+     if (document.layers){
+     document.captureEvents(Event.MOUSEDOWN);
+     document.onmousedown=clickNS4;
+     }
+     else if (document.all&&!document.getElementById){
+     document.onmousedown=clickIE4;
+     }
 
-    function clickIE4(){
-        if (event.button!=0){
+     document.oncontextmenu=new Function("return false")
 
-            return false;
-        }
-    }
+     document.onkeydown = function(e){
+     if(e.keyCode != 0)
+     {
+     return false;
+     }
 
-    function clickNS4(e){
-        if (document.layers||document.getElementById&&!document.all){
-            if (e.which==2||e.which==3){
-
-                return false;
-            }
-        }
-    }
-
-    if (document.layers){
-        document.captureEvents(Event.MOUSEDOWN);
-        document.onmousedown=clickNS4;
-    }
-    else if (document.all&&!document.getElementById){
-        document.onmousedown=clickIE4;
-    }
-
-    document.oncontextmenu=new Function("return false")
-
-    // -->
-</script>
-
-<script language=javascript>
-document.onkeydown = function(e){
-if(e.keyCode != 0)
-        {
-            return false;
-        }
-
-}
+     }
 </script>

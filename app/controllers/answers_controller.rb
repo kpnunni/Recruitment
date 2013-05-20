@@ -76,7 +76,7 @@ class AnswersController < ApplicationController
       if @answer.no_more
        params[:to]="finish"
       else
-       params[:to]=@answer.get_ans
+       params[:to]=@answer.get_next_ans(params[:id].to_i+1)
       end
     end
     if  params[:to]=="finish"||params[:to].nil?
@@ -85,7 +85,7 @@ class AnswersController < ApplicationController
 
       redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
     else
-      @nxt=params[:to].to_i
+      @nxt=@answer.get_next_ans(params[:to].to_i)
       redirect_to answer_path(@nxt)
     end
 
@@ -125,7 +125,7 @@ class AnswersController < ApplicationController
   end
 
   def congrats
-     @candidate=User.find(params[:id]).candidate
+     @candidate=Candidate.find(params[:id])
      #if @candidate.recruitment_test.is_passed=="Passed"
        #UserMailer.result_email(@candidate.user).deliver
        #  UserMailer.delay.result_email(@candidate.user)
@@ -138,7 +138,7 @@ class AnswersController < ApplicationController
        #    @users.each {|admin| UserMailer.delay.exam_complete_email(admin,current_user.candidate) }
      #end
 
-     sign_out
+     #sign_out
   end
   def blank
   end
@@ -157,6 +157,8 @@ class AnswersController < ApplicationController
 
   def feed_back
       @recruitment_test = RecruitmentTest.find(params[:id])
+      @candidate = current_user.candidate.id
+      sign_out
   end
 
 end

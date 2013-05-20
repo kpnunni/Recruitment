@@ -54,6 +54,19 @@ class Answer < ActiveRecord::Base
     return nil
   end
 
+  def get_next_ans(current_id)
+    self.candidate.answers.where("id >= ?",current_id ).sort.each do |ans|
+      if (ans.question.allowed_time-ans.time_taken)>3
+        return ans.id
+      end
+    end
+    self.candidate.answers.where("id < ?",current_id ).sort.each do |ans|
+      if (ans.question.allowed_time-ans.time_taken)>3
+        return ans.id
+      end
+    end
+    return self.candidate.answers.first.id
+  end
    def save_mark(current_user)
      @recruitment_test=RecruitmentTest.new
      @recruitment_test.candidate=current_user.candidate

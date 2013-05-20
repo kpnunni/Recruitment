@@ -58,3 +58,8 @@ end
 
 # To use debugger
 # gem 'debugger'
+group :development, :test do
+    gem 'railroady'
+end
+gem "jquery-rails"
+
