@@ -42,7 +42,11 @@ Test::Application.routes.draw do
     end
   end
 
-  resources :recruitment_tests
+  resources :recruitment_tests do
+    collection do
+      post :sent_mail
+    end
+  end
   resources :instructions
   resources :answers do
     collection do

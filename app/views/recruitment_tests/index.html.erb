@@ -31,10 +31,11 @@
 
 
 
-
+<%= form_tag("/recruitment_tests/sent_mail", :method => "post") do  %>
 
     <table  class="index_table" >
       <tr>
+        <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all" /></th>
         <th width="20%">Candidate Name</th>
         <th width="15%">Exam</th>
         <th width="7%" >Total questions</th>
@@ -47,6 +48,7 @@
 
       <% @recruitment_tests.each do |recruitment_test| %>
           <tr>
+            <td><%=check_box_tag "email[sent_ids][]",   recruitment_test.id %></td>
             <td class="lft" ><%= recruitment_test.candidate.name %></td>
             <td class="lft" ><%= recruitment_test.candidate.schedule.exam.name %></td>
             <td><%= recruitment_test.candidate.schedule.exam.questions.count%></td>
@@ -65,4 +67,19 @@
           </tr>
       <% end %>
     </table>
+    <br /> <%= button_to "Sent selected result to admin's email",sent_mail_recruitment_tests_path(:id=>33), data: { confirm: 'Are you sure?' } , class:"btn-success" %>
+<% end %>
 <h4><%= will_paginate @recruitment_tests ,:container=>false %></h4>
+
+<script type="text/javascript" >
+
+    function toggle1(source) {
+        var checkboxes = document.getElementsByTagName("input");
+
+        for(var i in checkboxes)
+            if(document.getElementsByTagName("input")[i].type == "checkbox")
+                document.getElementsByTagName("input")[i].checked = source.checked;
+    }
+</script>
+
+

@@ -1,6 +1,6 @@
 class RecruitmentTest < ActiveRecord::Base
    attr_accessible :feedback ,:candidate_id, :is_completed,:completed_on,:right_answers,:no_of_question_attended,:mark_percentage,:is_passed,:comments
-
+   attr_accessor :to_sent
    belongs_to :candidate
 
    def calc_right_answers(user)

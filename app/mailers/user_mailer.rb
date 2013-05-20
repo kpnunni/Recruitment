@@ -43,8 +43,8 @@ class UserMailer < ActionMailer::Base
     @url = "recruitment-suyati.herokuapp.com"
     mail(:to => user.user_email, :subject => "Result for validation")
   end
-  def admin_result_email(user,can)
-    @candidate = can
+  def admin_result_email(user,result)
+    @results = result
     @user = user
     mail(:to => user.user_email, :subject => "Test cleared")
   end

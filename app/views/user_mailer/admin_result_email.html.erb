@@ -4,11 +4,66 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h2>Candidate <%= @candidate.name %> cleared the recruitment test.  </h2>
+    <h2>Test Results </h2>
 
     <p>
-      <b>Candidate email id:<%=@candidate.user.user_email  %></b>
+      <table style="width: 100%; border: 2px;" border="2px">
+      <tr>
+        <th width="20%">Candidate</th>
+        <th width="15%">Exam</th>
+        <th width="7%" >Total questions</th>
+        <th width="7%" >Attended</th>
+        <th width="6%">Right answers</th>
+        <th width="10%">Mark(%)</th>
+      </tr>
+
+      <% @results.each do |result| %>
+          <tr>
+            <td class="lft" ><%= result.candidate.name %></td>
+            <td class="lft" ><%= result.candidate.schedule.exam.name %></td>
+            <td><%= result.candidate.schedule.exam.questions.count%></td>
+            <td><%= result.no_of_question_attended%></td>
+            <td  ><%= result.right_answers%></td>
+            <td ><%= number_with_precision(result.mark_percentage, :precision => 2)%></td>
+          </tr>
+      <% end %>
+    </table>
     </p>
+
+    <h2>Category wise cut off:</h2>
+    <br/>
+    <p>
+       <% @results.each do |result| %>
+        <h3>Candidate: <%= result.candidate.name  %></h3>
+        <p>
+         <table style="width: 100%; border: 2px;" border="2px" >
+          <tr>
+            <th>Category</th>
+            <th>no of questions</th>
+            <th>Right answers</th>
+            <th>Wrong answers</th>
+            <th>Mark</th>
+            <th>Mark(%)</th>
+          </tr>
+             <% Category.all.each do |cat| %>
+             <% if result.candidate.schedule.exam.questions.where("category_id=?",cat.id).count!=0 %>
+    
+              <tr>
+                <td><%=cat.category    %></td>
+                <td><%= result.candidate.schedule.exam.questions.where("category_id=?",cat.id).count %></td>
+                <td><%= result.each_right_answers(cat) %></td>
+                <td><%= result.each_wrong_answers(cat) %></td>
+                <td><%= result.calc_mark(cat)  %></td>
+                <td><%= number_with_precision(result.calc_mark_percentage(cat),:precision=>2)  %></td>
+              </tr>
+              <% end %>
+              <% end %>
+        </table>
+        <% end %>
+        </p>
+    </p>
+
+
 
   </body>
 </html>

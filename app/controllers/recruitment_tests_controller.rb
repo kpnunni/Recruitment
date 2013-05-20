@@ -4,7 +4,7 @@ class RecruitmentTestsController < ApplicationController
       skip_before_filter :authenticate,:only => :update
   def index
     @recruitment_tests = RecruitmentTest.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
-
+    @ids=Array.new(15)
     respond_to do |format|
       format.html 
       format.json { render json: @recruitment_tests }
@@ -56,6 +56,14 @@ class RecruitmentTestsController < ApplicationController
       format.html { redirect_to recruitment_tests_url }
       format.json { head :no_content }
     end
+  end
+  def sent_mail
+     ids = params[:email][:sent_ids].map(&:to_i)
+     @results = RecruitmentTest.where("id in (?)", ids ).all
+     @users=User.joins(:roles).where( roles: { role_name: "Get Selection Email"})
+     @users.each {|admin| UserMailer.admin_result_email(admin,@results).deliver  }
+     redirect_to recruitment_tests_path , notice: 'details sent to emails.'
+    #render text: @results
   end
   def chk_user
     if !(my_roles.include?('Validate Result')||my_roles.include?('View Result'))
