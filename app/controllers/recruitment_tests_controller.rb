@@ -14,6 +14,7 @@ class RecruitmentTestsController < ApplicationController
 
   def show
     @recruitment_test = RecruitmentTest.find(params[:id])
+    @extra = find_extra
     respond_to do |format|
 
       format.html 
@@ -98,6 +99,11 @@ private
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
-
+  def find_extra
+    @candidate = @recruitment_test.candidate
+    questions = @candidate.schedule.exam.question_ids
+    @answers =  @candidate.answers.where("question_id in (?)",questions)
+    @extra_answers = @candidate.answers.where("question_id not in (?)",questions)
+  end
 
 end

@@ -6,7 +6,7 @@
 
       <table align="right"  width="100%"  >
         <tr>
-          <td class="lft" width="75%"  >
+          <td class="lft" width="65%"  >
             Question Category:<%= @answer.question.category.category %>
           </td>
           <td>
@@ -77,7 +77,10 @@
       <table cellpadding="5" align="center"   >
         <tr>
           <% if current_user.candidate.answer_ids.include?(@answer.id+1)   %>
-              <td><%= f.button  "Next", :name=>"to",:value=>@answer.id+1, :disable_with => "Next",class: "btn btn-large btn-primary", :disable_with => "Next", confirm: "as"%></td>
+              <td><%= f.button  "Next", :name=>"to",:value=>@answer.id+1, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
+          <% end %>
+          <% if @load_more  %>
+              <td><%= f.button  "More Question", :name=>"to",:value=>"more", :disable_with => "More",class: "btn btn-large btn-primary" %></td>
           <% end %>
           <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Finish',:onclick=>"show_submitting();"%></td>
         </tr>
@@ -87,9 +90,6 @@
       <br/>Please click on the question number button to load the question. Or click Next to load next question <br/>
       <h3>Questions:</h3>
       <% @candidate.answers.sort.each_with_index do |ans,i| %>
-
-          <% if (ans.question.allowed_time-ans.time_taken)>3 %>
-
               <% if ans.answer!="0"&&ans.id!=@answer.id  %>
                   <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>"background-color: #90ee90;"  %>
               <% elsif ans.id==@answer.id  %>
@@ -97,9 +97,6 @@
               <% else %>
                   <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 %>
               <% end %>
-          <% else %>
-              <%= f.button  i+1, disabled: true  %>
-          <% end %>
       <% end %>
 
 
@@ -131,8 +128,8 @@
                   str="red"
               }
 
-
-              document.getElementById('count').innerHTML=g_iCount.toString().fontcolor(str);
+              var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec"
+              document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
 
               g_iCount = g_iCount - 1;
               if (flag == 0){

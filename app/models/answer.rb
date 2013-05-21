@@ -67,6 +67,16 @@ class Answer < ActiveRecord::Base
     end
     return self.candidate.answers.first.id
   end
+
+  def get_next_ans_in_single_mode(current_id)
+    ans = self.candidate.answers.where("id >= ?",current_id )
+    if ans.sort.first
+      ans.sort.first
+    else
+      self.candidate.answers.first.id
+    end
+  end
+
    def save_mark(current_user)
      @recruitment_test=RecruitmentTest.new
      @recruitment_test.candidate=current_user.candidate

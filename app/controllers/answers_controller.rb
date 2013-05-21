@@ -54,12 +54,17 @@ class AnswersController < ApplicationController
      @answer = Answer.find(params[:id])
      @answer.q_no=current_user.candidate.answers.where("id <= ?",@answer.id ).count
      @answer.dec_time =Time.now
-     @count=@answer.question.allowed_time-@answer.time_taken
      @c_option=Array.new(@answer.question.options.count)
      @tick=Array.new(@answer.question.options.count)
      @tick.each_with_index do |val,i|
         @tick[i]= @answer.answer[i]=="1"
      end
+    if @each_mode.status == "on"
+      @count=@answer.question.allowed_time-@answer.time_taken
+    else
+      @count = calculate_remaining_time
+      @load_more = answered_all && more_questions_available
+    end
   end
 
   def update
@@ -183,31 +188,53 @@ class AnswersController < ApplicationController
       params[:to]="finish"
     end
 
-    if params[:to]=="timer"
-      if @answer.no_more
-        params[:to]="finish"
-      else
-        params[:to]=@answer.get_next_ans(params[:id].to_i+1)
-      end
-    end
-    if  params[:to]=="finish"||params[:to].nil?
+    if  params[:to]=="finish"||params[:to].nil?||params[:to]=="timer"
       @answer.save_mark(current_user)
       @answer.make_result(current_user)
 
       redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
+    elsif params[:to] == "more"
+      @nxt=get_more_question
+      redirect_to answer_path(@nxt)
     else
-      @nxt=@answer.get_next_ans(params[:to].to_i)
+      @nxt=@answer.get_next_ans_in_single_mode(params[:to].to_i)
       redirect_to answer_path(@nxt)
     end
   end
 
 
+  def calculate_remaining_time
+    total = @candidate.schedule.exam.total_time
+    used = @candidate.answers.collect {|v| v.time_taken }.sum
+    remaining = total - used
+  end
 
+  def answered_all
+     @candidate.answers.where(answer: '0').present?  ?  false : true
+  end
 
+  def more_questions_available
+       exam_question_ids = @candidate.answers.map(&:question_id)
+       exam_questions = Question.find(exam_question_ids)
+       catogry=exam_questions.map(&:category_id).uniq
+       questions = Question.where("category_id in (?)",catogry)
+       questions = questions - exam_questions
+       questions.present? ? true : false
+  end
 
-
-
-
-
-
+  def get_more_question
+       exam_question_ids = @candidate.answers.map(&:question_id)
+       exam_questions = Question.find(exam_question_ids)
+       catogry=exam_questions.map(&:category_id).uniq
+       questions = Question.where("category_id in (?)",catogry)
+       questions = questions - exam_questions
+       next_question = questions.shuffle.first
+          @answer=Answer.new
+          @answer.question=next_question
+          @answer.candidate=@candidate
+          @answer.time_taken=0
+          @answer.answer="0"
+          @answer.save
+       @answer.id
+  end
 end

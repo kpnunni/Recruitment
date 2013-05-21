@@ -31,7 +31,7 @@ class RecruitmentTest < ActiveRecord::Base
    def each_right_answers(cat)
       count=0
       candidate=self.candidate
-      candidate.answers.where(question_id: Question.where("category_id=?",cat.id).pluck(:id)).each do |ans|
+      candidate.answers.where(question_id: candidate.schedule.exam.questions.where("category_id=?",cat.id).map(&:id)).each do |ans|
          if ans.answer==ans.question.answer_id
             count+=1
          end
@@ -41,7 +41,7 @@ class RecruitmentTest < ActiveRecord::Base
       def each_wrong_answers(cat)
       count=0
       candidate=self.candidate
-      candidate.answers.where(question_id: Question.where("category_id=?",cat.id).pluck(:id)).each do |ans|
+      candidate.answers.where(question_id: candidate.schedule.exam.questions.where("category_id=?",cat.id).map(&:id)).each do |ans|
          if ans.answer!=ans.question.answer_id&&ans.answer!="0"
             count+=1
          end

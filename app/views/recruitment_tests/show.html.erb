@@ -39,7 +39,28 @@
           <% end %>
           <% end %>
     </table>
-
+                          <br/>
+    <h3>Additional answers:</h3>
+    <table   class="index_table"      >
+      <tr>
+        <th>Category</th>
+        <th>Answer</th>
+        <th>Right answers</th>
+        <th>Right?</th>
+        <th>Complexity</th>
+        <th>Time Taken(sec)</th>
+      </tr>
+      <% @extra_answers.each do |ans| %>
+              <tr>
+                <td><%=ans.question.category.category   %></td>
+                <td><%= ans.answer %></td>
+                <td><%= ans.question.answer_id %></td>
+                <td><%= ans.answer == ans.question.answer_id ? "Yes" : "No" %></td>
+                <td><%= ans.question.complexity.complexity %></td>
+                <td><%= ans.time_taken %></td>
+              </tr>
+      <% end %>
+    </table>
 
     <h3 align="left" >Answer Paper:</h3> <br/>
 
