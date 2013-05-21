@@ -49,7 +49,8 @@ class AnswersController < ApplicationController
 
 
   def show
-     @candidate=current_user.candidate
+    @each_mode=Setting.find_by_name('time_limit_for_each_question')
+    @candidate=current_user.candidate
      @answer = Answer.find(params[:id])
      @answer.q_no=current_user.candidate.answers.where("id <= ?",@answer.id ).count
      @answer.dec_time =Time.now
@@ -62,33 +63,12 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @candidate=current_user.candidate
-    @answer = Answer.find(params[:id])
-    @answer.c_option=params[:answer][:c_option]
-    @answer.time_taken=((Time.now.to_f-Time.parse(params[:answer][:dec_time]).to_f).to_i)+@answer.time_taken
-    @answer.answer= @answer.set_answer
-
-    if !@answer.update_attributes(params[:answer])
-       params[:to]="finish"
-    end
-
-    if params[:to]=="timer"
-      if @answer.no_more
-       params[:to]="finish"
-      else
-       params[:to]=@answer.get_next_ans(params[:id].to_i+1)
-      end
-    end
-    if  params[:to]=="finish"||params[:to].nil?
-      @answer.save_mark(current_user)
-      @answer.make_result(current_user)
-
-      redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
+    @each_mode=Setting.find_by_name('time_limit_for_each_question')
+    if @each_mode.status == "on"
+       each_mode_answers
     else
-      @nxt=@answer.get_next_ans(params[:to].to_i)
-      redirect_to answer_path(@nxt)
+       single_mode_answers
     end
-
   end
 
   def candidate_detail
@@ -115,6 +95,7 @@ class AnswersController < ApplicationController
       @exam=@schedule.exam
       @ngtv=Setting.find_by_name('negative_mark').status.eql?("on")
       @diff=(@schedule.sh_date.to_i-Time.now.to_i)/60
+      @untill=Setting.find_by_name('canot_start_exam')
   end
 
   def chk_user
@@ -160,5 +141,73 @@ class AnswersController < ApplicationController
       @candidate = current_user.candidate.id
       sign_out
   end
+
+
+  def each_mode_answers
+    @candidate=current_user.candidate
+    @answer = Answer.find(params[:id])
+    @answer.c_option=params[:answer][:c_option]
+    @answer.time_taken=((Time.now.to_f-Time.parse(params[:answer][:dec_time]).to_f).to_i)+@answer.time_taken
+    @answer.answer= @answer.set_answer
+
+    if !@answer.update_attributes(params[:answer])
+      params[:to]="finish"
+    end
+
+    if params[:to]=="timer"
+      if @answer.no_more
+        params[:to]="finish"
+      else
+        params[:to]=@answer.get_next_ans(params[:id].to_i+1)
+      end
+    end
+    if  params[:to]=="finish"||params[:to].nil?
+      @answer.save_mark(current_user)
+      @answer.make_result(current_user)
+
+      redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
+    else
+      @nxt=@answer.get_next_ans(params[:to].to_i)
+      redirect_to answer_path(@nxt)
+    end
+  end
+
+  def single_mode_answers
+    @candidate=current_user.candidate
+    @answer = Answer.find(params[:id])
+    @answer.c_option=params[:answer][:c_option]
+    @answer.time_taken=((Time.now.to_f-Time.parse(params[:answer][:dec_time]).to_f).to_i)+@answer.time_taken
+    @answer.answer= @answer.set_answer
+
+    if !@answer.update_attributes(params[:answer])
+      params[:to]="finish"
+    end
+
+    if params[:to]=="timer"
+      if @answer.no_more
+        params[:to]="finish"
+      else
+        params[:to]=@answer.get_next_ans(params[:id].to_i+1)
+      end
+    end
+    if  params[:to]=="finish"||params[:to].nil?
+      @answer.save_mark(current_user)
+      @answer.make_result(current_user)
+
+      redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
+    else
+      @nxt=@answer.get_next_ans(params[:to].to_i)
+      redirect_to answer_path(@nxt)
+    end
+  end
+
+
+
+
+
+
+
+
+
 
 end

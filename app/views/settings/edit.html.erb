@@ -3,6 +3,16 @@
       <h1>Settings</h1>
       <%= form_for :setting , :url => '/settings/update',:method=>'PUT' do |f| %>
 
+
+          Can start exam before: <%=  number_field_tag "from" ,@from.status,  class: "text_box" %> (in minutes)  **not using
+          <br />
+
+          Cannot start exam after:<%= number_field_tag "untill", @untill.status,  class: "text_box"   %> (in minutes)
+          <br />
+
+          <%= check_box_tag :each_mode ,1,@each_mode.status.eql?("on")%>Time Limit for each Question?
+          <br />
+
           <%= check_box_tag :negative ,1,@negative_mark.status.eql?("on")%>Negative mark?
           <br />
 
