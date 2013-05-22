@@ -4,7 +4,7 @@
   <%= form_for @schedule, :html => { :id=>"sh"+(candidate.id/15.0).to_s},:url => '/candidates/schedule_create' ,:method=>"post" do |f| %>
       <br/>
       Exam:
-      <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]},{},:id=>"sh"+(candidate.id/15.0).to_s+"exam_id" %>
+      <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]},{},:id=>"sh"+(candidate.id/15.0).to_s+"exam_id",  style: "width: 300px;" %>
       <br/> <br/>
       <%= f.label :date_and_time %>
 

@@ -9,7 +9,7 @@
 
 
         <%= f.label :exam%>
-        <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]}%><br/>
+        <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]},{},  style: "width: 300px;"%><br/>
 
 
 

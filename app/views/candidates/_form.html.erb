@@ -115,5 +115,6 @@
     </div>
            <br /> <br />
         <%= f.submit "Register" ,class: "btn btn-large btn-primary" , :disable_with=>"Registering.."%>
-    <% end %>
-         <%= link_to image_tag('back.png'),candidates_path  %>
+        <%= link_to "Cancel", candidates_path  ,class: "btn btn-large btn-warning"%>
+
+<% end %>

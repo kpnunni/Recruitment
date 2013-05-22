@@ -29,7 +29,7 @@
 
 
 
-        <td><%= f1.select("category_id", @categorys.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id}) %></td>
+        <td><%= f1.select("category_id", @categorys.collect {|s| [s.category, s.id ] }, {:selected =>@question.category_id},  style: "width: 300px;") %></td>
         <td><%= link_to 'new category?', '#',:remote=>true ,:onclick=>"jQuery('#new_category1').dialog({ modal: true, title: 'Adding new category',width: 260 } );" %> </td>
 
           </tr>
