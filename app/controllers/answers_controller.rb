@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
-  before_filter :chk_user, :except => [:congrats,:clogin,:feed_back  ]
-  skip_before_filter :authenticate, :only => [:congrats ,:clogin,:feed_back  ]
+  before_filter :chk_user, :except => [:congrats,:clogin,:feed_back, :check_popup  ]
+  skip_before_filter :authenticate, :only => [:congrats ,:clogin,:feed_back, :check_popup  ]
 
   def make
      @candidate=current_user.candidate
@@ -82,6 +82,9 @@ class AnswersController < ApplicationController
   def candidate_detail
       @candidate=current_user.candidate
 
+  end
+  def check_popup
+    render layout: false
   end
   def candidate_update
       @candidate=Candidate.find(params[:id])
