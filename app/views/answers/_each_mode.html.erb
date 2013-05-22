@@ -76,8 +76,8 @@
 
       <table cellpadding="5" align="center"   >
         <tr>
-          <% if current_user.candidate.answer_ids.include?(@answer.id+1)   %>
-              <td><%= f.button  "Next", :name=>"to",:value=>@answer.id+1, :disable_with => "Next",class: "btn btn-large btn-primary", :disable_with => "Next", confirm: "as"%></td>
+          <% if @next %>
+              <td><%= f.button  "Next", :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary", :disable_with => "Next", confirm: "as"%></td>
           <% end %>
           <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Finish',:onclick=>"show_submitting();"%></td>
         </tr>

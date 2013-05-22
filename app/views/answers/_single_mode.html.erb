@@ -76,11 +76,14 @@
 
       <table cellpadding="5" align="center"   >
         <tr>
-          <% if current_user.candidate.answer_ids.include?(@answer.id+1)   %>
-              <td><%= f.button  "Next", :name=>"to",:value=>@answer.id+1, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
+          <% if @back %>
+              <td><%= f.button  "<<Back", :name=>"to",:value=>@back.id, :disable_with => "Back",class: "btn btn-large btn-primary" %></td>
+          <% end %>
+          <% if @next %>
+              <td><%= f.button  "Next>>", :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
           <% end %>
           <% if @load_more  %>
-              <td><%= f.button  "More Question", :name=>"to",:value=>"more", :disable_with => "More",class: "btn btn-large btn-primary" %></td>
+              <td><%= f.button  "More Question", :name=>"to",:value=>"more", :disable_with => "More",class: "btn btn-large btn-success" %></td>
           <% end %>
           <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Finish',:onclick=>"show_submitting();"%></td>
         </tr>

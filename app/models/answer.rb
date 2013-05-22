@@ -70,7 +70,7 @@ class Answer < ActiveRecord::Base
 
   def get_next_ans_in_single_mode(current_id)
     ans = self.candidate.answers.where("id >= ?",current_id )
-    if ans.sort.first
+    if ans
       ans.sort.first
     else
       self.candidate.answers.first.id

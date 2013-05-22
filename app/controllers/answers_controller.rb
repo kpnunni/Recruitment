@@ -61,9 +61,12 @@ class AnswersController < ApplicationController
      end
     if @each_mode.status == "on"
       @count=@answer.question.allowed_time-@answer.time_taken
+      @next = next_present_answer(@answer.id)
     else
       @count = calculate_remaining_time
       @load_more = answered_all && more_questions_available
+      @next = next_answer(@answer.id)
+      @back = previous_answer(@answer.id)
     end
   end
 
@@ -82,7 +85,7 @@ class AnswersController < ApplicationController
   end
   def candidate_update
       @candidate=Candidate.find(params[:id])
-      if params[:candidate][:address]==""||params[:candidate][:phone1]==""||params[:candidate][:technology]==""||params[:candidate][:skills]==""
+      if params[:candidate][:address]==""||params[:candidate][:phone1]==""
         flash.now[:error]="You should fill all mandatory fields"
         render '/answers/candidate_detail'
         return
@@ -237,4 +240,32 @@ class AnswersController < ApplicationController
           @answer.save
        @answer.id
   end
+
+  def next_answer(current_id)
+    ans = @candidate.answers.where("id > ?",current_id )
+    if ans
+      ans.sort.first
+    else
+      nil
+    end
+  end
+
+  def previous_answer(current_id)
+    ans = @candidate.answers.where("id < ?",current_id )
+    if ans
+      ans.sort.last
+    else
+      nil
+    end
+  end
+
+  def next_present_answer(current_id)
+    @candidate.answers.where("id > ?",current_id ).sort.each do |ans|
+      if (ans.question.allowed_time-ans.time_taken)>3
+        return ans.id
+      end
+    end
+    return  nil
+  end
+
 end
