@@ -9,7 +9,7 @@
 
 
 
-    <%= form_for (@recruitment_test) do |f|%>
+
 
 
 
@@ -39,68 +39,32 @@
           <% end %>
           <% end %>
     </table>
-                          <br/>
-    <h3>Additional answers:</h3>
-    <table   class="index_table"      >
-      <tr>
-        <th>Category</th>
-        <th>Answer</th>
-        <th>Right answers</th>
-        <th>Right?</th>
-        <th>Complexity</th>
-        <th>Time Taken(sec)</th>
-      </tr>
-      <% @extra_answers.each do |ans| %>
-              <tr>
-                <td><%=ans.question.category.category   %></td>
-                <td><%= ans.answer %></td>
-                <td><%= ans.question.answer_id %></td>
-                <td><%= ans.answer == ans.question.answer_id ? "Yes" : "No" %></td>
-                <td><%= ans.question.complexity.complexity %></td>
-                <td><%= ans.time_taken %></td>
-              </tr>
-      <% end %>
-    </table>
 
-    <h3 align="left" >Answer Paper:</h3> <br/>
-
-        <table  class="index_table"      >
+    <% if @extra_answers.present? %>
+                              <br/>
+        <h3>Additional answers:</h3>
+        <table   class="index_table"      >
           <tr>
-            <th width="60%" >Question</th>
-            <th width="15%" >Candidate's Answer</th>
-            <th width="10%" >Right answer</th>
-            <th width="5%" >Time bonus</th>
-            <th width="5%" >Category</th>
-            <th width="5%" >Complexity</th>
+            <th>Category</th>
+            <th>Answer</th>
+            <th>Right answers</th>
+            <th>Right?</th>
+            <th>Complexity</th>
+            <th>Time Taken(sec)</th>
           </tr>
-          <% @recruitment_test.candidate.answers.each do |ans| %>
-                      <tr>
-                        <td class="lft" ><%=ans.question.question   %></td>
-                        <% i=0 %>
-                        <td><%ans.question.options.each do |op|  %>
-                                <% if ans.answer[i]=="1" %>
-                                    <%='|'+op.option+'|'  %>
-                                <% end %>
-                              <% i+=1 %>
-                             <% end %>
-                        </td>
-
-                        <%#=ans.question.answer_id  %>
-                        <td><%ans.question.options.each do |op|  %>
-                              <% if op.is_right  %>
-                              <%='|'+op.option+'|'  %>
-                              <% end %>
-                              <% end %>
-                        </td>
-                        <td><%=(a=ans.question.allowed_time-ans.time_taken)>0?a:0 %></td>
-                        <td><%=ans.question.category.category  %></td>
-                         <td><%=ans.question.complexity.complexity  %></td>
-
-                      </tr>
-                  <% end %>
-
-
+          <% @extra_answers.each do |ans| %>
+                  <tr>
+                    <td><%=ans.question.category.category   %></td>
+                    <td><%= ans.answer %></td>
+                    <td><%= ans.question.answer_id %></td>
+                    <td><%= ans.answer == ans.question.answer_id ? "Yes" : "No" %></td>
+                    <td><%= ans.question.complexity.complexity %></td>
+                    <td><%= ans.time_taken %></td>
+                  </tr>
+          <% end %>
         </table>
+    <% end %>
+
           <br/>
         <h3>Feed Back:</h3>
 
@@ -108,13 +72,55 @@
 
 
          <br/>
-        <% if @recruitment_test.is_passed=="Pending" %>
-        <b>Decision: <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
-        <%=f.label :Comment  %></b>
-        <%=f.text_area  :comments ,:rows=>"3" ,:style=>"width: 100%" %>  <br />
+        <%= form_for (@recruitment_test) do |f|%>
+            <% if @recruitment_test.is_passed=="Pending" %>
+                <b>Decision: <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
+                <%=f.label :Comment  %></b>
+                <%=f.text_area  :comments ,:rows=>"3" ,:style=>"width: 100%" %>  <br />
 
-        <div align="center" ><%= f.submit "Submit" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();",:disable_with=>"Submitting.."%></div>
+                <div align="center" >
+                  <%= f.submit "Submit" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();",:disable_with=>"Submitting.."%>
+                  <%= link_to "Cancel", recruitment_tests_path,class: "btn btn-large btn-warning" %>
+                </div>
+            <% end %>
         <% end %>
 
-         <%= link_to image_tag('back.png'), recruitment_tests_path  %>
-        <% end %>
+<h3 align="left" >Answer Paper:</h3> <br/>
+
+<table  class="index_table"      >
+  <tr>
+    <th width="60%" >Question</th>
+    <th width="15%" >Candidate's Answer</th>
+    <th width="10%" >Right answer</th>
+    <th width="5%" >Time bonus</th>
+    <th width="5%" >Category</th>
+    <th width="5%" >Complexity</th>
+  </tr>
+  <% @recruitment_test.candidate.answers.each do |ans| %>
+      <tr>
+        <td class="lft" ><%=ans.question.question   %></td>
+        <% i=0 %>
+        <td><%ans.question.options.each do |op|  %>
+              <% if ans.answer[i]=="1" %>
+                  <%='|'+op.option+'|'  %>
+              <% end %>
+              <% i+=1 %>
+          <% end %>
+        </td>
+
+        <%#=ans.question.answer_id  %>
+        <td><%ans.question.options.each do |op|  %>
+              <% if op.is_right  %>
+                  <%='|'+op.option+'|'  %>
+              <% end %>
+          <% end %>
+        </td>
+        <td><%=(a=ans.question.allowed_time-ans.time_taken)>0?a:0 %></td>
+        <td><%=ans.question.category.category  %></td>
+        <td><%=ans.question.complexity.complexity  %></td>
+
+      </tr>
+  <% end %>
+
+
+</table>

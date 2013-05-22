@@ -109,6 +109,8 @@ class ExamsController < ApplicationController
     end
     respond_to do |format|
       if @exam.update_attributes(params[:exam])
+        @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
+        @exam.save
         format.html { redirect_to exams_path, notice: 'Exam was successfully updated.' }
         format.json { head :no_content }
       else

@@ -9,12 +9,14 @@
      <%=simple_format  @content.body %>
      </p>
     <p>
-      Test details:<br/>
-      Scheduled date is: <%= @user.candidate.schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>
-      Scheduled time is: <%= @user.candidate.schedule.sh_date.strftime("%I:%M%p") %>.<br/>
+      <b>
+      Test detail:<br/>
+      Date: <%= @user.candidate.schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>
+      Time: <%= @user.candidate.schedule.sh_date.strftime("%I:%M%p") %>.<br/>
+      </b>
     </p>
     <p>
-      To login to the site, just follow this link: <%= link_to "click me", clogin_answer_url(@user.salt) %>.
+      <b>To login to the site, just follow this link: <%= link_to "click here", clogin_answer_url(@user.salt) %>.</b>
     </p>
 
   </body>

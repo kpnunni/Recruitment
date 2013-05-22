@@ -1,0 +1,28 @@
+<h6>Instructions</h6><br/><br/>
+<b>
+  <% @instructions.each do |ins|%>
+      <%= image_tag 'point.png' %>
+      <%= ins.instruction  %><br/>
+  <% end %>
+  <%#= image_tag 'point.png' %>
+  <!--This Exam contains-->
+  <%# Category.all.each do |cat| %>
+
+  <%# if @exam.questions.where("category_id=? ",cat.id ).count!=0 %>
+  <%#= @exam.questions.where("category_id=? ",cat.id ).count %>
+  <%#=cat.category    %>
+  <!--questions,-->
+  <%# end %>
+  <%# end %>
+  <!--<br/>-->
+
+
+  <%= image_tag 'point.png' %>Total time:<%=  @exam.total_time/1.minute   %>minutes<br/>
+  <%= image_tag 'point.png' %>Number of questions:<%= @exam.no_of_question %><br/>
+  <%= image_tag 'point.png' %>Pop up new window when you click 'start exam'<br/>
+  <% if @ngtv %>
+      <%= image_tag 'point.png' %>Negative mark will be there(1/4).<br/>
+  <% else %>
+      <%= image_tag 'point.png' %>No negative mark.<br/>
+  <% end %>
+</b>
