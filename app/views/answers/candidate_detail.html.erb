@@ -9,11 +9,17 @@
       <h3>
 
 
-      Hi <%= @candidate.name  %>, Please fill your details.</h3> </FONT>
+      Hi <%= @candidate.name  %></h3> </FONT>
 
 
     <br/>
-    <%= nested_form_for @candidate, :url=>"/answers/#{@candidate.id}/candidate_update" do |f|%>
+    <div id="popup">
+      Before starting the exam please check popup blocker is enabled or not.
+      <%= link_to_function "Check pop up blocker", "check_pop_up();"  %>
+    </div>
+
+    <div id="update_form" style="display: none;">
+         <%= nested_form_for @candidate, :url=>"/answers/#{@candidate.id}/candidate_update" do |f|%>
        <table width="75%" >
          <tr>
            <td class="rght" >
@@ -75,4 +81,18 @@
 
 
     <% end %>
-    <h2><% link_to 'start_exam',new_answer_path %></h2>
+    </div>
+    <script type="text/javascript">
+        function check_pop_up(){
+            var windowName = 'userConsole';
+            var popUp = window.open('/answers/check_popup', windowName, 'width=300, height=100, left=200, top=200, scrollbars, resizable');
+            if (popUp == null || typeof(popUp)=='undefined') {
+                alert('Please disable your pop-up blocker then reload page and click this link again.');
+            }
+            else {
+                document.getElementById("update_form").show();
+                document.getElementById("popup").hide();
+                popUp.focus();
+            }
+        }
+    </script>
