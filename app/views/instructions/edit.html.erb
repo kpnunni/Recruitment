@@ -1,18 +1,4 @@
 
     <h1>Edit instruction</h1>
-    <%= form_for @instruction do |f| %>
-
-
-        <div class="error_msg">
-          <%= render  "shared/error_message", :target => @instruction   %>
-        </div>
-
-        <br /><br />
-        <b>New Instruction?</b><br />
-        <%= f.text_field :instruction%>
-
-        <%= f.submit "Update" ,class: "btn btn-large btn-primary",:onclick=>"show_submitting();" %><br />
-    <% end %>
-
-
+    <%= render 'form' %>
 <br /><%= link_to image_tag('back.png'), instructions_path %>

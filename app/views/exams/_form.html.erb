@@ -23,6 +23,8 @@
 
         <%= f.label  :description%>
         <%= f.text_field :description %>
+        <%= f.label :Complexity %>
+        <%= f.select("complexity_id", Complexity.all.reverse.collect {|s| [s.complexity, s.id ] }, { :selected =>@exam.complexity_id}) %>
 
         <br /><b>Instructions</b><br />  <br/>
           <input type="checkbox" onClick="toggle1(this)" /> Toggle All
@@ -36,8 +38,6 @@
 
 
         <%= link_to 'new_instruction?' , '#' ,:remote=>true,:onclick=> "jQuery('#new_instruction').dialog({ modal: true, title: 'Adding new instruction',width: 260 } );"%>   <br />   <br />
-        <%= f.label :Complexity %>
-        <%= f.select("complexity_id", Complexity.all.collect {|s| [s.complexity, s.id ] }, { :selected =>@exam.complexity_id}) %>
 
 
       <table  class="index_table" >

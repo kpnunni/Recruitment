@@ -6,10 +6,9 @@
           <%= render  "shared/error_message", :target => @instruction  %>
         </div>
 
-        <br /><br />
+
 
         <div class="input-append">
-            <b>New Instruction:</b>
             <%= f.text_field :instruction ,  style: "width: 500px;", class: "span2", id: "appendedInputButton"%>
             <%= f.submit class: "btn btn-primary",:onclick=>"show_submitting();" %><br />
         </div>
