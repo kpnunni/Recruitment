@@ -12,11 +12,9 @@ Test::Application.routes.draw do
   resources :questions do
     collection do
       post :delete_all
-      post :update_multiple_edit
     end
     member do
       get :delete_image
-      get :mulipple_edit
     end
 
 

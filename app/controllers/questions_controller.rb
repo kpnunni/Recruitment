@@ -11,7 +11,6 @@ class QuestionsController < ApplicationController
 
       def index
         @questions= Question.filtered(params[:search],params[:srch]).paginate(:page => params[:page], :per_page => 15)
- #       @questions=Question.paginate(:page => params[:page], :per_page => 10)
         if my_roles.include?('Add Questions')&&!my_roles.include?('Manage Questions')
           @questions.select! {|q| q.created_by==current_user.user_email}
 
@@ -23,7 +22,6 @@ class QuestionsController < ApplicationController
         @category=Category.all
         @types=Type.all
         @users=Question.select("created_by").uniq
-        @ids=Array.new(@questions.count)
         respond_to do |format|
           format.html
           format.json { render json: @questions }
@@ -126,30 +124,40 @@ class QuestionsController < ApplicationController
       end
 
   def delete_all
-    flag=0
-    nothing_to_delete=1
-    if !params[:to_delete].nil?
-     params[:to_delete].each do |k,v|
-        @question=Question.find(k.to_i)
-        flag=1 if !@question.exams.empty?&&v.to_i==1
-        if v.to_i==1&&@question.exams.empty?
-          @question.delete
-          nothing_to_delete=0
+     if params[:commit] == "Delete selected"
+        flag=0
+        nothing_to_delete=1
+        if !params[:question].nil?
+         params[:question][:ids].each do |q|
+            @question=Question.find(q.to_i)
+            flag=1 if !@question.exams.empty?
+            @question.delete
+            nothing_to_delete=0
+         end
+         end
+
+         if flag==1
+           flash[:warning]="some questions are part of question paper.So you cant delete."
+         elsif nothing_to_delete==1
+           flash[:error]="Nothing to delete"
+         else
+           flash[:notice]="Question's' deleted successfully"
+         end
+     else    #edit all
+        time = params[:new_allowed_time].to_i
+        if time > 0 and time <= 200
+          Question.update_all({allowed_time: time},{ id:  params[:question][:ids]})
+          flash[:notice]="Question's' updated successfully"
+        else
+          flash[:error]="Invalid allowed time"
         end
-
      end
-     if flag==1
-       flash[:warning]="some questions are part of question paper.So you cant delete."
-     elsif nothing_to_delete==1
-       flash[:error]="Nothing to delete"
-     else
-       flash[:notice]="Question's' deleted successfully"
-     end
-
-    end
     redirect_to questions_path
   end
 
+  def update_all
+
+  end
   def delete_image
     @question=Question.find(params[:id])
     @question.question_image.clear

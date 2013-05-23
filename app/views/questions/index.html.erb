@@ -2,6 +2,26 @@
 
 <script type="text/javascript" >
 
+    jQuery(document).ready(function() {
+      jQuery(".check_boxes").change(function() {
+        var checkboxes = jQuery(".check_boxes");
+        var flag = 0;
+        for(var i in checkboxes)
+            if(checkboxes[i].checked == true)
+                flag = 1;
+        if(flag==1){
+           jQuery("#delete_all").show();
+        }
+        else{
+            jQuery("#delete_all").hide();
+            jQuery("#edit_all").hide();
+        }
+      });
+    });
+
+    function show_edit(){
+        jQuery("#edit_all").toggle();
+    }
     function toggle1(source) {
         var checkboxes = document.getElementsByTagName("input");
 
@@ -71,7 +91,7 @@
 
     <table  class="index_table" >
       <tr>
-        <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all to delete" /></th>
+        <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all to delete", class="check_boxes" /></th>
         <th width="50%">question</th>
         <th  width="7%">allowed time (sec)</th>
         <th width="15%">Created by:</th>
@@ -82,54 +102,11 @@
 
       <% @questions.each_with_index do |question,i| %>
           <tr>
-            <%=fields_for :to_delete do|del|  %>
-            <td><%= del.check_box  question.id %></td>
-             <% end %>
+            <td><%= check_box_tag "question[ids][]",  question.id,false, class: "check_boxes" %></td>
             <td class="lft" ><%=link_to   question.question.slice(0..75), '#',:onclick=>"show_box(#{question.id});",:remote=>true, :title=>"detail" %>
             <%= "......" if question.question.length>75 %>
               <div style="display: none;"  id= <%=question.id%>  >
-                <b>Question:</b>
-                <%=  question.question %><br /><br />
-                <% if !question.question_image.to_s.include?("missing.png") %>
-                    <%= image_tag question.question_image.url(:original) %>
-                <% end %>
-                <table  border="3" width="75%"   >
-                  <tr>
-                    <th>options:</th>
-                    <th>true/false</th>
-                  </tr>
-
-                  <% question.options.each do |op| %>
-                      <tr>
-                        <td width="75%" class="lft" ><%= op.option %></td>
-                        <td width="10%" ><%= op.is_right %></td>
-                      </tr>
-                  <%end %>
-
-                </table>
-                <br />
-                <b>Answer code:</b>
-                <%=  question.answer_id %><br />
-
-                <b>Time allowed:</b>
-                <%=  question.allowed_time %><br />
-
-                <b>Category:</b>
-                <%= question.category.category %><br />
-
-                <b>Complexity:</b>
-                <%= question.complexity.complexity %><br />
-
-                <b>Type:</b>
-                <%= question.type.question_type %><br />
-
-                <b>created by:</b>
-                <%=  question.created_by %><br />
-
-                <b>created at:</b>
-                <%=  question.created_at.strftime("%b %d %A,%Y at %I:%M%p") %><br />
-
-
+                <%=  render 'question',question: question %>
               </div>
             </td>
             <td><%= question.allowed_time %></td>
@@ -150,8 +127,21 @@
       <% end %>
     </table>
 
-        <br /> <%= button_to "Delete selected",delete_all_questions_path(:id=>33), data: { confirm: 'Are you sure?' } %>
-    <% end %>
+        <br />
+
+        <div id="delete_all" style="display: none;">
+            <%= submit_tag "Delete selected", class: "btn btn-danger" , data: { confirm: 'Are you sure?' } -%>
+            <%= link_to_function "Change allowed time of selected questions", 'show_edit();' , class: "btn" , id: "editt"  -%>
+        </div>
+
+    <div id="edit_all" style="display: none;">
+       <br />
+      Allowed Time:<%= text_field_tag "new_allowed_time","", :maxlength=>3 ,  :class => "text_box"   %>
+      <%= submit_tag "Update all",  class: "btn btn-warning", data: { confirm: 'Are you sure?' }  %>
+    </div>
+
+
+<% end %>
     <% if !(my_roles.include?('Add Questions Only')&&!my_roles.include?('Manage Questions')&&!my_roles.include?('Add Questions')) %>
      <h4><%= will_paginate @questions ,:container=>false %></h4>
     <% end %>

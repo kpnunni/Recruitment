@@ -208,48 +208,7 @@
              <%= "......" if q.question.length>50 %>
 
              <div style="display: none;"  id= <%=q.id%>  >
-               <b>Question:</b>
-               <%=  q.question %><br /><br />
-               <% if !q.question_image.to_s.include?("missing.png") %>
-                   <%= image_tag q.question_image.url(:original) %>
-               <% end %>
-               <table  border="3" width="75%"   >
-                 <tr>
-                   <th>options:</th>
-                   <th>true/false</th>
-                 </tr>
-
-                 <% q.options.each do |op| %>
-                     <tr>
-                       <td width="75%" class="lft" ><%= op.option %></td>
-                       <td width="10%" ><%= op.is_right %></td>
-                     </tr>
-                 <%end %>
-
-               </table>
-                <br />
-               <b>Answer code:</b>
-               <%=  q.answer_id %><br />
-
-               <b>Time allowed:</b>
-               <%=  q.allowed_time %><br />
-
-               <b>Category:</b>
-               <%= q.category.category %><br />
-
-               <b>Complexity:</b>
-               <%= q.complexity.complexity %><br />
-
-               <b>Type:</b>
-               <%= q.type.question_type %><br />
-
-               <b>created by:</b>
-               <%=  q.created_by %><br />
-
-               <b>created at:</b>
-               <%=  q.created_at.strftime("%b %d %A,%Y at %I:%M%p") %><br />
-
-
+               <%=  render 'questions/question',question: q %>
              </div>
 
 
