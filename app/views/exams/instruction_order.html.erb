@@ -1,0 +1,30 @@
+<h2>Changing the order of Instructions</h2>
+
+<%= form_for @exam ,url: '/exams/update_instruction_order',method: :post  do |f| %>
+    <div id="order">
+        <% @exam.instructions.each do |ins| %>
+           <li id="<%= ins.id %>" class="ordering">
+             <%= ins.instruction %>
+             <%= check_box_tag "exam[instruction_ids][]", ins.id, true, style: "display: none;"  %>
+           </li>
+        <% end %>
+        <br/>
+    </div>
+    <%= hidden_field_tag(:id, @exam.id) %>
+    <%= f.button "Update", class: "btn btn-success" %>
+<% end %>
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+           jQuery("#order").sortable({
+              connectWith: ".ordering",
+              update : function () {
+                  var order1 = $('#order').sortable('toArray').toString();
+
+                  alert("Order 1:"+order1);
+
+
+              }
+          }).disableSelection();
+  });
+</script>

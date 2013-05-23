@@ -28,10 +28,12 @@ Test::Application.routes.draw do
       get :remove_instruction
       get :schedule
       get :regenerate
+      get :instruction_order
     end
     collection do
       get :settings
       post :save_settings
+      post :update_instruction_order
     end
   end
 

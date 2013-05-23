@@ -72,7 +72,15 @@
                     <%@ngtv=Setting.find_by_name('negative_mark').status.eql?("on")  %>
                     <%@instructions=@exam .instructions .all  %>
                     <%= render 'answers/show_instructions' %>
-                </div>
+                    <% if @instructions.empty? %>
+                        <h3>No instructions</h3>
+                        <br/>
+                        <%= link_to "Add instructions?", edit_exam_path(exam)%>
+                    <% else %>
+                        <br/>
+                        <%= link_to "Re-order the instructions?", instruction_order_exam_path(exam)%>
+                    <% end %>
+              </div>
 
             </td>
              <td width="5%" ><%= link_to image_tag('edit.png'), edit_exam_path(exam),title: "edit" %></td>

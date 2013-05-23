@@ -95,7 +95,8 @@ class ExamsController < ApplicationController
     @instruction=Instruction.new
     @exam.modified_by =current_user .user_email
     @exam.complexity_id=params[:exam][:complexity_id]
-    @exam.instructions.delete_all
+    #@exam.instructions.delete_all
+    params[:exam][:instruction_ids]=[] if params[:exam][:instruction_ids].nil?
     if regenerate_question_paper?
       @exam.subj= params[:exam][:subj]
       @q_count=@exam.generate_question_paper
@@ -131,6 +132,22 @@ class ExamsController < ApplicationController
     end
   end
 
+   def instruction_order
+      @exam = Exam.includes(:instructions).find(params[:id])
+   end
+
+   def update_instruction_order
+     @exam = Exam.includes(:instructions).find(params[:id])
+     @exam.instructions.delete_all
+     params[:exam][:instruction_ids].reverse!  if params[:exam]
+     if @exam.update_attributes(params[:exam])
+       @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
+       @exam.save
+       redirect_to exams_path, notice: 'Instructions reordered successfully.'
+     else
+       render action: "instruction_order"
+     end
+   end
   def question_paper
     @exam = Exam.find(params[:id])
     @qpaper= @exam.questions.all
