@@ -139,7 +139,7 @@ class ExamsController < ApplicationController
    def update_instruction_order
      @exam = Exam.includes(:instructions).find(params[:id])
      @exam.instructions.delete_all
-     params[:exam][:instruction_ids].reverse!  if params[:exam]
+     #params[:exam][:instruction_ids].reverse!  if params[:exam]
      if @exam.update_attributes(params[:exam])
        @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
        @exam.save
