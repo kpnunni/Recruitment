@@ -1,89 +1,33 @@
 <h1>Candidate:
-   <%=@recruitment_test.candidate.name %>
+  <%=@recruitment_test.candidate.name %>
 
-  </h1>
-    <br/>
-    <b>Email id:</b><%= @recruitment_test.candidate.user.user_email %><br/>
-    <b>Exam completed on:</b><%= @recruitment_test.completed_on.strftime("%b %d %A,%Y at %I:%M%p")  %> <br/>
-     <br/>
+</h1>
+<br/>
+<b>Email id:</b><%= @recruitment_test.candidate.user.user_email %><br/>
+<b>Exam completed on:</b><%= @recruitment_test.completed_on.strftime("%b %d %A,%Y at %I:%M%p")  %> <br/>
+<br/>
+
+<%= render 'category_wise_mark' %>
+
+<br/>
+<h3>Feed Back:</h3>
+
+<%=simple_format  @recruitment_test.feedback %>
 
 
+<br/>
+<%= form_for (@recruitment_test) do |f|%>
+    <% if @recruitment_test.is_passed=="Pending" %>
+        <b>Decision: <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
+          <%=f.label :Comment  %></b>
+        <%=f.text_area  :comments ,:rows=>"3" ,:style=>"width: 100%" %>  <br />
 
-
-
-
-
-
-
-
-    <table   class="index_table"      >
-      <tr>
-        <th>Category</th>
-        <th>no of questions</th>
-        <th>Right answers</th>
-        <th>Wrong answers</th>
-        <th>Mark</th>
-        <th>Mark(%)</th>
-      </tr>
-         <% Category.all.each do |cat| %>
-         <% if @recruitment_test.candidate.schedule.exam.questions.where("category_id=?",cat.id).count!=0 %>
-
-          <tr>
-            <td><%=cat.category    %></td>
-            <td><%= @recruitment_test.candidate.schedule.exam.questions.where("category_id=?",cat.id).count %></td>
-            <td><%= @recruitment_test.each_right_answers(cat) %></td>
-            <td><%= @recruitment_test.each_wrong_answers(cat) %></td>
-            <td><%= @recruitment_test.calc_mark(cat)  %></td>
-            <td><%= number_with_precision(@recruitment_test.calc_mark_percentage(cat),:precision=>2)  %></td>
-          </tr>
-          <% end %>
-          <% end %>
-    </table>
-
-    <% if @extra_answers.present? %>
-                              <br/>
-        <h3>Additional answers:</h3>
-        <table   class="index_table"      >
-          <tr>
-            <th>Category</th>
-            <th>Answer</th>
-            <th>Right answers</th>
-            <th>Right?</th>
-            <th>Complexity</th>
-            <th>Time Taken(sec)</th>
-          </tr>
-          <% @extra_answers.each do |ans| %>
-                  <tr>
-                    <td><%=ans.question.category.category   %></td>
-                    <td><%= ans.answer %></td>
-                    <td><%= ans.question.answer_id %></td>
-                    <td><%= ans.answer == ans.question.answer_id ? "Yes" : "No" %></td>
-                    <td><%= ans.question.complexity.complexity %></td>
-                    <td><%= ans.time_taken %></td>
-                  </tr>
-          <% end %>
-        </table>
+        <div align="center" >
+          <%= f.submit "Submit" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();",:disable_with=>"Submitting.."%>
+          <%= link_to "Cancel", recruitment_tests_path,class: "btn btn-large btn-warning" %>
+        </div>
     <% end %>
-
-          <br/>
-        <h3>Feed Back:</h3>
-
-        <%=simple_format  @recruitment_test.feedback %>
-
-
-         <br/>
-        <%= form_for (@recruitment_test) do |f|%>
-            <% if @recruitment_test.is_passed=="Pending" %>
-                <b>Decision: <%=f.select :is_passed ,["Passed","Failed"],{:selected =>:is_passed} %>
-                <%=f.label :Comment  %></b>
-                <%=f.text_area  :comments ,:rows=>"3" ,:style=>"width: 100%" %>  <br />
-
-                <div align="center" >
-                  <%= f.submit "Submit" ,class: "btn btn-large btn-primary" ,:onclick=>"show_submitting();",:disable_with=>"Submitting.."%>
-                  <%= link_to "Cancel", recruitment_tests_path,class: "btn btn-large btn-warning" %>
-                </div>
-            <% end %>
-        <% end %>
+<% end %>
 
 <h3 align="left" >Answer Paper:</h3> <br/>
 

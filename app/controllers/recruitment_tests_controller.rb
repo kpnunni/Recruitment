@@ -2,7 +2,7 @@ class RecruitmentTestsController < ApplicationController
       before_filter :chk_user , :except=> [:update ]
      before_filter :chk_result, :only=> :show
       skip_before_filter :authenticate,:only => :update
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction , :find_extra
   def index
     @recruitment_tests = RecruitmentTest.filtered(params[:search],sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
@@ -14,7 +14,7 @@ class RecruitmentTestsController < ApplicationController
 
   def show
     @recruitment_test = RecruitmentTest.find(params[:id])
-    @extra = find_extra
+    @extra = find_extra(@recruitment_test)
     respond_to do |format|
 
       format.html 
@@ -99,8 +99,8 @@ private
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
-  def find_extra
-    @candidate = @recruitment_test.candidate
+  def find_extra(recruitment_test)
+    @candidate = recruitment_test.candidate
     questions = @candidate.schedule.exam.question_ids
     @answers =  @candidate.answers.where("question_id in (?)",questions)
     @extra_answers = @candidate.answers.where("question_id not in (?)",questions)

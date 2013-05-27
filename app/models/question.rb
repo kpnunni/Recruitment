@@ -52,5 +52,7 @@ class Question < ActiveRecord::Base
       qst=Question.all(:order => 'created_at DESC')
      end
    end
-
+  def to_param
+    "#{id} #{question}".parameterize
+  end
 end
