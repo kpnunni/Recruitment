@@ -1,70 +1,70 @@
 
-    <h3 align="right"><%= link_to image_tag('addsh.png'), new_schedule_path, :class=>"dropt", :title=>"new schedule" %></h3>
+<h3 align="right"><%= link_to image_tag('addsh.png'), new_schedule_path, :class=>"dropt", :title=>"new schedule" %></h3>
 
 
 
-    <h1>Scheduled Exams</h1>
+<h1>Scheduled Exams</h1>
 
-    <form class="filter_form">
+<form class="filter_form">
 
-      <table  cellpadding="5" class="filter_table"   >
-        <tr>
-          <td width="60%" ></td>
-          <th>Created by:</th>
-          <th>From:</th>
-          <th>To:</th>
-         </tr>
-        <tr>
-          <td width="60%" ></td>
-              <td><%= select("search","by", @users.collect {|s| s.created_by }, { :include_blank => true,:selected => params[:search] ? params[:search][:by] :"" }) %></td>
-              <td><%= text_field_tag   "search[from]",params[:search] ? params[:search]["from"] : "",  :class=>"text_box2" %></td>
-              <td><%= text_field_tag  "search[to]",params[:search] ? params[:search]["to"] : "",:class=>"text_box2" %></td>
-          <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
-        </tr>
-      </table>
+  <table  cellpadding="5" class="filter_table"   >
+    <tr>
+      <td width="60%" ></td>
+      <th>Created by:</th>
+      <th>From:</th>
+      <th>To:</th>
+    </tr>
+    <tr>
+      <td width="60%" ></td>
+      <td><%= select("search","by", @users.collect {|s| s.created_by }, { :include_blank => true,:selected => params[:search] ? params[:search][:by] :"" },onchange: "this.form.submit();") %></td>
+      <td><%= text_field_tag   "search[from]",params[:search] ? params[:search]["from"] : "",  :class=>"text_box2" %></td>
+      <td><%= text_field_tag  "search[to]",params[:search] ? params[:search]["to"] : "",:class=>"text_box2" %></td>
+      <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+    </tr>
+  </table>
 
-    </form>
+</form>
 
-    <table  class="index_table">
+<table  class="index_table">
+  <tr>
+    <th>Time</th>
+    <th>Test</th>
+    <th>Created by</th>
+    <th>Created at</th>
+    <th>Last edited at</th>
+    <th>Time Remaining</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @schedules.each do |schedule| %>
       <tr>
-        <th>Time</th>
-        <th>Test</th>
-        <th>Created by</th>
-        <th>Created at</th>
-        <th>Last edited at</th>
-        <th>Time Remaining</th>
-        <th></th>
-        <th></th>
-      </tr>
-
-      <% @schedules.each do |schedule| %>
-          <tr>
-             <td width="25%" ><%= link_to schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p") , schedule_path(schedule) %></td>
-             <td width="15%" ><%= schedule.exam.name  %></td>
-             <td width="15%" ><%= schedule.created_by  %></td>
-             <td width="15%" ><%= schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %></td>
-             <td width="15%" ><%= schedule.updated_at.strftime("%b %d %A,%Y at %I:%M%p")  %></td>
+        <td width="25%" ><%= link_to schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p") , schedule_path(schedule) %></td>
+        <td width="15%" ><%= schedule.exam.name  %></td>
+        <td width="15%" ><%= schedule.created_by  %></td>
+        <td width="15%" ><%= schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %></td>
+        <td width="15%" ><%= schedule.updated_at.strftime("%b %d %A,%Y at %I:%M%p")  %></td>
 
 
-            <% if  schedule.sh_date.to_i - Time.new.to_i < 0  %>
-                <td width="10%" ><%= "Time over"  %></td>
-            <% else %>
-                <td width="10%" ><%= time_ago_in_words(schedule.sh_date)    %></td>
-            <% end %>
+        <% if  schedule.sh_date.to_i - Time.new.to_i < 0  %>
+            <td width="10%" ><%= "Time over"  %></td>
+        <% else %>
+            <td width="10%" ><%= time_ago_in_words(schedule.sh_date)    %></td>
+        <% end %>
 
 
-            <% if my_roles.include?('Re Schedule') %>
+        <% if my_roles.include?('Re Schedule') %>
             <td ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule),:title=>"Re schedule" %></td>
-            <% else %>
+        <% else %>
             <td ><%=  image_tag 'edit_x.png' ,:title => "can't re schedule" %></td>
-            <% end %>
-            <% if my_roles.include?('Cancel Schedule') %>
+        <% end %>
+        <% if my_roles.include?('Cancel Schedule') %>
             <td ><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } ,:title=>"cancel schedule"%></td>
-            <% else %>
+        <% else %>
             <td ><%=  image_tag 'delete_x.png' , :title=>"can't cancel schedule"%></td>
-            <% end %>
-          </tr>
-      <% end %>
-    </table>
+        <% end %>
+      </tr>
+  <% end %>
+</table>
 <h4><%= will_paginate @schedules ,:container=>false %></h4>
 

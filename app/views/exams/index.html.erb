@@ -1,100 +1,100 @@
 
-  <h3 align="right"></h3>
+<h3 align="right"></h3>
 
 
-      <table width="100%" >
+<table width="100%" >
+  <tr>
+    <td class="lft" >
+      <%= link_to (image_tag 'instructions.png'), instructions_path, :class=>"dropt", :title=>"manage instructions"  %>
+    </td>
+    <td>
+
+    </td>
+    <td class="rght" >
+      <%= link_to image_tag('add.png'), new_exam_path, :class=>"dropt", :title=>"add new exam"  %>
+    </td>
+
+  </tr>
+</table>
+
+<h1>Exams</h1>
+<form class="filter_form">
+
+  <table  cellpadding="5" class="filter_table"  width="100%" >
+    <tr>
+      <td width="60%" ></td>
+
+      <th>Created by:</th>
+      <th width="20%" >From:</th>
+      <th width="20%">To:</th>
+      <th>Name:</th>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= select("search","by",@users.collect{|u| u.created_by} , { :include_blank => true,:selected =>params[:search]?params[:search][:by]:""},onchange: "this.form.submit();") %></td>
+      <td><%= text_field_tag  "search[from]",params[:search]?params[:search]["from"]:"" ,  :class=>"text_box2" %></td>
+      <td><%= text_field_tag   "search[to]",params[:search]?params[:search]["to"]:"" ,  :class=>"text_box2" %></td>
+      <td align="right" ><%= text_field_tag "search[name]",params[:search]?params[:search][:name]:""  %></td>
+      <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
+    </tr>
+  </table>
+
+</form>
+
+
+
+
+
+
+
+<table  class="index_table" >
+  <tr>
+    <th>Name</th>
+    <th>Questions</th>
+    <th>Duration(minutes)</th>
+    <th>Description</th>
+    <th>Preview Instructions</th>
+    <th></th>
+    <th></th>
+
+  </tr>
+  <% image_tag 'edit.jpg' %>
+  <% @exams.each do |exam| %>
       <tr>
-        <td class="lft" >
-          <%= link_to (image_tag 'instructions.png'), instructions_path, :class=>"dropt", :title=>"manage instructions"  %>
-        </td>
-        <td>
+        <td width="20%" class="lft"  ><%= link_to exam.name, exam_path(exam),title: "detail" %></td>
+        <td width="15%" ><%= exam.no_of_question  %></td>
+        <td width="15%" ><%= exam.total_time/1.minutes  %></td>
+        <td width="35%" class="lft"   ><%= exam.description  %></td>
+        <td width="15%"><%= link_to 'Show','#',:onclick=>"open_instruction(#{exam.id});" ,:remote=>true%>
 
-         </td>
-        <td class="rght" >
-          <%= link_to image_tag('add.png'), new_exam_path, :class=>"dropt", :title=>"add new exam"  %>
-         </td>
-
-      </tr>
-    </table>
-
-    <h1>Exams</h1>
-       <form class="filter_form">
-
-            <table  cellpadding="5" class="filter_table"  width="100%" >
-                <tr>
-                    <td width="60%" ></td>
-
-                    <th>Created by:</th>
-                    <th width="20%" >From:</th>
-                    <th width="20%">To:</th>
-                    <th>Name:</th>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><%= select("search","by",@users.collect{|u| u.created_by} , { :include_blank => true,:selected =>params[:search]?params[:search][:by]:""}) %></td>
-                    <td><%= text_field_tag  "search[from]",params[:search]?params[:search]["from"]:"" ,  :class=>"text_box2" %></td>
-                    <td><%= text_field_tag   "search[to]",params[:search]?params[:search]["to"]:"" ,  :class=>"text_box2" %></td>
-                    <td align="right" ><%= text_field_tag "search[name]",params[:search]?params[:search][:name]:""  %></td>
-                    <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
-                </tr>
-           </table>
-
-       </form>
-
-
-
-
-
-
-
-    <table  class="index_table" >
-      <tr>
-        <th>Name</th>
-        <th>Questions</th>
-        <th>Duration(minutes)</th>
-        <th>Description</th>
-        <th>Preview Instructions</th>
-        <th></th>
-        <th></th>
-
-      </tr>
-            <% image_tag 'edit.jpg' %>
-      <% @exams.each do |exam| %>
-          <tr>
-            <td width="20%" class="lft"  ><%= link_to exam.name, exam_path(exam),title: "detail" %></td>
-            <td width="15%" ><%= exam.no_of_question  %></td>
-            <td width="15%" ><%= exam.total_time/1.minutes  %></td>
-            <td width="35%" class="lft"   ><%= exam.description  %></td>
-            <td width="15%"><%= link_to 'Show','#',:onclick=>"open_instruction(#{exam.id});" ,:remote=>true%>
-
-              <div style="display: none;"  id= <%=exam.id%>  >
-                    <%@exam = exam  %>
-                    <%@ngtv=Setting.find_by_name('negative_mark').status.eql?("on")  %>
-                    <%@instructions=@exam .instructions .all  %>
-                    <%= render 'answers/show_instructions' %>
-                    <% if @instructions.empty? %>
-                        <h3>No instructions</h3>
-                        <br/>
-                        <%= link_to "Add instructions?", edit_exam_path(exam)%>
-                    <% else %>
-                        <br/>
-                        <%= link_to "Re-order the instructions?", instruction_order_exam_path(exam)%>
-                    <% end %>
-              </div>
-
-            </td>
-             <td width="5%" ><%= link_to image_tag('edit.png'), edit_exam_path(exam),title: "edit" %></td>
-
-            <% if exam.schedules.where("sh_date >= ?",Time.now).empty? %>
-            <td width="5%"><%= link_to  image_tag('delete.png'), exam, method: :delete, data: { confirm: 'Are you sure?' } ,:title => "delete" %></td>
+          <div style="display: none;"  id= <%=exam.id%>  >
+            <%@exam = exam  %>
+            <%@ngtv=Setting.find_by_name('negative_mark').status.eql?("on")  %>
+            <%@instructions=@exam .instructions .all  %>
+            <%= render 'answers/show_instructions' %>
+            <% if @instructions.empty? %>
+                <h3>No instructions</h3>
+                <br/>
+                <%= link_to "Add instructions?", edit_exam_path(exam)%>
             <% else %>
-            <td width="5%"><%= image_tag('delete_x.png',:title => "This exam is scheduled.You can't delete" ) %></td>
+                <br/>
+                <%= link_to "Re-order the instructions?", instruction_order_exam_path(exam)%>
             <% end %>
+          </div>
 
-          </tr>
-      <% end %>
-    </table>
+        </td>
+        <td width="5%" ><%= link_to image_tag('edit.png'), edit_exam_path(exam),title: "edit" %></td>
 
-    <h4><%= will_paginate @exams ,:container=>false %></h4><br />
+        <% if exam.schedules.where("sh_date >= ?",Time.now).empty? %>
+            <td width="5%"><%= link_to  image_tag('delete.png'), exam, method: :delete, data: { confirm: 'Are you sure?' } ,:title => "delete" %></td>
+        <% else %>
+            <td width="5%"><%= image_tag('delete_x.png',:title => "This exam is scheduled.You can't delete" ) %></td>
+        <% end %>
+
+      </tr>
+  <% end %>
+</table>
+
+<h4><%= will_paginate @exams ,:container=>false %></h4><br />
 
 
