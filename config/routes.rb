@@ -39,13 +39,15 @@ Test::Application.routes.draw do
   resources :schedules do
     member do
       get :remove
-
     end
   end
 
   resources :recruitment_tests do
     collection do
       post :sent_mail
+    end
+    member do
+      get :pass_or_fail
     end
   end
   resources :instructions
@@ -76,7 +78,7 @@ Test::Application.routes.draw do
   end
 
   resources :candidates do
-     collection  do
+    collection  do
       post :schedule_create
     end
     resources :experiences

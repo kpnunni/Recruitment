@@ -37,8 +37,8 @@
         <th width="7%" > Questions attended </th>
         <th width="6%"><%= sortable "right_answers"%></th>
         <th width="10%"><%= sortable "mark_percentage"%></th>
-        <th width="28%">Comments</th>
-        <th width="5%">Status</th>
+        <th width="15%">Status</th>
+        <th width="15%">Comments</th>
         <th width="2%"> </th>
       </tr>
 
@@ -46,7 +46,7 @@
           <tr>
             <td><%=check_box_tag "email[sent_ids][]",   recruitment_test.id %></td>
             <td class="lft" >
-              <%= recruitment_test.candidate.name %>
+              <%= link_to recruitment_test.candidate.name,recruitment_test, title: "Details" %>
               <%= image_tag('new.gif') if recruitment_test.created_at.to_date == Date.today %>
             </td>
             <td class="lft" ><%= recruitment_test.candidate.schedule.exam.name %></td>
@@ -54,18 +54,32 @@
             <td><%= recruitment_test.no_of_question_attended%></td>
             <td  ><%= recruitment_test.right_answers%></td>
             <td ><%= number_with_precision(recruitment_test.mark_percentage, :precision => 2)%></td>
+            <td>
+              <% if recruitment_test.is_passed=="Pending"  %>
+                  <div>
+                    <div style="float:left;">
+                      <%= link_to "Pass" ,{ :controller => 'recruitment_tests', :action => "pass_or_fail", :id => recruitment_test.id, status: "Passed"}, class: "btn btn-mini btn-success", confirm: 'Are you sure?' -%>
+                    </div>
+                    <div style="float:left;">
+                     _or_
+                    </div>
+                    <div style="float:left;">
+                      <%= link_to "Fail" ,{ :controller => 'recruitment_tests', :action => "pass_or_fail", :id => recruitment_test.id, status: "Failed"},  class: "btn btn-mini btn-danger", confirm: 'Are you sure?' -%>
+                    </div>
+                    <div style="clear:both;">
+                    </div>
+                  </div>
+              <% elsif recruitment_test.is_passed=="Passed"  %>
+                  <%= button_tag "Passed" , class:"btn btn-success ", disabled: true, style: "width: 100px;" %>
+              <% else %>
+                  <%= button_tag "Failed" , class:"btn btn-danger ", disabled: true, style: "width: 100px;" %>
+              <% end %>
+
+            </td>
             <td class="lft"><%= recruitment_test.comments%></td>
-            <% if recruitment_test.is_passed=="Pending"  %>
-                <td><%=link_to "Pending", recruitment_test_path(recruitment_test)%></td>
-            <% elsif recruitment_test.is_passed=="Passed"  %>
-                <td style="background-color: #adff2f;" ><%= link_to "Passed", recruitment_test_path(recruitment_test)%></td>
-            <% else %>
-                <td style="background-color: #f08080;" ><%= link_to "Failed", recruitment_test_path(recruitment_test)%></td>
-            <% end %>
 
             <td class="see">
               <div class="arrow">
-
               </div>
             </td>
           </tr>
