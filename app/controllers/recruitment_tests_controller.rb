@@ -1,12 +1,12 @@
 class RecruitmentTestsController < ApplicationController
-      before_filter :chk_user , :except=> [:update ]
-     before_filter :chk_result, :only=> :show
-      skip_before_filter :authenticate,:only => :update
+  before_filter :chk_user , :except=> [:update ]
+  before_filter :chk_result, :only=> :show
+  skip_before_filter :authenticate,:only => :update
   helper_method :sort_column, :sort_direction , :find_extra
   def index
     @recruitment_tests = RecruitmentTest.filtered(params[:search],sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 20)
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @recruitment_tests }
     end
   end
@@ -17,7 +17,7 @@ class RecruitmentTestsController < ApplicationController
     @extra = find_extra(@recruitment_test)
     respond_to do |format|
 
-      format.html 
+      format.html
       format.json { render json: @recruitment_test }
     end
   end
@@ -60,30 +60,40 @@ class RecruitmentTestsController < ApplicationController
   end
   def sent_mail
     if  params[:email]
-        ids = params[:email][:sent_ids].map(&:to_i)
-       @results = RecruitmentTest.where("id in (?)", ids ).all
-       @users=User.joins(:roles).where( roles: { role_name: "Get Selection Email"})
-       @users.each {|admin| UserMailer.admin_result_email(admin,@results).deliver  }
-       redirect_to recruitment_tests_path , notice: 'details sent to emails.'
+      ids = params[:email][:sent_ids].map(&:to_i)
+      @results = RecruitmentTest.where("id in (?)", ids ).all
+      @users=User.joins(:roles).where( roles: { role_name: "Get Selection Email"})
+      @users.each {|admin| UserMailer.admin_result_email(admin,@results).deliver  }
+      redirect_to recruitment_tests_path , notice: 'details sent to emails.'
     else
-        flash[:error]= 'Select results to sent.'
-        redirect_to recruitment_tests_path
+      flash[:error]= 'Select results to sent.'
+      redirect_to recruitment_tests_path
     end
     #render text: @results
   end
+  def pass_or_fail
+    @recruitment_test = RecruitmentTest.find(params[:id])
+    if params[:status]
+      @recruitment_test.update_attribute(:is_passed, params[:status])
+    end
+    respond_to do |format|
+      format.html { redirect_to recruitment_tests_url }
+      format.json { head :no_content }
+    end
+  end
   def chk_user
     if !(my_roles.include?('Validate Result')||my_roles.include?('View Result'))
-       redirect_to '/homes/index'
+      redirect_to '/homes/index'
     end
 
   end
   def chk_result
     if !my_roles.include?('Validate Result')
-       redirect_to '/homes/index'
+      redirect_to '/homes/index'
     end
   end
 
-private
+  private
   def sort_column
     sort = params[:sort]
     if sort == "right_answers"
