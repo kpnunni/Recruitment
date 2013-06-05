@@ -24,8 +24,9 @@ class UsersController < ApplicationController
     @user.encrypt_password
 
     if @user.save
-      UserMailer.delay.welcome_email(@user,@user.login_password)
-      UserMailer.welcome_email(@user,@user.login_password).deliver
+      #UserMailer.delay.welcome_email(@user,@user.login_password)
+      call_rake :send_welcome_mail, :mailing_id =>  @user.id , pass: @user.login_password
+      #UserMailer.welcome_email(@user,@user.login_password).deliver
       redirect_to users_path, notice: 'User was successfully created.'
     else
       render action: "new"
