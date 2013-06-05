@@ -32,13 +32,13 @@
       <tr>
         <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all" /></th>
         <th width="20%">Candidate Name</th>
-        <th width="15%">Exam</th>
+        <th width="25%">Exam</th>
         <th width="7%" >Total questions</th>
         <th width="7%" > Questions attended </th>
         <th width="6%"><%= sortable "right_answers"%></th>
         <th width="10%"><%= sortable "mark_percentage"%></th>
-        <th width="15%">Status</th>
-        <th width="15%">Comments</th>
+        <th width="20%">Status of Selection</th>
+        <!--<th width="15%">Comments</th>-->
         <th width="2%"> </th>
       </tr>
 
@@ -54,29 +54,31 @@
             <td><%= recruitment_test.no_of_question_attended%></td>
             <td  ><%= recruitment_test.right_answers%></td>
             <td ><%= number_with_precision(recruitment_test.mark_percentage, :precision => 2)%></td>
-            <td>
+            <td class="lft">
               <% if recruitment_test.is_passed=="Pending"  %>
-                  <div>
+                  <div style="padding-left: 20px;" id="parent<%= recruitment_test.id %>">
                     <div style="float:left;">
-                      <%= link_to "Pass" ,{ :controller => 'recruitment_tests', :action => "pass_or_fail", :id => recruitment_test.id, status: "Passed"}, class: "btn btn-mini btn-success", confirm: 'Are you sure?' -%>
+                      <%= link_to "Pass" ,"#", class: "btn btn-mini btn-success",id: "p#{recruitment_test.id}", onclick: "decision_pass(#{recruitment_test.id});" , remote: true -%>
                     </div>
                     <div style="float:left;">
-                     _or_
+                      _or_
                     </div>
                     <div style="float:left;">
-                      <%= link_to "Fail" ,{ :controller => 'recruitment_tests', :action => "pass_or_fail", :id => recruitment_test.id, status: "Failed"},  class: "btn btn-mini btn-danger", confirm: 'Are you sure?' -%>
+                      <%= link_to "Fail" ,"#",  class: "btn btn-mini btn-danger",id: "f#{recruitment_test.id}", onclick: "decision_fail(#{recruitment_test.id});" , remote: true -%>
                     </div>
                     <div style="clear:both;">
                     </div>
                   </div>
+                  <div id="pdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('passed.png')  %></div>
+                  <div id="fdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('failed.png')  %></div>
               <% elsif recruitment_test.is_passed=="Passed"  %>
-                  <%= button_tag "Passed" , class:"btn btn-success ", disabled: true, style: "width: 100px;" %>
+                  <%= image_tag('passed.png')  %>
               <% else %>
-                  <%= button_tag "Failed" , class:"btn btn-danger ", disabled: true, style: "width: 100px;" %>
+                  <%= image_tag('failed.png')  %>
               <% end %>
 
             </td>
-            <td class="lft"><%= recruitment_test.comments%></td>
+            <!--<td class="lft"><%#= recruitment_test.comments%></td>-->
 
             <td class="see">
               <div class="arrow">
@@ -95,6 +97,24 @@
 <h4><%= will_paginate @recruitment_tests ,:container=>false %></h4>
 
 <script type="text/javascript" >
+    function decision_pass(id){
+        jQuery('#parent'+id).detach();
+        jQuery('#pdiv'+id).show();
+        jQuery.ajax({
+            type: 'GET',
+            url: '/recruitment_tests/'+id+'/pass_or_fail',
+            data: {status: "Passed"}
+        });
+    }
+    function decision_fail(id){
+        jQuery('#parent'+id).detach();
+        jQuery('#fdiv'+id).show();
+        jQuery.ajax({
+            type: 'GET',
+            url: '/recruitment_tests/'+id+'/pass_or_fail',
+            data: {status: "Failed"}
+        });
+    }
 
     function toggle1(source) {
         var checkboxes = document.getElementsByTagName("input");
@@ -105,16 +125,15 @@
     }
 </script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-        $("#report tr:odd").addClass("odd");
-        $("#report tr:not(.odd)").hide();
-        $("#report tr:first-child").show();
+    jQuery(document).ready(function(){
+        jQuery("#report tr:odd").addClass("odd");
+        jQuery("#report tr:not(.odd)").hide();
+        jQuery("#report tr:first-child").show();
 
-        $(".see").click(function(){
-            $(this).parent("tr").next("tr").toggle();
-            $(this).find(".arrow").toggleClass("up");
+        jQuery(".see").click(function(){
+            jQuery(this).parent("tr").next("tr").toggle();
+            jQuery(this).find(".arrow").toggleClass("up");
         });
     });
 </script>

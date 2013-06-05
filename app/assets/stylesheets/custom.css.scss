@@ -464,6 +464,9 @@ text-spacing: 5px;
 .rght{
   text-align: right;
 }
+.cntr{
+  text-align: center;
+}
 table.curvedEdges {
        vertical-align:top;
      valign: "top";
@@ -796,6 +799,12 @@ a:active  { color: #ccc }  /* active links    */
 .tr {
   border: 1px solid black;
   display: table-row;
+  text-align: center;
+}
+.th {
+  font-weight:bold;
+  border: 1px solid black;
+  display: table-cell;
   text-align: center;
 }
 .td {

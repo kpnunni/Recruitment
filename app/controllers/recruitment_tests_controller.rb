@@ -78,7 +78,7 @@ class RecruitmentTestsController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to recruitment_tests_url }
-      format.json { head :no_content }
+      format.js { render :nothing }
     end
   end
   def chk_user

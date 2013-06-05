@@ -19,7 +19,7 @@ class RecruitmentTest < ActiveRecord::Base
    def find_mark_percentage(user)
      q_attent=self.no_of_question_attended
      right_ans=self.right_answers.to_f
-     total_q=user.candidate.schedule.exam.no_of_question
+     total_q=user.candidate.answers.count
      wrong_ans=q_attent-right_ans
      if Setting.find_by_name('negative_mark').status.eql?("off")
        self.mark_percentage= (right_ans/total_q)*100
@@ -81,7 +81,7 @@ class RecruitmentTest < ActiveRecord::Base
 
   def self.filtered(search,sort)
       if search.nil?
-        return @test=RecruitmentTest.order(sort)
+        return @test=RecruitmentTest.includes(:candidate => [ :answers , :schedule => [:exam => [:questions => [:answers]]] ] ).order(sort)
       end
        name=range=min=max=RecruitmentTest.order(sort)
        name.select! {|test| test.candidate.name.include?(search["name"]) }             if  search["by"]!=""

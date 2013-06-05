@@ -1,12 +1,12 @@
 
 <div class="table">
   <div class="tr">
-    <div class="td">Category</div>
-    <div class="td">no of questions</div>
-    <div class="td">Right answers</div>
-    <div class="td">Wrong answers</div>
-    <div class="td">Mark</div>
-    <div class="td">Mark(%)</div>
+    <div class="th">Category</div>
+    <div class="th">no of questions</div>
+    <div class="th">Right answers</div>
+    <div class="th">Wrong answers</div>
+    <div class="th">Mark</div>
+    <div class="th">Mark(%)</div>
   </div>
   <% Category.all.each do |cat| %>
       <% if @recruitment_test.candidate.schedule.exam.questions.where("category_id=?",cat.id).count!=0 %>
@@ -28,12 +28,12 @@
 
     <div class="table"  >
       <div class="tr">
-        <div class="td">Category</div>
-        <div class="td">Answer</div>
-        <div class="td">Right answers</div>
-        <div class="td">Right?</div>
-        <div class="td">Complexity</div>
-        <div class="td">Time Taken(sec)</div>
+        <div class="th">Category</div>
+        <div class="th">Answer</div>
+        <div class="th">Right answers</div>
+        <div class="th">Right?</div>
+        <div class="th">Complexity</div>
+        <div class="th">Time Taken(sec)</div>
       </div>
       <% @extra_answers.each do |ans| %>
           <% if ans.question %>
