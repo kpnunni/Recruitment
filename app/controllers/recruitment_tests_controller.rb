@@ -61,9 +61,7 @@ class RecruitmentTestsController < ApplicationController
   def sent_mail
     if  params[:email]
       ids = params[:email][:sent_ids].map(&:to_i)
-      @results = RecruitmentTest.where("id in (?)", ids ).all
-      @users=User.joins(:roles).where( roles: { role_name: "Get Selection Email"})
-      @users.each {|admin| UserMailer.admin_result_email(admin,@results).deliver  }
+      call_rake :send_result_mail, :candidate_ids => ids.join(",")
       redirect_to recruitment_tests_path , notice: 'details sent to emails.'
     else
       flash[:error]= 'Select results to sent.'

@@ -1,25 +1,25 @@
 class SchedulesController < ApplicationController
-    before_filter :chk_user
-   before_filter :new_sch ,:only =>  [:new,:create]
-   before_filter :re_sch ,:only =>  [:edit,:update]
-   before_filter :cancel_sch ,:only =>  [:remove,:destroy]
-    def new_sch
-     if !(my_roles.include?('Schedule'))
-        redirect_to '/homes/index'
-     end
-
-     end
-
-   def re_sch
-    if !(my_roles.include?('Re Schedule'))
-       redirect_to '/homes/index'
+  before_filter :chk_user
+  before_filter :new_sch ,:only =>  [:new,:create]
+  before_filter :re_sch ,:only =>  [:edit,:update]
+  before_filter :cancel_sch ,:only =>  [:remove,:destroy]
+  def new_sch
+    if !(my_roles.include?('Schedule'))
+      redirect_to '/homes/index'
     end
 
-   end
+  end
 
-   def cancel_sch
+  def re_sch
+    if !(my_roles.include?('Re Schedule'))
+      redirect_to '/homes/index'
+    end
+
+  end
+
+  def cancel_sch
     if !(my_roles.include?('Cancel Schedule'))
-       redirect_to '/homes/index'
+      redirect_to '/homes/index'
     end
 
   end
@@ -29,8 +29,8 @@ class SchedulesController < ApplicationController
   def index
     @schedules = Schedule.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
     @users=Schedule.select("created_by").uniq
-     respond_to do |format|
-      format.html 
+    respond_to do |format|
+      format.html
       format.json { render json: @schedules }
     end
 
@@ -42,7 +42,7 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
 
-      format.html 
+      format.html
       format.json { render json: @schedule }
     end
   end
@@ -52,9 +52,9 @@ class SchedulesController < ApplicationController
     @exam=Exam.all
     @schedule = Schedule.new
     @candidates=Candidate.all
-     @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
+    @candidates.delete_if {|c| !c.user.isAlive || !c.schedule_id.nil?  }
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @schedule }
     end
   end
@@ -84,12 +84,7 @@ class SchedulesController < ApplicationController
     end
     respond_to do |format|
       if @schedule.save
-        @schedule.candidates.each{|c| UserMailer.delay.schedule_email(c.user)  }
-        @schedule.candidates.each{|c| UserMailer.schedule_email(c.user).deliver  }
-        @users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
-        #@users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
-        @users.each {|admin| UserMailer.delay.admin_schedule_email(admin,@schedule) }
-        @users.each {|admin| UserMailer.admin_schedule_email(admin,@schedule).deliver }
+        call_rake :send_schedule_mail, :schedule_id => @schedule.id
         format.html { redirect_to schedules_path, notice: 'Exam was successfully scheduled.' }
         format.json { render json: @schedule, status: :created, location: @schedule }
       else
@@ -113,15 +108,9 @@ class SchedulesController < ApplicationController
       return
     end
 
-     respond_to do |format|
+    respond_to do |format|
       if @schedule.update_attributes(params[:schedule])
-        @schedule.candidates.each{|c| UserMailer.delay.update_schedule_email(c.user) }
-        @schedule.candidates.each{|c| UserMailer.update_schedule_email(c.user).deliver }
-        @users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
-        #@users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
-        @users.each {|admin| UserMailer.delay.admin_update_schedule_email(admin,@schedule) }
-        @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@schedule).deliver }
-
+        call_rake :send_update_schedule_mail, :schedule_id => @schedule.id
         format.html { redirect_to @schedule, notice: 'Exam was successfully rescheduled.' }
         format.json { head :no_content }
       else
@@ -134,10 +123,9 @@ class SchedulesController < ApplicationController
 
   def destroy
     @schedule = Schedule.find(params[:id])
-        @schedule.candidates.each{|c| UserMailer.cancel_schedule_email(c.user,@schedule).deliver }
-        #@users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Schedule Email"))}
-        @users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
-        @users.each {|admin| UserMailer.cancel_schedule_email(admin,@schedule).deliver }
+    @schedule.candidates.each{|c| UserMailer.cancel_schedule_email(c.user,@schedule).deliver }
+    @users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
+    @users.each {|admin| UserMailer.cancel_schedule_email(admin,@schedule).deliver }
 
     @schedule.destroy
 
@@ -148,18 +136,18 @@ class SchedulesController < ApplicationController
   end
 
   def remove
-      @schedule=Schedule.find(params[:id])
-      @candidate=Candidate.find(params[:candidate_id])
-      @schedule.candidates.delete(@candidate)
-      @schedule.destroy if @schedule.candidates.empty?
-      redirect_to schedule_path(@schedule) if !@schedule.candidates.empty?
-      redirect_to schedules_path if @schedule.candidates.empty?
-      UserMailer.cancel_schedule_email(@candidate.user,@schedule)
+    @schedule=Schedule.find(params[:id])
+    @candidate=Candidate.find(params[:candidate_id])
+    @schedule.candidates.delete(@candidate)
+    @schedule.destroy if @schedule.candidates.empty?
+    redirect_to schedule_path(@schedule) if !@schedule.candidates.empty?
+    redirect_to schedules_path if @schedule.candidates.empty?
+    UserMailer.cancel_schedule_email(@candidate.user,@schedule)
   end
 
   def chk_user
     if !current_user.has_role?('Schedule','Re Schedule','Cancel Schedule')
-       redirect_to '/homes/index'
+      redirect_to '/homes/index'
     end
 
   end

@@ -69,12 +69,12 @@
                     <div style="clear:both;">
                     </div>
                   </div>
-                  <div id="pdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('passed.png')  %></div>
-                  <div id="fdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('failed.png')  %></div>
+                  <div id="pdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('passed.png',size: "90x25")  %></div>
+                  <div id="fdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('failed.png',size: "90x25")  %></div>
               <% elsif recruitment_test.is_passed=="Passed"  %>
-                  <%= image_tag('passed.png')  %>
+                  <%= image_tag('passed.png',size: "90x25")  %>
               <% else %>
-                  <%= image_tag('failed.png')  %>
+                  <%= image_tag('failed.png',size: "90x25")  %>
               <% end %>
 
             </td>
