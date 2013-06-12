@@ -1,6 +1,6 @@
 class CandidatesController < ApplicationController
- # skip_before_filter :authenticate ,:create
- # before_filter :chk_user ,:except =>[ :update ,:create]
+  # skip_before_filter :authenticate ,:create
+  # before_filter :chk_user ,:except =>[ :update ,:create]
   def chk_user
     if !my_roles.include?('Manage Candidates')
       redirect_to '/homes/index'
@@ -26,8 +26,8 @@ class CandidatesController < ApplicationController
     @candidate=Candidate.find(params[:id])
     @candidate.build_recruitment_test if @candidate.schedule && @candidate.recruitment_test.nil?
     @user=@candidate.user
-  #  @experiences=@candidate.experiences.all
-  #  @qualifications=@candidate.qualifications.all
+    #  @experiences=@candidate.experiences.all
+    #  @qualifications=@candidate.qualifications.all
   end
 
   def create
@@ -47,17 +47,17 @@ class CandidatesController < ApplicationController
 
   def update
     @candidate=Candidate.find(params[:id])
-      if @candidate.update_attributes(params[:candidate])
-        if params[:candidate][:done]=="1"
+    if @candidate.update_attributes(params[:candidate])
+      if params[:candidate][:done]=="1"
 
-        end
-        redirect_to candidates_path , notice: 'Candidate was successfully updated.'
-      else
-        @user=@candidate.user
-        @experiences=@candidate.experiences.all
-        @qualifications=@candidate.qualifications.all
-        render action: "edit"
       end
+      redirect_to candidates_path , notice: 'Candidate was successfully updated.'
+    else
+      @user=@candidate.user
+      @experiences=@candidate.experiences.all
+      @qualifications=@candidate.qualifications.all
+      render action: "edit"
+    end
   end
 
   def destroy
@@ -69,8 +69,8 @@ class CandidatesController < ApplicationController
 
   def new
     @candidate=Candidate.new
-   # 2.times{@candidate.experiences.build }
-   # 2.times{@candidate.qualifications.build }
+    # 2.times{@candidate.experiences.build }
+    # 2.times{@candidate.qualifications.build }
     @candidate.build_user
     respond_to do |format|
       format.html # new.html.erb
@@ -81,40 +81,37 @@ class CandidatesController < ApplicationController
   def schedule_create
     @candidate=Candidate.find(params[:schedule][:candidate_ids].keys.first.to_i)
     @exam=Exam.all
-#    if params[:schedule]["sh_date(1i)"].empty?||params[:schedule]["sh_date(2i)"].empty?||params[:schedule]["sh_date(3i)"].empty?||params[:schedule]["sh_date(4i)"].empty?||params[:schedule]["sh_date(5i)"].empty?
-#       flash[:error]='Invalid date and time.'
-#       redirect_to candidates_path
-#       return
-#    end
-#    @date=Time.parse(params[:schedule]["sh_date(1i)"]+"-"+params[:schedule]["sh_date(2i)"]+"-"+params[:schedule]["sh_date(3i)"]+" "+params[:schedule]["sh_date(4i)"]+":"+params[:schedule]["sh_date(5i)"])
-#    if @date < Time.now
-#       flash[:error]='Date and time should be greater than current date and time.'
-#       redirect_to candidates_path
-#       return
-#    end
-
     #Schedule
     if @candidate.schedule.nil?
-       @schedule = Schedule.new(params[:schedule])
-       @schedule.created_by=current_user.user_email
-       if @schedule.save
-         call_rake :send_one_schedule_mail, :candidate_id =>  @candidate.id
-         flash[:notice]='Exam was successfully scheduled.'
-       else
-         flash[:error]='Error on scheduling.'
-       end
-    #Reschedule
+      @schedule = Schedule.new(params[:schedule])
+      @schedule.created_by=current_user.user_email
+      if @schedule.save
+        call_rake :send_one_schedule_mail, :candidate_id =>  @candidate.id
+        flash[:notice]='Exam was successfully scheduled.'
+      else
+        flash[:error]='Error on scheduling.'
+      end
+      #Reschedule
     else
-       @schedule = @candidate.schedule
-       @schedule.updated_by=current_user.user_email
-       if  @schedule.update_attributes(params[:schedule])
-         call_rake :send_one_update_schedule_mail, :candidate_id =>  @candidate.id
-         flash[:notice]='Exam was successfully re-scheduled.'
-       else
-         flash[:error]='Error on re-scheduling.'
-       end
+      @schedule = @candidate.schedule
+      @schedule.updated_by=current_user.user_email
+      if  @schedule.update_attributes(params[:schedule])
+        call_rake :send_one_update_schedule_mail, :candidate_id =>  @candidate.id
+        flash[:notice]='Exam was successfully re-scheduled.'
+      else
+        flash[:error]='Error on re-scheduling.'
+      end
     end
-      redirect_to candidates_path
+    redirect_to candidates_path
   end
+  def resent_schedule_email
+    @candidate=Candidate.find(params[:id])
+    if params[:status] == "schedule"
+      call_rake :resend_one_schedule_mail, :candidate_id =>  @candidate.id
+    else
+      call_rake :resend_one_update_schedule_mail, :candidate_id =>  @candidate.id
+    end
 
+    redirect_to candidates_path, notice: 'Email was successfully resent.'
+  end
 end

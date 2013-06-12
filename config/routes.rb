@@ -81,6 +81,9 @@ Test::Application.routes.draw do
     collection  do
       post :schedule_create
     end
+    member  do
+      get :resent_schedule_email
+    end
     resources :experiences
     resources :qualifications
   end

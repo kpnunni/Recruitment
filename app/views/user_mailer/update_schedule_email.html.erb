@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
- Hi <%= @user.candidate.name %>, <br/>
-      <%=simple_format @content.body %>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+Hi <%= @user.candidate.name %>, <br/>
+<%=simple_format @content.body %>
 
-    <p>
-      Test details:<br/>
-      Scheduled date is: <%= @user.candidate.schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>
-      Scheduled time is: <%= @user.candidate.schedule.sh_date.strftime("%I:%M%p") %>.<br/>
-    </p>
-    <p>
-      To login to the site, just follow this link: <%= link_to "click me", clogin_answer_url(@user.salt) %>.
-    </p>
-    <p>Best wishes..</p>
-  </body>
+<p>
+  Test details:<br/>
+  Date: <%= @user.candidate.schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>
+  Time: <%= @user.candidate.schedule.sh_date.strftime("%I:%M%p") %>.<br/>
+</p>
+<p>
+  To login to the site, just follow this link: <%= link_to "click me", clogin_answer_url(@user.salt) %>.
+</p>
+<p>Best wishes..</p>
+</body>
 </html>

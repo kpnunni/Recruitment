@@ -17,6 +17,16 @@ task :send_one_update_schedule_mail => :environment do
   @users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
   @users.each {|admin| UserMailer.admin_update_schedule_email(admin,@candidate.schedule).deliver  }
 end
+desc "Resend schedule email for 1 candidate"
+task :resend_one_schedule_mail => :environment do
+  @candidate = Candidate.find(ENV["CANDIDATE_ID"])
+  UserMailer.schedule_email(@candidate.user).deliver
+end
+desc "Resend update schedule email for 1 candidate"
+task :resend_one_update_schedule_mail => :environment do
+  @candidate = Candidate.find(ENV["CANDIDATE_ID"])
+  UserMailer.update_schedule_email(@candidate.user).deliver
+end
 desc "Send schedule email for many candidate"
 task :send_schedule_mail => :environment do
   @schedule = Schedule.find(ENV["SCHEDULE_ID"])
