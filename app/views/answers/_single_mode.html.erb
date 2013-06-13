@@ -1,9 +1,5 @@
-
 <div id="question_answer" style="min-height: 300px;">
-
-  <%= form_for  @answer, html: { onsubmit: "set_flag();"} do |f| %>
-
-
+  <%= form_for  @answer, html: { id: "exam_form", onsubmit: "jQuery('#outer').show();set_flag();"} do |f| %>
       <table align="right"  width="100%"  >
         <tr>
           <td class="lft" width="65%"  >
@@ -17,63 +13,13 @@
           </td>
         </tr>
       </table>
-
-
-
       <br/>
-
-
-
       <br/>
-
       <%=f.hidden_field   :dec_time ,:value =>@answer.dec_time %>
-
-
-      <div class="qno"  >
-
-        <b>  <%= label_tag @answer.q_no%></b>
-      </div>
-      <div class="question"  >
-        <%=simple_format @answer.question.question %><br/>
-        <% if !@answer.question.question_image.to_s.include?("missing.png") %>
-            <%= image_tag @answer.question.question_image.url(:original) %><br/>
-        <% end %>
-      </div>
-
-      <table cellpadding="0"  width="100%" class="question" >
-
-        <% if @answer.question.type.question_type=="check_box" %>
-
-            <% @answer.question.options.sort.each_with_index do |op,i| %>
-                <tr>
-                  <%= f.fields_for :c_option do |c_op| %>
-                      <td width="2%" ><%=  c_op.check_box  op.id,:checked => @tick[i] %></td>
-                      <td class="lft" ><%= c_op.label op.id,op.option %></td>
-                  <% end %>
-                </tr>
-            <% end %>
-
-        <% else %>
-            <% @answer.question.options.sort.each_with_index do |op,i| %>
-                <tr >
-                  <%= f.fields_for :c_option do |c_op| %>
-                      <td width="2%"  ><%=  c_op.radio_button 1, op.id,:checked => @tick[i]%></td>
-                      <td class="lft"  >   <%=  c_op.label op.id,op.option %>  </td>
-                  <% end %>
-                </tr>
-            <% end %>
-
-        <% end %>
-
-
-
-      </table>
-
+      <%= render "question", answer: @answer, f: f  %>
       </b><br/>
-
       </div>
       <%= f.submit   :id =>"procedure_submit_button" , :name=>"to",:value=>"timer" , :style => "display: none" ,:remote  => true%>
-
       <table cellpadding="5" align="center"   >
         <tr>
           <% if @back %>
@@ -85,24 +31,20 @@
           <% if @load_more  %>
               <td><%= f.button  "More Question", :name=>"to",:value=>"more", :disable_with => "More",class: "btn btn-large btn-success" %></td>
           <% end %>
-          <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Finish',:onclick=>"show_submitting();"%></td>
+          <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Finish',:onclick=>"finish_exam(); return false;"%></td>
         </tr>
       </table>
-
-
       <br/>Please click on the question number button to load the question. Or click Next to load next question <br/>
       <h3>Questions:</h3>
       <% @candidate.answers.sort.each_with_index do |ans,i| %>
-              <% if ans.answer!="0"&&ans.id!=@answer.id  %>
-                  <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>"background-color: #90ee90;"  %>
-              <% elsif ans.id==@answer.id  %>
-                  <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 ,:style=>"background-color: orange;" %>
-              <% else %>
-                  <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 %>
-              <% end %>
+          <% if ans.answer!="0"&&ans.id!=@answer.id  %>
+              <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>"background-color: #90ee90;"  %>
+          <% elsif ans.id==@answer.id  %>
+              <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 ,:style=>"background-color: orange;" %>
+          <% else %>
+              <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 %>
+          <% end %>
       <% end %>
-
-
       <br/>
       <br/> Please call: 0484 4242800 for immediate assistance <br/>
   <% end %>

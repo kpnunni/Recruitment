@@ -1,0 +1,30 @@
+<div class="qno"  >
+  <b>  <%= label_tag answer.q_no%></b>
+</div>
+<div class="question"  >
+  <%=simple_format answer.question.question %><br/>
+  <% if !answer.question.question_image.to_s.include?("missing.png") %>
+      <%= image_tag answer.question.question_image.url(:original) %><br/>
+  <% end %>
+</div>
+<table cellpadding="0"  width="100%" class="question" >
+  <% if answer.question.type.question_type=="check_box" %>
+      <% answer.question.options.sort.each_with_index do |op,i| %>
+          <tr>
+            <%= f.fields_for :c_option do |c_op| %>
+                <td width="2%" ><%=  c_op.check_box  op.id,:checked => @tick[i] %></td>
+                <td class="lft" ><%= c_op.label op.id,op.option %></td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% else %>
+      <% answer.question.options.sort.each_with_index do |op,i| %>
+          <tr >
+            <%= f.fields_for :c_option do |c_op| %>
+                <td width="2%"  ><%=  c_op.radio_button 1, op.id,:checked => @tick[i]%></td>
+                <td class="lft"  >   <%=  c_op.label op.id,op.option %>  </td>
+            <% end %>
+          </tr>
+      <% end %>
+  <% end %>
+</table>

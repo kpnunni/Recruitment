@@ -14,15 +14,14 @@
 
 <%= form_for @user, :html => { :onsubmit=>"show_submitting();" } do |f| %>
 
-
     <div class="error_msg">
       <%= render  "shared/error_message", :target => @user  %>
     </div>
 
 
 
-        <%= f.label :Email %>
-        <%= f.text_field :user_email,:autocomplete=>"off",:placeholder => "Eg:abc@gmail.com"  ,required:{}%>
+    <%= f.label :Email %>
+    <%= f.text_field :user_email,:autocomplete=>"off",:placeholder => "Eg:abc@gmail.com"  ,required:{}%>
 
     <% if @user.new_record? %>
         <%= f.label :password %>
@@ -32,23 +31,24 @@
         <%= f.password_field :login_password_confirmation,:autocomplete=>"off",:placeholder => "****", :value=>(params[:user] ? params[:user][:login_password_confirmation] : "") ,required:{} %>
 
     <% end %>
-         <br />
-        <b>Roles:</b>
-        <br />
-        <input type="checkbox" onClick="toggle1(this)" /> Select/Un Select All
+    <br />
+    <b>Roles:</b>
+    <br />
+    <input type="checkbox" onClick="toggle1(this)" /> Select/Un Select All
 
-        <% Role.where("role_name!=?","Candidate").each do |role| %>
-            <br />
-            <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role)%>
-            <%= role.role_name %>
-        <% end %>
+    <% Role.where("role_name!=?","Candidate").each do |role| %>
+        <label>
+          <%= check_box_tag "user[role_ids][]", role.id, @user.roles.include?(role),{class: 'icheck-me', data: {skin: "square", color: "green"}} -%>
+          <%= role.role_name %>
+        </label>
+    <% end %>
 
 
-        <br />  <br />
+    <br />  <br />
 
-           <%= f.submit :id=>"commit", class: "btn btn-large btn-success" ,:disable_with=>"Submitting..." %>
+    <%= f.submit :id=>"commit", class: "btn btn-large btn-success" ,:disable_with=>"Submitting..." %>
 
-            <%= link_to "Cancel",users_path ,class: "btn btn-large btn-warning"%>
+    <%= link_to "Cancel",users_path ,class: "btn btn-large btn-warning"%>
 
 <% end %>
 
