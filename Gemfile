@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '1.9.3'
 gem 'rails', '3.2.11'
 gem "delayed_job_active_record"
 gem "delayed_task", "0.1.4"
