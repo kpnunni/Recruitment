@@ -1,4 +1,11 @@
 <script type="text/javascript">
+    jQuery(function() {
+        jQuery( "#tabs" ).tabs({
+            show: { effect: "blind", duration: 1000 }
+        });
+    });
+    jQuery(".ui-widget-content").css("background-color", "blue");
+
     function sh_click(){
         if(document.getElementById("search_schedule").options[document.getElementById("search_schedule").selectedIndex].text=="For today")
         {
@@ -42,71 +49,77 @@
     }
 </script>
 <h1 align="center" > Suyati Online Recruitment Test</h1>
-<table width="100%"   cellpadding="5px" border="0" class="home_border"   >
-  <tr>
-    <td width="50%" height="300px"  >
-      <%= select("search","schedule", ["For today","For this week","For this month"],{},:onchange=>"sh_click()",:class=>"select_home") %>
-      <div id="sh1">
-        <table border="3" width="100%" height="480"  class="curvedEdges" >
-          <tr>
-            <th>
-              <h2>Scheduled Exams</h2>
-            </th>
-          </tr>
-          <% @schedules1.each {|r|  %>
-              <tr>
-                <td class="lft_home"  height="0" >
-                  <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
-                </td>
-              </tr>
-          <% } %>
-          <tr>
-            <td height="90%" > </td>
-          </tr>
-        </table>
-      </div>
-      <div id="sh7">
-        <table border="3" width="100%" height="480"  class="curvedEdges" >
-          <tr>
-            <th>
-              <h2> Scheduled Exams</h2>
-            </th>
-          </tr>
-          <% @schedules7.each {|r|  %>
-              <tr>
-                <td class="lft_home"  height="0" >
-                  <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
-                </td>
-              </tr>
-          <% } %>
-          <tr>
-            <td height="90%" > </td>
-          </tr>
-        </table>
-      </div>
-      <div id="sh30">
-        <table border="3" width="100%" height="480"  class="curvedEdges" >
-          <tr>
-            <th>
-              <h2> Scheduled Exams </h2>
-            </th>
-          </tr>
-          <% @schedules30.each {|r|  %>
-              <tr>
-                <td class="lft_home"  height="0" >
-                  <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
-                </td>
-              </tr>
-          <% } %>
-          <tr>
-            <td height="90%" > </td>
-          </tr>
-        </table>
-      </div>
-    </td><td>
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Scheduled Exams</a></li>
+    <li><a href="#tabs-2">Results</a></li>
+    <li><a href="#tabs-3">Recent Questions </a></li>
+    <li><a href="#tabs-4">Recent passed candidates </a></li>
+  </ul>
+  <div id="tabs-1">
+    <%= select("search","schedule", ["For today","For this week","For this month"],{},:onchange=>"sh_click()",:class=>"select_home") %>
+    <div id="sh1">
+      <table border="3" width="100%" height="480"  class="home_table" >
+        <tr>
+          <th>
+            <h2>Scheduled Exams</h2>
+          </th>
+        </tr>
+        <% @schedules1.each {|r|  %>
+            <tr>
+              <td class="lft_home"  height="0" >
+                <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
+              </td>
+            </tr>
+        <% } %>
+        <tr>
+          <td height="90%" > </td>
+        </tr>
+      </table>
+    </div>
+    <div id="sh7">
+      <table border="3" width="100%" height="480"  class="home_table" >
+        <tr>
+          <th>
+            <h2> Scheduled Exams</h2>
+          </th>
+        </tr>
+        <% @schedules7.each {|r|  %>
+            <tr>
+              <td class="lft_home"  height="0" >
+                <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
+              </td>
+            </tr>
+        <% } %>
+        <tr>
+          <td height="90%" > </td>
+        </tr>
+      </table>
+    </div>
+    <div id="sh30">
+      <table border="3" width="100%" height="480"  class="home_table" >
+        <tr>
+          <th>
+            <h2> Scheduled Exams </h2>
+          </th>
+        </tr>
+        <% @schedules30.each {|r|  %>
+            <tr>
+              <td class="lft_home"  height="0" >
+                <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
+              </td>
+            </tr>
+        <% } %>
+        <tr>
+          <td height="90%" > </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div id="tabs-2">
     <%= select("search","result", ["For today","For this week","For this month"],{},:onchange=>"rs_click()",:class=>"select_home") %>
     <div id="rs1">
-      <table border="3" width="100%" height="480"  class="curvedEdges" >
+      <table border="3" width="100%" height="480"  class="home_table" >
         <tr>
           <th>
             <h2> Results</h2>
@@ -125,7 +138,7 @@
       </table>
     </div>
     <div id="rs7">
-      <table border="3" width="100%" height="480"  class="curvedEdges" >
+      <table border="3" width="100%" height="480"  class="home_table" >
         <tr>
           <th>
             <h2> Results</h2>
@@ -144,7 +157,7 @@
       </table>
     </div>
     <div id="rs30">
-      <table border="3" width="100%" height="480"  class="curvedEdges" >
+      <table border="3" width="100%" height="480"  class="home_table" >
         <tr>
           <th>
             <h2> Results</h2>
@@ -162,50 +175,47 @@
         </tr>
       </table>
     </div>
-  </td></tr>
-  <tr>
-    <td>
-      <table border="3" width="100%" height="480"  class="curvedEdges" >
-        <tr>
-          <th>
-            <h2>Recent Questions</h2>
-          </th>
-        </tr>
-        <% @questions.each {|q|  %>
-            <tr>
-              <td class="lft_home"  height="0" >
-                <%=link_to  q.question.slice(0..50),'#',:onclick=>"show_box(#{q.id});",:remote=>true %>
-                <%= "......" if q.question.length>50 %>
-                <div style="display: none;"  id= <%=q.id%>  >
-                  <%=  render 'questions/question',question: q %>
-                </div>
-              </td>
-            </tr>
-        <% } %>
-      </table>
-    </td>
-    <td>
-      <table border="3" width="100%" height="480" class="curvedEdges" align="" >
-        <tr>
-          <th>
-            <h2> Recent passed candidates</h2>
-          </th>
-        </tr>
-        <% @candidates.each {|c|  %>
-            <tr>
-              <td class="lft_home"  >
-                <%=link_to  c.candidate.name,candidate_path(c.candidate)    %>
-              </td>
-            </tr>
-        <% } %>
-        <tr>
-          <td height="90%" > </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
-
+  </div>
+  <div id="tabs-3">
+    <table border="3" width="100%" height="480"  class="home_table" >
+      <tr>
+        <th>
+          <h2>Recent Questions</h2>
+        </th>
+      </tr>
+      <% @questions.each {|q|  %>
+          <tr>
+            <td class="lft_home"  height="0" >
+              <%=link_to  q.question.slice(0..50),'#',:onclick=>"show_box(#{q.id});",:remote=>true %>
+              <%= "......" if q.question.length>50 %>
+              <div style="display: none;"  id= <%=q.id%>  >
+                <%=  render 'questions/question',question: q %>
+              </div>
+            </td>
+          </tr>
+      <% } %>
+    </table>
+  </div>
+  <div id="tabs-4">
+    <table border="3" width="100%" height="480" class="home_table" align="" >
+      <tr>
+        <th>
+          <h2> Recent passed candidates</h2>
+        </th>
+      </tr>
+      <% @candidates.each {|c|  %>
+          <tr>
+            <td class="lft_home"  >
+              <%=link_to  c.candidate.name,candidate_path(c.candidate)    %>
+            </td>
+          </tr>
+      <% } %>
+      <tr>
+        <td height="90%" > </td>
+      </tr>
+    </table>
+  </div>
+</div>
 
 
 

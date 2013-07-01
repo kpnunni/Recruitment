@@ -118,19 +118,6 @@ class AnswersController < ApplicationController
 
   def congrats
     @candidate=Candidate.find(params[:id])
-    #if @candidate.recruitment_test.is_passed=="Passed"
-    #UserMailer.result_email(@candidate.user).deliver
-    #  UserMailer.delay.result_email(@candidate.user)
-    #@users=User.all.select {|usr| usr.roles.include?(Role.find_by_role_name("Get Selection Email"))}
-    #@users.each {|admin| UserMailer.admin_result_email(admin,@candidate).deliver  }
-    #    @users.each {|admin| UserMailer.delay.admin_result_email(admin,@candidate)  }
-    #else
-    #@users=User.all.select {|usr| usr.has_role?("Validate Result")||usr.has_role?("View Result")}
-    #@users.each {|admin| UserMailer.exam_complete_email(admin,current_user.candidate).deliver }
-    #    @users.each {|admin| UserMailer.delay.exam_complete_email(admin,current_user.candidate) }
-    #end
-
-    #sign_out
   end
   def blank
   end
