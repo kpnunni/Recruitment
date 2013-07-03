@@ -17,9 +17,9 @@ class InstructionsController < ApplicationController
 
     if @instruction.save
       if params[:by]=="add"
-        redirect_to new_exam_path , notice: 'Instruction was successfully created.' }
+        redirect_to new_exam_path , notice: 'Instruction was successfully created.'
       else
-        redirect_to instructions_path , notice: 'Instruction was successfully created.' }
+        redirect_to instructions_path , notice: 'Instruction was successfully created.'
       end
     else
       flash[:error]="Instruction is empty /already exists"
