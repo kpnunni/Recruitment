@@ -35,6 +35,7 @@ gem 'jquery-rails'
  # gem 'therubyracer-heroku'
 end
 group :test, :development do
+  gem "bullet"
   gem "webrat"
   gem "capybara"
   gem "rspec-rails", "~> 2.0"

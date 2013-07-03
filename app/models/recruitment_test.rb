@@ -81,7 +81,7 @@ class RecruitmentTest < ActiveRecord::Base
 
   def self.filtered(search,sort)
       if search.nil?
-        return @test=RecruitmentTest.includes(:candidate => [ :answers , :schedule => [:exam => [:questions => [:answers]]] ] ).order(sort)
+        return @test=RecruitmentTest.includes(:candidate => [ :answers =>[:question] , :schedule => [:exam => [:questions]] ] ).order(sort)
       end
        name=range=min=max=RecruitmentTest.order(sort)
        name.select! {|test| test.candidate.name.include?(search["name"]) }             if  search["by"]!=""

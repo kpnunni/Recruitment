@@ -13,21 +13,14 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    @candidates=Candidate.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
+    @candidates=Candidate.includes([:recruitment_test]).filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
     @exam=Exam.all
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @candidates }
-    end
-
   end
 
   def edit
     @candidate=Candidate.find(params[:id])
     @candidate.build_recruitment_test if @candidate.schedule && @candidate.recruitment_test.nil?
     @user=@candidate.user
-    #  @experiences=@candidate.experiences.all
-    #  @qualifications=@candidate.qualifications.all
   end
 
   def create
@@ -37,10 +30,8 @@ class CandidatesController < ApplicationController
     @candidate.user.encrypt_password
     @candidate.user.roles.push(Role.find_by_role_name('Candidate'))
     if @candidate.save
-      # UserMailer.welcome_email(@candidate.user,@candidate.user.login_password).deliver
       redirect_to candidates_path , notice: 'Candidate was successfully created.'
     else
-
       render "new"
     end
   end
@@ -48,9 +39,6 @@ class CandidatesController < ApplicationController
   def update
     @candidate=Candidate.find(params[:id])
     if @candidate.update_attributes(params[:candidate])
-      if params[:candidate][:done]=="1"
-
-      end
       redirect_to candidates_path , notice: 'Candidate was successfully updated.'
     else
       @user=@candidate.user
@@ -69,14 +57,7 @@ class CandidatesController < ApplicationController
 
   def new
     @candidate=Candidate.new
-    # 2.times{@candidate.experiences.build }
-    # 2.times{@candidate.qualifications.build }
     @candidate.build_user
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml { render :xml => @candidate }
-    end
-
   end
   def schedule_create
     @candidate=Candidate.find(params[:schedule][:candidate_ids].keys.first.to_i)
@@ -111,7 +92,6 @@ class CandidatesController < ApplicationController
     else
       call_rake :resend_one_update_schedule_mail, :candidate_id =>  @candidate.id
     end
-
     redirect_to candidates_path, notice: 'Email was successfully resent.'
   end
 end
