@@ -71,7 +71,7 @@
             <td><%= select("search","by", @users.collect {|s| s.created_by }, { :include_blank => true,:selected =>params[:search]?params[:search][:by]:""},onchange: "this.form.submit();") %></td>
             <td><%= text_field_tag  "search[from]",params[:search]?params[:search]["from"]:""  , :class=>"text_box2" %></td>
             <td><%= text_field_tag  "search[to]",params[:search]?params[:search]["to"]:"" , :class=>"text_box2" %></td>
-            <td align="right" ><%= text_field_tag "srch" , params[:srch]?params[:srch]:"",:class=>"text_box2"  %></td>
+            <td align="right" ><%= text_field_tag "search[text]" , params[:search]?params[:search]["text"]:"",:class=>"text_box2"  %></td>
             <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
           </tr>
         </table>

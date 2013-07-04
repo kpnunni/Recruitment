@@ -8,11 +8,12 @@
     <div class="th">Mark</div>
     <div class="th">Mark(%)</div>
   </div>
-  <% Category.all.each do |cat| %>
-      <% if @recruitment_test.candidate.schedule.exam.questions.where("category_id=?",cat.id).count!=0 %>
+  <% @categories.each do |cat| %>
+      <%  no_of_questions = @recruitment_test.candidate.schedule.exam.questions.select { |q| q.category_id == cat.id}.size  %>
+      <% if true %>
           <div class="tr">
             <div class="td"><%=cat.category    %></div>
-            <div class="td"><%= @recruitment_test.candidate.schedule.exam.questions.where("category_id=?",cat.id).count %></div>
+            <div class="td"><%= no_of_questions %></div>
             <div class="td"><%= @recruitment_test.each_right_answers(cat) %></div>
             <div class="td"><%= @recruitment_test.each_wrong_answers(cat) %></div>
             <div class="td"><%= @recruitment_test.calc_mark(cat)  %></div>

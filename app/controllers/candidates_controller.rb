@@ -13,7 +13,7 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    @candidates=Candidate.includes([:recruitment_test]).filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
+    @candidates=Candidate.filtered(params[:search]).paginate(:page => params[:page], :per_page => 20)
     @exam=Exam.all
   end
 

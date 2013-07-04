@@ -5,6 +5,7 @@ class RecruitmentTestsController < ApplicationController
   helper_method :sort_column, :sort_direction , :find_extra
   def index
     @recruitment_tests = RecruitmentTest.filtered(params[:search],sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 20)
+    @categories = Category.all
   end
   def show
     @recruitment_test = RecruitmentTest.find(params[:id])

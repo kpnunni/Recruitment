@@ -37,11 +37,11 @@ class Candidate < ActiveRecord::Base
   end
 
   def self.filtered search
-    @candidates = Candidate.order('created_at DESC').includes([:user, :schedule]).all
-    @candidates.select! {|can| can.name.include?(search[:name]) } if search.try(:[],:name).present?
-    @candidates.select! {|can| can.user.user_email.include?(search[:email]) } if search.try(:[],:email).present?
+    @candidates = Candidate.order('created_at DESC').includes([:user, :schedule, :recruitment_test]).all
+    @candidates.select! {|can| can.name.include?(search[:name])                                         } if search.try(:[],:name).present?
+    @candidates.select! {|can| can.user.user_email.include?(search[:email])                             } if search.try(:[],:email).present?
     @candidates.select! {|can| can.phone1.include?(search[:phone])||can.phone2.include?(search[:phone]) } if search.try(:[],:phone).present?
-    @candidates.select! {|can| can.skills.include?(search[:skill]) } if search.try(:[],:skill).present?
+    @candidates.select! {|can| can.skills.include?(search[:skill])                                      } if search.try(:[],:skill).present?
     if search && search[:status]&& search[:status][:type] &&search[:status][:type]=="Exam Scheduled"
       @candidates.select! {|can| !can.schedule.nil? }
     elsif search && search[:status]!=""&&search[:status][:type]=="Exam not Scheduled"

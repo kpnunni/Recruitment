@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
     end
   end
   def index
-    @questions= Question.includes([:options,:category,:complexity,:type,:exams]).filtered(params[:search],params[:srch]).paginate(:page => params[:page], :per_page => 15)
+    @questions= Question.filtered(params[:search]).paginate(:page => params[:page], :per_page => 15)
     if my_roles.include?('Add Questions')&&!my_roles.include?('Manage Questions')
       @questions.select! {|q| q.created_by==current_user.user_email}
     elsif (my_roles.include?('Add Questions Only')&&!my_roles.include?('Manage Questions')&&!my_roles.include?('Add Questions'))
