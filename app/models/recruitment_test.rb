@@ -41,7 +41,7 @@ class RecruitmentTest < ActiveRecord::Base
     count=0
     candidate=self.candidate
     candidate.answers.each do |ans|
-      if ans.question.try(:category_id) == cat.id && ans.answer!=ans.question.answer_id
+      if ans.question.try(:category_id) == cat.id && ans.answer!=ans.question.answer_id && ans.answer!="0"
         count+=1
       end
     end

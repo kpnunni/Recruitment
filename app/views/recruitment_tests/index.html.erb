@@ -25,77 +25,79 @@
   </table>
 
 </form>
+<% if @recruitment_tests.empty? %>
+    <h2>No results..</h2>
+<% else %>
+    <%= form_tag("/recruitment_tests/sent_mail", :method => "post") do  %>
 
-<%= form_tag("/recruitment_tests/sent_mail", :method => "post") do  %>
-
-    <table id="report"  >
-      <tr>
-        <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all" /></th>
-        <th width="20%">Candidate Name</th>
-        <th width="25%">Exam</th>
-        <th width="7%" >Total questions</th>
-        <th width="7%" > Questions attended </th>
-        <th width="6%"><%= sortable "right_answers"%></th>
-        <th width="10%"><%= sortable "mark_percentage"%></th>
-        <th width="20%">Status of Selection</th>
-        <!--<th width="15%">Comments</th>-->
-        <th width="2%"> </th>
-      </tr>
-
-      <% @recruitment_tests.each do |recruitment_test| %>
+        <table id="report"  >
           <tr>
-            <td><%=check_box_tag "email[sent_ids][]",   recruitment_test.id %></td>
-            <td class="lft" >
-              <%= link_to recruitment_test.candidate.name,recruitment_test, title: "Details" %>
-              <%= image_tag('new.gif') if recruitment_test.created_at.to_date == Date.today %>
-            </td>
-            <td class="lft" ><%= recruitment_test.candidate.schedule.exam.name %></td>
-            <td><%= recruitment_test.candidate.schedule.exam.questions.size%></td>
-            <td><%= recruitment_test.no_of_question_attended%></td>
-            <td  ><%= recruitment_test.right_answers%></td>
-            <td ><%= number_with_precision(recruitment_test.mark_percentage, :precision => 2)%></td>
-            <td class="lft">
-              <% if recruitment_test.is_passed=="Pending"  %>
-                  <div style="padding-left: 20px;" id="parent<%= recruitment_test.id %>">
-                    <div style="float:left;">
-                      <%= link_to "Pass" ,"#", class: "btn btn-mini btn-success",id: "p#{recruitment_test.id}", onclick: "decision_pass(#{recruitment_test.id});" , remote: true -%>
-                    </div>
-                    <div style="float:left;">
-                      _or_
-                    </div>
-                    <div style="float:left;">
-                      <%= link_to "Fail" ,"#",  class: "btn btn-mini btn-danger",id: "f#{recruitment_test.id}", onclick: "decision_fail(#{recruitment_test.id});" , remote: true -%>
-                    </div>
-                    <div style="clear:both;">
-                    </div>
+            <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all" /></th>
+            <th width="20%">Candidate Name</th>
+            <th width="25%">Exam</th>
+            <th width="7%" >Total questions</th>
+            <th width="7%" > Questions attended </th>
+            <th width="6%"><%= sortable "right_answers"%></th>
+            <th width="10%"><%= sortable "mark_percentage"%></th>
+            <th width="20%">Status of Selection</th>
+            <!--<th width="15%">Comments</th>-->
+            <th width="2%"> </th>
+          </tr>
+
+          <% @recruitment_tests.each do |recruitment_test| %>
+              <tr>
+                <td><%=check_box_tag "email[sent_ids][]",   recruitment_test.id %></td>
+                <td class="lft" >
+                  <%= link_to recruitment_test.candidate.name,recruitment_test, title: "Details" %>
+                  <%= image_tag('new.gif') if recruitment_test.created_at.to_date == Date.today %>
+                </td>
+                <td class="lft" ><%= recruitment_test.candidate.schedule.exam.name %></td>
+                <td><%= recruitment_test.candidate.schedule.exam.questions.size%></td>
+                <td><%= recruitment_test.no_of_question_attended%></td>
+                <td  ><%= recruitment_test.right_answers%></td>
+                <td ><%= number_with_precision(recruitment_test.mark_percentage, :precision => 2)%></td>
+                <td class="lft">
+                  <% if recruitment_test.is_passed=="Pending"  %>
+                      <div style="padding-left: 20px;" id="parent<%= recruitment_test.id %>">
+                        <div style="float:left;">
+                          <%= link_to "Pass" ,"#", class: "btn btn-mini btn-success",id: "p#{recruitment_test.id}", onclick: "decision_pass(#{recruitment_test.id});" , remote: true -%>
+                        </div>
+                        <div style="float:left;">
+                          _or_
+                        </div>
+                        <div style="float:left;">
+                          <%= link_to "Fail" ,"#",  class: "btn btn-mini btn-danger",id: "f#{recruitment_test.id}", onclick: "decision_fail(#{recruitment_test.id});" , remote: true -%>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                      </div>
+                      <div id="pdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('passed.png',size: "90x25")  %></div>
+                      <div id="fdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('failed.png',size: "90x25")  %></div>
+                  <% elsif recruitment_test.is_passed=="Passed"  %>
+                      <%= image_tag('passed.png',size: "90x25")  %>
+                  <% else %>
+                      <%= image_tag('failed.png',size: "90x25")  %>
+                  <% end %>
+
+                </td>
+                <!--<td class="lft"><%#= recruitment_test.comments%></td>-->
+
+                <td class="see">
+                  <div class="arrow">
                   </div>
-                  <div id="pdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('passed.png',size: "90x25")  %></div>
-                  <div id="fdiv<%= recruitment_test.id %>" style="display: none;"><%= image_tag('failed.png',size: "90x25")  %></div>
-              <% elsif recruitment_test.is_passed=="Passed"  %>
-                  <%= image_tag('passed.png',size: "90x25")  %>
-              <% else %>
-                  <%= image_tag('failed.png',size: "90x25")  %>
-              <% end %>
-
-            </td>
-            <!--<td class="lft"><%#= recruitment_test.comments%></td>-->
-
-            <td class="see">
-              <div class="arrow">
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="10">
-              <%= render 'category_wise_mark',:@recruitment_test => recruitment_test,:@extra_answers => find_extra(recruitment_test)%>
-            </td>
-          </tr>
-      <% end %>
-    </table>
-    <br /> <%= button_to "Sent selected result to admin's email",sent_mail_recruitment_tests_path(:id=>33), data: { confirm: 'Are you sure?' } , class:"btn btn-success" %>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="10">
+                  <%= render 'category_wise_mark',:@recruitment_test => recruitment_test,:@extra_answers => find_extra(recruitment_test)%>
+                </td>
+              </tr>
+          <% end %>
+        </table>
+        <br /> <%= button_to "Sent selected result to admin's email",sent_mail_recruitment_tests_path(:id=>33), data: { confirm: 'Are you sure?' } , class:"btn btn-success" %>
+    <% end %>
+    <h4><%= will_paginate @recruitment_tests ,:container=>false %></h4>
 <% end %>
-<h4><%= will_paginate @recruitment_tests ,:container=>false %></h4>
-
 <script type="text/javascript" >
     function decision_pass(id){
         jQuery('#parent'+id).detach();
