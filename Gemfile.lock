@@ -29,6 +29,7 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
+    atomic (1.1.10)
     better_errors (0.9.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -38,6 +39,9 @@ GEM
     builder (3.0.4)
     bullet (4.6.0)
       uniform_notifier
+    cache_digests (0.3.1)
+      actionpack (>= 3.2)
+      thread_safe
     capybara (2.1.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -169,6 +173,8 @@ GEM
       libv8 (~> 3.11.8.12)
       ref
     thor (0.15.4)
+    thread_safe (0.1.0)
+      atomic
     tilt (1.4.1)
     treetop (1.4.12)
       polyglot
@@ -194,6 +200,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass (~> 2.0.2)
   bullet
+  cache_digests
   capybara
   coffee-rails (~> 3.2.1)
   cucumber-rails
