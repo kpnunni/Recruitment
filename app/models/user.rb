@@ -13,7 +13,9 @@ class User < ActiveRecord::Base
    validates :user_email,    :presence   => true,:format     => { :with => email_regex },:uniqueness => { :case_sensitive => false }
    validates :login_password, :presence => true,:confirmation => true,:length => { :within => 4..20 } ,:if => :there?
    validate :include_role
-
+   def self.ransackable_attributes(auth_object = nil)
+      super & ['user_email', 'isAlive']
+   end
    def set_alive
      self.isAlive= 1
      self.isDelete= 0

@@ -24,6 +24,9 @@ class Candidate < ActiveRecord::Base
   
   after_destroy :chk_schedule
 
+   def self.ransackable_attributes(auth_object = nil)
+      super & ['name', 'phone1', 'phone2', "address", "skills", ]
+   end
   def id_present?
     !id.nil?
   end

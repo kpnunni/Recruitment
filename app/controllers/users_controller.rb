@@ -5,7 +5,9 @@ class UsersController < ApplicationController
     @user= User.find(params[:id])
   end
   def index
-    @users=User.filtered(params[:search],params[:filter],current_user.id).paginate(:page => params[:page], :per_page => 20)
+    @search = User.includes(:roles,:candidate).search(params[:q])
+    @users = @search.result.paginate(page: params[:page], per_page: 15)
+    @search.build_condition
   end
   def edit
     @user=User.find(params[:id])

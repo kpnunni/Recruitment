@@ -1,38 +1,71 @@
-
 <h3 align="right"  ><%= link_to image_tag('adduser.png'), new_user_path, :class=>"dropt", :title=>"add new user" %></h3>
 <h1>Users</h1>
+<!--<form class="filter_form">-->
 
+<!--<table  cellpadding="5" class='filter_table' >-->
+<!--<tr>-->
+<!--<td width="60%" ></td>-->
+<!--<th>Role:</th>-->
+<!--<td><%= select("filter","role", Role.all.collect {|s| [s.role_name, s.id ] }, { :include_blank => true,:selected =>params[:filter] ? params[:filter][:role]:""},onchange: "this.form.submit();") %></td>-->
+<!--<th>Type:</th>-->
+<!--<td><%= select("filter","type", [["Active",1],["Inactive",0]], { :include_blank => true,:selected =>params[:filter] ? params[:filter][:type]:""},onchange: "this.form.submit();") %></td>-->
+<!--<th>Email:</th>-->
+<!--<td><%= text_field_tag "search" , params[:search] ? params[:search] : ""%></td>-->
 
-<form class="filter_form">
+<!--<td class="dropt" title="search"><%=image_submit_tag 'filter.png' , :class => 'search' %></td>-->
+<!--</tr>-->
+<!--</table>-->
 
-  <table  cellpadding="5" class='filter_table' >
-    <tr>
-      <td width="60%" ></td>
-      <th>Role:</th>
-      <td><%= select("filter","role", Role.all.collect {|s| [s.role_name, s.id ] }, { :include_blank => true,:selected =>params[:filter] ? params[:filter][:role]:""},onchange: "this.form.submit();") %></td>
-      <th>Type:</th>
-      <td><%= select("filter","type", [["Active",1],["Inactive",0]], { :include_blank => true,:selected =>params[:filter] ? params[:filter][:type]:""},onchange: "this.form.submit();") %></td>
-      <th>Email:</th>
-      <td><%= text_field_tag "search" , params[:search] ? params[:search] : ""%></td>
+<!--</form>-->
 
-      <td class="dropt" title="search"><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
-    </tr>
-  </table>
-
-</form>
+<%= search_form_for @search do |f| %>
+    <table  cellpadding="5" class='filter_table' >
+      <tr>
+        <th width="60%"></th>
+        <th>Field name</th>
+        <th>Condition</th>
+        <th>Value</th>
+      </tr>
+      <%= f.condition_fields do |c| %>
+          <tr>
+            <td width="60%"></td>
+            <%= c.attribute_fields do |a| %>
+                <td>
+                  <%= a.attribute_select associations: [:roles] %>
+                </td>
+            <% end %>
+            <td>
+              <%= c.predicate_select %>
+            </td>
+            <%= c.value_fields do |v| %>
+                <td>
+                  <%= v.text_field :value %>
+                </td>
+            <% end %>
+          </tr>
+      <% end %>
+      <tr>
+        <td width="90%"></td>
+        <td></td>
+        <td></td>
+        <td class="rght">
+          <div class="actions"><%= f.submit "Search" %></div>
+        </td>
+      </tr>
+    </table>
+<% end %>
 <% if @users.empty? %>
     <h2>No results..</h2>
 <% else %>
     <table  class="index_table"   >
       <tr>
-        <th>User Email</th>
+        <th><%= sort_link @search, :user_email, "Email" %></th>
         <th>User Roles</th>
-        <th>Active?</th>
+        <th><%= sort_link @search, :isAlive, "Active" %></th>
         <th></th>
         <th></th>
         <th></th>
       </tr>
-
       <% @users.each do |user| %>
           <tr>
             <td width="20%" class="lft"  ><%= user.user_email %></td>
@@ -53,10 +86,8 @@
                 <td class="dropt" title="Make Active/Inactive(inactive)" ><%= image_tag('kill.png')%></td>
             <% end %>
             <td class="dropt" title="delete" ><%= link_to  image_tag('delete.png',:alt => "Delete Entry"), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
           </tr>
       <% end %>
     </table>
     <h4><%= will_paginate @users ,:container=>false %></h4>
 <% end %>
-
