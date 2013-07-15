@@ -50,8 +50,8 @@ class AnswersController < ApplicationController
 
   def show
     @each_mode=Setting.find_by_name('time_limit_for_each_question')
-    @candidate=current_user.candidate
-    @answer = Answer.find(params[:id])
+    @answer = Answer.includes([:question, :candidate => [:answers => [:question]]]).find(params[:id])
+    @candidate = @answer.candidate
     @answer.q_no=current_user.candidate.answers.where("id <= ?",@answer.id ).count
     @answer.dec_time =Time.now
     @c_option=Array.new(@answer.question.options.count)
@@ -252,7 +252,7 @@ class AnswersController < ApplicationController
   def next_present_answer(current_id)
     @candidate.answers.where("id > ?",current_id ).sort.each do |ans|
       if (ans.question.allowed_time-ans.time_taken)>3
-        return ans.id
+        return ans
       end
     end
     return  nil
