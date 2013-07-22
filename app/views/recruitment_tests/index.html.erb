@@ -96,7 +96,7 @@
         </table>
         <br /> <%= button_to "Sent selected result to admin's email",sent_mail_recruitment_tests_path(:id=>33), data: { confirm: 'Are you sure?' } , class:"btn btn-success" %>
     <% end %>
-    <h4><%= will_paginate @recruitment_tests ,:container=>false %></h4>
+    <%= pagination_links(@recruitment_tests) %>
 <% end %>
 <script type="text/javascript" >
     function decision_pass(id){

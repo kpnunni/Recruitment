@@ -61,5 +61,5 @@
           </tr>
       <% end %>
     </table>
-    <h4><%= will_paginate @schedules ,:container=>false %></h4>
+    <%= pagination_links(@schedules) %>
 <% end %>

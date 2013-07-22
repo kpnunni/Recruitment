@@ -1,7 +1,4 @@
-
-
 <script type="text/javascript" >
-
     jQuery(document).ready(function() {
         jQuery(".check_boxes").change(function() {
             var checkboxes = jQuery(".check_boxes");
@@ -18,7 +15,6 @@
             }
         });
     });
-
     function show_edit(){
         jQuery("#edit_all").toggle("slow");
     }
@@ -30,7 +26,6 @@
                 document.getElementsByTagName("input")[i].checked = source.checked;
     }
 </script>
-
 <br/>
 <table width="100%" >
   <tr>
@@ -38,16 +33,13 @@
       <%= link_to (image_tag 'category.png'),categories_path,:title=>"Manage Categories"  %>
     </td>
     <td>
-
     </td>
     <td class="rght" >
       <%= link_to image_tag('add.png'), new_question_path, :class=>"dropt", :title=>"add new question"   %>
     </td>
-
   </tr>
 </table>
 <h1>Available Questions</h1>
-
 <% if !(my_roles.include?('Add Questions Only')&&!my_roles.include?('Manage Questions')&&!my_roles.include?('Add Questions')) %>
     <div class="filter_options_container">
       <form class="filter_form">
@@ -75,22 +67,15 @@
             <td class="dropt" title="search" ><%=image_submit_tag 'filter.png' , :class => 'search' %></td>
           </tr>
         </table>
-
       </form>
     </div>
-
 <% end %>
-
-
-
+<%= pagination_links(@questions) %>
+<br/>
 <% if @questions.empty? %>
     <h2>No results..</h2>
 <% else %>
     <%= form_tag("/questions/delete_all", :method => "post") do  %>
-
-
-
-
         <table  class="index_table" >
           <tr>
             <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all to delete" class="check_boxes" /></th>
@@ -101,7 +86,6 @@
             <th width="5%"></th>
             <th width="5%"></th>
           </tr>
-
           <% @questions.each_with_index do |question,i| %>
               <tr>
                 <td><%= check_box_tag "question[ids][]",  question.id,false, class: "check_boxes" %></td>
@@ -123,14 +107,9 @@
                   <% end %>
                 </td>
               </tr>
-
-
-
           <% end %>
         </table>
-
         <br />
-
         <div id="delete_all" style="display: none;">
           <%= submit_tag "Delete selected", class: "btn btn-danger" , data: { confirm: 'Are you sure?' } -%>
           <%= link_to_function "Change allowed time of selected questions", 'show_edit();' , class: "btn" , id: "editt"  -%>
@@ -141,15 +120,6 @@
           Allowed Time:<%= text_field_tag "new_allowed_time","", :maxlength=>3 ,  :class => "text_box"   %>
           <%= submit_tag "Update all",  class: "btn btn-warning", data: { confirm: 'Are you sure?' }  %>
         </div>
-
-
     <% end %>
-    <h4><%= will_paginate @questions ,:container=>false %></h4>
+    <%= pagination_links(@questions) %>
 <% end %>
-
-
-
-
-
-
-
