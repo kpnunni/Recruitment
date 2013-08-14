@@ -29,21 +29,18 @@
     <th width="5%" >Complexity</th>
   </tr>
   <% @recruitment_test.candidate.answers.each do |ans| %>
-      <tr>
+      <%if ans.question %>
+          <tr>
         <td class="lft" ><%=ans.question.question   %></td>
-        <% i=0 %>
-        <td><%ans.question.options.each do |op|  %>
+        <td><%ans.question.options.each_with_index do |op,i|  %>
               <% if ans.answer[i]=="1" %>
-                  <%='|'+op.option+'|'  %>
+                  <%='['+op.option+']'  %>
               <% end %>
-              <% i+=1 %>
           <% end %>
         </td>
-
-        <%#=ans.question.answer_id  %>
         <td><%ans.question.options.each do |op|  %>
               <% if op.is_right  %>
-                  <%='|'+op.option+'|'  %>
+                  <%='['+op.option+']'  %>
               <% end %>
           <% end %>
         </td>
@@ -52,6 +49,7 @@
         <td><%=ans.question.complexity.complexity  %></td>
 
       </tr>
+          <% end %>
   <% end %>
 
 

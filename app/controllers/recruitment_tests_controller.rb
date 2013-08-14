@@ -8,8 +8,9 @@ class RecruitmentTestsController < ApplicationController
     @categories = Category.all
   end
   def show
-    @recruitment_test = RecruitmentTest.find(params[:id])
+    @recruitment_test = RecruitmentTest.includes(:candidate => [ :answers =>[:question=>[:options,:complexity, :category]] , :schedule => [:exam => [:questions=>[:complexity, :category]]] ] ).find(params[:id])
     @extra = find_extra(@recruitment_test)
+    @categories = Category.all
   end
   def update
     @recruitment_test = RecruitmentTest.find(params[:id])
