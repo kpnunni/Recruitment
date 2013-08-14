@@ -31,8 +31,10 @@ class RecruitmentTest < ActiveRecord::Base
   def each_right_answers(cat)
     count=0
     candidate.answers.each do |ans|
-      if ans.question.try(:category_id) == cat.id && ans.answer==ans.question.answer_id
-        count+=1
+      if candidate.schedule.exam.questions.include?(ans.question)
+        if ans.question.try(:category_id) == cat.id && ans.answer==ans.question.answer_id
+          count+=1
+        end
       end
     end
     count
@@ -41,8 +43,10 @@ class RecruitmentTest < ActiveRecord::Base
     count=0
     candidate=self.candidate
     candidate.answers.each do |ans|
-      if ans.question.try(:category_id) == cat.id && ans.answer!=ans.question.answer_id && ans.answer!="0"
-        count+=1
+      if candidate.schedule.exam.questions.include?(ans.question)
+        if ans.question.try(:category_id) == cat.id && ans.answer!=ans.question.answer_id && ans.answer!="0"
+          count+=1
+        end
       end
     end
     count
@@ -56,7 +60,7 @@ class RecruitmentTest < ActiveRecord::Base
     q_nos=self.candidate.schedule.exam.questions.select { |q| q.category_id == cat.id}.size
     right_ans=self.each_right_answers(cat)
     wrong_ans=self.each_wrong_answers(cat)/4.0
-    total_q=self.candidate.schedule.exam.no_of_question
+    total_q=self.candidate.answers.size
     if ((self.right_answers.to_f/total_q)*100-self.mark_percentage)>1
       right_ans-wrong_ans
     else
@@ -69,7 +73,7 @@ class RecruitmentTest < ActiveRecord::Base
     q_nos=self.candidate.schedule.exam.questions.select { |q| q.category_id == cat.id}.size
     right_ans=self.each_right_answers(cat).to_f
     wrong_ans=self.each_wrong_answers(cat)/4.0
-    total_q=self.candidate.schedule.exam.no_of_question
+    total_q=self.candidate.answers.size
     if ((self.right_answers.to_f/total_q)*100-self.mark_percentage)>1     #negative mark is there in his exam
       mark_p=((right_ans-wrong_ans)/q_nos)*100
     else
