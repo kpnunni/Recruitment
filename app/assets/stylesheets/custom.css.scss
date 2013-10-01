@@ -784,8 +784,14 @@ a:active  { color: #ccc }  /* active links    */
   background-color: #adf5db !important;
   border-radius: 3px;
 }
+.hide{}
+@media print
+{
+  DIV.navbar-inner, .filter_form, #add_new, #print_link, TD.dropt, FOOTER.footer, #hide, #new_exam, #new_schedule  {
+    display: none;
+  }
 
-
+}
 
 
 

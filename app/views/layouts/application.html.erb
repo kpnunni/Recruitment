@@ -1,62 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
   <title>SuyatiRecruitmentTest</title>
-
-
   <%= stylesheet_link_tag    "application", :media => "all" %>
-     <%= javascript_include_tag "jquery" %>
+  <%= javascript_include_tag "jquery" %>
   <%= javascript_include_tag "application" %>
-
-
-
   <%= javascript_include_tag "prototype" %>
-
-
   <%#= javascript_include_tag "widgEditor" %>
-
   <%= javascript_include_tag "bootstrap" %>
-
-
   <%= csrf_meta_tags %>
-   <%= stylesheet_link_tag    "header" %>
-    <%= render 'layouts/shim' %>
+  <%= stylesheet_link_tag    "header" %>
+  <%= render 'layouts/shim' %>
 </head>
 <body>
-
-    <%= render 'layouts/header' %>
-    <div class="container" style="width: 960px;">
-            <% if flash.any? %>
-              <div class="flash">
-                <% if flash[:notice] %>
-                  <div class="notice"><%= flash[:notice] %></div>
-                <% end %>
-                <% if flash[:warning] %>
-                  <div class="warning"><%= flash[:warning] %></div>
-                <% end %>
-                <% if flash[:error] %>
-                  <div class="error"><%= flash[:error] %></div>
-                <% end %>
-                <% if flash[:alert] %>
-                  <div class="alert"><%= flash[:alert] %></div>
-                <% end %>
-              </div>
-            <% end %>
-
-
-
-	    <%= yield %>
-
-        <div id="submitting" style ="display: none;" align=center >
-            <%=  image_tag 'submitting5.gif'%>
-        </div>
-
-
-    </div>
-      <%= render 'layouts/footer' %>
-    
+<%= render 'layouts/header' %>
+<div class="container" style="width: 960px;">
+  <% if flash.any? %>
+      <div class="flash">
+        <% if flash[:notice] %>
+            <div class="notice"><%= flash[:notice] %></div>
+        <% end %>
+        <% if flash[:warning] %>
+            <div class="warning"><%= flash[:warning] %></div>
+        <% end %>
+        <% if flash[:error] %>
+            <div class="error"><%= flash[:error] %></div>
+        <% end %>
+        <% if flash[:alert] %>
+            <div class="alert"><%= flash[:alert] %></div>
+        <% end %>
+      </div>
+  <% end %>
+  <%= yield %>
+  <div id="submitting" style ="display: none;" align=center >
+    <%=  image_tag 'submitting5.gif'%>
+  </div>
+</div>
+<%= render 'layouts/footer' %>
 </body>
 </html>
 

@@ -17,78 +17,76 @@
 </form>
 -->
 
-<% cache @users do %>
-    <%= search_form_for @search do |f| %>
-        <table  cellpadding="5" class='filter_table' >
+<%= search_form_for @search do |f| %>
+    <table  cellpadding="5" class='filter_table' >
+      <tr>
+        <th width="60%"></th>
+        <th>Field name</th>
+        <th>Condition</th>
+        <th>Value</th>
+      </tr>
+      <%= f.condition_fields do |c| %>
           <tr>
-            <th width="60%"></th>
-            <th>Field name</th>
-            <th>Condition</th>
-            <th>Value</th>
-          </tr>
-          <%= f.condition_fields do |c| %>
-              <tr>
-                <td width="60%"></td>
-                <%= c.attribute_fields do |a| %>
-                    <td>
-                      <%= a.attribute_select associations: [:roles] %>
-                    </td>
-                <% end %>
+            <td width="60%"></td>
+            <%= c.attribute_fields do |a| %>
                 <td>
-                  <%= c.predicate_select %>
+                  <%= a.attribute_select associations: [:roles] %>
                 </td>
-                <%= c.value_fields do |v| %>
-                    <td>
-                      <%= v.text_field :value %>
-                    </td>
-                <% end %>
-              </tr>
-          <% end %>
-          <tr>
-            <td width="90%"></td>
-            <td></td>
-            <td></td>
-            <td class="rght">
-              <div class="actions"><%= f.submit "Search" %></div>
+            <% end %>
+            <td>
+              <%= c.predicate_select %>
             </td>
+            <%= c.value_fields do |v| %>
+                <td>
+                  <%= v.text_field :value %>
+                </td>
+            <% end %>
           </tr>
-        </table>
-    <% end %>
-    <% if @users.empty? %>
-        <h2>No results..</h2>
-    <% else %>
-        <table  class="index_table"   >
+      <% end %>
+      <tr>
+        <td width="90%"></td>
+        <td></td>
+        <td></td>
+        <td class="rght">
+          <div class="actions"><%= f.submit "Search" %></div>
+        </td>
+      </tr>
+    </table>
+<% end %>
+<% if @users.empty? %>
+    <h2>No results..</h2>
+<% else %>
+    <table  class="index_table"   >
+      <tr>
+        <th><%= sort_link @search, :user_email, "Email" %></th>
+        <th>User Roles</th>
+        <th><%= sort_link @search, :isAlive, "Active" %></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <% @users.each do |user| %>
           <tr>
-            <th><%= sort_link @search, :user_email, "Email" %></th>
-            <th>User Roles</th>
-            <th><%= sort_link @search, :isAlive, "Active" %></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <td width="20%" class="lft"  ><%= user.user_email %></td>
+            <td width="60%" class="lft"  >
+              <% if user.roles.size==16 %>
+                  Admin
+              <% else %>
+                  <%= user.roles.map(&:role_name).join(",") %>
+              <% end %>
+            </td>
+            <td width="10%"><%=user.isAlive? ? (image_tag 'green.png',  :title=>"yes") :( image_tag 'red.png', :title=>"no")%></td>
+            <td class="dropt" title="edit" >
+              <%= link_to image_tag('edit.png'),(user.candidate ? edit_candidate_path(user.candidate) : edit_user_path(user)) %>
+            </td>
+            <% if my_roles.include?('Manage Login')  %>
+                <td class="dropt" title="Make Active/Inactive" ><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put%></td>
+            <% else %>
+                <td class="dropt" title="Make Active/Inactive(inactive)" ><%= image_tag('kill.png')%></td>
+            <% end %>
+            <td class="dropt" title="delete" ><%= link_to  image_tag('delete.png',:alt => "Delete Entry"), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
-          <% @users.each do |user| %>
-              <tr>
-                <td width="20%" class="lft"  ><%= user.user_email %></td>
-                <td width="60%" class="lft"  >
-                  <% if user.roles.size==16 %>
-                      Admin
-                  <% else %>
-                      <%= user.roles.map(&:role_name).join(",") %>
-                  <% end %>
-                </td>
-                <td width="10%"><%=user.isAlive? ? (image_tag 'green.png',  :title=>"yes") :( image_tag 'red.png', :title=>"no")%></td>
-                <td class="dropt" title="edit" >
-                  <%= link_to image_tag('edit.png'),(user.candidate ? edit_candidate_path(user.candidate) : edit_user_path(user)) %>
-                </td>
-                <% if my_roles.include?('Manage Login')  %>
-                    <td class="dropt" title="Make Active/Inactive" ><%= link_to   image_tag('kill.png'),delete_user_path(user),method: :put%></td>
-                <% else %>
-                    <td class="dropt" title="Make Active/Inactive(inactive)" ><%= image_tag('kill.png')%></td>
-                <% end %>
-                <td class="dropt" title="delete" ><%= link_to  image_tag('delete.png',:alt => "Delete Entry"), user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-              </tr>
-          <% end %>
-        </table>
-        <%= pagination_links(@users) %>
-    <% end %>
+      <% end %>
+    </table>
+    <%= pagination_links(@users) %>
 <% end %>

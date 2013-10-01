@@ -1,5 +1,4 @@
-<h3 align="right"></h3>
-<table width="100%" >
+ <table width="100%" id="new_exam" >
   <tr>
     <td class="lft" >
       <%= link_to (image_tag 'instructions.png'), instructions_path, :class=>"dropt", :title=>"manage instructions"  %>
@@ -31,6 +30,9 @@
     </tr>
   </table>
 </form>
+<div style="text-align: right;">
+  <%= link_to "PRINT", '#', onclick: "javascript:print()", id: "print_link", class: "btn btn-xs" %>
+</div>
 <% if @exams.empty? %>
     <h2>No results..</h2>
 <% else %>
@@ -39,10 +41,10 @@
         <th>Name</th>
         <th>Questions</th>
         <th>Duration(minutes)</th>
-        <th>Description</th>
-        <th>Preview Instructions</th>
-        <th></th>
-        <th></th>
+        <th id="hide">Description</th>
+        <th id="hide">Preview Instructions</th>
+        <th id="hide"></th>
+        <th id="hide"></th>
 
       </tr>
       <% image_tag 'edit.jpg' %>
@@ -52,7 +54,7 @@
             <td width="15%" ><%= exam.no_of_question  %></td>
             <td width="15%" ><%= exam.total_time/1.minutes  %></td>
             <td width="35%" class="lft"   ><%= exam.description  %></td>
-            <td width="15%"><%= link_to 'Show','#',:onclick=>"open_instruction(#{exam.id});" ,:remote=>true%>
+            <td width="15%" id="hide"><%= link_to 'Show','#',:onclick=>"open_instruction(#{exam.id});" ,:remote=>true%>
 
               <div style="display: none;"  id= <%=exam.id%>  >
                 <%@exam = exam  %>
@@ -69,11 +71,11 @@
                 <% end %>
               </div>
             </td>
-            <td width="5%" ><%= link_to image_tag('edit.png'), edit_exam_path(exam),title: "edit" %></td>
+            <td width="5%" id="hide"><%= link_to image_tag('edit.png'), edit_exam_path(exam),title: "edit" %></td>
             <% if exam.schedules.where("sh_date >= ?",Time.now).empty? %>
-                <td width="5%"><%= link_to  image_tag('delete.png'), exam, method: :delete, data: { confirm: 'Are you sure?' } ,:title => "delete" %></td>
+                <td width="5%" id="hide"><%= link_to  image_tag('delete.png'), exam, method: :delete, data: { confirm: 'Are you sure?' } ,:title => "delete" %></td>
             <% else %>
-                <td width="5%"><%= image_tag('delete_x.png',:title => "This exam is scheduled.You can't delete" ) %></td>
+                <td width="5%" id="hide"><%= image_tag('delete_x.png',:title => "This exam is scheduled.You can't delete" ) %></td>
             <% end %>
           </tr>
       <% end %>

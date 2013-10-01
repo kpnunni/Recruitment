@@ -1,4 +1,4 @@
-<h3 align="right"><%= link_to image_tag('addsh.png'), new_schedule_path, :class=>"dropt", :title=>"new schedule" %></h3>
+<h3 align="right" id="new_schedule"><%= link_to image_tag('addsh.png'), new_schedule_path, :class=>"dropt", :title=>"new schedule" %></h3>
 <h1>Scheduled Exams</h1>
 <form class="filter_form">
   <table  cellpadding="5" class="filter_table"   >
@@ -17,6 +17,9 @@
     </tr>
   </table>
 </form>
+<div style="text-align: right;">
+  <%= link_to "PRINT", '#', onclick: "javascript:print()", id: "print_link", class: "btn btn-xs" %>
+</div>
 <% if @schedules.empty? %>
     <h2>No results..</h2>
 <% else %>
@@ -28,8 +31,8 @@
         <th>Created at</th>
         <th>Last edited at</th>
         <th>Time Remaining</th>
-        <th></th>
-        <th></th>
+        <th id="hide"></th>
+        <th id="hide"></th>
       </tr>
 
       <% @schedules.each do |schedule| %>
@@ -49,14 +52,14 @@
 
 
             <% if my_roles.include?('Re Schedule') %>
-                <td ><%= link_to image_tag('edit.png'), edit_schedule_path(schedule),:title=>"Re schedule" %></td>
+                <td  id="hide"><%= link_to image_tag('edit.png'), edit_schedule_path(schedule),:title=>"Re schedule" %></td>
             <% else %>
-                <td ><%=  image_tag 'edit_x.png' ,:title => "can't re schedule" %></td>
+                <td  id="hide"><%=  image_tag 'edit_x.png' ,:title => "can't re schedule" %></td>
             <% end %>
             <% if my_roles.include?('Cancel Schedule') %>
-                <td ><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } ,:title=>"cancel schedule"%></td>
+                <td  id="hide"><%= link_to  image_tag('delete.png'), schedule, method: :delete, data: { confirm: 'Are you sure?' } ,:title=>"cancel schedule"%></td>
             <% else %>
-                <td ><%=  image_tag 'delete_x.png' , :title=>"can't cancel schedule"%></td>
+                <td  id="hide"><%=  image_tag 'delete_x.png' , :title=>"can't cancel schedule"%></td>
             <% end %>
           </tr>
       <% end %>
