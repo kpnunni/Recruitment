@@ -85,7 +85,7 @@ class QuestionsController < ApplicationController
     @question.destroy
     redirect_to questions_url, notice: 'Question was successfully deleted.'
   end
-  def delete_all
+  def multiple
     if params[:commit] == "Delete selected"
       flag=0
       nothing_to_delete=1
@@ -104,7 +104,7 @@ class QuestionsController < ApplicationController
       else
         flash[:notice]="Question's' deleted successfully"
       end
-    else    #edit all
+    elsif params[:commit] == "Update all"    #edit all
       time = params[:new_allowed_time].to_i
       if time > 0 and time <= 200
         Question.update_all({allowed_time: time},{ id:  params[:question][:ids]})
@@ -112,10 +112,18 @@ class QuestionsController < ApplicationController
       else
         flash[:error]="Invalid allowed time"
       end
+    else  #to print
+       if params[:question] && !params[:question][:ids].empty?
+         @questions =  Question.where(id: params[:question][:ids]).reverse
+         render print_questions_questions_path(:format => 'pdf')
+         return
+       else
+         flash[:error]="Nothing to print"
+       end
     end
     redirect_to questions_path
   end
-  def update_all
+  def print_questions
   end
   def delete_image
     @question=Question.find(params[:id])

@@ -75,7 +75,7 @@
 <% if @questions.empty? %>
     <h2>No results..</h2>
 <% else %>
-    <%= form_tag("/questions/delete_all", :method => "post") do  %>
+    <%= form_tag("/questions/multiple", :method => "post") do  %>
         <table  class="index_table" >
           <tr>
             <th width="3%"><input type="checkbox" onClick="toggle1(this)" title="Select/Unselect all to delete" class="check_boxes" /></th>
@@ -111,6 +111,7 @@
         </table>
         <br />
         <div id="delete_all" style="display: none;">
+          <%= submit_tag "Print selected", class: "btn btn-success" -%>
           <%= submit_tag "Delete selected", class: "btn btn-danger" , data: { confirm: 'Are you sure?' } -%>
           <%= link_to_function "Change allowed time of selected questions", 'show_edit();' , class: "btn" , id: "editt"  -%>
         </div>

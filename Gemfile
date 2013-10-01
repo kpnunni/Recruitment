@@ -65,5 +65,5 @@ group :development, :test do
     gem 'railroady'
 end
 gem "jquery-rails"
-gem "friendly_id"
-
+#gem "friendly_id"
+gem 'prawn_rails'

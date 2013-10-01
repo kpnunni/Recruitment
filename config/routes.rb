@@ -11,7 +11,8 @@ Test::Application.routes.draw do
   resources :templates
   resources :questions do
     collection do
-      post :delete_all
+      post :multiple
+      get :print_questions
     end
     member do
       get :delete_image
