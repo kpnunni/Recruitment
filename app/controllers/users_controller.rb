@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
   def index
     @search = User.includes(:roles,:candidate).search(params[:q])
-    @users = @search.result.paginate(page: params[:page], per_page: 15)
+    @users = @search.result.delete_if {|user| user.has_role?("Candidate")}.paginate(page: params[:page], per_page: 15)
     @search.build_condition
   end
   def edit
