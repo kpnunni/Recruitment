@@ -27,10 +27,12 @@ class SettingsController < ApplicationController
     else
       @auto_result.update_attribute(:status,:off)
     end
-    if params[:each_mode]=="1"
+    if params[:each_mode]=="1" && @each_mode.status == "off"
       @each_mode.update_attribute(:status,:on)
-    else
+      increase_total_time
+    elsif params[:each_mode].nil? && @each_mode.status == "on"
       @each_mode.update_attribute(:status,:off)
+      reduce_total_time
     end
     @from.update_attribute(:status,params[:from].to_i)
     @untill.update_attribute(:status,params[:untill].to_i)
@@ -41,4 +43,19 @@ class SettingsController < ApplicationController
        redirect_to root_path
     end
   end
+  def reduce_total_time
+    Exam.all.each do |exam|
+      current_time = exam.total_time
+      new_time = current_time * 2/3
+      exam.update_attribute(:total_time, new_time)
+    end
+  end
+
+  def increase_total_time
+    Exam.all.each do |exam|
+      new_time = exam.questions.collect {|v| v.allowed_time}.sum
+      exam.update_attribute(:total_time, new_time)
+    end
+  end
+
 end
