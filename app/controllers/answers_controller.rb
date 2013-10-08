@@ -137,6 +137,7 @@ class AnswersController < ApplicationController
   def feed_back
     @recruitment_test = RecruitmentTest.find(params[:id])
     @candidate = current_user.candidate.id
+    call_rake :send_result_mail, :candidate_ids => params[:id]
     sign_out
   end
 
