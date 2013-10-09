@@ -546,6 +546,12 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   padding-left: 2px;
   float: right;
   width: 96%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .home_border{

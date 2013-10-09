@@ -44,14 +44,14 @@
                   <td width="20%" class="lft"><%= candidate.user.user_email  %></td>
                   <td width="10%" class="lft"><%= candidate.phone1 %></td>
                   <td width="20%" class="lft"><%= candidate.skills%></td>
-                  <td width="15%" title="schedule a test"  >
+                  <td width="15%" >
                     <% if candidate.schedule.nil?  %>
                         <%= link_to  'Schedule Now', '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %>
                     <% elsif candidate.recruitment_test.nil? %>
                         <% if candidate.schedule.candidates.count<2 %>
-                            <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %>
+                            <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});", title: "Reschedule" %>
                         <% else %>
-                            <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), edit_schedule_path(candidate.schedule.id) %>
+                            <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), edit_schedule_path(candidate.schedule.id), title: "Reschedule" %>
                         <% end %>
                     <% elsif candidate.recruitment_test %>
                         <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>

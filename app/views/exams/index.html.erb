@@ -53,7 +53,7 @@
             <td width="20%" class="lft"  ><%= link_to exam.name, exam_path(exam),title: "detail" %></td>
             <td width="15%" ><%= exam.no_of_question  %></td>
             <td width="15%" ><%= exam.total_time/1.minutes  %></td>
-            <td width="35%" class="lft"   ><%= exam.description  %></td>
+            <td width="25%" class="lft"   ><%= exam.description  %></td>
             <td width="15%" id="hide"><%= link_to 'Show','#',:onclick=>"open_instruction(#{exam.id});" ,:remote=>true%>
 
               <div style="display: none;"  id= <%=exam.id%>  >
