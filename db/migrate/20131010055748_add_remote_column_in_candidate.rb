@@ -1,6 +1,6 @@
 class AddRemoteColumnInCandidate < ActiveRecord::Migration
   def up
-    add_column :schedules ,:remote ,:Boolean, default: true
+    add_column :schedules ,:remote ,:Boolean, default: false
   end
 
   def down
