@@ -13,7 +13,8 @@
       <%= f.fields_for :candidate_ids do |f1| %>
           <%= f1.check_box   candidate.id ,:checked=>true,:style=>"display: none",:id=>"sh"+(candidate.id/15.0).to_s+"c_id"%>
       <% end %>
-
+      <br/>
+       <%= f.check_box  :remote %> Attending the exam from remote location?
       <br/><br/>
       <%= f.submit  class: "btn btn-large btn-primary",:disable_with=>"Scheduling..",:id=>"sh"+(candidate.id/15.0).to_s+"submit" ,:onclick=>"getElementById('#{'sh'+candidate.id.to_s}').show();this.hide();"%>
       <br/>

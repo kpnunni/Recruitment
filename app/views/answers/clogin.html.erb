@@ -1,7 +1,12 @@
-<div class="error">
-    <b>You can't enter to the site because any of the following reasons,     </b><br/>
-    -You are not an 'Active' candidate. Contact HR for make 'Active'<br/>
-    -You are not a valid candidate. <br/>
-    -Your scheduled exam was cancelled.   <br/>
-    -You already attends the exam.  <br/>
-</div>
+<% if @user and @user.candidate and @user.candidate.schedule and @user.candidate.schedule.remote %>
+    <div class="warning">
+      <%= "-Since you are attending the exam from the remote place, HR needs to activate your account. Please contact HR for make 'Active'" %><br/>
+    </div>
+<% else %>
+    <div class="error">
+      <b>You can't enter to the site because any of the following reasons, </b><br/>
+      -You are not a valid candidate. <br/>
+      -Your scheduled exam was cancelled.   <br/>
+      -You already attends the exam.  <br/>
+    </div>
+<% end %>

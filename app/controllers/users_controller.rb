@@ -49,14 +49,18 @@ class UsersController < ApplicationController
       @user.isAlive= false
       @user.isDelete= true
       @user.save
-      flash[:warning]="User '#{@user.user_email}' is now Inactive"
+      flash[:notice]="User '#{@user.user_email}' is now Inactive"
     else
       @user.isAlive=  true
       @user.isDelete=  false
       @user.save
       flash[:notice]="User '#{@user.user_email}' is now Active"
     end
-    redirect_to users_path
+    if params[:from] == "candidate"
+      redirect_to candidates_path, notice: "Activation changed for candidate '#{@user.candidate.name}'"
+    else
+      redirect_to users_path
+    end
   end
   def profile
     @user=User.find(params[:id])

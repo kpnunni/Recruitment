@@ -40,7 +40,12 @@
             </tr>
             <% @candidates.each do |candidate| %>
                 <tr>
-                  <td width="15%" class="lft"  ><%= candidate.name %></td>
+                  <td width="15%" class="lft"  >
+                    <%= candidate.name %>
+                    <%  if candidate.schedule and candidate.schedule.remote and candidate.recruitment_test.nil? %>
+                        <%= link_to   candidate.user.isAlive? ? (image_tag 'active.png',  :title=>"Active candidate, Click to Toggle the activation") :( image_tag 'inactive.png', :title=>"Inactive candidate, Click to Toggle the activation"),delete_user_path(candidate.user,from: "candidate"),method: :put%>
+                    <% end %>
+                  </td>
                   <td width="20%" class="lft"><%= candidate.user.user_email  %></td>
                   <td width="10%" class="lft"><%= candidate.phone1 %></td>
                   <td width="20%" class="lft"><%= candidate.skills%></td>
@@ -60,14 +65,14 @@
                       <%= render 'schedule', :candidate => candidate  %>
                     </div>
                   </td>
-                  <% if !candidate.recruitment_test.nil?%>
+                  <% if candidate.recruitment_test %>
                       <td width="10%"><%="Completed"%></td>
-                  <% elsif !candidate.schedule.nil?&&candidate.schedule.created_at==candidate.schedule.updated_at%>
+                  <% elsif candidate.schedule && candidate.schedule.created_at==candidate.schedule.updated_at%>
                       <td width="10%">
                         <%="Scheduled"%>
                         <%= link_to image_tag('resent.png'), resent_schedule_email_candidate_path(candidate,status: "schedule"), title: "Resent schedule email" %>
                       </td>
-                  <% elsif !candidate.schedule.nil?%>
+                  <% elsif candidate.schedule%>
                       <td width="10%">
                         <%="Re Scheduled"%>
                         <%= link_to image_tag('resent.png'), resent_schedule_email_candidate_path(candidate,status: "re-schedule"), title: "Resent re-schedule email" %>

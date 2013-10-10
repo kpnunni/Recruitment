@@ -69,6 +69,7 @@ class CandidatesController < ApplicationController
       if @schedule.save
         call_rake :send_one_schedule_mail, :candidate_id =>  @candidate.id
         flash[:notice]='Exam was successfully scheduled.'
+        @candidate.user.update_attribute(:isAlive,false) if @schedule.remote
       else
         flash[:error]='Error on scheduling.'
       end
@@ -79,6 +80,7 @@ class CandidatesController < ApplicationController
       if  @schedule.update_attributes(params[:schedule])
         call_rake :send_one_update_schedule_mail, :candidate_id =>  @candidate.id
         flash[:notice]='Exam was successfully re-scheduled.'
+        @candidate.user.update_attribute(:isAlive,false) if @schedule.remote
       else
         flash[:error]='Error on re-scheduling.'
       end

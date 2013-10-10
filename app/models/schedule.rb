@@ -1,6 +1,6 @@
 class Schedule < ActiveRecord::Base
   attr_accessor :candidate_ids
-  attr_accessible  :created_by,:updated_by,:exam_id,:sh_date,:candidate_ids
+  attr_accessible  :created_by,:updated_by,:exam_id,:sh_date,:candidate_ids , :remote
   has_many :candidates
   belongs_to :exam
   accepts_nested_attributes_for :candidates

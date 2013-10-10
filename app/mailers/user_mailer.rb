@@ -8,9 +8,12 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.user_email, :subject => "Welcome to Suyati online recruitment test Site")
   end
   def schedule_email(user)
-    @content=Template.find(1)
     @user = user
-    @url = "recruitment-suyati.herokuapp.com/answers/#{user.salt}/clogin"
+    if @user.candidate.schedule.remote
+      @content=Template.find(6)
+    else
+      @content=Template.find(1)
+    end
     mail(:to => user.user_email, :subject => "Recruitment test")
   end
   def admin_schedule_email (admin,schedule)
@@ -21,7 +24,6 @@ class UserMailer < ActionMailer::Base
   def update_schedule_email(user)
     @content=Template.find(2)
     @user = user
-    @url = "recruitment-suyati.herokuapp.com/answers/#{user.salt}/clogin"
     mail(:to => user.user_email, :subject => "Update schedule")
   end
   def admin_update_schedule_email(user,schedule)
@@ -46,7 +48,7 @@ class UserMailer < ActionMailer::Base
   def admin_result_email(user,result)
     @results = result
     @user = user
-    mail(:to => user.user_email, :subject => "Test cleared")
+    mail(:to => user.user_email, :subject => "Test completed")
   end
   def result_email(user)
     @pass=Template.find(4)
