@@ -34,6 +34,7 @@ gem 'jquery-rails'
  #  gem 'thin'
  group :production do
   gem 'pg'
+  gem 'heroku_rails_deflate'
  # gem 'therubyracer-heroku'
 end
 group :test, :development do
