@@ -4,7 +4,8 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h3>Test Results </h3>
+    <h2> Mark Details </h2>
+    <h3> <%= "Candidate: #{@results.first.candidate.name}(#{@results.first.candidate.user.user_email})" if @results.size == 1 %></h3>
 
     <p>
       <table style="width: 100%; border: 2px;" border="2px">
@@ -21,7 +22,11 @@
           <tr>
             <td class="lft" ><%= result.candidate.name %></td>
             <td class="lft" ><%= result.candidate.schedule.exam.name %></td>
-            <td><%= result.candidate.schedule.exam.questions.count%></td>
+            <td>
+              <%= result.candidate.schedule.exam.questions.size%>
+              <% extra = result.candidate.answers.size - result.candidate.schedule.exam.questions.size %>
+              <%= " + #{extra}" if extra > 0 %>
+            </td>
             <td><%= result.no_of_question_attended%></td>
             <td  ><%= result.right_answers%></td>
             <td ><%= number_with_precision(result.mark_percentage, :precision => 2)%></td>
@@ -31,10 +36,9 @@
     </p>
 
     <h3>Category wise cut off:</h3>
-    <br/>
     <p>
        <% @results.each do |result| %>
-        <h3>Candidate: <%= result.candidate.name  %></h3>
+        <h3> <%= "Candidate: #{result.candidate.name}" if @results.size > 1 %></h3>
         <p>
          <table style="width: 100%; border: 2px;" border="2px" >
           <tr>
@@ -47,7 +51,7 @@
           </tr>
              <% Category.all.each do |cat| %>
              <% if result.candidate.schedule.exam.questions.where("category_id=?",cat.id).count!=0 %>
-    
+
               <tr>
                 <td><%=cat.category    %></td>
                 <td><%= result.candidate.schedule.exam.questions.where("category_id=?",cat.id).count %></td>

@@ -55,7 +55,11 @@
                   <%= image_tag('new.gif') if recruitment_test.created_at.to_date == Date.today %>
                 </td>
                 <td class="lft" ><%= recruitment_test.candidate.schedule.exam.name %></td>
-                <td><%= recruitment_test.candidate.answers.size%></td>
+                <td>
+                  <%= recruitment_test.candidate.schedule.exam.questions.size %>
+                  <% extra = recruitment_test.candidate.answers.size - recruitment_test.candidate.schedule.exam.questions.size %>
+                  <%= " + #{extra}" if extra > 0 %>
+                </td>
                 <td><%= recruitment_test.no_of_question_attended%></td>
                 <td  ><%= recruitment_test.right_answers%></td>
                 <td ><%= number_with_precision(recruitment_test.mark_percentage, :precision => 2)%></td>
