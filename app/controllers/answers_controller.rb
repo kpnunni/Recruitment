@@ -204,7 +204,7 @@ class AnswersController < ApplicationController
   end
 
   def answered_all
-    @candidate.answers.where(answer: '0').present?  ?  false : true
+    @candidate.answers.where(answer: '0').count <= 1 ?  true : false
   end
 
   def more_questions_available
