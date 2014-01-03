@@ -209,19 +209,18 @@ class AnswersController < ApplicationController
 
   def more_questions_available
     exam_question_ids = @candidate.answers.map(&:question_id)
-    exam_questions = Question.find(exam_question_ids)
-    catogry=exam_questions.map(&:category_id).uniq
-    questions = Question.where("category_id in (?)",catogry)
-    questions = questions - exam_questions
+    more_category = Category.where("category = 'Additional'").first.id
+    questions = Question.where("category_id = ? and id not in (?)",more_category,exam_question_ids)
     questions.present? ? true : false
   end
 
   def get_more_question
     exam_question_ids = @candidate.answers.map(&:question_id)
-    exam_questions = Question.find(exam_question_ids)
-    catogry=exam_questions.map(&:category_id).uniq
-    questions = Question.where("category_id in (?)",catogry)
-    questions = questions - exam_questions
+    #exam_questions = Question.find(exam_question_ids)
+    #catogry=exam_questions.map(&:category_id).uniq
+    #questions = Question.where("category_id in (?)",catogry)
+    more_category = Category.where("category = 'Additional'").first.id
+    questions = Question.where("category_id = ? and id not in (?)",more_category,exam_question_ids)
     next_question = questions.shuffle.first
     @answer=Answer.new
     @answer.question=next_question
