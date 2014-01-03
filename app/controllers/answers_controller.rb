@@ -50,7 +50,7 @@ class AnswersController < ApplicationController
 
   def show
     @each_mode=Setting.find_by_name('time_limit_for_each_question')
-    @answer = Answer.includes([:question, :candidate => [:answers => [:question]]]).find(params[:id])
+    @answer = Answer.includes([:question => [:category], :candidate => [:answers => [:question => [:category]]]]).find(params[:id])
     @candidate = @answer.candidate
     @answer.q_no=current_user.candidate.answers.where("id <= ?",@answer.id ).count
     @answer.dec_time =Time.now
@@ -64,7 +64,7 @@ class AnswersController < ApplicationController
       @next = next_present_answer(@answer.id)
     else
       @count = calculate_remaining_time
-      @load_more = answered_all && more_questions_available
+      @load_more = answered_all && more_questions_available && feature_enabled
       @next = next_answer(@answer.id)
       @back = previous_answer(@answer.id)
     end
@@ -258,5 +258,7 @@ class AnswersController < ApplicationController
     end
     return  nil
   end
-
+  def feature_enabled
+     Setting.find_by_name('load_more').status.eql?("on")
+  end
 end

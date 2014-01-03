@@ -1,15 +1,15 @@
 <footer class="footer">
-  <h4>
-          <% if signed_in? %>
-            login by:<%= current_user.user_email %>
+  <!--<h4>-->
+          <!--<%# if signed_in? %>-->
+           <!-- login by:<%#= current_user.user_email %>  -->
 
 
-            <% if admin? %>
-                ||||| Auto Result=><%= auto_result.status  %>
-                ||||| Negative mark=><%= negative.status %>
-            <% end %>
-          <% end %>
-  </h4>
+            <!--<%# if admin? %>-->
+             <!--   ||||| Auto Result=><%#= auto_result.status  %> -->
+             <!--   ||||| Negative mark=><%#= negative.status %>   -->
+            <!--<%# end %>-->
+          <!--<%# end %>-->
+  <!--</h4>-->
 
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

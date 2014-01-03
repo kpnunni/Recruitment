@@ -2,7 +2,12 @@
   <b>  <%= label_tag answer.q_no%></b>
 </div>
 <div class="question"  >
-  <%=simple_format answer.question.question %><br/>
+  <% if @each_mode.status == "on" %>
+    <%=simple_format answer.question.question %><br/>
+  <% else %>
+    <%=simple_format answer.question.question.gsub(/The first.*same story/,"") %><br/>
+  <% end %>
+
   <% if !answer.question.question_image.to_s.include?("missing.png") %>
       <%= image_tag answer.question.question_image.url(:original) %><br/>
   <% end %>

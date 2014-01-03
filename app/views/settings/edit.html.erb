@@ -4,19 +4,39 @@
       <%= form_for :setting , :url => '/settings/update',:method=>'PUT' do |f| %>
 
 
-          Can start exam before: <%=  number_field_tag "from" ,@from.status,  class: "text_box" %> (in minutes)  **not using
-          <br />
 
-          Cannot start exam after:<%= number_field_tag "untill", @untill.status,  class: "text_box"   %> (in minutes)
-          <br />
 
-          <%= check_box_tag :each_mode ,1,@each_mode.status.eql?("on")%>Time Limit for each Question?
-          <br />
+            <table style="width: 100%;" border="2">
+              <tr>
+                <th>Name</th>
+                <th>Value</th>
+              </tr>
+              <tr>
+                <td class="lft">Can start exam before: (in minutes)  **not using</td>
+                <td><%=  number_field_tag "from" ,@from,  class: "text_box" %></td>
+              </tr>
+              <tr>
+                <td class="lft">Cannot start exam after: (in minutes)</td>
+                <td><%= number_field_tag "untill", @untill,  class: "text_box"   %></td>
+              </tr>
+              <tr>
+                <td class="lft">Time Limit for each Question?</td>
+                <td><%= check_box_tag :each_mode ,1,@each_mode.eql?("on")%></td>
+              </tr>
+              <tr>
+                <td class="lft">Negative mark?</td>
+                <td><%= check_box_tag :negative ,1,@negative_mark.eql?("on")%></td>
+              </tr>
+              <tr>
+                <td class="lft">Enable load more question?</td>
+                <td><%= check_box_tag :load_more ,1,@load_more.eql?("on")%></td>
+              </tr>
+              <tr>
+                <td class="lft">Auto result calculation?</td>
+                <td><%= check_box_tag :auto_result,1,@auto_result.eql?("on"),:onClick=>"show_category()" %></td>
+              </tr>
+            </table>
 
-          <%= check_box_tag :negative ,1,@negative_mark.status.eql?("on")%>Negative mark?
-          <br />
-
-          <%= check_box_tag :auto_result,1,@auto_result.status.eql?("on"),:onClick=>"show_category()" %>Auto result calculation?
 
           <div id="cutoff">
             <table   class="index_table" >
