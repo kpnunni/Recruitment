@@ -13,6 +13,8 @@ class CategoriesController < ApplicationController
     @category = Category.new(params[:category])
     if @category.save
       if params[:by]=="add"
+        redirect_to new_question_path, notice: 'New category added .'
+      else
         redirect_to categories_path, notice: 'Category was successfully created.'
       end
     else
