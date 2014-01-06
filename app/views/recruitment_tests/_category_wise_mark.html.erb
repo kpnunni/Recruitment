@@ -29,7 +29,7 @@
 
     <div class="table"  >
       <div class="tr">
-        <div class="th">Category</div>
+        <div class="th">Question</div>
         <div class="th">Answer</div>
         <div class="th">Right answers</div>
         <div class="th">Right?</div>
@@ -39,10 +39,10 @@
       <% @extra_answers.each do |ans| %>
           <% if ans.question %>
               <div class="tr">
-                <div class="td"><%=ans.question.category.category   %></div>
+                <div class="td lft"><%= link_to   ans.question.question.slice(0..50), "#", remote: true, :onclick => "javascript:window.open(\"#{question_path(ans.question)}\",'popup','width=600,height=600');"   %></div>
                 <div class="td"><%= ans.answer %></div>
                 <div class="td"><%= ans.question.answer_id %></div>
-                <div class="td"><%= ans.answer == ans.question.answer_id ? "Yes" : "No" %></div>
+                <div class="td" style="background-color: <%= ans.answer == ans.question.answer_id ? "#2e8b57" : "#cd5c5c"  %>;"><%= ans.answer == ans.question.answer_id ? "Yes" : "No" %></div>
                 <div class="td"><%= ans.question.complexity.complexity %></div>
                 <div class="td"><%= ans.time_taken %></div>
               </div>

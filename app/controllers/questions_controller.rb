@@ -21,7 +21,12 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find(params[:id])
-    @options = @question.options.all
+    @options = @question.options
+
+    if my_roles.include?('Add Questions') && !my_roles.include?('Manage Questions')
+      redirect_to questions_path if @question.created_by==current_user.user_email
+    end
+
   end
   def new
     @question = Question.new
