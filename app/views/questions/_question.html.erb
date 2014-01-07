@@ -1,5 +1,5 @@
   <b>Question:</b>
-  <%=  question.question %><br /><br />
+  <%= simple_format question.question %><br /><br />
   <% if !question.question_image.to_s.include?("missing.png") %>
       <%= image_tag question.question_image.url(:original) %>
   <% end %>
