@@ -36,7 +36,7 @@
         </table>
 
         <%= f1.label :Question %>
-        <%= f1.text_area  :question, :rows=>10,:class=>"quest" %>
+        <%= f1.text_area  :question, :rows=>10,:class=>"quest", :autofocus => true %>
 
         <% if @question.question_image && !@question.question_image.to_s.include?("missing.png") %>
             <%=image_tag @question.question_image.url(:original)   %>
@@ -50,7 +50,7 @@
             </div>
             <div class="right" >
             Allowed time*:
-            <%= f1.text_field :allowed_time , :maxlength=>3 ,  :class => "text_box"  ,required:{}%> seconds
+            <%= f1.text_field :allowed_time , :maxlength=>3 ,  :class => "text_box" , value: @question.new_record? ? "90" : @question.allowed_time %> seconds
             </div>
          </div>
          <br/>      <br/>
@@ -66,7 +66,7 @@
         <%= f1.fields_for :options do |op| %>
 
 
-           <%= op.text_field :option , :class=>"txt_option" ,required:{} %>
+           <%= op.text_field :option , :class=>"txt_option" %>
            &emsp;&emsp;&emsp;&emsp;
             <%= op.check_box :is_right%>
            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;

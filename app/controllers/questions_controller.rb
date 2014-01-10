@@ -30,6 +30,7 @@ class QuestionsController < ApplicationController
   end
   def new
     @question = Question.new
+    4.times{ @question.options.build }
     @complexity=Complexity.first(3)
     @categorys=Category.all
     @types=Type.all

@@ -64,7 +64,7 @@ class AnswersController < ApplicationController
       @next = next_present_answer(@answer.id)
     else
       @count = calculate_remaining_time
-      @load_more = answered_all && more_questions_available && feature_enabled
+      @load_more = feature_enabled && answered_all && more_questions_available
       @next = next_answer(@answer.id)
       @back = previous_answer(@answer.id)
     end
