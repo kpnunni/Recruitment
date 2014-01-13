@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <h2> Mark Details </h2>
-    <h3> <%= "Candidate: #{@results.first.candidate.name}(#{@results.first.candidate.user.user_email})" if @results.size == 1 %></h3>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+<h2> Mark Details </h2>
+<h3> <%= "Candidate: #{@results.first.candidate.name}(#{@results.first.candidate.user.user_email})" if @results.size == 1 %></h3>
 
-    <p>
-      <table style="width: 100%; border: 2px;" border="2px">
+<p>
+<table style="width: 100%; border: 2px;" border="2px">
+  <tr>
+    <th width="20%">Candidate</th>
+    <th width="15%">Exam</th>
+    <th width="7%" >Total questions</th>
+    <th width="7%" >Attended</th>
+    <th width="6%">Right answers</th>
+    <th width="10%">Mark(%)</th>
+  </tr>
+
+  <% @results.each do |result| %>
       <tr>
-        <th width="20%">Candidate</th>
-        <th width="15%">Exam</th>
-        <th width="7%" >Total questions</th>
-        <th width="7%" >Attended</th>
-        <th width="6%">Right answers</th>
-        <th width="10%">Mark(%)</th>
+        <td class="lft" ><%= result.candidate.name %></td>
+        <td class="lft" ><%= result.candidate.schedule.exam.name %></td>
+        <td>
+          <%= result.candidate.schedule.exam.questions.size%>
+          <% extra = result.candidate.answers.size - result.candidate.schedule.exam.questions.size %>
+          <%= " + #{extra}" if extra > 0 %>
+        </td>
+        <td><%= result.no_of_question_attended%></td>
+        <td  ><%= result.right_answers%></td>
+        <td ><%= number_with_precision(result.mark_percentage, :precision => 2)%></td>
       </tr>
+  <% end %>
+</table>
+</p>
 
-      <% @results.each do |result| %>
-          <tr>
-            <td class="lft" ><%= result.candidate.name %></td>
-            <td class="lft" ><%= result.candidate.schedule.exam.name %></td>
-            <td>
-              <%= result.candidate.schedule.exam.questions.size%>
-              <% extra = result.candidate.answers.size - result.candidate.schedule.exam.questions.size %>
-              <%= " + #{extra}" if extra > 0 %>
-            </td>
-            <td><%= result.no_of_question_attended%></td>
-            <td  ><%= result.right_answers%></td>
-            <td ><%= number_with_precision(result.mark_percentage, :precision => 2)%></td>
-          </tr>
-      <% end %>
-    </table>
-    </p>
-
-    <h3>Category wise cut off:</h3>
+<h3>Category wise cut off:</h3>
+<p>
+  <% @results.each do |result| %>
+    <h3> <%= "Candidate: #{result.candidate.name}" if @results.size > 1 %></h3>
     <p>
-       <% @results.each do |result| %>
-        <h3> <%= "Candidate: #{result.candidate.name}" if @results.size > 1 %></h3>
-        <p>
-         <table style="width: 100%; border: 2px;" border="2px" >
-          <tr>
-            <th>Category</th>
-            <th>no of questions</th>
-            <th>Right answers</th>
-            <th>Wrong answers</th>
-            <th>Mark</th>
-            <th>Mark(%)</th>
-          </tr>
-             <% Category.all.each do |cat| %>
-             <% if result.candidate.schedule.exam.questions.where("category_id=?",cat.id).count!=0 %>
+    <table style="width: 100%; border: 2px;" border="2px" >
+      <tr>
+        <th>Category</th>
+        <th>no of questions</th>
+        <th>Right answers</th>
+        <th>Wrong answers</th>
+        <th>Mark</th>
+        <th>Mark(%)</th>
+      </tr>
+      <% Category.all.each do |cat| %>
+          <% if result.candidate.schedule.exam.questions.where("category_id=?",cat.id).count!=0 %>
 
               <tr>
                 <td><%=cat.category    %></td>
@@ -60,14 +60,45 @@
                 <td><%= result.calc_mark(cat)  %></td>
                 <td><%= number_with_precision(result.calc_mark_percentage(cat),:precision=>2)  %></td>
               </tr>
-              <% end %>
-              <% end %>
-        </table>
-        <% end %>
-        </p>
+          <% end %>
+      <% end %>
+    </table>
     </p>
+    <p>
+      <%  @candidate = result.candidate
+          questions = @candidate.schedule.exam.question_ids
+          @extra_answers = @candidate.answers.where("question_id not in (?)",questions)   %>
+      <% if @extra_answers.present? %>
+          <br/>
+          <h3>Additional answers:</h3>
 
+          <table style="width: 100%; border: 2px;" border="2px" >
+            <tr>
+              <th>Question</th>
+              <th>Answer</th>
+              <th>Right answers</th>
+              <th>Right?</th>
+              <th>Complexity</th>
+              <th>Time Taken(sec)</th>
+            </tr>
+            <% @extra_answers.each do |ans| %>
+                <% if ans.question %>
+                    <tr>
+                      <td><%= link_to   ans.question.question.truncate(50), question_url(ans.question)  %></td>
+                      <td><%= ans.answer %></td>
+                      <td><%= ans.question.answer_id %></td>
+                      <td style="background-color: <%= ans.answer == ans.question.answer_id ? "#2e8b57" : "#cd5c5c"  %>;"><%= ans.answer == ans.question.answer_id ? "Yes" : "No" %></td>
+                      <td><%= ans.question.complexity.complexity %></td>
+                      <td><%= ans.time_taken %></td>
+                    </tr>
+                <% end %>
+            <% end %>
+          </table>
+      <% end %>
 
+      </p>
+<% end %>
 
-  </body>
+</p>
+</body>
 </html>
