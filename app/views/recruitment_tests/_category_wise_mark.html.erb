@@ -26,27 +26,23 @@
 <% if @extra_answers.present? %>
     <br/>
     <h3>Additional answers:</h3>
-
+    <%
+      attend = @extra_answers.size
+      right = @extra_answers.select{|ans| ans.question && ans.answer == ans.question.answer_id }.size
+      wrong = attend - right
+    %>
     <div class="table"  >
       <div class="tr">
-        <div class="th">Question</div>
-        <div class="th">Answer</div>
+        <div class="th">Total questions</div>
+        <div class="th">Questions attended</div>
         <div class="th">Right answers</div>
-        <div class="th">Right?</div>
-        <div class="th">Complexity</div>
-        <div class="th">Time Taken(sec)</div>
+        <div class="th">Wrong answers</div>
       </div>
-      <% @extra_answers.each do |ans| %>
-          <% if ans.question %>
-              <div class="tr">
-                <div class="td lft"><%= link_to   ans.question.question.slice(0..50), "#", remote: true, :onclick => "javascript:window.open(\"#{question_path(ans.question)}\",'popup','width=600,height=600');"   %></div>
-                <div class="td"><%= ans.answer %></div>
-                <div class="td"><%= ans.question.answer_id %></div>
-                <div class="td" style="background-color: <%= ans.answer == ans.question.answer_id ? "#2e8b57" : "#cd5c5c"  %>;"><%= ans.answer == ans.question.answer_id ? "Yes" : "No" %></div>
-                <div class="td"><%= ans.question.complexity.complexity %></div>
-                <div class="td"><%= ans.time_taken %></div>
-              </div>
-          <% end %>
-      <% end %>
-    </div>
+      <div class="tr">
+        <div class="td"><%= @additional %></div>
+        <div class="td"><%= attend %></div>
+        <div class="td"><%= right %></div>
+        <div class="td"><%= wrong %></div>
+      </div>
 <% end %>
+</div>

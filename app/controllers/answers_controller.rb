@@ -64,7 +64,8 @@ class AnswersController < ApplicationController
       @next = next_present_answer(@answer.id)
     else
       @count = calculate_remaining_time
-      @load_more = feature_enabled && answered_all && more_questions_available
+      @load_more = feature_enabled && answered_all_except_last && more_questions_available
+      @answered_all = answered_all
       @next = next_answer(@answer.id)
       @back = previous_answer(@answer.id)
     end
@@ -203,8 +204,11 @@ class AnswersController < ApplicationController
     remaining = total - used
   end
 
+  def answered_all_except_last
+    @candidate.answers.select{|ans|ans.answer == '0'}.size == 1 ?  true : false
+  end
   def answered_all
-    @candidate.answers.where(answer: '0').count <= 1 ?  true : false
+    @candidate.answers.select{|ans|ans.answer == '0'}.size == 0 ?  true : false
   end
 
   def more_questions_available

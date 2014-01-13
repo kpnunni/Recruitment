@@ -4,7 +4,7 @@ class RecruitmentTest < ActiveRecord::Base
 
   def calc_right_answers(user)
     count=0
-    user.candidate.answers.each do |ans|
+    user.candidate.answers.select{|ans| candidate.schedule.exam.questions.include?(ans.question) }.each do |ans|
       if ans.answer==ans.question.answer_id
         count+=1
       end
@@ -13,14 +13,14 @@ class RecruitmentTest < ActiveRecord::Base
   end
 
   def count_no_of_question_attended(user)
-    self.no_of_question_attended=user.candidate.answers.where("answer!=?","0").size
+    self.no_of_question_attended = user.candidate.answers.select{|ans| candidate.schedule.exam.questions.include?(ans.question) && ans.answer != "0" }.size
   end
 
   def find_mark_percentage(user)
-    q_attent=self.no_of_question_attended
-    right_ans=self.right_answers.to_f
-    total_q=user.candidate.answers.size
-    wrong_ans=q_attent-right_ans
+    q_attent = self.no_of_question_attended
+    right_ans = self.right_answers.to_f
+    total_q = user.candidate.schedule.exam.questions.size
+    wrong_ans = q_attent-right_ans
     if Setting.find_by_name('negative_mark').status.eql?("off")
       self.mark_percentage= (right_ans/total_q)*100
     else

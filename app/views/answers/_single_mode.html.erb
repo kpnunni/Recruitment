@@ -31,7 +31,7 @@
             <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
         <% end %>
         <td><%= f.button  "More Question", :name=>"to",:value=>"more", :disable_with => "More",class: "btn btn-large btn-success", style: "display: none", id: "load_moreq" %></td>
-        <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Finish',:onclick=>"finish_exam(); return false;"%></td>
+        <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Submit my exam',:onclick=>"finish_exam(); return false;"%></td>
       </tr>
     </table>
     <br/>Please click on the question number button to load the question. Or click Next to load next question <br/>
@@ -59,12 +59,17 @@
 <% end %>
 
 <script type="text/javascript" >
+    var more_question = <%= @load_more %>;
+    var answered_all = <%= @answered_all %>;
     window.onload = function()
     {
         startCountdown(<%=cnt=@count%>)
+        if(more_question && answered_all )
+        {
+            jQuery("#load_moreq").show("slow");
+        }
     }
 
-    var more_question = <%= @load_more %>;
 
     jQuery("input:radio").change(function(){
         if(more_question)

@@ -7,6 +7,7 @@ class RecruitmentTestsController < ApplicationController
   def index
     @recruitment_tests = RecruitmentTest.filtered(params[:search],sort_column + " " + sort_direction).paginate(:page => params[:page], :per_page => 20)
     @categories = Category.all
+    @additional = Category.where("category = 'Additional'").first.questions.size
   end
   def show
     @recruitment_test = RecruitmentTest.includes(:candidate => [ :answers =>[:question=>[:options,:complexity, :category]] , :schedule => [:exam => [:questions=>[:complexity, :category]]] ] ).find(params[:id])

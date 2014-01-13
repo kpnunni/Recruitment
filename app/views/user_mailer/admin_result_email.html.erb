@@ -71,28 +71,24 @@
       <% if @extra_answers.present? %>
           <br/>
           <h3>Additional answers:</h3>
-
+          <%
+             attend = @extra_answers.size
+             right = @extra_answers.select{|ans| ans.question && ans.answer == ans.question.answer_id }.size
+             wrong = attend - right
+          %>
           <table style="width: 100%; border: 2px;" border="2px" >
             <tr>
-              <th>Question</th>
-              <th>Answer</th>
+              <th>Total questions</th>
+              <th>Questions attended</th>
               <th>Right answers</th>
-              <th>Right?</th>
-              <th>Complexity</th>
-              <th>Time Taken(sec)</th>
+              <th>Wrong answers</th>
             </tr>
-            <% @extra_answers.each do |ans| %>
-                <% if ans.question %>
-                    <tr>
-                      <td><%= link_to   ans.question.question.truncate(50), question_url(ans.question)  %></td>
-                      <td><%= ans.answer %></td>
-                      <td><%= ans.question.answer_id %></td>
-                      <td style="background-color: <%= ans.answer == ans.question.answer_id ? "#2e8b57" : "#cd5c5c"  %>;"><%= ans.answer == ans.question.answer_id ? "Yes" : "No" %></td>
-                      <td><%= ans.question.complexity.complexity %></td>
-                      <td><%= ans.time_taken %></td>
-                    </tr>
-                <% end %>
-            <% end %>
+            <tr>
+              <td><%= @additional %></td>
+              <td><%= attend %></td>
+              <td><%= right %></td>
+              <td><%= wrong %></td>
+            </tr>
           </table>
       <% end %>
 
