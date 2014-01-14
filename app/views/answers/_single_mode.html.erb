@@ -16,6 +16,7 @@
       <br/>
       <br/>
       <%=f.hidden_field   :dec_time ,:value =>@answer.dec_time %>
+      <%= hidden_field_tag   :time_used %>
       <% cache @answer do %>
           <%= render "question", answer: @answer, f: f  %>
       <% end %>
@@ -79,7 +80,7 @@
         }
      });
 
-    var flag=0;
+    var flag= 0,time_used = 0;
     function set_flag(){
         flag = 1;
     }
@@ -97,8 +98,10 @@
                 str="red"
             }
 
-            var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec"
+            var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec" ;
             document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
+            jQuery('#time_used').val(time_used);
+            time_used++;
 
             g_iCount = g_iCount - 1;
             if (flag == 0){

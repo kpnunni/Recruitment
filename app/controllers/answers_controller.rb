@@ -176,7 +176,8 @@ class AnswersController < ApplicationController
     @candidate=current_user.candidate
     @answer = Answer.find(params[:id])
     @answer.c_option=params[:answer][:c_option]
-    @answer.time_taken=((Time.now.to_f-Time.parse(params[:answer][:dec_time]).to_f).to_i)+@answer.time_taken
+    #@answer.time_taken=((Time.now.to_f-Time.parse(params[:answer][:dec_time]).to_f).to_i)+@answer.time_taken
+    @answer.time_taken += params[:time_used].to_i
     @answer.answer= @answer.set_answer
 
     if !@answer.update_attributes(params[:answer])
