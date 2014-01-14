@@ -205,7 +205,7 @@ class AnswersController < ApplicationController
   end
 
   def answered_all_except_last
-    @candidate.answers.select{|ans|ans.answer == '0'}.size == 1 ?  true : false
+    @candidate.answers.select{|ans|ans.answer == '0'}.size <= 1 ?  true : false
   end
   def answered_all
     @candidate.answers.select{|ans|ans.answer == '0'}.size == 0 ?  true : false

@@ -19,8 +19,8 @@
                      <%=link_to 'sign out', '/signout',method: :delete   %>
                    </h2>
                 </div>
-                <div id="exam" style="display: none;">
-                    <h2><%= link_to 'start_exam >>','/answers/blank' ,:onclick=>"popup()" %></h2>
+                <div id="exam" style="display: none; padding-top: 100px;">
+                    <h2><%= link_to 'Start Exam','/answers/blank' ,:onclick=>"popup()", class: "btn btn-large btn-success"%></h2>
                 </div>
             <% end %>
 
