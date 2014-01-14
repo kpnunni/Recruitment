@@ -61,6 +61,7 @@
 <script type="text/javascript" >
     var more_question = <%= @load_more %>;
     var answered_all = <%= @answered_all %>;
+    var last_question = <%= @answer.answer == "0" %>;
     window.onload = function()
     {
         startCountdown(<%=cnt=@count%>)
@@ -72,7 +73,7 @@
 
 
     jQuery("input:radio").change(function(){
-        if(more_question)
+        if(more_question && last_question)
         {
            jQuery("#load_moreq").show("slow");
         }

@@ -58,7 +58,7 @@
                 <td>
                   <%= recruitment_test.candidate.schedule.exam.questions.size %>
                   <% extra = recruitment_test.candidate.answers.size - recruitment_test.candidate.schedule.exam.questions.size %>
-                  <%= " + #{extra}" if extra > 0 %>
+                  <%= " +" if extra > 0 %>
                 </td>
                 <td><%= recruitment_test.no_of_question_attended%></td>
                 <td  ><%= recruitment_test.right_answers%></td>
