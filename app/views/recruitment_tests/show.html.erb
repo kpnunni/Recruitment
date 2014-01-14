@@ -10,9 +10,8 @@
 <%= render 'category_wise_mark' %>
 
 <br/>
-<h3>Feed Back:</h3>
-
-<%=simple_format  @recruitment_test.feedback %>
+<h3>Feed Back:</h3><br />
+<%=simple_format  @recruitment_test.feedback.present? ? @recruitment_test.feedback : "No feed back" %>
 
 
 <br/>

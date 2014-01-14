@@ -12,6 +12,7 @@ class RecruitmentTestsController < ApplicationController
   def show
     @recruitment_test = RecruitmentTest.includes(:candidate => [ :answers =>[:question=>[:options,:complexity, :category]] , :schedule => [:exam => [:questions=>[:complexity, :category]]] ] ).find(params[:id])
     @extra = find_extra(@recruitment_test)
+    @additional = Category.where("category = 'Additional'").first.questions.size
     @categories = Category.all
   end
   def update

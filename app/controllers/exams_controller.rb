@@ -56,6 +56,7 @@ class ExamsController < ApplicationController
     end
     @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
     if @exam.save
+      calculate_total_time
       redirect_to exams_path , notice: 'Exam was successfully created.'
     else
       render action: "new"
@@ -73,16 +74,15 @@ class ExamsController < ApplicationController
       @exam.subj= params[:exam][:subj]
       @q_count=@exam.generate_question_paper
       @exam.no_of_question= @exam.subj.values.collect {|v| v.to_i}.sum
-      @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
       if @exam.no_of_question!=@q_count
         flash.now[:error]="Not enough questions (category wise/complexity wise)"
         render 'new'
         return
       end
+      calculate_total_time
     end
     if @exam.update_attributes(params[:exam])
-      @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
-      @exam.save
+      calculate_total_time
       redirect_to exams_path, notice: 'Exam was successfully updated.'
     else
       render action: "edit"
@@ -101,8 +101,7 @@ class ExamsController < ApplicationController
     @exam.instructions.delete_all
     #params[:exam][:instruction_ids].reverse!  if params[:exam]
     if @exam.update_attributes(params[:exam])
-      @exam.total_time=@exam.questions.collect {|v| v.allowed_time}.sum
-      @exam.save
+      calculate_total_time
       redirect_to exams_path, notice: 'Instructions reordered successfully.'
     else
       render action: "instruction_order"
@@ -125,6 +124,7 @@ class ExamsController < ApplicationController
     @exam.questions.each {|q| categories<<q.category.category }
     categories.each{ |cat| @exam.subj[cat]+=1 }
     @exam.generate_question_paper
+    calculate_total_time
     redirect_to  exam_path(@exam)  ,:notice => "Question paper regenerated successfully."
   end
   def regenerate_question_paper?
@@ -138,5 +138,14 @@ class ExamsController < ApplicationController
     else
       true
     end
+  end
+  def calculate_total_time
+    total_time = @exam.questions.map(&:allowed_time).sum
+    if Setting.find_by_name("time_limit_for_each_question").status == "off"
+      @exam.total_time = total_time * 2/3
+    else
+      @exam.total_time = total_time
+    end
+    @exam.save
   end
 end
