@@ -546,6 +546,23 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   padding-left: 2px;
   float: right;
   width: 96%;
+  overflow:auto;
+  max-height:400px;
+  background-color: white;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.options{
+  font-family:serif;
+  font-size:11pt;
+  text-spacing: 5px;
+  padding-left: 2px;
+  float: right;
+  width: 96%;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
