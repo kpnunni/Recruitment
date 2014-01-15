@@ -12,6 +12,8 @@
       <%= image_tag answer.question.question_image.url(:original) %><br/>
   <% end %>
 </div>
+<br> <br> <br> <br>
+
 <table cellpadding="0"  width="100%" class="options" >
   <% if answer.question.type.question_type=="check_box" %>
       <% answer.question.options.sort.each_with_index do |op,i| %>

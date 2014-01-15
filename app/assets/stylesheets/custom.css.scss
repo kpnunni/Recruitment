@@ -540,6 +540,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 
 }
 .question{
+  font-size: 14px;
   text-spacing: 5px;
   padding-left: 2px;
   float: right;
@@ -555,10 +556,13 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
   user-select: none;
 }
 .options{
+  font-size: 14px;
   text-spacing: 5px;
   padding-left: 2px;
   float: right;
   width: 96%;
+  margin-top: 10px;
+  margin-bottom: 10px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;

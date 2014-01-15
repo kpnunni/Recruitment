@@ -1,156 +1,157 @@
 <%= form_for  @answer, html: { id: "exam_form", onsubmit: "jQuery('#outer').show();set_flag();"} do |f| %>
-    <div id="question_answer" style="min-height: 300px;">
-      <table align="right"  width="100%"  >
-        <tr>
-          <td class="lft" width="65%"  >
-            Question Category:<%= @answer.question.category.category %>
-          </td>
-          <td>
-            <div class="countdown1" align="right"  >Time Remaining:  </div>
-          </td>
-          <td>
-            <div id="count" class="countdown" align="right "  ></div>
-          </td>
-        </tr>
-      </table>
-      <br/>
-      <br/>
-      <%=f.hidden_field   :dec_time ,:value =>@answer.dec_time %>
-      <%= hidden_field_tag   :time_used %>
-      <% cache @answer do %>
-          <%= render "question", answer: @answer, f: f  %>
-      <% end %>
-      </b><br/>
-    </div>
-    <%= f.submit   :id =>"procedure_submit_button" , :name=>"to",:value=>"timer" , :style => "display: none" ,:remote  => true%>
-    <table cellpadding="5" align="center"   >
-      <tr>
-        <% if @back %>
-            <td><%= f.button  "&#8592;Back".html_safe , :name=>"to",:value=>@back.id, :disable_with => "Back",class: "btn btn-large btn-primary" %></td>
-        <% end %>
-        <% if @next %>
-            <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
-        <% end %>
-        <td><%= f.button  "More Question", :name=>"to",:value=>"more", :disable_with => "More",class: "btn btn-large btn-success", style: "display: none", id: "load_moreq" %></td>
-        <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Submit my exam',:onclick=>"finish_exam(); return false;"%></td>
-      </tr>
-    </table>
-    <br/>Please click on the question number button to load the question. Or click Next to load next question <br/>
-    <h3>Questions:</h3>
-    <div style="overflow: hidden;">
-      <% previous_category = "",changed = false  %>
-      <% @candidate.answers.sort.each_with_index do |ans,i| %>
-          <% current_category = ans.question.category.category %>
-          <% changed = previous_category != current_category ? !changed : changed %>
-          <% previous_category = current_category %>
-            <div style="float: left;     width: 30px; background:  <%= changed ? "blue" : "red" %>;" id=<%= ans.id %> >
-                <% if ans.answer!="0"&&ans.id!=@answer.id  %>
-                    <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>"background-color: #90ee90; border-radius: 15px;", title: "answered question"   %>
-                <% elsif ans.id==@answer.id  %>
-                    <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 ,:style=>"background-color: orange; border-radius: 15px;", title: "current question" %>
-                <% else %>
-                    <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>" border-radius: 15px;", title: "not answered question" %>
+<div id="question_answer" style="min-height: 300px;">
+  <table align="right"  width="100%"  >
+    <tr>
+      <td class="lft" width="65%"  >
+        <i>
+          Question Category:<%= @answer.question.category.category %>
+        </i>          </td>
+      <td>
+        <div class="countdown1" align="right"  >Time Remaining:  </div>
+      </td>
+      <td>
+        <div id="count" class="countdown" align="right "  ></div>
+      </td>
+    </tr>
+  </table>
+  <br/>
+  <br/>
+  <%=f.hidden_field   :dec_time ,:value =>@answer.dec_time %>
+  <%= hidden_field_tag   :time_used %>
+  <% cache @answer do %>
+      <%= render "question", answer: @answer, f: f  %>
+  <% end %>
+  </b><br/>
+</div>
+<%= f.submit   :id =>"procedure_submit_button" , :name=>"to",:value=>"timer" , :style => "display: none" ,:remote  => true%>
+<table cellpadding="5" align="center"   >
+  <tr>
+    <% if @back %>
+        <td><%= f.button  "&#8592;Back".html_safe , :name=>"to",:value=>@back.id, :disable_with => "Back",class: "btn btn-large btn-primary" %></td>
+          <% end %>
+          <% if @next %>
+              <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
                 <% end %>
-            </div>
-        <% end %>
-    </div>
+                <td><%= f.button  "More Question", :name=>"to",:value=>"more", :disable_with => "More",class: "btn btn-large btn-success", style: "display: none", id: "load_moreq" %></td>
+                      <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Submit my exam',:onclick=>"finish_exam(); return false;"%></td>
+                            </tr>
+                            </table>
+                            <br/>Please click on the question number button to load the question. Or click Next to load next question <br/>
+                            <h3>Questions:</h3>
+                            <div style="overflow: hidden;">
+                              <% previous_category = "",changed = false  %>
+                              <% @candidate.answers.sort.each_with_index do |ans,i| %>
+                                  <% current_category = ans.question.category.category %>
+                                  <% changed = previous_category != current_category ? !changed : changed %>
+                                  <% previous_category = current_category %>
+                                  <div style="float: left;     width: 30px; background:  <%= changed ? "blue" : "red" %>;" id=<%= ans.id %> >
+                                    <% if ans.answer!="0"&&ans.id!=@answer.id  %>
+                                        <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>"background-color: #90ee90; border-radius: 15px;", title: "answered question"   %>
+                                    <% elsif ans.id==@answer.id  %>
+                                        <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 ,:style=>"background-color: orange; border-radius: 15px;", title: "current question" %>
+                                    <% else %>
+                                        <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>" border-radius: 15px;", title: "not answered question" %>
+                                    <% end %>
+                                  </div>
+                              <% end %>
+                            </div>
 
-    <br/>
-    <br/> Please call: 0484 4242800 for immediate assistance <br/>
-<% end %>
+                            <br/>
+                            <br/> Please call: 0484 4242800 for immediate assistance <br/>
+                        <% end %>
 
-<script type="text/javascript" >
-    var more_question = <%= @load_more %>;
-    var answered_all = <%= @answered_all %>;
-    var last_question = <%= @answer.answer == "0" %>;
-    window.onload = function()
-    {
-        startCountdown(<%=cnt=@count%>)
-        if(more_question && answered_all )
-        {
-            jQuery("#load_moreq").show("slow");
-        }
-    }
-
-
-    jQuery("input:radio").change(function(){
-        if(more_question && last_question)
-        {
-           jQuery("#load_moreq").show("slow");
-        }
-     });
-
-    var flag= 0,time_used = 0;
-    function set_flag(){
-        flag = 1;
-    }
-    function startCountdown(g_iCount)
-    {
-        if((g_iCount) > 0)
-        {
-            var str="green";
-            if (g_iCount<20&&g_iCount>=10)
-            {
-                str="orange"
-            }
-            else if (g_iCount<10)
-            {
-                str="red"
-            }
-
-            var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec" ;
-            document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
-            jQuery('#time_used').val(time_used);
-            time_used++;
-
-            g_iCount = g_iCount - 1;
-            if (flag == 0){
-                setTimeout(function() {startCountdown(g_iCount); }, 1000);
-            }
-            else{
-                return;
-            }
-        }
-        else
-        {
-            document.getElementById('procedure_submit_button').click();
-        }
-    }
-
-    var message="Function Disabled!";
+                        <script type="text/javascript" >
+                            var more_question = <%= @load_more %>;
+                            var answered_all = <%= @answered_all %>;
+                            var last_question = <%= @answer.answer == "0" %>;
+                            window.onload = function()
+                            {
+                                startCountdown(<%=cnt=@count%>)
+                                if(more_question && answered_all )
+                                {
+                                    jQuery("#load_moreq").show("slow");
+                                }
+                            }
 
 
-    function clickIE4(){
-        if (event.button!=0){
+                            jQuery("input:radio").change(function(){
+                                if(more_question && last_question)
+                                {
+                                    jQuery("#load_moreq").show("slow");
+                                }
+                            });
 
-            return false;
-        }
-    }
+                            var flag= 0,time_used = 0;
+                            function set_flag(){
+                                flag = 1;
+                            }
+                            function startCountdown(g_iCount)
+                            {
+                                if((g_iCount) > 0)
+                                {
+                                    var str="green";
+                                    if (g_iCount<20&&g_iCount>=10)
+                                    {
+                                        str="orange"
+                                    }
+                                    else if (g_iCount<10)
+                                    {
+                                        str="red"
+                                    }
 
-    function clickNS4(e){
-        if (document.layers||document.getElementById&&!document.all){
-            if (e.which==2||e.which==3){
+                                    var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec" ;
+                                    document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
+                                    jQuery('#time_used').val(time_used);
+                                    time_used++;
 
-                return false;
-            }
-        }
-    }
+                                    g_iCount = g_iCount - 1;
+                                    if (flag == 0){
+                                        setTimeout(function() {startCountdown(g_iCount); }, 1000);
+                                    }
+                                    else{
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    document.getElementById('procedure_submit_button').click();
+                                }
+                            }
 
-    if (document.layers){
-        document.captureEvents(Event.MOUSEDOWN);
-        document.onmousedown=clickNS4;
-    }
-    else if (document.all&&!document.getElementById){
-        document.onmousedown=clickIE4;
-    }
+                            var message="Function Disabled!";
 
-    document.oncontextmenu=new Function("return false")
 
-    document.onkeydown = function(e){
-        if(e.keyCode != 0)
-        {
-            return false;
-        }
+                            function clickIE4(){
+                                if (event.button!=0){
 
-    }
-</script>
+                                    return false;
+                                }
+                            }
+
+                            function clickNS4(e){
+                                if (document.layers||document.getElementById&&!document.all){
+                                    if (e.which==2||e.which==3){
+
+                                        return false;
+                                    }
+                                }
+                            }
+
+                            if (document.layers){
+                                document.captureEvents(Event.MOUSEDOWN);
+                                document.onmousedown=clickNS4;
+                            }
+                            else if (document.all&&!document.getElementById){
+                                document.onmousedown=clickIE4;
+                            }
+
+                            document.oncontextmenu=new Function("return false")
+
+                            document.onkeydown = function(e){
+                                if(e.keyCode != 0)
+                                {
+                                    return false;
+                                }
+
+                            }
+                        </script>
