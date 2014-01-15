@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     Ascii85 (1.0.2)
+    RedCloth (4.2.9)
     actionmailer (3.2.11)
       actionpack (= 3.2.11)
       mail (~> 2.4.4)
@@ -214,12 +215,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RedCloth
   better_errors
   binding_of_caller
   bootstrap-sass (~> 2.0.2)
   bullet
   cache_digests
   capybara
+  coderay
   coffee-rails (~> 3.2.1)
   cucumber-rails
   daemons
