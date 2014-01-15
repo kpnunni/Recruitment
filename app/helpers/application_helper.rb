@@ -13,4 +13,18 @@ module ApplicationHelper
     options[:outer_window] ||= 1
     will_paginate(collection, options)
   end
+
+
+  def coderay(text)
+    text.gsub!(/\n/, '<br>')
+    text.gsub!(/\<code(?: lang="(.+?)")?\>(.+?)\<\/code\>/m) do
+      lang = $1
+      content = $2.gsub(/<br>/, '')
+      code = CodeRay.scan(content, lang).div()
+      "<notextile>#{code}</notextile>"
+    end
+    return text.html_safe
+  end
+
+
 end

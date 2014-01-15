@@ -61,7 +61,7 @@
         jQuery('#'+id).dialog({ modal: true, title: 'Scheduling',width: 460 } );
     }
     function show_box(no){
-        jQuery("#"+no+"").dialog({width: 650,position: {   at: " bottom" }  });
+        jQuery("#"+no+"").dialog({width: 800  });
     }
     function open_instruction(no){
         jQuery("#"+no+"").dialog({modal: true,width: 800});

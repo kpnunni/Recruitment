@@ -89,7 +89,9 @@
           <% @questions.each_with_index do |question,i| %>
               <tr>
                 <td><%= check_box_tag "question[ids][]",  question.id,false, class: "check_boxes" %></td>
-                <td class="lft" ><%=link_to   question.question.truncate(75), '#',:onclick=>"show_box(#{question.id});",:remote=>true, :title=>"detail" %>
+                <td class="lft" >
+                  <%=link_to question.question.truncate(75), '#',:onclick=>"show_box(#{question.id});",:remote=>true, :title=>"detail" %>
+                  <%#=link_to   image_tag('detailq.png'), question %>
                   <div style="display: none;"  id= <%=question.id%>  >
                     <%=  render 'question',question: question %>
                   </div>

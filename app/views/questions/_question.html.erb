@@ -1,8 +1,10 @@
+<div class="question">
   <b>Question:</b>
-  <%= simple_format question.question %><br /><br />
+  <%= coderay(question.question) %><br /><br />
   <% if !question.question_image.to_s.include?("missing.png") %>
       <%= image_tag question.question_image.url(:original) %>
   <% end %>
+</div>
   <table  border="3" width="75%"   >
     <tr>
       <th>options:</th>

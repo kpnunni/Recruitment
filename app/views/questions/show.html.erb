@@ -1,42 +1,47 @@
-     <b>Question:</b>
-     <%=  @question.question %><br /><br />
-       <% if !@question.question_image.to_s.include?("missing.png") %>
-       <%= image_tag @question.question_image.url(:original) %>
-            <% end %>
-        <table  border="3" width="75%"   >
-          <tr>
-            <th>options:</th>
-            <th>true/false</th>
-          </tr>
+<div class="question">
+  <b>Question:</b>
+  <%=  coderay(@question.question) %>
+</div>
+<br /><br />
+<div>
+  <% if !@question.question_image.to_s.include?("missing.png") %>
+      <%= image_tag @question.question_image.url(:original) %>
+  <% end %>
+  <table  border="3" width="75%"   >
+    <tr>
+      <th>options:</th>
+      <th>true/false</th>
+    </tr>
 
-        <% @options.each do |op| %>
-              <tr>
-            <td width="75%" class="lft" ><%= op.option %></td>
-            <td width="10%" ><%= op.is_right %></td>
-            </tr>
-        <%end %>
+    <% @options.each do |op| %>
+        <tr>
+          <td width="75%" class="lft" ><%= op.option %></td>
+          <td width="10%" ><%= op.is_right %></td>
+        </tr>
+    <%end %>
 
-        </table>
-        <%#= link_to  image_tag('addc.png'), new_question_option_path(@question) %>
-        <br />
-        <b>Answer code:</b>
-     <%=  @question.answer_id %><br />
+  </table>
+<%#= link_to  image_tag('addc.png'), new_question_option_path(@question) %>
+  <br />
+  <b>Answer code:</b>
+  <%=  @question.answer_id %><br />
 
-     <b>Time allowed:</b>
-     <%=  @question.allowed_time %><br />
+  <b>Time allowed:</b>
+  <%=  @question.allowed_time %><br />
 
-     <b>Category:</b>
-     <%= @question.category.category %><br />
+  <b>Category:</b>
+  <%= @question.category.category %><br />
 
-     <b>Complexity:</b>
-     <%= @question.complexity.complexity %><br />
+  <b>Complexity:</b>
+  <%= @question.complexity.complexity %><br />
 
-     <b>Type:</b>
-     <%= @question.type.question_type %><br />
+  <b>Type:</b>
+  <%= @question.type.question_type %><br />
 
-     <b>created by:</b>
-     <%=  @question.created_by %><br />
+  <b>created by:</b>
+  <%=  @question.created_by %><br />
 
-     <b>created at:</b>
-     <%=  @question.created_at.strftime("%b %d %A,%Y at %I:%M%p") %><br />
+  <b>created at:</b>
+  <%=  @question.created_at.strftime("%b %d %A,%Y at %I:%M%p") %><br />
 
+</div>

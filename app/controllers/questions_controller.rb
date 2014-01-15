@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  layout false ,:only => :show
+  #layout false ,:only => :show
   before_filter :chk_user
   def chk_user
     if !current_user.has_role?('Add Questions Only','Manage Questions','Add Questions')

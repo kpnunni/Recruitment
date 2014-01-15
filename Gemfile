@@ -68,3 +68,5 @@ end
 gem "jquery-rails"
 #gem "friendly_id"
 gem 'prawn_rails'
+gem 'coderay'
+gem "RedCloth"

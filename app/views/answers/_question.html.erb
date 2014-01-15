@@ -3,9 +3,9 @@
 </div>
 <div class="question"  >
   <% if @each_mode.status == "on" %>
-    <%=simple_format answer.question.question %><br/>
+    <%= coderay answer.question.question %><br/>
   <% else %>
-    <%=simple_format answer.question.question.gsub(/The first.*same story/,"") %><br/>
+    <%= coderay answer.question.question.gsub(/The first.*same story/,"") %><br/>
   <% end %>
 
   <% if !answer.question.question_image.to_s.include?("missing.png") %>
