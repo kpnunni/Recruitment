@@ -20,7 +20,11 @@ module ApplicationHelper
     text.gsub!(/\<code(?: lang="(.+?)")?\>(.+?)\<\/code\>/m) do
       lang = $1
       content = $2.gsub(/<br>/, '')
+      begin
       code = CodeRay.scan(content, lang).div()
+      rescue
+        code = content
+      end
       "<notextile>#{code}</notextile>"
     end
     return text.html_safe

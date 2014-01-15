@@ -32,7 +32,7 @@ class Question < ActiveRecord::Base
     @questions.select! { |q| q.created_at.between?(search[:from],search[:to]) } if search.try(:[],:from).present? && search.try(:[],:to).present?
     @questions
   end
-  def to_param
-    "#{id} #{question}".parameterize
-  end
+  #def to_param
+  #  "#{id} #{question.first(50)}".parameterize
+  #end
 end
