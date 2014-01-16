@@ -38,7 +38,7 @@
                             </table>
                             <br/> <br/>
                             <h3>Questions:</h3>[Click on the question number button to load the question. Or click Next to load next question]
-                            <div style="overflow: hidden; max-height: 200px; overflow: auto; ">
+                            <div style="overflow: hidden;">
                               <% previous_category = "",changed = false  %>
                               <% @candidate.answers.sort.each_with_index do |ans,i| %>
                                   <% current_category = ans.question.category.category %>
