@@ -66,6 +66,7 @@ class AnswersController < ApplicationController
       @count = calculate_remaining_time
       @load_more = feature_enabled && answered_all_except_last && more_questions_available
       @answered_all = answered_all
+      @submit = show_submit
       @next = next_answer(@answer.id)
       @back = previous_answer(@answer.id)
     end
@@ -264,5 +265,9 @@ class AnswersController < ApplicationController
   end
   def feature_enabled
      Setting.find_by_name('load_more').status.eql?("on")
+  end
+  def show_submit
+    more_q = Category.find_by_category('Additional').questions.count
+    @candidate.answers.size == @candidate.schedule.exam.no_of_question + more_q
   end
 end

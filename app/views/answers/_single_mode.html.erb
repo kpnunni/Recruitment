@@ -27,13 +27,15 @@
 <table cellpadding="5" align="center"   >
   <tr>
     <% if @back %>
-        <td><%= f.button  "&#8592;Back".html_safe , :name=>"to",:value=>@back.id, :disable_with => "Back",class: "btn btn-large btn-primary" %></td>
+        <td><%= f.button  "&#8592;Previous".html_safe , :name=>"to",:value=>@back.id, :disable_with => "Back",class: "btn btn-large btn-primary" %></td>
           <% end %>
           <% if @next %>
               <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
-                <% end %>
-                <td><%= f.button  "More Question", :name=>"to",:value=>"more", :disable_with => "More",class: "btn btn-large btn-success", style: "display: none", id: "load_moreq" %></td>
-                      <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Submit my exam',:onclick=>"finish_exam(); return false;"%></td>
+          <% end %>
+          <td><%= f.button  "Programming Questions", :name=>"to",:value=>"more", :disable_with => "Programming Questions",class: "btn btn-large btn-success", style: "display: none", id: "load_moreq" %></td>
+          <% if @submit %>
+             <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Submit my exam',:onclick=>"finish_exam(); return false;"%></td>
+           <% end %>
                             </tr>
                             </table>
                             <br/> <br/>
