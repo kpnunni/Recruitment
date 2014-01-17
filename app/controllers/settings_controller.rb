@@ -54,7 +54,7 @@ class SettingsController < ApplicationController
   def reduce_total_time
     Exam.all.each do |exam|
       current_time = exam.total_time
-      new_time = current_time * 2/3
+      new_time = current_time * 0.88
       exam.update_attribute(:total_time, new_time)
     end
   end

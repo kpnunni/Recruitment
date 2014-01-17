@@ -79,8 +79,8 @@ class SchedulesController < ApplicationController
   def destroy
     @schedule = Schedule.find(params[:id])
     @schedule.candidates.each{|c| UserMailer.cancel_schedule_email(c.user,@schedule).deliver }
-    @users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
-    @users.each {|admin| UserMailer.cancel_schedule_email(admin,@schedule).deliver }
+    #@users=User.joins(:roles).where(roles: {role_name: "Get Schedule Email"})
+    #@users.each {|admin| UserMailer.cancel_schedule_email(admin,@schedule).deliver }
     @schedule.destroy
     respond_to do |format|
       format.html { redirect_to schedules_url, notice: 'Schedule was successfully cancelled.' }
