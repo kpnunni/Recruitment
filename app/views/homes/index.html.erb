@@ -43,7 +43,7 @@
         <h2>
         <% if my_roles.include?("Candidate") %>
             <% @diff=(current_user.candidate.schedule.sh_date.to_i-Time.now.to_i)/60 %>
-           <% if @diff > 1 %>
+           <% if @diff > 30 %>
                <%= "Your exam will start by "+ current_user.candidate.schedule.sh_date.strftime("%b-%d-%Y  %I:%M%p")%>
                   <%=link_to 'sign out', '/signout',method: :delete   %>
         <% else %>
