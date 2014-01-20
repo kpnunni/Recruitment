@@ -129,7 +129,7 @@ class AnswersController < ApplicationController
     @diff=(@user.candidate.schedule.sh_date.to_i-Time.now.to_i)/60
     return if @user.nil?||!@user.isAlive||@user.candidate.schedule.nil?
     sign_in(@user)
-    if @diff > 1
+    if @diff > 30
       redirect_to '/homes/index'
     else
       redirect_to '/answers/candidate_detail'
