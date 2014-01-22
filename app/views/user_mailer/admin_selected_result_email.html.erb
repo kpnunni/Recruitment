@@ -32,7 +32,7 @@
 
         <%  @candidate = result.candidate
             questions = @candidate.schedule.exam.question_ids
-            @extra_answers = @candidate.answers.where("question_id not in (?)",questions)   %>
+            @extra_answers = @candidate.answers.where("question_id not in (?) and answer != ? ",questions,"0")   %>
         <% if @extra_answers.present? %>
             <%
                attend = @extra_answers.size
@@ -40,8 +40,8 @@
             %>
         <% else %>
             <%
-               attend = 0
-               right = 0
+               attend = "-"
+               right = "-"
             %>
          <% end %>
         <td ><%= attend %></td>

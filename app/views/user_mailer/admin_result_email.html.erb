@@ -67,7 +67,7 @@
     <p>
       <%  @candidate = result.candidate
           questions = @candidate.schedule.exam.question_ids
-          @extra_answers = @candidate.answers.where("question_id not in (?)",questions)   %>
+          @extra_answers = @candidate.answers.where("question_id not in (?) and answer != ?",questions,"0")   %>
       <% if @extra_answers.present? %>
           <br/>
           <h3>Additional answers:</h3>

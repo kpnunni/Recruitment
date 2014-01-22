@@ -4,6 +4,6 @@ module RecruitmentTestsHelper
     questions = @candidate.schedule.exam.question_ids
     extra_questions = Category.where("category = 'Additional'").first.question_ids
     @answers =  @candidate.answers.where("question_id in (?)",questions)
-    @extra_answers = @candidate.answers.where("question_id in (?)",extra_questions)
+    @extra_answers = @candidate.answers.where("question_id in (?) and answer != ?",extra_questions,"0")
   end
 end

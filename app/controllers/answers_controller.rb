@@ -39,11 +39,14 @@ class AnswersController < ApplicationController
       end
     end
     @anss=Answer.where("candidate_id=?",@candidate.id )
-    min=@anss.first.id
-    @anss.each{|v| min=v.id if v.id<min}
+    if @candidate.submitted
+      min = @anss.sort.last.id
+    else
+      min = @anss.map(&:id).min
+    end
     @ans=Answer.find(min)
-    @c_option=Array.new(@ans.question.options.count)
-    redirect_to answer_path(@ans.id)
+    #@c_option=Array.new(@ans.question.options.count)
+    redirect_to answer_path(@ans)
 
   end
 
@@ -54,7 +57,7 @@ class AnswersController < ApplicationController
     @candidate = @answer.candidate
     @answer.q_no = @candidate.answers.where("id <= ?",@answer.id ).count
     @answer.dec_time =Time.now
-    @c_option=Array.new(@answer.question.options.count)
+    #@c_option=Array.new(@answer.question.options.count)
     @tick=Array.new(@answer.question.options.count)
     @tick.each_with_index do |val,i|
       @tick[i]= @answer.answer[i]=="1"
