@@ -330,7 +330,7 @@ class AnswersController < ApplicationController
   end
   def show_submit
     more_q = Question.additional.count
-    @candidate.answers.select{|ans| ans.answer != "0"}.size == @candidate.schedule.exam.no_of_question + more_q
+    @candidate.answers.select{|ans| ans.answer != "0"}.size >= @candidate.schedule.exam.no_of_question + more_q  - 1
   end
 
   def add_additional_answers
