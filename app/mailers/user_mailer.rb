@@ -51,6 +51,12 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail(:to => user.user_email, :subject => "Test completed")
   end
+  def admin_selected_result_email(user,result)
+    @additional = Category.where("category = 'Additional'").first.questions.size
+    @results = result
+    @user = user
+    mail(:to => user.user_email, :subject => "Mark Details")
+  end
   def result_email(user)
     @pass=Template.find(4)
     @fail=Template.find(5)

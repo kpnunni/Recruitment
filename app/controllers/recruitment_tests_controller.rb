@@ -37,7 +37,7 @@ class RecruitmentTestsController < ApplicationController
   def sent_mail
     if  params[:email]
       ids = params[:email][:sent_ids].map(&:to_i)
-      call_rake :send_result_mail, :candidate_ids => ids.join(",")
+      call_rake :send_selected_result_mail, :candidate_ids => ids.join(",")
       redirect_to recruitment_tests_path , notice: 'details sent to emails.'
     else
       flash[:error]= 'Select results to sent.'
