@@ -22,8 +22,16 @@
 <% if @candidates.empty? %>
     <h2>No results..</h2>
 <% else %>
-    <div style="text-align: right;">
-      <%= link_to "PRINT", '#', onclick: "javascript:print()", id: "print_link", class: "btn btn-xs" %>
+     <div>
+         <div style="text-align: left;float: left; width: 50%;">
+          Per Page:
+          <%= link_to "30", candidates_path(per_page: 30), class: "btn btn-xs" %>
+          <%= link_to "40", candidates_path(per_page: 40), class: "btn btn-xs" %>
+          <%= link_to "50", candidates_path(per_page: 50), class: "btn btn-xs" %>
+        </div>
+        <div style="text-align: right; float: right; width: 50%;">
+          <%= link_to "PRINT", '#', onclick: "javascript:print()", id: "print_link", class: "btn btn-xs" %>
+        </div>
     </div>
       <table   class="index_table" >
             <tr>

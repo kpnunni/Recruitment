@@ -25,9 +25,20 @@
   </table>
 
 </form>
-<div style="text-align: right;">
-  <%= link_to "PRINT", '#', onclick: "javascript:print()", id: "print_link", class: "btn btn-xs" %>
+<div>
+    <div style="text-align: left;float: left; width: 50%;">
+        Per Page:
+        <%= link_to "30", recruitment_tests_path(per_page: 30), class: "btn btn-xs" %>
+        <%= link_to "40", recruitment_tests_path(per_page: 40), class: "btn btn-xs" %>
+        <%= link_to "50", recruitment_tests_path(per_page: 50), class: "btn btn-xs" %>
+    </div>
+    <div style="text-align: right; float: right; width: 50%;">
+        <%= link_to "PRINT", '#', onclick: "javascript:print()", id: "print_link", class: "btn btn-xs" %>
+    </div>
 </div>
+<div>
+  <br />
+  <br />
 <% if @recruitment_tests.empty? %>
     <h2>No results..</h2>
 <% else %>
@@ -105,6 +116,8 @@
     <% end %>
     <%= pagination_links(@recruitment_tests) %>
 <% end %>
+</div>
+
 <script type="text/javascript" >
     function decision_pass(id){
         jQuery('#parent'+id).detach();

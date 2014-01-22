@@ -71,7 +71,12 @@
     </div>
 <% end %>
 <%= pagination_links(@questions) %>
-<br/>
+  <div style="text-align: left;">
+    Per Page:
+    <%= link_to "30", questions_path(per_page: 30), class: "btn btn-xs" %>
+    <%= link_to "40", questions_path(per_page: 40), class: "btn btn-xs" %>
+    <%= link_to "50", questions_path(per_page: 50), class: "btn btn-xs" %>
+  </div>
 <% if @questions.empty? %>
     <h2>No results..</h2>
 <% else %>
