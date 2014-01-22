@@ -96,7 +96,11 @@ class AnswersController < ApplicationController
       return
     end
     if @candidate.update_attributes(params[:candidate])
-      redirect_to entry_pass_answers_path
+      if @candidate.schedule.remote
+       redirect_to instructions_answers_path
+      else
+       redirect_to entry_pass_answers_path
+      end
     else
       render 'answers/candidate_detail' ,:notice=>"error"
     end

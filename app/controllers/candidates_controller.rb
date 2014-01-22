@@ -25,8 +25,8 @@ class CandidatesController < ApplicationController
 
   def create
     @candidate=Candidate.new(params[:candidate])
-    @candidate.user.login_password="Suyati123"
-    @candidate.user.login_password_confirmation="Suyati123"
+    @candidate.user.login_password="suyati123"
+    @candidate.user.login_password_confirmation="suyati123"
     @candidate.user.encrypt_password
     @candidate.user.roles.push(Role.find_by_role_name('Candidate'))
     if @candidate.save
