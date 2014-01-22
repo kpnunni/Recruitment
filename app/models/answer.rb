@@ -87,8 +87,8 @@ class Answer < ActiveRecord::Base
      @recruitment_test.count_no_of_question_attended(current_user)
      @recruitment_test.find_mark_percentage(current_user)
      @recruitment_test.save
-     @user=User.find(current_user.id)
-     @user.update_attribute(:isAlive,0)
+     #@user=User.find(current_user.id)
+     #@user.update_attribute(:isAlive,0)
    end
 
   def make_result(user)

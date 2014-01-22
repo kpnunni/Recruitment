@@ -27,138 +27,135 @@
 <table cellpadding="5" align="center"   >
   <tr>
     <% if @back %>
-        <td><%= f.button  "&#8592;Previous".html_safe , :name=>"to",:value=>@back.id, :disable_with => "Back",class: "btn btn-large btn-primary" %></td>
-          <% end %>
-          <% if @next %>
-              <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
-          <% end %>
-          <td><%= f.button  "Submit Exam and attend Programming Questions", :name=>"to",:value=>"more", :disable_with => "Programming Questions",class: "btn btn-large btn-success", style: "display: none", id: "load_moreq" %></td>
-          <% if @submit %>
-             <td><%= f.button 'Submit my Exam', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Submit my exam',:onclick=>"finish_exam(); return false;"%></td>
-           <% end %>
-                            </tr>
-                            </table>
-                            <br/> <br/>
-                            <h3>Questions:</h3>[Click on the question number button to jumb to that question.]
-                            <div style="overflow: hidden;">
-                              <% previous_category = "",changed = false  %>
-                              <% @answers.sort.each_with_index do |ans,i| %>
-                                  <% current_category = ans.question.category.category %>
-                                  <% changed = previous_category != current_category ? !changed : changed %>
-                                  <% if previous_category != current_category %>
-                                      <div style="width: 100%;"></div>
-                                     <br> <br><%= current_category+":-" %>
-                                      <div style="width: 100%;"></div>
-                                  <% end %>
-                                  <% previous_category = current_category %>
-                                  <div style="float: left;     width: 30px;" >
-                                    <% if ans.answer!="0"&&ans.id!=@answer.id  %>
-                                        <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>"background-color: #90ee90; border-radius: 15px;", title: "answered question"   %>
-                                    <% elsif ans.id==@answer.id  %>
-                                        <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 ,:style=>"background-color: orange; border-radius: 15px;", title: "current question" %>
-                                    <% else %>
-                                        <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>" border-radius: 15px;", title: "not answered question" %>
-                                    <% end %>
-                                  </div>
-                              <% end %>
-                            </div>
+    <td><%= f.button  "&#8592;Previous".html_safe , :name=>"to",:value=>@back.id, :disable_with => "Back",class: "btn btn-large btn-primary" %></td>
+      <% end %>
+      <% if @next %>
+          <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
+      <% end %>
+         <td><%= f.button "Continue&#8594&#8594".html_safe, :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit first part of the exam and attends Programming Questions" , :disable_with =>'Continue',:onclick=>"finish_exam(); return false;", style: "display: none", id: "load_moreq"%></td>
+       </tr>
+       </table>
+       <br/> <br/>
+       <h3>Questions:</h3>[Click on the question number button to jumb to that question.]
+       <div style="overflow: hidden;">
+         <% previous_category = "",changed = false  %>
+         <% @answers.sort.each_with_index do |ans,i| %>
+             <% current_category = ans.question.category.category %>
+             <% changed = previous_category != current_category ? !changed : changed %>
+             <% if previous_category != current_category %>
+                 <div style="width: 100%;"></div>
+                 <br> <br><%= current_category+":-" %>
+                 <div style="width: 100%;"></div>
+             <% end %>
+             <% previous_category = current_category %>
+             <div style="float: left;     width: 30px;" >
+               <% if ans.answer!="0"&&ans.id!=@answer.id  %>
+                   <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>"background-color: #90ee90; border-radius: 15px;", title: "answered question"   %>
+               <% elsif ans.id==@answer.id  %>
+                   <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1 ,:style=>"background-color: orange; border-radius: 15px;", title: "current question" %>
+               <% else %>
+                   <%= f.button  i+1, :name=>"to",:value=>ans.id, :disable_with => i+1,:style=>" border-radius: 15px;", title: "not answered question" %>
+               <% end %>
+             </div>
+         <% end %>
+       </div>
 
-                            <br/>
-                            <br/> Please call: 0484 4242800 for immediate assistance <br/>
-                        <% end %>
-
-                        <script type="text/javascript" >
-                            var more_question = <%= @load_more %>;
-                            var answered_all = <%= @answered_all %>;
-                            var last_question = <%= @answer.answer == "0" %>;
-                            window.onload = function()
-                            {
-                                startCountdown(<%=cnt=@count%>)
-                                if(more_question && answered_all )
-                                {
-                                    jQuery("#load_moreq").show("slow");
-                                }
-                            }
+       <br/>
+       <br/> Please call: 0484 4242800 for immediate assistance <br/>
+    <% end %>
+    <div id="confirm" style="display: none;">Really want to submit your part one of your exam?</div>
+<script type="text/javascript" >
+       var more_question = <%= @load_more %>;
+       var answered_all = <%= @answered_all %>;
+       var last_question = <%= @answer.answer == "0" %>;
+       window.onload = function()
+       {
+           startCountdown(<%=cnt=@count%>)
+           if(more_question && answered_all )
+           {
+               jQuery("#load_moreq").show("slow");
+           }
+       }
 
 
-                            jQuery("input:radio").change(function(){
-                                if(more_question && last_question)
-                                {
-                                    jQuery("#load_moreq").show("slow");
-                                }
-                            });
+       jQuery("input:radio").change(function(){
+           if(more_question && last_question)
+           {
+               jQuery("#load_moreq").show("slow");
+           }
+       });
 
-                            var flag= 0,time_used = 0;
-                            function set_flag(){
-                                flag = 1;
-                            }
-                            function startCountdown(g_iCount)
-                            {
-                                if((g_iCount) > 0)
-                                {
-                                    var str="green";
-                                    if (g_iCount<20&&g_iCount>=10)
-                                    {
-                                        str="orange"
-                                    }
-                                    else if (g_iCount<10)
-                                    {
-                                        str="red"
-                                    }
+       var flag= 0,time_used = 0;
+       function set_flag(){
+           flag = 1;
+       }
+       function startCountdown(g_iCount)
+       {
+           if((g_iCount) > 0)
+           {
+               var str="green";
+               if (g_iCount<20&&g_iCount>=10)
+               {
+                   str="orange"
+               }
+               else if (g_iCount<10)
+               {
+                   str="red"
+               }
 
-                                    var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec" ;
-                                    document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
-                                    jQuery('#time_used').val(time_used);
-                                    time_used++;
+               var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec" ;
+               document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
+               jQuery('#time_used').val(time_used);
+               time_used++;
 
-                                    g_iCount = g_iCount - 1;
-                                    if (flag == 0){
-                                        setTimeout(function() {startCountdown(g_iCount); }, 1000);
-                                    }
-                                    else{
-                                        return;
-                                    }
-                                }
-                                else
-                                {
-                                    document.getElementById('procedure_submit_button').click();
-                                }
-                            }
+               g_iCount = g_iCount - 1;
+               if (flag == 0){
+                   setTimeout(function() {startCountdown(g_iCount); }, 1000);
+               }
+               else{
+                   return;
+               }
+           }
+           else
+           {
+               document.getElementById('procedure_submit_button').click();
+           }
+       }
 
-                            var message="Function Disabled!";
+       var message="Function Disabled!";
 
 
-                            function clickIE4(){
-                                if (event.button!=0){
+       function clickIE4(){
+           if (event.button!=0){
 
-                                    return false;
-                                }
-                            }
+               return false;
+           }
+       }
 
-                            function clickNS4(e){
-                                if (document.layers||document.getElementById&&!document.all){
-                                    if (e.which==2||e.which==3){
+       function clickNS4(e){
+           if (document.layers||document.getElementById&&!document.all){
+               if (e.which==2||e.which==3){
 
-                                        return false;
-                                    }
-                                }
-                            }
+                   return false;
+               }
+           }
+       }
 
-                            if (document.layers){
-                                document.captureEvents(Event.MOUSEDOWN);
-                                document.onmousedown=clickNS4;
-                            }
-                            else if (document.all&&!document.getElementById){
-                                document.onmousedown=clickIE4;
-                            }
+       if (document.layers){
+           document.captureEvents(Event.MOUSEDOWN);
+           document.onmousedown=clickNS4;
+       }
+       else if (document.all&&!document.getElementById){
+           document.onmousedown=clickIE4;
+       }
 
-                            document.oncontextmenu=new Function("return false")
+       document.oncontextmenu=new Function("return false")
 
-                            document.onkeydown = function(e){
-                                if(e.keyCode != 0)
-                                {
-                                    return false;
-                                }
+       document.onkeydown = function(e){
+           if(e.keyCode != 0)
+           {
+               return false;
+           }
 
-                            }
-                        </script>
+       }
+    </script>

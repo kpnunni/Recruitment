@@ -171,6 +171,8 @@ class AnswersController < ApplicationController
     @recruitment_test = RecruitmentTest.find(params[:id])
     @candidate = current_user.candidate.id
     call_rake :send_result_mail, :candidate_ids => params[:id]
+    @user=User.find(current_user.id)
+    @user.update_attribute(:isAlive,0)
     sign_out
   end
 
@@ -218,24 +220,23 @@ class AnswersController < ApplicationController
 
     if  params[:to]=="finish"||params[:to].nil?||params[:to]=="timer"
       if @candidate.submitted
-        @answer.save_mark(current_user)
-        @answer.make_result(current_user)
         redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
       else
-        @candidate.update_attribute(:submitted, true)
-        @nxt = add_additional_answers
+        start_additional_question
         redirect_to answer_path(@nxt)
       end
-    elsif params[:to] == "more"
-      @candidate.update_attribute(:submitted, true)
-      @nxt = add_additional_answers
-      redirect_to answer_path(@nxt)
     else
       @nxt=@answer.get_next_ans_in_single_mode(params[:to].to_i)
       redirect_to answer_path(@nxt)
     end
   end
 
+  def start_additional_question
+    @answer.save_mark(current_user)
+    @answer.make_result(current_user)
+    @candidate.update_attribute(:submitted, true)
+    @nxt = add_additional_answers
+  end
 
   def calculate_remaining_time
     total = @candidate.schedule.exam.total_time
