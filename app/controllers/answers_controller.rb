@@ -52,7 +52,7 @@ class AnswersController < ApplicationController
     @each_mode=Setting.find_by_name('time_limit_for_each_question')
     @answer = Answer.includes([:question => [:category], :candidate => [:answers => [:question => [:category]]]]).find(params[:id])
     @candidate = @answer.candidate
-    @answer.q_no=current_user.candidate.answers.where("id <= ?",@answer.id ).count
+    @answer.q_no = @candidate.answers.where("id <= ?",@answer.id ).count
     @answer.dec_time =Time.now
     @c_option=Array.new(@answer.question.options.count)
     @tick=Array.new(@answer.question.options.count)
@@ -70,6 +70,7 @@ class AnswersController < ApplicationController
         @additional = Question.additional
         @id_s = @additional.map(&:id)
         @answers = @candidate.answers.select {|ans| @id_s.include?(ans.question_id)}
+        @answer.q_no = @answers.select{|ans| ans.id <= @answer.id }.size
         @count = calculate_additional_remaining_time
         @next = next_additional_answer(@answer.id)
         @back = previous_additional_answer(@answer.id)
@@ -224,8 +225,7 @@ class AnswersController < ApplicationController
       end
     elsif params[:to] == "more"
       @candidate.update_attribute(:submitted, true)
-      add_additional_answers
-      @nxt=get_more_question
+      @nxt = add_additional_answers
       redirect_to answer_path(@nxt)
     else
       @nxt=@answer.get_next_ans_in_single_mode(params[:to].to_i)
@@ -330,10 +330,11 @@ class AnswersController < ApplicationController
   end
 
   def add_additional_answers
+    @additional = Question.additional
     @additional.shuffle.each do |q|
       Answer.create(question_id: q.id, candidate_id: @candidate.id,time_taken: 0, answer: "0")
     end
-    next_ans = @candidate.answers.where(question_id: @additional.map(&:id)).first
+    next_ans = @candidate.answers.where(question_id: @additional.map(&:id)).sort.first
   end
 
 
