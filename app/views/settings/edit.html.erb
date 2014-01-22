@@ -32,9 +32,19 @@
                 <td><%= check_box_tag :load_more ,1,@load_more.eql?("on")%></td>
               </tr>
               <tr>
+                <td class="lft">Multiplication value for time limit for all question settings</td>
+                <td><%= text_field_tag :multiply_with,@multiply_with,  class: "text_box"  %></td>
+              </tr>
+              <tr>
+                <td class="lft">Code to start the Exam</td>
+                <td><%= text_field_tag :start_code,@start_code %></td>
+              </tr>
+              <tr>
                 <td class="lft">Auto result calculation?</td>
                 <td><%= check_box_tag :auto_result,1,@auto_result.eql?("on"),:onClick=>"show_category()" %></td>
               </tr>
+
+
             </table>
 
 

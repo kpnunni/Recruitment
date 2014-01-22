@@ -3,6 +3,8 @@ class SettingsController < ApplicationController
   def edit
      @setting = Setting.new
      @settings = Setting.all
+     @multiply_with = get_status('multiply_with')
+     @start_code = get_status('start_code')
      @load_more = get_status('load_more')
      @negative_mark = get_status('negative_mark')
      @auto_result = get_status('auto_result')
@@ -13,6 +15,8 @@ class SettingsController < ApplicationController
      @cut_off = (0..100).to_a.select {|v| v%5==0 }
   end
   def update
+    @multiply_with = Setting.find_by_name('multiply_with')
+    @start_code = Setting.find_by_name('start_code')
     @load_more=Setting.find_by_name('load_more')
     @negative_mark=Setting.find_by_name('negative_mark')
     @auto_result=Setting.find_by_name('auto_result')
@@ -44,6 +48,8 @@ class SettingsController < ApplicationController
     end
     @from.update_attribute(:status,params[:from].to_i)
     @untill.update_attribute(:status,params[:untill].to_i)
+    @multiply_with.update_attribute(:status,params[:multiply_with].to_f)
+    @start_code.update_attribute(:status,params[:start_code])
       redirect_to '/settings/edit' ,:notice => "Settings updated"
   end
   def chk_role
@@ -52,9 +58,10 @@ class SettingsController < ApplicationController
     end
   end
   def reduce_total_time
+    multiply = Setting.find_by_name('multiply_with').status.to_f
     Exam.all.each do |exam|
       current_time = exam.total_time
-      new_time = current_time * 0.9
+      new_time = current_time * multiply
       exam.update_attribute(:total_time, new_time)
     end
   end

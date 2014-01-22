@@ -96,9 +96,22 @@ class AnswersController < ApplicationController
       return
     end
     if @candidate.update_attributes(params[:candidate])
-      redirect_to instructions_answers_path
+      redirect_to entry_pass_answers_path
     else
       render 'answers/candidate_detail' ,:notice=>"error"
+    end
+  end
+
+  def entry_pass
+    @candidate = current_user.candidate
+  end
+  def entry_pass_validation
+    actual_code = Setting.find_by_name('start_code').status
+    if params[:pass] == actual_code
+    redirect_to instructions_answers_path
+    else
+      flash[:error] = "Invalid code"
+      redirect_to entry_pass_answers_path
     end
   end
 

@@ -59,6 +59,8 @@ Test::Application.routes.draw do
       get :blank
       get :make
       get :check_popup
+      get :entry_pass
+      post :entry_pass_validation
     end
     member do
       get :congrats

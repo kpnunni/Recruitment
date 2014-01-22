@@ -1,0 +1,9 @@
+<div>
+  <br />
+  <br />
+  <br />
+  <%= form_tag( entry_pass_validation_answers_path, method: :post) do %>
+    Enter the code:<%= text_field_tag :pass  %>
+    <%= button_tag "Proceed",class: "btn btn-success" %>
+  <% end %>
+</div>

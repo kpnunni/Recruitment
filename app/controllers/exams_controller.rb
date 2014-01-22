@@ -141,8 +141,9 @@ class ExamsController < ApplicationController
   end
   def calculate_total_time
     total_time = @exam.questions.map(&:allowed_time).sum
+    multiply = Setting.find_by_name('multiply_with').status.to_f
     if Setting.find_by_name("time_limit_for_each_question").status == "off"
-      @exam.total_time = total_time * 0.9
+      @exam.total_time = total_time * multiply
     else
       @exam.total_time = total_time
     end
