@@ -14,6 +14,7 @@ class Question < ActiveRecord::Base
   has_attached_file :question_image
   accepts_nested_attributes_for :options, :allow_destroy => true,:reject_if => proc { |attributes| attributes['option'].blank? }
   accepts_nested_attributes_for :answers
+  scope :additional, where("category_id in (?)", Category.where(category: "Additional").map(&:id))
   def options_status
     if self.question.empty? && self.question_image_file_name.nil?
       self.errors[:base]<<"Question or image should not be blank"

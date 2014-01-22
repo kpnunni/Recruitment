@@ -63,12 +63,22 @@ class AnswersController < ApplicationController
       @count=@answer.question.allowed_time-@answer.time_taken
       @next = next_present_answer(@answer.id)
     else
-      @count = calculate_remaining_time
       @load_more = feature_enabled && answered_all_except_last && more_questions_available
       @answered_all = answered_all
       @submit = show_submit
-      @next = next_answer(@answer.id)
-      @back = previous_answer(@answer.id)
+      if @candidate.submitted
+        @additional = Question.additional
+        @id_s = @additional.map(&:id)
+        @answers = @candidate.answers.select {|ans| @id_s.include?(ans.question_id)}
+        @count = calculate_additional_remaining_time
+        @next = next_additional_answer(@answer.id)
+        @back = previous_additional_answer(@answer.id)
+      else
+        @answers = @candidate.answers
+        @count = calculate_remaining_time
+        @next = next_answer(@answer.id)
+        @back = previous_answer(@answer.id)
+      end
     end
   end
 
@@ -203,11 +213,18 @@ class AnswersController < ApplicationController
     end
 
     if  params[:to]=="finish"||params[:to].nil?||params[:to]=="timer"
-      @answer.save_mark(current_user)
-      @answer.make_result(current_user)
-
-      redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
+      if @candidate.submitted
+        @answer.save_mark(current_user)
+        @answer.make_result(current_user)
+        redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
+      else
+        @candidate.update_attribute(:submitted, true)
+        @nxt = add_additional_answers
+        redirect_to answer_path(@nxt)
+      end
     elsif params[:to] == "more"
+      @candidate.update_attribute(:submitted, true)
+      add_additional_answers
       @nxt=get_more_question
       redirect_to answer_path(@nxt)
     else
@@ -220,6 +237,12 @@ class AnswersController < ApplicationController
   def calculate_remaining_time
     total = @candidate.schedule.exam.total_time
     used = @candidate.answers.collect {|v| v.time_taken }.sum
+    remaining = total - used
+  end
+
+  def calculate_additional_remaining_time
+    total = @additional.map(&:allowed_time).sum
+    used = @candidate.answers.where(question_id: @id_s).collect {|v| v.time_taken }.sum
     remaining = total - used
   end
 
@@ -272,6 +295,24 @@ class AnswersController < ApplicationController
     end
   end
 
+  def next_additional_answer(current_id)
+    ans = @answers.select{|ans| ans.id > current_id }
+    if ans
+      ans.sort.first
+    else
+      nil
+    end
+  end
+
+  def previous_additional_answer(current_id)
+    ans = @answers.select{|ans| ans.id < current_id }
+    if ans
+      ans.sort.last
+    else
+      nil
+    end
+  end
+
   def next_present_answer(current_id)
     @candidate.answers.where("id > ?",current_id ).sort.each do |ans|
       if (ans.question.allowed_time-ans.time_taken)>3
@@ -284,7 +325,16 @@ class AnswersController < ApplicationController
      Setting.find_by_name('load_more').status.eql?("on")
   end
   def show_submit
-    more_q = Category.find_by_category('Additional').questions.count
-    @candidate.answers.size == @candidate.schedule.exam.no_of_question + more_q
+    more_q = Question.additional.count
+    @candidate.answers.select{|ans| ans.answer != "0"}.size == @candidate.schedule.exam.no_of_question + more_q
   end
+
+  def add_additional_answers
+    @additional.shuffle.each do |q|
+      Answer.create(question_id: q.id, candidate_id: @candidate.id,time_taken: 0, answer: "0")
+    end
+    next_ans = @candidate.answers.where(question_id: @additional.map(&:id)).first
+  end
+
+
 end

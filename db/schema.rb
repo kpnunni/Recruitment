@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131010055748) do
+ActiveRecord::Schema.define(:version => 20140122071649) do
 
   create_table "answers", :force => true do |t|
     t.integer  "candidate_id"
@@ -36,8 +36,9 @@ ActiveRecord::Schema.define(:version => 20131010055748) do
     t.string   "resume_file_size"
     t.integer  "resume"
     t.integer  "schedule_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.boolean  "submitted",           :default => false
   end
 
   create_table "categories", :force => true do |t|
