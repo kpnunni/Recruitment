@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <body>
-    <h1>New Schedule detail
-     </h1>
-    <p>
-      Scheduled date is: <%= @schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>
-      Scheduled time is: <%= @schedule.sh_date.strftime("%I:%M%p") %>.<br/>
-      Scheduled test is: <%= @schedule.exam.name %>.<br/>
-      Candidates are:.<br/>
-      <% @schedule.candidates.each do |c|%>
-      <%= c.name %><br/>
-      <% end %>
-
-    </p>
-    <p>
-
-    </p>
-
-  </body>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+<h1>New Schedule</h1>
+<br/>
+<h3>Test detail:</h3>
+<br/>
+<p>
+  <i>
+    Test Name:<%= @schedule.exam.name %>.<br/>
+    Date:     <%= @schedule.sh_date.strftime("%b %d %A,%Y") %>.<br/>
+    Time:     <%= @schedule.sh_date.strftime("%I:%M%p") %>.<br/>
+  </i>
+</p>  <br/>
+<h3>Candidates:</h3>
+<p>
+  <i>
+    <% @schedule.candidates.each do |c|%>
+        <%= "#{c.name}(#{c.user.user_email})" %><br/>
+    <% end %>
+  </i>
+</p>
+</body>
 </html>
