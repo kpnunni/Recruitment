@@ -26,13 +26,14 @@
 <%= f.submit   :id =>"procedure_submit_button" , :name=>"to",:value=>"timer" , :style => "display: none" ,:remote  => true%>
 <table cellpadding="5" align="center"   >
   <tr>
-    <% if @back %>
+    <td><%= link_to_function  "Reset Answer" , "reset_answers();",class: "btn btn-large" %></td>
+          <% if @back %>
     <td><%= f.button  "&#8592;Previous".html_safe , :name=>"to",:value=>@back.id, :disable_with => "Back",class: "btn btn-large btn-primary" %></td>
       <% end %>
       <% if @next %>
           <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
       <% end %>
-         <td><%= f.button "Submit Section A &#8594&#8594".html_safe, :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit first part of the exam and attends Programming Questions" , :disable_with =>'Submit Section A and start Section B',:onclick=>"finish_exam(); return false;", style: "display: none", id: "load_moreq"%></td>
+         <td><%= f.button "Submit Section A &#8594&#8594".html_safe, :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit first part of the exam and attends Programming Questions" , :disable_with =>'Submit Section A and start Section B',:onclick=>"finish_exam(); return false;", id: "load_moreq"%></td>
        </tr>
        </table>
        <br/> <br/>
@@ -65,25 +66,25 @@
     <% end %>
     <div id="confirm" style="display: none;">Really want to submit Section A and start Section B of your exam?</div>
 <script type="text/javascript" >
-       var more_question = <%= @load_more %>;
-       var answered_all = <%= @answered_all %>;
-       var last_question = <%= @answer.answer == "0" %>;
+//       var more_question = <%#= @load_more %>;
+//       var answered_all = <%#= @answered_all %>;
+//       var last_question = <%#= @answer.answer == "0" %>;
        window.onload = function()
        {
            startCountdown(<%=cnt=@count%>)
-           if(more_question && answered_all )
-           {
-               jQuery("#load_moreq").show("slow");
-           }
+//           if(more_question && answered_all )
+//           {
+//               jQuery("#load_moreq").show("slow");
+//           }
        }
 
 
-       jQuery("input:radio").change(function(){
-           if(more_question && last_question)
-           {
-               jQuery("#load_moreq").show("slow");
-           }
-       });
+//       jQuery("input:radio").change(function(){
+//           if(more_question && last_question)
+//           {
+//               jQuery("#load_moreq").show("slow");
+//           }
+//       });
 
        var flag= 0,time_used = 0;
        function set_flag(){

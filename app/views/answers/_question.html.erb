@@ -36,15 +36,6 @@
             <% end %>
           </tr>
       <% end %>
-        <tr ></tr>
-        <tr ></tr>
-        <tr ></tr>
-        <tr >
-          <%= f.fields_for :c_option do |c_op| %>
-              <td width="2%"  ><%=radio_button_tag "answer[c_option][1]", "skip" %></td>
-              <td class="lft" style="font-size: 18px; color: red;" >   <%=  "SKIP THIS QUESTION" %>  </td>
-          <% end %>
-        </tr>
   <% end %>
 </table>
 </div>

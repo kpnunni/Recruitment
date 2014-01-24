@@ -28,15 +28,17 @@
 <%= f.submit   :id =>"procedure_submit_button" , :name=>"to",:value=>"timer" , :style => "display: none" ,:remote  => true%>
 <table cellpadding="5" align="center"   >
   <tr>
-    <% if @back %>
+    <td><%= link_to_function  "Reset Answer" , "reset_answers();",class: "btn btn-large" %></td>
+
+          <% if @back %>
     <td><%= f.button  "&#8592;Previous".html_safe , :name=>"to",:value=>@back.id, :disable_with => "Back",class: "btn btn-large btn-primary" %></td>
       <% end %>
       <% if @next %>
           <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
       <% end %>
-      <% if @submit %>
+      <%# if @submit %>
     <td><%= f.button 'Submit Section B', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Submit Section B',:onclick=>"finish_exam(); return false;"%></td>
-    <% end %>
+    <%# end %>
     </tr>
     </table>
     <br/> <br/>
