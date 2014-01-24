@@ -1,4 +1,5 @@
-<div class="qno"  >
+<div>
+  <div class="qno"  >
   <b>  <%= label_tag answer.q_no%></b>
 </div>
 <div class="question"  >
@@ -12,9 +13,11 @@
       <%= image_tag answer.question.question_image.url(:original) %><br/>
   <% end %>
 </div>
+</div>
 <br> <br> <br> <br>
 
-<table cellpadding="0"  width="100%" class="options" >
+<div>
+  <table cellpadding="0"  width="100%" class="options" >
   <% if answer.question.type.question_type=="check_box" %>
       <% answer.question.options.sort.each_with_index do |op,i| %>
           <tr>
@@ -33,5 +36,15 @@
             <% end %>
           </tr>
       <% end %>
+        <tr ></tr>
+        <tr ></tr>
+        <tr ></tr>
+        <tr >
+          <%= f.fields_for :c_option do |c_op| %>
+              <td width="2%"  ><%=radio_button_tag "answer[c_option][1]", "skip" %></td>
+              <td class="lft" style="font-size: 18px; color: red;" >   <%=  "SKIP THIS QUESTION" %>  </td>
+          <% end %>
+        </tr>
   <% end %>
 </table>
+</div>
