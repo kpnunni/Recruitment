@@ -37,7 +37,6 @@
           <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
       <% end %>
       <%# if @submit %>
-    <td><%= f.button 'Submit Section B', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Submit Section B',:onclick=>"finish_exam(); return false;"%></td>
     <%# end %>
     </tr>
     </table>
@@ -56,7 +55,9 @@
           </div>
       <% end %>
     </div>
-
+     <div align="center">
+       <%= f.button 'Submit Section B', :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit your exam" , :disable_with =>'Submit Section B',:onclick=>"finish_exam(); return false;"%>
+     </div>
     <br/>
     <br/> Please call: 0484 4242800 for immediate assistance <br/>
 <% end %>

@@ -33,7 +33,6 @@
       <% if @next %>
           <td><%= f.button  "Next&#8594;".html_safe , :name=>"to",:value=>@next.id, :disable_with => "Next",class: "btn btn-large btn-primary" %></td>
       <% end %>
-         <td><%= f.button "Submit Section A &#8594&#8594".html_safe, :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit first part of the exam and attends Programming Questions" , :disable_with =>'Submit Section A and start Section B',:onclick=>"finish_exam(); return false;", id: "load_moreq"%></td>
        </tr>
        </table>
        <br/> <br/>
@@ -62,9 +61,17 @@
        </div>
 
        <br/>
-       <br/> Please call: 0484 4242800 for immediate assistance <br/>
-    <% end %>
-    <div id="confirm" style="display: none;">Really want to submit Section A and start Section B of your exam?</div>
+       <div align="center">
+       <%= f.button "Finish Section A &#8594&#8594".html_safe, :name=>"to",:value=>"finish",class: "btn btn-large btn-warning",:title=>"Submit first part of the exam and attends Programming Questions" , :disable_with =>'Submit Section A and start Section B',:onclick=>"finish_exam(); return false;", id: "load_moreq"%>
+       </div>
+           <br/> Please call: 9037498886 for immediate assistance <br/>
+ <% end %>
+    <div id="confirm" style="display: none;">
+      Are you sure to submit Section A of your Exam? <br/>
+      You won't be able to answer or modify from Section A again. Time remaining for Section A will not be carry forward for Section B as it will be elapsed if you go for Submit Section A.<br/><br/>
+
+      If you are done Section A please Press 'Submit my exam' to proceed for Section B else cancel to stay back on Section A.<br/>
+    </div>
 <script type="text/javascript" >
 //       var more_question = <%#= @load_more %>;
 //       var answered_all = <%#= @answered_all %>;
