@@ -35,10 +35,7 @@
         <td ><%= number_with_precision(result.mark_percentage, :precision => 2)%></td>
         <td ><%= number_with_precision(result.find_mark_percentage_if_negative, :precision => 2)%></td>
         <td  ><%= "#{result.each_right_answers(Category.find_by_category("Mathematics"))}/11" %></td>
-        <td  ><%= "#{result.each_right_answers(Category.find_by_category("Logical Reasoning"))
-                    +result.each_right_answers(Category.find_by_category("Logical Reasoning - swimmers (group question)"))
-                    +result.each_right_answers(Category.find_by_category("Logical Reasoning - marriage (group question)"))
-                    +result.each_right_answers(Category.find_by_category("Logical Reasoning - houses (group question)"))}/10" %></td>
+        <td  ><%= "#{result.each_right_answers(Category.find_by_category("Logical Reasoning"))+result.each_right_answers(Category.find_by_category("Logical Reasoning - swimmers (group question)"))+result.each_right_answers(Category.find_by_category("Logical Reasoning - marriage (group question)"))+result.each_right_answers(Category.find_by_category("Logical Reasoning - houses (group question)"))}/10" %></td>
         <td  ><%= "#{result.each_right_answers(Category.find_by_category("Object Oriented Programming Concepts"))}/10" %></td>
 
         <%  @candidate = result.candidate
