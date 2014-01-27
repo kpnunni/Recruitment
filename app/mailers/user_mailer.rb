@@ -46,13 +46,13 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.user_email, :subject => "Result for validation")
   end
   def admin_result_email(user,result)
-    @additional = Category.where("category = 'Additional'").first.questions.size
+    @additional = Question.additional.count
     @results = result
     @user = user
     mail(:to => user.user_email, :subject => "Test completed")
   end
   def admin_selected_result_email(user,result)
-    @additional = Category.where("category = 'Additional'").first.questions.size
+    @additional = Question.additional.count
     @results = result
     @user = user
     mail(:to => user.user_email, :subject => "Mark Details")
