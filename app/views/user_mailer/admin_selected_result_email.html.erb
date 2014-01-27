@@ -7,18 +7,18 @@
 <p>
 <table style="width: 100%; border: 2px;" border="2px">
   <tr>
-    <th width="20%">Candidate</th>
+    <th width="30%">Candidate</th>
     <th width="15%">Exam</th>
-    <th width="7%" >Total questions</th>
-    <th width="7%" >Attended</th>
-    <th width="6%">Right answers</th>
-    <th width="10%">Mark(%)</th>
-    <th width="10%">Mark(%) if -ve</th>
-    <th width="10%">Mathematical right answers</th>
-    <th width="10%">Logical right answers</th>
-    <th width="10%">OOPs right answers</th>
-    <th width="10%">AQ attended</th>
-    <th width="10%">AQ right answers</th>
+    <th width="5%" >Total questions</th>
+    <th width="5%" >Attended</th>
+    <th width="5%">Right answers</th>
+    <th width="5%">Mark(%)</th>
+    <th width="5%">Mark(%) if -ve</th>
+    <th width="5%">Mathematical right answers</th>
+    <th width="5%">Logical right answers</th>
+    <th width="5%">OOPs right answers</th>
+    <th width="5%">AQ attended</th>
+    <th width="5%">AQ right answers</th>
   </tr>
 
   <% @results.each do |result| %>
@@ -38,8 +38,7 @@
         <td  ><%= "#{result.each_right_answers(Category.find_by_category("Logical Reasoning"))
                     +result.each_right_answers(Category.find_by_category("Logical Reasoning - swimmers (group question)"))
                     +result.each_right_answers(Category.find_by_category("Logical Reasoning - marriage (group question)"))
-                    +result.each_right_answers(Category.find_by_category("Logical Reasoning - houses (group question)"))
-        }/10" %></td>
+                    +result.each_right_answers(Category.find_by_category("Logical Reasoning - houses (group question)"))}/10" %></td>
         <td  ><%= "#{result.each_right_answers(Category.find_by_category("Object Oriented Programming Concepts"))}/10" %></td>
 
         <%  @candidate = result.candidate
