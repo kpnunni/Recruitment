@@ -28,6 +28,13 @@ class RecruitmentTest < ActiveRecord::Base
     end
 
   end
+  def find_mark_percentage_if_negative
+    q_attent = self.no_of_question_attended
+    right_ans = self.right_answers.to_f
+    total_q = self.candidate.schedule.exam.questions.size
+    wrong_ans = q_attent-right_ans
+    mark_percentage = (right_ans/total_q)*100
+  end
   def each_right_answers(cat)
     count=0
     candidate.answers.each do |ans|
