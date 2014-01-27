@@ -33,7 +33,7 @@ class RecruitmentTest < ActiveRecord::Base
     right_ans = self.right_answers.to_f
     total_q = self.candidate.schedule.exam.questions.size
     wrong_ans = q_attent-right_ans
-    mark_percentage = (right_ans/total_q)*100
+    mark_percentage = ((right_ans-(wrong_ans/4.0))/total_q)*100
   end
   def each_right_answers(cat)
     count=0
