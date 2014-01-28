@@ -1,3 +1,66 @@
+<script type="text/javascript" >
+    window.onload = function()
+    {
+        startCountdown(<%= @count-1 %>)
+    }
+    function finish_exam(){
+        jQuery("#confirm").dialog({
+            width: 350,draggable: false,show: "slow",closeOnEscape: false,
+            buttons: {
+                "Submit my exam": function() {
+                    jQuery("#exam_form").submit() ;
+                    jQuery(this).dialog( "close" );
+                },
+                Cancel: function() {
+                    jQuery(this).dialog( "close" );
+                }
+            }
+        });
+    }
+    function reset_answers(){
+        jQuery("input[type=radio]").each(function(){
+            jQuery(this).prop('checked', false);
+        });
+    }
+
+    function clickIE4(){
+        if (event.button!=0){
+
+            return false;
+        }
+    }
+
+    function clickNS4(e){
+        if (document.layers||document.getElementById&&!document.all){
+            if (e.which==2||e.which==3){
+
+                return false;
+            }
+        }
+    }
+
+    if (document.layers){
+        document.captureEvents(Event.MOUSEDOWN);
+        document.onmousedown=clickNS4;
+    }
+    else if (document.all&&!document.getElementById){
+        document.onmousedown=clickIE4;
+    }
+
+    document.oncontextmenu=new Function("return false")
+    document.onkeydown = function(e){
+        if(e.keyCode != 0)
+        {
+            return false;
+        }
+
+    }
+
+    jQuery(document).bind("keydown", disablekeys);
+    function disablekeys(){
+        return false;
+    }
+</script>
 <% if @each_mode.status == "on" %>
     <%= render "each_mode" %>
 <% elsif !@candidate.submitted %>
@@ -10,24 +73,3 @@
     <%= image_tag('loading_icon.gif', alt: "Loading...", style: "  position: absolute;top: 300px;left: 600px; z-index: 100;") %>
   </div>
 </div>
-<script type="text/javascript" >
-    function finish_exam(){
-        jQuery("#confirm").dialog({
-            width: 350,draggable: false,show: "slow",closeOnEscape: false,
-            buttons: {
-                "Submit my exam": function() {
-                    jQuery("#exam_form").submit() ;
-                },
-                Cancel: function() {
-                    jQuery( this ).dialog( "close" );
-                }
-            }
-        });
-    }
-    function reset_answers(){
-        jQuery("input[type=radio]").each(function(){
-            jQuery(this).prop('checked', false);
-        });
-    }
-
-</script>

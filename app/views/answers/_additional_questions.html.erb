@@ -1,4 +1,44 @@
-<%= form_for  @answer, html: { id: "exam_form", onsubmit: "jQuery('#outer').show();set_flag();"} do |f| %>
+<script type="text/javascript" >
+    var flag= 0,time_used = 0;
+    function set_flag(){
+        flag = 1;
+        jQuery('#outer').show();
+    }
+    function startCountdown(g_iCount)
+    {
+        if((g_iCount) > 0)
+        {
+            var str="green";
+            if (g_iCount<20&&g_iCount>=10)
+            {
+                str="orange"
+            }
+            else if (g_iCount<10)
+            {
+                str="red"
+            }
+
+            var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec" ;
+            document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
+            jQuery('#time_used').val(time_used);
+            time_used++;
+
+            g_iCount = g_iCount - 1;
+            if (flag == 0){
+                setTimeout(function() {startCountdown(g_iCount); }, 1000);
+            }
+            else{
+                return;
+            }
+        }
+        else
+        {
+            document.getElementById('procedure_submit_button').click();
+        }
+    }
+</script>
+
+<%= form_for  @answer, html: { id: "exam_form", onsubmit: "set_flag();"} do |f| %>
 <div id="question_answer" style="min-height: 300px;">
   <table align="right"  width="100%"  >
     <tr>
@@ -12,7 +52,7 @@
         <div class="countdown1" align="right"  >Time Remaining:  </div>
       </td>
       <td>
-        <div id="count" class="countdown" align="right "  ></div>
+        <div id="count" class="countdown" align="right "  ><%= "#{@count/60} min #{@count%60}sec" %></div>
       </td>
     </tr>
   </table>
@@ -63,82 +103,4 @@
 <% end %>
 <div id="confirm" style="display: none;">Really want to submit Section B of your exam?</div>
 
-<script type="text/javascript" >
-    window.onload = function()
-    {
-        startCountdown(<%=cnt=@count%>)
-    }
-  var flag= 0,time_used = 0;
-  function set_flag(){
-      flag = 1;
-  }
-  function startCountdown(g_iCount)
-  {
-      if((g_iCount) > 0)
-      {
-          var str="green";
-          if (g_iCount<20&&g_iCount>=10)
-          {
-              str="orange"
-          }
-          else if (g_iCount<10)
-          {
-              str="red"
-          }
 
-          var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec" ;
-          document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
-          jQuery('#time_used').val(time_used);
-          time_used++;
-
-          g_iCount = g_iCount - 1;
-          if (flag == 0){
-              setTimeout(function() {startCountdown(g_iCount); }, 1000);
-          }
-          else{
-              return;
-          }
-      }
-      else
-      {
-          document.getElementById('procedure_submit_button').click();
-      }
-  }
-
-  var message="Function Disabled!";
-
-
-  function clickIE4(){
-      if (event.button!=0){
-
-          return false;
-      }
-  }
-
-  function clickNS4(e){
-      if (document.layers||document.getElementById&&!document.all){
-          if (e.which==2||e.which==3){
-
-              return false;
-          }
-      }
-  }
-
-  if (document.layers){
-      document.captureEvents(Event.MOUSEDOWN);
-      document.onmousedown=clickNS4;
-  }
-  else if (document.all&&!document.getElementById){
-      document.onmousedown=clickIE4;
-  }
-
-  document.oncontextmenu=new Function("return false")
-
-  document.onkeydown = function(e){
-      if(e.keyCode != 0)
-      {
-          return false;
-      }
-
-  }
-</script>
