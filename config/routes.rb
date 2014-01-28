@@ -46,6 +46,7 @@ Test::Application.routes.draw do
   resources :recruitment_tests do
     collection do
       post :sent_mail
+      get :feedback
     end
     member do
       get :pass_or_fail

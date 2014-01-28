@@ -1,0 +1,9 @@
+<div>
+  <h1>Feedback's</h1>
+  <% @results.each do |result| %>
+  <div style="font-size: 18px;">
+    <b><%= result.feedback %></b>
+    <i><%= "-"+result.candidate.name %></i>
+  </div>
+  <% end %>
+</div>

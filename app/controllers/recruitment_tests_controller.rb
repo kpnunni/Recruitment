@@ -29,6 +29,9 @@ class RecruitmentTestsController < ApplicationController
       render json: @recruitment_test.errors, status: :unprocessable_entity
     end
   end
+  def feedback
+     @results = RecruitmentTest.where("feedback is not NULL").all
+  end
   def destroy
     @recruitment_test = RecruitmentTest.find(params[:id])
     @recruitment_test.destroy
