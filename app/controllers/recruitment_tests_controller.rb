@@ -30,7 +30,7 @@ class RecruitmentTestsController < ApplicationController
     end
   end
   def feedback
-     @results = RecruitmentTest.where("feedback is not NULL")
+     @results = RecruitmentTest.where("feedback is not NULL").reverse
      @results.select!{|r| r.feedback.present?}
   end
   def destroy
