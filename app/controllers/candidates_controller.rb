@@ -1,6 +1,6 @@
 class CandidatesController < ApplicationController
   # skip_before_filter :authenticate ,:create
-  # before_filter :chk_user ,:except =>[ :update ,:create]
+  before_filter :chk_user ,:except =>[ :update ,:create]
   def chk_user
     if !my_roles.include?('Manage Candidates')
       redirect_to '/homes/index'

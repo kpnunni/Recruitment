@@ -1,4 +1,10 @@
 class InstructionsController < ApplicationController
+  before_filter :chk_user
+  def chk_user
+    if !my_roles.include?('Manage Exams')
+      redirect_to '/homes/index'
+    end
+  end
   def index
     @instructions = Instruction.all(:order => 'created_at DESC').paginate(:page => params[:page], :per_page => 20)
     @instruction = Instruction.new

@@ -1,4 +1,10 @@
 class CategoriesController < ApplicationController
+  before_filter :chk_user ,:except =>[ :update ,:create]
+  def chk_user
+    if !my_roles.include?('Manage Questions')
+      redirect_to '/homes/index'
+    end
+  end
   def index
     @categories = Category.all(:order => 'created_at DESC').paginate(:page => params[:page], :per_page => 20)
     @category = Category.new
