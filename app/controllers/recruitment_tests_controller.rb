@@ -30,7 +30,8 @@ class RecruitmentTestsController < ApplicationController
     end
   end
   def feedback
-     @results = RecruitmentTest.where("feedback is not NULL").all
+     @results = RecruitmentTest.where("feedback is not NULL")
+     @results.select!{|r| r.feedback.present?}
   end
   def destroy
     @recruitment_test = RecruitmentTest.find(params[:id])
