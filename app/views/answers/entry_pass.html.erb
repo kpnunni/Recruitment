@@ -7,3 +7,42 @@
     <%= button_tag "Proceed",class: "btn btn-success" %>
   <% end %>
 </div>
+
+<div style="padding-top: 150px;" >
+  <div id="speed"></div>
+</div>
+
+<script type="text/javascript">
+    var imageAddr = "<%= asset_path("suyati1.png") %>";
+    var startTime, endTime;
+    var downloadSize = 200000;
+    var download = new Image();
+    download.onload = function () {
+        endTime = (new Date()).getTime();
+        showResults();
+    }
+    startTime = (new Date()).getTime();
+    download.src = imageAddr;
+
+    function showResults() {
+        var duration = (endTime - startTime) / 1000;
+        var bitsLoaded = downloadSize * 8;
+        var speedBps = Math.round(bitsLoaded / duration);
+        var speedKbps = (speedBps / 1024).toFixed(2);
+        var speedMbps = (speedKbps / 1024).toFixed(2);
+        var status = "";
+        if(speedMbps > 20.0 ){
+            status = "Good";
+        }
+        else if(speedMbps > 5.0 && speedMbps <20.0 ){
+            status = "Not bad";
+        }
+        else{
+            status = "Bad";
+        }
+        jQuery("#speed").html("Your internet connection speed is: " +
+                speedMbps + " Mbps (" +
+                speedKbps + " kbps)<br/>" +
+                "Status:"+status);
+    }
+</script>
