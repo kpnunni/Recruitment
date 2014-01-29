@@ -52,23 +52,22 @@ class AnswersController < ApplicationController
 
 
   def show
-    @each_mode=Setting.find_by_name('time_limit_for_each_question')
+    #@each_mode=Setting.find_by_name('time_limit_for_each_question')
     @answer = Answer.includes([:question => [:category], :candidate => [:answers => [:question => [:category]]]]).find(params[:id])
     @candidate = @answer.candidate
-    @answer.q_no = @candidate.answers.where("id <= ?",@answer.id ).count
-    @answer.dec_time =Time.now
+    #@answer.dec_time =Time.now
     #@c_option=Array.new(@answer.question.options.count)
-    @tick=Array.new(@answer.question.options.count)
-    @tick.each_with_index do |val,i|
-      @tick[i]= @answer.answer[i]=="1"
-    end
-    if @each_mode.status == "on"
-      @count=@answer.question.allowed_time-@answer.time_taken
-      @next = next_present_answer(@answer.id)
-    else
-      @load_more = feature_enabled && answered_all_except_last && more_questions_available
-      @answered_all = answered_all
-      @submit = show_submit
+    #@tick=Array.new(@answer.question.options.count)
+    #@tick.each_with_index do |val,i|
+    #  @tick[i]= @answer.answer[i]=="1"
+    #end
+    #if @each_mode.status == "on"
+    #  @count=@answer.question.allowed_time-@answer.time_taken
+    #  @next = next_present_answer(@answer.id)
+    #else
+      #@load_more = feature_enabled && answered_all_except_last && more_questions_available
+      #@answered_all = answered_all
+      #@submit = show_submit
       if @candidate.submitted
         @additional = Question.additional
         @id_s = @additional.map(&:id)
@@ -78,21 +77,22 @@ class AnswersController < ApplicationController
         @next = next_additional_answer(@answer.id)
         @back = previous_additional_answer(@answer.id)
       else
+        @answer.q_no = @candidate.answers.where("id <= ?",@answer.id ).count
         @answers = @candidate.answers
         @count = calculate_remaining_time
         @next = next_answer(@answer.id)
         @back = previous_answer(@answer.id)
       end
-    end
+    #end
   end
 
   def update
-    @each_mode=Setting.find_by_name('time_limit_for_each_question')
-    if @each_mode.status == "on"
-      each_mode_answers
-    else
+    #@each_mode=Setting.find_by_name('time_limit_for_each_question')
+    #if @each_mode.status == "on"
+    #  each_mode_answers
+    #else
       single_mode_answers
-    end
+    #end
   end
 
   def candidate_detail
@@ -134,7 +134,7 @@ class AnswersController < ApplicationController
   end
 
   def instructions
-    @instructions=current_user.candidate.schedule.exam.instructions.all
+    @instructions=current_user.candidate.schedule.exam.instructions
     @schedule=current_user.candidate.schedule
     @exam=@schedule.exam
     @ngtv=Setting.find_by_name('negative_mark').status.eql?("on")

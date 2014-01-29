@@ -58,7 +58,7 @@
   </table>
   <br/>
   <br/>
-  <%=f.hidden_field   :dec_time ,:value =>@answer.dec_time %>
+  <%#=f.hidden_field   :dec_time ,:value =>@answer.dec_time %>
   <%= hidden_field_tag   :time_used %>
   <% cache @answer do %>
       <%= render "question", answer: @answer, f: f  %>

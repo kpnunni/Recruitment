@@ -1,4 +1,6 @@
+<% cache "instructions_of_exam_#{@exam.id}" do %>
     <%= render 'show_instructions' %>
+<% end %>
     <br/>
             <% if @diff > 30 %>
                 <div id="long_wait" style="" >
