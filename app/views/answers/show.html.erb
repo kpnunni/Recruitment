@@ -61,9 +61,9 @@
         return false;
     }
 </script>
-<% if @each_mode.status == "on" %>
-    <%= render "each_mode" %>
-<% elsif !@candidate.submitted %>
+<%# if @each_mode.status == "on" %>
+    <%#= render "each_mode" %>
+<% if !@candidate.submitted %>
     <%= render "single_mode" %>
 <% else %>
     <%= render "additional_questions" %>

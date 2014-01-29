@@ -3,11 +3,11 @@
   <b>  <%= label_tag answer.q_no%></b>
 </div>
 <div class="question"  >
-  <% if @each_mode.status == "on" %>
-    <%= coderay answer.question.question %><br/>
-  <% else %>
+  <%# if @each_mode.status == "on" %>
+    <%#= coderay answer.question.question %>
+  <%# else %>
     <%= coderay answer.question.question.gsub(/The first.*same story/,"") %><br/>
-  <% end %>
+  <%# end %>
 
   <% if !answer.question.question_image.to_s.include?("missing.png") %>
       <%= image_tag answer.question.question_image.url(:original) %><br/>
