@@ -70,3 +70,4 @@ gem "jquery-rails"
 gem 'prawn_rails'
 gem 'coderay'
 gem "RedCloth"
+gem 'rails_12factor'
