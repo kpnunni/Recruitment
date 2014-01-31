@@ -317,7 +317,7 @@ select {
     width: 240px;
     height: 34px;
     overflow: hidden;
-    background: url(new_arrow.png) no-repeat right #ddd;
+    background: url(<%= asset_path("new_arrow.png") %>) no-repeat right #ddd;
 }
 
 
@@ -747,7 +747,7 @@ a:active  { color: #ccc }  /* active links    */
     margin:10px 0 10px 40px; padding:0px;
 }
 #report th {
-    background:#7CB8E2 url(header_bkg.png) repeat-x scroll center left;
+    background:#7CB8E2 url(<%= asset_path("header_bkg.png") %>) repeat-x scroll center left;
     color:#fff;
     padding:7px 15px;
     text-align:left;
@@ -758,11 +758,11 @@ a:active  { color: #ccc }  /* active links    */
     padding:7px 15px;
 }
 #report tr.odd td {
-    background:#fff url(row_bkg.png) repeat-x scroll center left;
+    background:#fff url(<%= asset_path("row_bkg.png") %>) repeat-x scroll center left;
     cursor:pointer;
 }
 #report div.arrow {
-    background:transparent url(arrows.png) no-repeat scroll 0px -16px;
+    background:transparent url(<%= asset_path("arrows.png") %>) no-repeat scroll 0px -16px;
     width:16px;
     height:16px;
     display:block;
