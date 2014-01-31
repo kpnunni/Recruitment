@@ -26,11 +26,12 @@ group :assets do
    gem 'therubyracer', :platforms => :ruby
    gem 'jquery-ui-rails'
   gem 'uglifier', '>= 1.0.3'
+  gem 'turbo-sprockets-rails3'
 end
 
 gem 'cache_digests'
 gem 'ransack'
-gem 'jquery-rails'
+#gem 'jquery-rails'
  #  gem 'thin'
  group :production do
   gem 'pg'
