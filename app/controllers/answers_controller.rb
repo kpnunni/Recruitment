@@ -209,7 +209,7 @@ class AnswersController < ApplicationController
   def single_mode_answers
     @candidate=current_user.candidate
     @answer = Answer.find(params[:id])
-    @answer.c_option=params[:answer][:c_option]
+    @answer.c_option= params[:answer] ? params[:answer][:c_option] : nil
     #@answer.time_taken=((Time.now.to_f-Time.parse(params[:answer][:dec_time]).to_f).to_i)+@answer.time_taken
     time_used = params[:time_used].to_i > 200 ? 200 : params[:time_used].to_i #handling low bandwidth request
     @answer.time_taken += time_used

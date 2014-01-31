@@ -22,7 +22,7 @@
       <% answer.question.options.sort.each_with_index do |op,i| %>
           <tr>
             <%= f.fields_for :c_option do |c_op| %>
-                <td width="2%" ><%=  c_op.check_box  op.id,:checked => answer[i] == "1" %></td>
+                <td width="2%" ><%=  c_op.check_box  op.id,:checked => answer.answer[i] == "1" %></td>
                 <td class="lft" ><%= c_op.label op.id,op.option %></td>
             <% end %>
           </tr>
@@ -31,7 +31,7 @@
       <% answer.question.options.sort.each_with_index do |op,i| %>
           <tr >
             <%= f.fields_for :c_option do |c_op| %>
-                <td width="2%"  ><%=  c_op.radio_button 1, op.id,:checked => answer[i] == "1" %></td>
+                <td width="2%"  ><%=  c_op.radio_button 1, op.id,:checked => answer.answer[i] == "1" %></td>
                 <td class="lft"  >   <%=  c_op.label op.id,op.option %>  </td>
             <% end %>
           </tr>
