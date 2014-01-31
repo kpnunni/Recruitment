@@ -50,6 +50,7 @@ Test::Application.routes.draw do
     end
     member do
       get :pass_or_fail
+      get :clear_answers
     end
   end
   resources :instructions

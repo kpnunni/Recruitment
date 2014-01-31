@@ -48,6 +48,11 @@ class RecruitmentTestsController < ApplicationController
       redirect_to recruitment_tests_path
     end
   end
+  def clear_answers
+    @recruitment_test = RecruitmentTest.find(params[:id])
+    @recruitment_test.candidate.answers.destroy_all
+    redirect_to recruitment_tests_path, notice: "Answers cleared for #{@recruitment_test.candidate.name}"
+  end
   def pass_or_fail
     @recruitment_test = RecruitmentTest.find(params[:id])
     if params[:status]
