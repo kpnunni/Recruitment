@@ -1,10 +1,13 @@
 <div>
   <h1>Feedback's</h1>
-  <% @results.each do |result| %>
-      <div style="font-size: 16px;">
+  <% @results.each do |date,results| %>
+      <h2><%= date.strftime("%B %d, %A ") %></h2>
+<% results.each do |result| %>
+          <div style="font-size: 16px;">
         <b><%= result.feedback %></b>
         <i><%= "-"+result.candidate.name %></i>
         <br/>
+            <%end%>
         <br/>
       </div>
   <% end %>
