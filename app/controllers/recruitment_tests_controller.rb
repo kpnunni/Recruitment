@@ -30,7 +30,7 @@ class RecruitmentTestsController < ApplicationController
     end
   end
   def feedback
-     @results = RecruitmentTest.where("feedback <> ''").group_by {|result| result.created_at.beginning_of_day}
+     @results = RecruitmentTest.where("feedback <> ''").reverse.group_by {|result| result.created_at.beginning_of_day}
    end
   def destroy
     @recruitment_test = RecruitmentTest.find(params[:id])
