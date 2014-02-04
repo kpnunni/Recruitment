@@ -3,12 +3,22 @@
   <% @results.each do |date,results| %>
       <h2><%= date.strftime("%d / %m / %Y, %A ") %></h2>
 <% results.each do |result| %>
-          <div style="font-size: 16px;">
-        <b><%= result.feedback %></b>
-        <i><%= "-"+result.candidate.name %></i>
-        <br/>
+
+          <div style="width: 100%; min-height: 50px; background-color: #add8e6; border-radius: 10px; overflow: auto;">
+
+          <div style="float: left; width: 10%;margin: 5px; padding:  5px; background-color: #e0ffff; border-radius: 10px;">
+          <i><%= "#{result.candidate.name} Saying:" %></i>
+          </div>
+
+          <div style="float: left; width: 85%; font-size: 16px;margin: 5px; padding: 5px; background-color: #e0ffff; border-radius: 10px;">
+          <b><%= result.feedback %></b>
+          </div>
+
+          </div>
+          <br/>
+
+
             <%end%>
         <br/>
-      </div>
   <% end %>
 </div>
