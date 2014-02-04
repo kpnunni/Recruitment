@@ -51,49 +51,49 @@
 
 .widgToolbar li.widgEditButton
 {
-	background-image: url(widgeditor_button_shadow.gif);
+	background-image: url(image_path("widgeditor_button_shadow.gif"));
 	background-repeat: no-repeat;
 	background-position: bottom right;
 }
 
 .widgButtonBold
 {
-	background-image: url(widgeditor_button_bold.gif);
+	background-image: url(image_path("widgeditor_button_bold.gif"));
 }
 
 .widgButtonHTML
 {
-	background-image: url(widgeditor_button_html.gif);
+	background-image: url(image_path("widgeditor_button_html.gif"));
 }
 
 .widgButtonImage 
 {
-	background-image: url(widgeditor_button_image.gif);
+	background-image: url(image_path("widgeditor_button_image.gif"));
 }
 
 .widgButtonItalic 
 {
-	background-image: url(widgeditor_button_italic.gif);
+	background-image: url(image_path("widgeditor_button_italic.gif"));
 }
 
 .widgButtonLink
 {
-	background-image: url(widgeditor_button_link.gif);
+	background-image: url(image_path("widgeditor_button_link.gif"));
 }
 
 .widgButtonOrdered
 {
-	background-image: url(widgeditor_button_ordered.gif);
+	background-image: url(image_path("widgeditor_button_ordered.gif"));
 }
 
 .widgButtonUnordered
 {
-	background-image: url(widgeditor_button_unordered.gif);
+	background-image: url(image_path("widgeditor_button_unordered.gif"));
 }
 
 .widgSource a
 {
-	background-image: url(widgeditor_button_empty.gif);
+	background-image: url(image_path("widgeditor_button_empty.gif"));
 	cursor: default;
 }
 
@@ -104,7 +104,7 @@
 
 .widgSource .widgButtonHTML
 {
-	background-image: url(widgeditor_button_html.gif);
+	background-image: url(image_path("widgeditor_button_html.gif"));
 }
 
 .widgSource .widgButtonHTML:hover
@@ -125,7 +125,7 @@
 	margin: 0;
 	padding: 0 0 0 2px;
 	border: 1px solid #CCCCCC;
-	background-image: url(widgeditor_toolbar_bg.gif);
+	background-image: url(image_path("widgeditor_toolbar_bg.gif"));
 	background-repeat: repeat-x;
 }
 
