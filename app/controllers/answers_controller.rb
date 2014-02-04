@@ -227,8 +227,8 @@ class AnswersController < ApplicationController
         redirect_to answer_path(@nxt)
       end
     else
-      @nxt=@answer.get_next_ans_in_single_mode(params[:to].to_i)
-      redirect_to answer_path(@nxt)
+      #@nxt=@answer.get_next_ans_in_single_mode(params[:to].to_i)
+      redirect_to answer_path(params[:to].to_i)
     end
   end
 
