@@ -1,0 +1,62 @@
+<i>
+  Question Category:<%= question.category.category %>
+</i> <br/>  <br/>
+<div>
+  <div class="qno"  >
+    <b>  <%= label_tag no %></b>
+  </div>
+  <div class="question"  >
+    <%# if @each_mode.status == "on" %>
+    <%#= coderay answer.question.question %>
+    <%# else %>
+    <%= coderay question.question.gsub(/The first.*same story/,"") %><br/>
+    <%# end %>
+
+    <% if !question.question_image.to_s.include?("missing.png") %>
+        <%= image_tag question.question_image.url(:original) %><br/>
+    <% end %>
+  </div>
+</div>
+<br> <br> <br> <br>
+
+<div>
+  <table cellpadding="0"  width="100%" class="options" >
+    <% if question.type.question_type=="check_box" %>
+        <% question.options.sort.each_with_index do |op,i| %>
+            <tr>
+              <%#= f.fields_for :c_option do |c_op| %>
+                  <td width="2%" ><%= check_box_tag  question.id, op.id %></td>
+                  <td class="lft" ><%= label_tag op.id,op.option %></td>
+              <%# end %>
+            </tr>
+        <% end %>
+    <% else %>
+        <% question.options.sort.each_with_index do |op,i| %>
+            <tr >
+              <%#= f.fields_for :c_option do |c_op| %>
+                  <td width="2%"  ><%= radio_button_tag question.id, op.id , current_user.candidate.answers.where(question_id: question.id).first.answer[i] == "1" ? true : false %></td>
+                   <td class="lft"  >   <%=  label_tag op.id,op.option %>  </td>
+              <%# end %>
+            </tr>
+        <% end %>
+    <% end %>
+  </table>
+  <% exam = current_user.candidate.schedule.exam
+     next_q = question.next_question(exam.id, current_user.candidate.submitted)
+     prev_q = question.previous_question(exam.id, current_user.candidate.submitted)
+  %>
+</div>
+  <table>
+    <tr>
+      <td><%= link_to_function  "Reset Answer" , "reset_answers(#{question.id});",class: "btn btn-small" %></td>
+
+          <% if prev_q %>
+  <td><%= button_to_function "&#8592;Previous".html_safe , "show_this(#{question.id},#{prev_q});", class: "btn btn-large btn-primary" %></td>
+  <% end %>
+  <% if next_q %>
+  <td><%= button_to_function "Next&#8594;".html_safe , "show_this(#{question.id},#{next_q});", class: "btn btn-large btn-primary" %></td>
+  <% end %>
+    </tr>
+    </table>
+
+

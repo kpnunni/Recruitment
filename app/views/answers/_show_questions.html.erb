@@ -1,0 +1,257 @@
+<script type="text/javascript">
+    var flag= 0,time_used = 0, first_q = <%= @questions.first.id %> ;
+    var additional_url = "<%= additional_answers_url(candidate_id: current_user.salt) %>" ;
+    var feedback_url = "<%= feed_back_answers_url %>" ;
+    var partB = <%= current_user.candidate.submitted %> ;
+    jQuery("#question_<%= @questions.first.id %>").show("slow");
+
+
+    window.onload = function()
+    {
+        jQuery("#question_"+first_q).show("slow");
+        jQuery("#loadingdiv").hide();
+        startCountdown(<%= @time -1 %>)
+    }
+
+    function show_this(current, q_id){
+        var finish = 0;
+
+        //from question button
+        if(current == 0)
+            current = jQuery('div:visible.all_questions').attr('value');
+
+        //finishing exam
+        if(q_id == 0)
+        {
+            finish = 1;
+        }
+        //finishing additional questions
+        else if(q_id == -1)
+        {
+            finish = 2;
+        }
+        jQuery("#question_"+current).hide();
+        jQuery("#question_"+q_id).show("slow");
+        var t_used = jQuery('#time_used').val();
+
+        //setting up the options
+        var op_id = "";
+        jQuery("input[name="+current+"]").each(function() {
+            if(this.checked)
+                op_id += "1";
+            else
+                op_id += "0";
+        });
+
+        //set background green of question button if select an option
+        if(parseInt(op_id) != 0)
+            jQuery("#qbutton_"+current).css({"background-color": "green"});
+        else
+            jQuery("#qbutton_"+current).css({"background-color": ""});
+
+        //set background black of current question button
+        jQuery("#qbutton_"+q_id).css({"background-color": "black"});
+
+        //sending aswer details to server
+        jQuery.post("/answers",
+                {
+                    time_used: t_used,
+                    question_id: current,
+                    option_id: op_id,
+                    finish: finish
+                },
+                function(data, status){
+                    if(finish == 1){
+                        jQuery("#loadingdiv").show();
+                        window.location.href = additional_url;
+                    }
+                    else if(finish == 2){
+                        jQuery("#loadingdiv").show();
+                        window.location.href = feedback_url;
+                    }
+                } ,
+                "json"
+        );
+
+        //resetting the timer of this question
+        time_used = 1;
+    }
+
+
+    function finish_sectionA(){
+        jQuery("#confirm").dialog({
+            width: 350,draggable: false,show: "slow",closeOnEscape: false,
+            buttons: {
+                "Submit my exam": function() {
+                    show_this(0,0);
+                    jQuery(this).dialog( "close" );
+                },
+                Cancel: function() {
+                    jQuery(this).dialog( "close" );
+                }
+            }
+        });
+    }
+    function finish_sectionB(){
+        jQuery("#confirmB").dialog({
+            width: 350,draggable: false,show: "slow",closeOnEscape: false,
+            buttons: {
+                "Submit my exam": function() {
+                    show_this(0,-1);
+                    jQuery(this).dialog( "close" );
+                },
+                Cancel: function() {
+                    jQuery(this).dialog( "close" );
+                }
+            }
+        });
+    }
+    function reset_answers(qid){
+        jQuery("input[name="+qid+"]:checked").prop('checked', false);;
+    }
+
+
+    //validation -------------------------->
+      function clickIE4(){
+          if (event.button!=0){
+
+              return false;
+          }
+      }
+
+      function clickNS4(e){
+          if (document.layers||document.getElementById&&!document.all){
+              if (e.which==2||e.which==3){
+
+                  return false;
+              }
+          }
+      }
+
+      if (document.layers){
+          document.captureEvents(Event.MOUSEDOWN);
+          document.onmousedown=clickNS4;
+      }
+      else if (document.all&&!document.getElementById){
+          document.onmousedown=clickIE4;
+      }
+
+      document.oncontextmenu=new Function("return false")
+      document.onkeydown = function(e){
+          if(e.keyCode != 0)
+          {
+              return false;
+          }
+
+      }
+
+      jQuery(document).bind("keydown", disablekeys);
+      function disablekeys(){
+          return false;
+      }
+
+
+    //count down ------------------------
+    function startCountdown(g_iCount)
+    {
+        if((g_iCount) > 0)
+        {
+            var str="green";
+            if (g_iCount<20&&g_iCount>=10)
+            {
+                str="orange"
+            }
+            else if (g_iCount<10)
+            {
+                str="red"
+            }
+
+            var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec" ;
+            document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
+            jQuery('#time_used').val(time_used);
+            time_used++;
+
+            g_iCount = g_iCount - 1;
+            if (flag == 0){
+                setTimeout(function() {startCountdown(g_iCount); }, 1000);
+            }
+            else{
+                return;
+            }
+        }
+        else
+        {  if(partB)
+            show_this(0,-1);
+           else
+            show_this(0,0);
+        }
+    }
+
+
+
+</script>
+<div id="loadingdiv" style=" dispaly: 'none'; width: 100%;height: 100%;top: 0px;left: 0px;position: fixed;display: block;opacity: 1; background-color: #f5f5f5;z-index: 99; text-align: center;">
+  <%= image_tag('loading_icon.gif', alt: "Loading...", style: "  position: absolute;top: 300px;left: 600px; z-index: 100;") %>
+</div>
+
+<div>
+  <div id="question_answer" style="min-height: 300px;">
+    <table align="right"  width="100%"  >
+      <tr>
+        <td class="lft" width="65%"  >
+        </td>
+        <td>
+          <div class="countdown1" align="right"  >Time Remaining:  </div>
+        </td>
+        <td>
+          <div id="count" class="countdown" align="right "  ><%= "#{@time/60} min #{@time%60}sec" %></div>
+        </td>
+      </tr>
+    </table>
+    <br/>
+    <br/>
+    <%= hidden_field_tag   :time_used %>
+    <% @questions.each_with_index do |question,i| %>
+        <div style="display: none;" id="question_<%= question.id %>" class="all_questions" value="<%= question.id %>" >
+          <%= render 'js_question', question: question, no: i+1 %>
+        </div>
+    <% end %>
+  </div>
+
+  <h3>Questions:</h3>[Click on the question number button to jumb to that question.]
+  <div style="overflow: hidden;">
+    <% previous_category = "",changed = false  %>
+    <% @questions.each_with_index do |question,i| %>
+        <% current_category = question.category.category %>
+        <% changed = previous_category != current_category ? !changed : changed %>
+        <% if previous_category != current_category %>
+            <div style="width: 100%;"></div>
+            <br> <br><%= current_category+":-" %>
+            <div style="width: 100%;"></div>
+        <% end %>
+        <% previous_category = current_category %>
+        <div id="<%= "qbutton_#{question.id}" %>" style="float: left;  padding: 2px;background-color: <%= current_user.candidate.answers.where(question_id: question.id).first.answer.to_i > 0 ? "green" : "" %>" >
+          <%= button_to_function  i+1, "show_this(0,#{question.id})", class: "btn btn-small btn-primary", style: "width: 30px;" %>
+        </div>
+    <% end %>
+  </div>
+
+<br/>
+<div align="center">
+<% if controller.action_name == "additional" %>
+ <%= button_to_function "Finish Section B".html_safe, "finish_sectionB();" ,class: "btn btn-large btn-danger",:title=>"Submit first part of the exam and attends Section B" %>
+<% else %>
+ <%= button_to_function "Finish Section A &#8594&#8594".html_safe, "finish_sectionA();" ,class: "btn btn-large btn-danger",:title=>"Submit second part of the exam" %>
+<% end %>
+</div>
+<br/> Please call: 9037498886 for immediate assistance <br/>
+<div id="confirm" style="display: none;">
+  Are you sure to submit Section A of your Exam? <br/>
+  You won't be able to answer or modify from Section A again. Time remaining for Section A will not be carry forward for Section B as it will be elapsed if you go for Submit Section A.<br/><br/>
+  If you are done Section A please Press 'Submit my exam' to proceed for Section B else cancel to stay back on Section A.<br/>
+</div>
+<div id="confirmB" style="display: none;">
+  Really want to submit Section B of your exam?
+</div>
+
+

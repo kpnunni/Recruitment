@@ -11,10 +11,12 @@ class SettingsController < ApplicationController
      @from = get_status('can_start_exam')
      @untill = get_status('canot_start_exam')
      @each_mode = get_status('time_limit_for_each_question')
+     @js_mode = get_status('js_mode')
      @categories =Category.all
      @cut_off = (0..100).to_a.select {|v| v%5==0 }
   end
   def update
+    @js_mode = Setting.find_by_name('js_mode')
     @multiply_with = Setting.find_by_name('multiply_with')
     @start_code = Setting.find_by_name('start_code')
     @load_more=Setting.find_by_name('load_more')
@@ -23,6 +25,11 @@ class SettingsController < ApplicationController
     @from=Setting.find_by_name('can_start_exam')
     @untill=Setting.find_by_name('canot_start_exam')
     @each_mode=Setting.find_by_name('time_limit_for_each_question')
+    if params[:js_mode]=="1"
+       @js_mode.update_attribute(:status,:on)
+    else
+       @js_mode.update_attribute(:status,:off)
+    end
     if params[:negative]=="1"
        @negative_mark.update_attribute(:status,:on)
     else

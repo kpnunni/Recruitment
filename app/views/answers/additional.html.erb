@@ -1,0 +1,7 @@
+<% if @used == 0 %>
+    <% cache "additional_questions" do %>
+        <%= render 'show_questions' %>
+    <% end %>
+<% else %>
+    <%= render 'show_questions' %>
+<% end %>

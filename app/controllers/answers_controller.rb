@@ -6,51 +6,77 @@ class AnswersController < ApplicationController
     @candidate=current_user.candidate
     if @candidate.answers.empty?
 
-      questions = @candidate.schedule.exam.questions
-      ordered_questions = []
-      catogry=questions.map(&:category_id).uniq
-      ordered_catogry = catogry
-      subjects=[]
-      ordered_catogry.each{ |v| subjects<< Category.find(v).category }
-      ordered_subjects = subjects
-      subjects.each{ |v|
-        if v =~ /group/i
-          ordered_subjects.delete(v)
-          ordered_subjects.unshift(v)
-        end
-      }
+      #questions = @candidate.schedule.exam.questions
+      #ordered_questions = []
+      #catogry=questions.map(&:category_id).uniq
+      #ordered_catogry = catogry
+      #subjects=[]
+      #ordered_catogry.each{ |v| subjects<< Category.find(v).category }
+      #ordered_subjects = subjects
+      #subjects.each{ |v|
+      #  if v =~ /group/i
+      #    ordered_subjects.delete(v)
+      #    ordered_subjects.unshift(v)
+      #  end
+      #}
+      #
+      #ordered_subjects.each{ |v|
+      #  if v =~ /group/i
+      #    ordered_questions << questions.where(category_id: Category.find_by_category(v).id).all.sort
+      #  else
+      #    ordered_questions << questions.where(category_id: Category.find_by_category(v).id).all.shuffle
+      #  end
+      #}
+      #ordered_questions.flatten!
 
-      ordered_subjects.each{ |v|
-        if v =~ /group/i
-          ordered_questions << questions.where(category_id: Category.find_by_category(v).id).all.sort
-        else
-          ordered_questions << questions.where(category_id: Category.find_by_category(v).id).all.shuffle
-        end
-      }
-      ordered_questions.flatten!
-
-      ordered_questions.each do |q|
-        @answer=Answer.new
-        @answer.question=q
-        @answer.candidate=@candidate
-        @answer.time_taken=0
-        @answer.answer="0"
-        @answer.save
+      @candidate.schedule.exam.questions.order(:category_id, :id).each do |q|
+        Answer.create({candidate_id: @candidate.id, question_id: q.id, time_taken: 0, answer: "0"})
+        #@answer.question=q
+        #@answer.candidate=@candidate
+        #@answer.time_taken=0
+        #@answer.answer="0"
+        #@answer.save
       end
     end
-    @anss=Answer.where("candidate_id=?",@candidate.id )
-    if @candidate.submitted
-      min = @anss.sort.last.id
+    if Setting.find_by_name('js_mode').status.eql?("on")
+      salt= current_user.salt
+      if @candidate.submitted
+         redirect_to additional_answers_path(candidate_id: salt)
+      else
+         redirect_to answers_path(candidate_id: salt)
+      end
     else
-      min = @anss.map(&:id).min
+      @answers = Answer.where("candidate_id=?",@candidate.id )
+      if @candidate.submitted
+        min = @answers.sort.last.id
+      else
+        min = @answers.map(&:id).min
+      end
+      @ans=Answer.find(min)
+      redirect_to answer_path(@ans)
     end
-    @ans=Answer.find(min)
-    #@c_option=Array.new(@ans.question.options.count)
-    redirect_to answer_path(@ans)
 
   end
 
-
+  def index
+    if params[:candidate_id] == current_user.salt
+      @exam = current_user.candidate.schedule.exam
+      @questions = @exam.questions.includes(:type, :options, :category).order(:category_id, :id)
+      @used = current_user.candidate.answers.map(&:time_taken).sum
+      @time = @exam.total_time - @used
+    else
+      render text: "Error"
+    end
+  end
+  def additional
+    if params[:candidate_id] == current_user.salt
+      @questions = Question.includes(:type, :options, :category).additional
+      @used = current_user.candidate.answers.where(question_id: @questions.map(&:id)).collect.map(&:time_taken).sum
+      @time = @questions.map(&:allowed_time).sum - @used
+   else
+      render text: "Error"
+    end
+  end
   def show
     #@each_mode=Setting.find_by_name('time_limit_for_each_question')
     @answer = Answer.includes([:question => [:category], :candidate => [:answers => [:question => [:category]]]]).find(params[:id])
@@ -86,6 +112,12 @@ class AnswersController < ApplicationController
     #end
   end
 
+  def create
+    respond_to do |format|
+      format.html{ single_mode_answers }
+      format.json { single_mode_answers_with_js }
+    end
+  end
   def update
     #@each_mode=Setting.find_by_name('time_limit_for_each_question')
     #if @each_mode.status == "on"
@@ -168,9 +200,9 @@ class AnswersController < ApplicationController
   end
 
   def feed_back
-    @recruitment_test = RecruitmentTest.find(params[:id])
+    @recruitment_test = current_user.candidate.recruitment_test
     @candidate = current_user.candidate.id
-    call_rake :send_result_mail, :candidate_ids => params[:id]
+    call_rake :send_result_mail, :candidate_ids => @recruitment_test.id
     @user=User.find(current_user.id)
     @user.update_attribute(:isAlive,0)
     sign_out
@@ -199,7 +231,7 @@ class AnswersController < ApplicationController
       @answer.save_mark(current_user)
       @answer.make_result(current_user)
 
-      redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
+      redirect_to feed_back_answers_path
     else
       @nxt=@answer.get_next_ans(params[:to].to_i)
       redirect_to answer_path(@nxt)
@@ -221,7 +253,7 @@ class AnswersController < ApplicationController
 
     if  params[:to]=="finish"||params[:to].nil?||params[:to]=="timer"
       if @candidate.submitted
-        redirect_to feed_back_answer_path(@answer.candidate.recruitment_test.id)
+        redirect_to feed_back_answers_path
       else
         start_additional_question
         redirect_to answer_path(@nxt)
@@ -230,6 +262,18 @@ class AnswersController < ApplicationController
       #@nxt=@answer.get_next_ans_in_single_mode(params[:to].to_i)
       redirect_to answer_path(params[:to].to_i)
     end
+  end
+
+  def single_mode_answers_with_js
+    @candidate = current_user.candidate
+    @answer = @candidate.answers.where(question_id: params[:question_id]).first
+    @answer.answer = params[:option_id]
+    @answer.time_taken += params[:time_used].to_i
+    @answer.save
+    if params[:finish] == "1"
+      start_additional_question
+    end
+    render :json => { :success => "success", :status_code => "200" }
   end
 
   def start_additional_question

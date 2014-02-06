@@ -36,4 +36,47 @@ class Question < ActiveRecord::Base
   #def to_param
   #  "#{id} #{question.first(50)}".parameterize
   #end
+  def next_question(exam_id,additional)
+    @exam = Exam.where(id: exam_id).first
+    if additional
+      questions = Question.additional.select{|q| q.id > self.id }
+    else
+      questions = @exam.questions
+      category_ids = questions.order(:category_id).map(&:category_id).uniq
+      current_category = self.category_id
+      next_category = category_ids[category_ids.index(current_category)+1]
+      current_category_questions = questions.select{|q| q.category_id == current_category }
+      next_category_questions = questions.select{|q| q.category_id == next_category }
+      total_questions = current_category_questions + next_category_questions
+      questions = total_questions.select{|q| q.id > self.id }
+    end
+
+    if questions.present?
+      questions.sort.first.id
+    else
+      nil
+    end
+  end
+
+  def previous_question(exam_id,additional)
+    @exam = Exam.where(id: exam_id).first
+    if additional
+      questions = Question.additional.select{|q| q.id < self.id }
+    else
+      questions = @exam.questions
+      category_ids = questions.order(:category_id).map(&:category_id).uniq
+      current_category = self.category_id
+      previous_category = category_ids[category_ids.index(current_category)-1]
+      current_category_questions = questions.select{|q| q.category_id == current_category }
+      prev_category_questions = questions.select{|q| q.category_id == previous_category }
+      total_questions = current_category_questions + prev_category_questions
+      questions = total_questions.select{|q| q.id < self.id }
+    end
+    if questions.present?
+      questions.sort.last.id
+    else
+      nil
+    end
+  end
+
 end

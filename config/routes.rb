@@ -57,6 +57,8 @@ Test::Application.routes.draw do
   resources :answers do
     collection do
       get :candidate_detail
+      get :feed_back
+      get :additional
       get :instructions
       get :blank
       get :make
@@ -68,7 +70,6 @@ Test::Application.routes.draw do
       get :congrats
       get :clogin
       put :candidate_update
-      get :feed_back
     end
   end
   resources :categories

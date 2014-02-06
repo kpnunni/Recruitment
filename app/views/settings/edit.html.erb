@@ -29,7 +29,11 @@
               </tr>
               <tr>
                 <td class="lft">Enable load more question?</td>
-                <td><%= check_box_tag :load_more ,1,@load_more.eql?("on")%></td>
+                <td><%= check_box_tag :load_more ,1,@load_more.eql?("on") %></td>
+              </tr>
+              <tr>
+                <td class="lft">Enable javascript mode of exam?</td>
+                <td><%= check_box_tag :js_mode, 1, @js_mode.eql?("on") %></td>
               </tr>
               <tr>
                 <td class="lft">Multiplication value for time limit for all question settings</td>

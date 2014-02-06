@@ -1,0 +1,7 @@
+<% if @used == 0 %>
+    <% cache "questions_of_exam#{@exam.id}" do %>
+        <%= render 'show_questions' %>
+    <% end %>
+<% else %>
+    <%= render 'show_questions' %>
+<% end %>
