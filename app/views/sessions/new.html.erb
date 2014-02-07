@@ -1,4 +1,7 @@
-
+    <div align="right">
+       <%= link_to 'Sign up Employee',signup_sessions_path(:as=>"emp"), class: "btn btn-success" %>
+       <%= link_to 'Sign up Candidate',signup_sessions_path(:as=>"can"), class: "btn btn-success" %> <br/>
+    </div>
 
     <h1>Login:</h1>
 
@@ -10,12 +13,10 @@
         <%= f.label :password %>
         <%= f.password_field :password ,required:{}%><br />
 
-        <%= f.check_box :remember%>Remember_me<br />
+        <label><%= f.check_box :remember%>Remember_me</label><br /> <br />
 
 
         <%= f.submit "Sign in", class: "btn btn-large btn-primary"%>
 
     <% end %>
-    Sign up as<%= link_to ' Employee',signup_sessions_path(:as=>"emp") %>/
-    <%= link_to ' Candidate',signup_sessions_path(:as=>"can") %> <br/>
-    <%= link_to 'Forgot password?',forgotpass_sessions_path %> <br/>
+    <%= link_to 'Forgot password?',forgotpass_sessions_path, class: "btn btn-small btn-warning" %> <br/>

@@ -116,6 +116,12 @@ class SessionsController < ApplicationController
   def registration
     if params[:can]=="Register"
        @candidate=Candidate.new(params[:candidate])
+       if params[:confirm_email] != @candidate.user.user_email
+         flash.now[:error] = "Email not matching with confirmation"
+          render 'signup'
+         return
+       end
+
        @candidate.user.login_password="suyati123"
        @candidate.user.login_password_confirmation="suyati123"
        @candidate.user.encrypt_password

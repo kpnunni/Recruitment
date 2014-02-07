@@ -25,7 +25,7 @@
         <% question.options.sort.each_with_index do |op,i| %>
             <tr>
               <%#= f.fields_for :c_option do |c_op| %>
-                  <td width="2%" ><%= check_box_tag  question.id, op.id , @candidate.answers.where(question_id: question.id).first.answer[i] == "1" ? true : false%></td>
+                  <td width="2%" ><%= check_box_tag  question.id, op.id , @used > 0 && @candidate.answers.where(question_id: question.id).first.answer[i] == "1" ? true : false%></td>
                   <td class="lft" ><%= label_tag op.id,op.option %></td>
               <%# end %>
             </tr>
@@ -34,7 +34,7 @@
         <% question.options.sort.each_with_index do |op,i| %>
             <tr >
               <%#= f.fields_for :c_option do |c_op| %>
-                  <td width="2%"  ><%= radio_button_tag question.id, op.id , @candidate.answers.where(question_id: question.id).first.answer[i] == "1" ? true : false %></td>
+                  <td width="2%"  ><%= radio_button_tag question.id, op.id , @used > 0 && @candidate.answers.where(question_id: question.id).first.answer[i] == "1" ? true : false %></td>
                    <td class="lft"  >   <%=  label_tag op.id,op.option %>  </td>
               <%# end %>
             </tr>

@@ -26,42 +26,45 @@
       <%= f.text_field :phone1 ,:maxlength=>12%> <br/>
       Phone no 2:
       <%= f.text_field :phone2 ,:maxlength=>12%> <br/>
-      Technology:
-      <%= f.text_field :technology %>
+      <!--Technology:-->
+      <!--<%#= f.text_field :technology %>-->
+      Certifications:
+      <%= f.text_field :certification %>
     </td>
   </tr>
   <tr>
     <td class="rght" >
-      Certification:
-      <%= f.text_field :certification %>
-    </td>
-    <td class="rght" >
       Skills:
       <%= f.text_field :skills %>
     </td>
+    <% if controller.controller_name == "sessions" %>
+      <td class="rght" >
+        Confirm Email:<%= image_tag 'mandatory.png' %>
+        <%= text_field_tag :confirm_email, params[:confirm_email],required:{}, onPaste: "return false;" %>
+      </td>
+    <% end %>
   </tr>
 </table>
 <br />
-<h3>Experiences:</h3>
-<%= f.fields_for :experiences  do |op| %>
-    <%= op.text_field "from_date",:class=>"calendar",:placeholder => "From date*" %>
-    <%= op.text_field "to_date",:class=>"calendar",:placeholder => "To date*" %>
-    <%= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in*"%>
-    <%= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>
-    <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
-<% end %>
-<p><%= f.link_to_add image_tag('addc.png',:title =>"Add new experience"  ), :experiences %></p>
-<br /><h3>Qualifications</h3>
-<%= f.fields_for :qualifications  do |op| %>
-    <%= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in*"%>
-    <%= op.text_field :qualification_from,:class=>"text_box3",:placeholder => "Qualification_from" %>
-    <%= op.text_field "from_date",:placeholder => "From_date*", :class=>"calendar" %>
-    <%= op.text_field "to_date",:placeholder => "To_date*"  ,:class=>"calendar"%>
-    <%= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3",:style=>"width:110px" %>
-    <%= op.text_field :comments,:placeholder => "Comments" ,:class=>"text_box3"%>
-    <%= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>
-<% end %>
-<p><%= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>
-<br />
-
-<br /> <br />
+<!--<h3>Experiences:</h3>-->
+<!--<%#= f.fields_for :experiences  do |op| %>-->
+    <!--<%#= op.text_field "from_date",:class=>"calendar",:placeholder => "From date*" %>-->
+    <!--<%#= op.text_field "to_date",:class=>"calendar",:placeholder => "To date*" %>-->
+    <!--<%#= op.text_field :experience_in ,:class=>"text_box3",:placeholder => "Experience in*"%>-->
+    <!--<%#= op.text_field :experience_from,:class=>"text_box3",:placeholder => "Experience from" %>-->
+    <!--<%#= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>-->
+<!--<%# end %>-->
+<!--<p><%#= f.link_to_add image_tag('addc.png',:title =>"Add new experience"  ), :experiences %></p>-->
+<!--<br /><h3>Qualifications</h3>-->
+<!--<%#= f.fields_for :qualifications  do |op| %>-->
+    <!--<%#= op.text_field :qualification_in,:class=>"text_box3" ,:placeholder => "Qualification_in*"%>-->
+    <!--<%#= op.text_field :qualification_from,:class=>"text_box3",:placeholder => "Qualification_from" %>-->
+    <!--<%#= op.text_field "from_date",:placeholder => "From_date*", :class=>"calendar" %>-->
+    <!--<%#= op.text_field "to_date",:placeholder => "To_date*"  ,:class=>"calendar"%>-->
+    <!--<%#= op.text_field :mark_percentage,:placeholder => "Mark_percentage",:class=>"text_box3",:style=>"width:110px" %>-->
+    <!--<%#= op.text_field :comments,:placeholder => "Comments" ,:class=>"text_box3"%>-->
+    <!--<%#= op.link_to_remove image_tag('delete.png',:title =>"Remove" )  %>-->
+<!--<%# end %>-->
+<!--<p><%#= f.link_to_add image_tag('addc.png',:title =>"Add new qualification "  ), :qualifications %></p>-->
+<!--<br />-->
+<!--<br /> <br />-->
