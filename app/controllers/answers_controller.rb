@@ -60,22 +60,24 @@ class AnswersController < ApplicationController
 
   def index
     if params[:candidate_id] == current_user.salt
-      @exam = current_user.candidate.schedule.exam
+      @candidate = current_user.candidate
+      @exam = @candidate.schedule.exam
       @questions = @exam.questions.includes(:type, :options, :category).order(:category_id, :id)
-      @used = current_user.candidate.answers.map(&:time_taken).sum
+      @used = @candidate.answers.map(&:time_taken).sum
       @time = @exam.total_time - @used
     else
       render text: "Error"
     end
   end
   def additional
-    if params[:candidate_id] == current_user.salt
-      @questions = Question.includes(:type, :options, :category).additional
-      @used = current_user.candidate.answers.where(question_id: @questions.map(&:id)).collect.map(&:time_taken).sum
+    #if params[:candidate_id] == current_user.salt
+      @questions = Question.includes(:type, :options, :category).additional.order(:id)
+      @candidate = current_user.candidate
+      @used = @candidate.answers.where(question_id: @questions.map(&:id)).collect.map(&:time_taken).sum
       @time = @questions.map(&:allowed_time).sum - @used
-   else
-      render text: "Error"
-    end
+   #else
+   #   render text: "Error"
+   # end
   end
   def show
     #@each_mode=Setting.find_by_name('time_limit_for_each_question')

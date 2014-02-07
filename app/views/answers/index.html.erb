@@ -1,5 +1,5 @@
 <% if @used == 0 %>
-    <% cache "questions_of_exam#{@exam.id}" do %>
+    <% cache("questions_of_exam#{@exam.id}", expires_in: 1.day) do %>
         <%= render 'show_questions' %>
     <% end %>
 <% else %>

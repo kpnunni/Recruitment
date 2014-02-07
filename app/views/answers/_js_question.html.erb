@@ -25,7 +25,7 @@
         <% question.options.sort.each_with_index do |op,i| %>
             <tr>
               <%#= f.fields_for :c_option do |c_op| %>
-                  <td width="2%" ><%= check_box_tag  question.id, op.id %></td>
+                  <td width="2%" ><%= check_box_tag  question.id, op.id , @candidate.answers.where(question_id: question.id).first.answer[i] == "1" ? true : false%></td>
                   <td class="lft" ><%= label_tag op.id,op.option %></td>
               <%# end %>
             </tr>
@@ -34,16 +34,16 @@
         <% question.options.sort.each_with_index do |op,i| %>
             <tr >
               <%#= f.fields_for :c_option do |c_op| %>
-                  <td width="2%"  ><%= radio_button_tag question.id, op.id , current_user.candidate.answers.where(question_id: question.id).first.answer[i] == "1" ? true : false %></td>
+                  <td width="2%"  ><%= radio_button_tag question.id, op.id , @candidate.answers.where(question_id: question.id).first.answer[i] == "1" ? true : false %></td>
                    <td class="lft"  >   <%=  label_tag op.id,op.option %>  </td>
               <%# end %>
             </tr>
         <% end %>
     <% end %>
   </table>
-  <% exam = current_user.candidate.schedule.exam
-     next_q = question.next_question(exam.id, current_user.candidate.submitted)
-     prev_q = question.previous_question(exam.id, current_user.candidate.submitted)
+  <% exam = @candidate.schedule.exam
+     next_q = question.next_question(exam.id, @candidate.submitted)
+     prev_q = question.previous_question(exam.id, @candidate.submitted)
   %>
 </div>
   <table>

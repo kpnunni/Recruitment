@@ -37,46 +37,24 @@ class Question < ActiveRecord::Base
   #  "#{id} #{question.first(50)}".parameterize
   #end
   def next_question(exam_id,additional)
-    @exam = Exam.where(id: exam_id).first
     if additional
-      questions = Question.additional.select{|q| q.id > self.id }
+      question_ids = Question.additional.order(:id).map(&:id)
     else
-      questions = @exam.questions
-      category_ids = questions.order(:category_id).map(&:category_id).uniq
-      current_category = self.category_id
-      next_category = category_ids[category_ids.index(current_category)+1]
-      current_category_questions = questions.select{|q| q.category_id == current_category }
-      next_category_questions = questions.select{|q| q.category_id == next_category }
-      total_questions = current_category_questions + next_category_questions
-      questions = total_questions.select{|q| q.id > self.id }
+      @exam = Exam.where(id: exam_id).first
+      question_ids = @exam.questions.order(:category_id,:id).map(&:id)
     end
-
-    if questions.present?
-      questions.sort.first.id
-    else
-      nil
-    end
+    next_q = question_ids[question_ids.index(self.id)+1]
   end
 
   def previous_question(exam_id,additional)
-    @exam = Exam.where(id: exam_id).first
     if additional
-      questions = Question.additional.select{|q| q.id < self.id }
+      question_ids = Question.additional.order(:id).map(&:id)
     else
-      questions = @exam.questions
-      category_ids = questions.order(:category_id).map(&:category_id).uniq
-      current_category = self.category_id
-      previous_category = category_ids[category_ids.index(current_category)-1]
-      current_category_questions = questions.select{|q| q.category_id == current_category }
-      prev_category_questions = questions.select{|q| q.category_id == previous_category }
-      total_questions = current_category_questions + prev_category_questions
-      questions = total_questions.select{|q| q.id < self.id }
+      @exam = Exam.where(id: exam_id).first
+      question_ids = @exam.questions.order(:category_id,:id).map(&:id)
     end
-    if questions.present?
-      questions.sort.last.id
-    else
-      nil
-    end
+    prev_q = question_ids[question_ids.index(self.id)-1]
+    prev_q == question_ids[-1] ? nil : prev_q
   end
 
 end

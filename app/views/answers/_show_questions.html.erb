@@ -1,8 +1,8 @@
 <script type="text/javascript">
     var flag= 0,time_used = 0, first_q = <%= @questions.first.id %> ;
-    var additional_url = "<%= additional_answers_url(candidate_id: current_user.salt) %>" ;
+    var additional_url = "<%= additional_answers_url %>" ;
     var feedback_url = "<%= feed_back_answers_url %>" ;
-    var partB = <%= current_user.candidate.submitted %> ;
+    var partB = <%= @candidate.submitted %> ;
     jQuery("#question_<%= @questions.first.id %>").show("slow");
 
 
@@ -23,11 +23,13 @@
         //finishing exam
         if(q_id == 0)
         {
+            jQuery("#loadingdiv").show();
             finish = 1;
         }
         //finishing additional questions
         else if(q_id == -1)
         {
+            jQuery("#loadingdiv").show();
             finish = 2;
         }
         jQuery("#question_"+current).hide();
@@ -62,11 +64,9 @@
                 },
                 function(data, status){
                     if(finish == 1){
-                        jQuery("#loadingdiv").show();
                         window.location.href = additional_url;
                     }
                     else if(finish == 2){
-                        jQuery("#loadingdiv").show();
                         window.location.href = feedback_url;
                     }
                 } ,
@@ -230,7 +230,7 @@
             <div style="width: 100%;"></div>
         <% end %>
         <% previous_category = current_category %>
-        <div id="<%= "qbutton_#{question.id}" %>" style="float: left;  padding: 2px;background-color: <%= current_user.candidate.answers.where(question_id: question.id).first.answer.to_i > 0 ? "green" : "" %>" >
+        <div id="<%= "qbutton_#{question.id}" %>" style="float: left;  padding: 2px;background-color: <%= @candidate.answers.where(question_id: question.id).first.answer.to_i > 0 ? "green" : "" %>" >
           <%= button_to_function  i+1, "show_this(0,#{question.id})", class: "btn btn-small btn-primary", style: "width: 30px;" %>
         </div>
     <% end %>
