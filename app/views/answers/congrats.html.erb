@@ -12,14 +12,14 @@
     }
 </script>
 <h3 align="center" > <br /> <br />
-
-  Congratulations! You are successfully completed the online test
+  <%= image_tag("success.png") %>
+  Congratulations! You have successfully completed the online test
   <% if @candidate.recruitment_test.mark_percentage>=60%>
-      you have got good score
+      ,<br />  <br />you have got good score
   <% elsif @candidate.recruitment_test.mark_percentage<50 &&@candidate.recruitment_test.mark_percentage>=40 %>
-      your score is satisfactory
+      ,<br />  <br />your score is satisfactory
   <% elsif @candidate.recruitment_test.mark_percentage<40&&@candidate.recruitment_test.mark_percentage>=25 %>
-      your score is average
+      ,<br />  <br />your score is average
   <% end %>
   <br /><br />
   Best of luck.  <br /> <br /> <br /><br />
