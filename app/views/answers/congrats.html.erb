@@ -1,24 +1,30 @@
 <script type="text/javascript ">
-     document.onkeydown = function(e){
-    if(e.keyCode == 8)
-            {
-                return false;
-            }
+    document.onkeydown = function(e){
+        if(e.keyCode == 8)
+        {
+            return false;
+        }
 
+    }
+    function close_exam(){
+        window.opener.location.reload();
+        window.close();
     }
 </script>
 <h3 align="center" > <br /> <br />
 
-
-  <% if @candidate.recruitment_test.mark_percentage>=70%>
-     Congratulations! you have got good score
-  <% elsif @candidate.recruitment_test.mark_percentage<70 &&@candidate.recruitment_test.mark_percentage>=50 %>
-       your score is satisfactory
-  <% elsif @candidate.recruitment_test.mark_percentage<50&&@candidate.recruitment_test.mark_percentage>=25 %>
-         your score is average
+  Congratulations! You are successfully completed the online test
+  <% if @candidate.recruitment_test.mark_percentage>=60%>
+      you have got good score
+  <% elsif @candidate.recruitment_test.mark_percentage<50 &&@candidate.recruitment_test.mark_percentage>=40 %>
+      your score is satisfactory
+  <% elsif @candidate.recruitment_test.mark_percentage<40&&@candidate.recruitment_test.mark_percentage>=25 %>
+      your score is average
   <% end %>
   <br /><br />
-  Result will be mail to your account soon.     <br /><br />
-  Best of luck.  <br />
-
+  Best of luck.  <br /> <br /> <br /><br />
 </h3>
+
+<div align="center">
+  <%= button_to_function "Close", "close_exam()", class: "btn btn-success" %>
+      </div>
