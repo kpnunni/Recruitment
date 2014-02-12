@@ -218,20 +218,18 @@
     <% end %>
   </div>
 
-  <h3>Questions:</h3>[Click on the question number button to jumb to that question.]
-  <div style="overflow: hidden;">
-    <% previous_category = "",changed = false  %>
-    <% @questions.each_with_index do |question,i| %>
-        <% current_category = question.category.category %>
-        <% changed = previous_category != current_category ? !changed : changed %>
-        <% if previous_category != current_category %>
-            <div style="width: 100%;"></div>
-            <br> <br><%= current_category+":-" %>
-            <div style="width: 100%;"></div>
-        <% end %>
-        <% previous_category = current_category %>
-        <div id="<%= "qbutton_#{question.id}" %>" style="float: left;  padding: 2px;background-color: <%= @candidate.answers.where(question_id: question.id).first.answer.to_i > 0 ? "green" : "" %>" >
+  <h3>Questions:</h3>[Click on the question number button to jumb to that question.]  <br> <br>
+  <div style="overflow: hidden; width: 100%;">
+    <% i = 1 %>
+    <% @questions.group_by(&:category_id).each do |category,questions| %>
+        <div style="float: left; width: 50%;">
+        <%= Category.find(category).category %><br>
+        <% questions.each do |question| %>
+        <div id="<%= "qbutton_#{question.id}" %>" style="float: left;  padding: 7px;background-color: <%= @candidate.answers.where(question_id: question.id).first.answer.to_i > 0 ? "green" : "" %>" >
           <%= button_to_function  i+1, "show_this(0,#{question.id})", class: "btn btn-small btn-primary", style: "width: 30px;" %>
+        </div>
+        <% i+= 1 %>
+        <% end %>
         </div>
     <% end %>
   </div>
