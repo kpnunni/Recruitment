@@ -8,7 +8,7 @@
 
     window.onload = function()
     {
-        jQuery("#question_"+first_q).show("slow");
+        jQuery("#question_"+first_q).show();
         jQuery("#loadingdiv").hide();
         startCountdown(<%= @time -1 %>)
     }
@@ -32,8 +32,18 @@
             jQuery("#loadingdiv").show();
             finish = 2;
         }
-        jQuery("#question_"+current).hide();
-        jQuery("#question_"+q_id).show("slow");
+        if(current<q_id)   //next
+        {
+            jQuery("#question_"+current).hide('slide', {direction: 'left'}, 500, function() {
+               jQuery("#question_"+q_id).show('slide', {direction: 'right'}, 500);
+            });
+        }
+        else              //previous
+        {
+            jQuery("#question_"+current).hide('slide', {direction: 'right'}, 500, function() {
+               jQuery("#question_"+q_id).show('slide', {direction: 'left'}, 500);
+            });
+        }
         var t_used = jQuery('#time_used').val();
 
         //setting up the options
@@ -80,7 +90,7 @@
 
     function finish_sectionA(){
         jQuery("#confirm").dialog({
-            width: 350,draggable: false,show: "slow",closeOnEscape: false,
+            width: 350,draggable: false, closeOnEscape: false, modal: true ,
             buttons: {
                 "Submit my exam": function() {
                     show_this(0,0);
@@ -94,7 +104,7 @@
     }
     function finish_sectionB(){
         jQuery("#confirmB").dialog({
-            width: 350,draggable: false,show: "slow",closeOnEscape: false,
+            width: 350,draggable: false, modal: true , closeOnEscape: false,
             buttons: {
                 "Submit my exam": function() {
                     show_this(0,-1);

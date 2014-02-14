@@ -269,12 +269,10 @@ class AnswersController < ApplicationController
   def single_mode_answers_with_js
     @candidate = current_user.candidate
     @answer = @candidate.answers.where(question_id: params[:question_id]).first
-    @answer.answer = params[:option_id]
-    @answer.time_taken += params[:time_used].to_i
-    @answer.save
-    if params[:finish] == "1"
-      start_additional_question
+    if @answer.present?
+       @answer.update_attributes({answer: params[:option_id], time_taken: params[:time_used]})
     end
+    start_additional_question if params[:finish] == "1"
     render :json => { :success => "success", :status_code => "200" }
   end
 
