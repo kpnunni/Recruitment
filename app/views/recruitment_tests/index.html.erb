@@ -60,7 +60,7 @@
           </tr>
 
           <% @recruitment_tests.each do |recruitment_test| %>
-             <% catch "result_#{ recruitment_test.id }" do %>
+             <% cache "result_#{ recruitment_test.id }" do %>
               <tr>
                 <td id="hide"><%=check_box_tag "email[sent_ids][]",   recruitment_test.id %></td>
                 <td class="lft" >
