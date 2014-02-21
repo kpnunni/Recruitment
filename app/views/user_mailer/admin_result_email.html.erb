@@ -8,28 +8,28 @@
 <h3> <%= "Candidate: #{@results.first.candidate.name}(#{@results.first.candidate.user.user_email})" if @results.size == 1 %></h3>
 
 <p>
-<table style="width: 100%; border: 2px;" border="2px">
+<table style="font-family: verdana,arial,sans-serif;font-size: 11px;color: #333333;border-width: 1px;border-color: #999999;border-collapse: collapse;">
   <tr>
-    <th width="20%">Candidate</th>
-    <th width="15%">Exam</th>
-    <th width="7%" >Total questions</th>
-    <th width="7%" >Attended</th>
-    <th width="6%">Right answers</th>
-    <th width="10%">Mark(%)</th>
+    <th width="20%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Candidate</th>
+    <th width="15%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Exam</th>
+    <th width="7%"  style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Total questions</th>
+    <th width="7%"  style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Attended</th>
+    <th width="6%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Right answers</th>
+    <th width="10%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Mark(%)</th>
   </tr>
 
   <% @results.each do |result| %>
       <tr>
-        <td class="lft" ><%= result.candidate.name %></td>
-        <td class="lft" ><%= result.candidate.schedule.exam.name %></td>
-        <td>
+        <td class="lft"  style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.candidate.name %></td>
+        <td class="lft"  style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.candidate.schedule.exam.name %></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">
           <%= result.candidate.schedule.exam.questions.size%>
           <% extra = result.candidate.answers.size - result.candidate.schedule.exam.questions.size %>
           <%= " +" if extra > 0 %>
         </td>
-        <td><%= result.no_of_question_attended%></td>
-        <td  ><%= result.right_answers%></td>
-        <td ><%= number_with_precision(result.mark_percentage, :precision => 2)%></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.no_of_question_attended%></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"  ><%= result.right_answers%></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;" ><%= number_with_precision(result.mark_percentage, :precision => 2)%></td>
       </tr>
   <% end %>
 </table>
@@ -40,25 +40,25 @@
   <% @results.each do |result| %>
     <h3> <%= "Candidate: #{result.candidate.name}" if @results.size > 1 %></h3>
     <p>
-    <table style="width: 100%; border: 2px;" border="2px" >
+    <table style="font-family: verdana,arial,sans-serif;font-size: 11px;color: #333333;border-width: 1px;border-color: #999999;border-collapse: collapse;">
       <tr>
-        <th>Category</th>
-        <th>no of questions</th>
-        <th>Right answers</th>
-        <th>Wrong answers</th>
-        <th>Mark</th>
-        <th>Mark(%)</th>
+        <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Category</th>
+        <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">no of questions</th>
+        <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Right answers</th>
+        <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Wrong answers</th>
+        <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Mark</th>
+        <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Mark(%)</th>
       </tr>
       <% Category.all.each do |cat| %>
           <% if result.candidate.schedule.exam.questions.where("category_id=?",cat.id).count!=0 %>
 
               <tr>
-                <td><%=cat.category    %></td>
-                <td><%= result.candidate.schedule.exam.questions.where("category_id=?",cat.id).count %></td>
-                <td><%= result.each_right_answers(cat) %></td>
-                <td><%= result.each_wrong_answers(cat) %></td>
-                <td><%= result.calc_mark(cat)  %></td>
-                <td><%= number_with_precision(result.calc_mark_percentage(cat),:precision=>2)  %></td>
+                <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%=cat.category    %></td>
+                <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.candidate.schedule.exam.questions.where("category_id=?",cat.id).count %></td>
+                <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.each_right_answers(cat) %></td>
+                <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.each_wrong_answers(cat) %></td>
+                <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.calc_mark(cat)  %></td>
+                <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= number_with_precision(result.calc_mark_percentage(cat),:precision=>2)  %></td>
               </tr>
           <% end %>
       <% end %>
@@ -76,18 +76,18 @@
              right = @extra_answers.select{|ans| ans.question && ans.answer == ans.question.answer_id }.size
              wrong = attend - right
           %>
-          <table style="width: 100%; border: 2px;" border="2px" >
+          <table style="font-family: verdana,arial,sans-serif;font-size: 11px;color: #333333;border-width: 1px;border-color: #999999;border-collapse: collapse;">
             <tr>
-              <th>Total questions</th>
-              <th>Questions attended</th>
-              <th>Right answers</th>
-              <th>Wrong answers</th>
+              <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Total questions</th>
+              <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Questions attended</th>
+              <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Right answers</th>
+              <th style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Wrong answers</th>
             </tr>
             <tr>
-              <td><%= @additional %></td>
-              <td><%= attend %></td>
-              <td><%= right %></td>
-              <td><%= wrong %></td>
+              <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= @additional %></td>
+              <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= attend %></td>
+              <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= right %></td>
+              <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= wrong %></td>
             </tr>
           </table>
       <% end %>
