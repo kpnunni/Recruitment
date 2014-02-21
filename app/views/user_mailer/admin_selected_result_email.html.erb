@@ -39,7 +39,7 @@
         <%
            math = result.each_right_answers(Category.find_by_category("Mathematics"))
            obj = result.each_right_answers(Category.find_by_category("Object Oriented Programming Concepts"))
-           log = result.right_answers - math - obj
+           log = result.right_answers - (math + obj)
         %>
         <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= math == 0 ? "-" : math %></td>
         <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= log == 0 ? "-" : log %></td>
