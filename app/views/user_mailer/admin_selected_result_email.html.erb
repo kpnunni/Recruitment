@@ -1,42 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 </head>
 <body>
+
+
 <p>
-<table style="width: 100%; border: 2px;" border="2px">
+<table class="imagetable" style="font-family: verdana,arial,sans-serif;font-size: 11px;color: #333333;border-width: 1px;border-color: #999999;border-collapse: collapse;">
   <tr>
-    <th width="30%">Candidate</th>
-    <th width="15%">Exam</th>
-    <th width="5%" >Total questions</th>
-    <th width="5%" >Attended</th>
-    <th width="5%">Right answers</th>
-    <th width="5%">Mark(%)</th>
-    <th width="5%">Mark(%) if -ve</th>
-    <th width="5%">Mathematical right answers</th>
-    <th width="5%">Logical right answers</th>
-    <th width="5%">OOPs right answers</th>
-    <th width="5%">AQ attended</th>
-    <th width="5%">AQ right answers</th>
+    <th width="30%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Candidate</th>
+    <th width="15%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Exam</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Total questions</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Attended</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Right answers</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Mark(%)</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Mark(%) if -ve</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Mathematical right answers(10)</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">Logical right answers(11)</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">OOPs right answers(10)</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">AQ attended</th>
+    <th width="5%" style="background: #b5cfd2 url(<%= asset_path("cell-blue.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">AQ right answers(9)</th>
   </tr>
 
   <% @results.each do |result| %>
       <tr>
-        <td class="lft" ><%= "#{result.candidate.name}(#{result.candidate.user.user_email})" %></td>
-        <td class="lft" ><%= result.candidate.schedule.exam.name %></td>
-        <td>
+        <td class="lft" style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= "#{result.candidate.name}(#{result.candidate.user.user_email})" %></td>
+        <td class="lft" style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.candidate.schedule.exam.name %></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;">
           <%= result.candidate.schedule.exam.questions.size%>
           <% extra = result.candidate.answers.size - result.candidate.schedule.exam.questions.size %>
           <%= " +" if extra > 0 %>
         </td>
-        <td><%= result.no_of_question_attended%></td>
-        <td  ><%= result.right_answers%></td>
-        <td ><%= number_with_precision(result.mark_percentage, :precision => 2)%></td>
-        <td ><%= number_with_precision(result.find_mark_percentage_if_negative, :precision => 2)%></td>
-        <td  ><%= "#{result.each_right_answers(Category.find_by_category("Mathematics"))}/11" %></td>
-        <td  ><%= "#{result.each_right_answers(Category.find_by_category("Logical Reasoning"))+result.each_right_answers(Category.find_by_category("Logical Reasoning - swimmers (group question)"))+result.each_right_answers(Category.find_by_category("Logical Reasoning - marriage (group question)"))+result.each_right_answers(Category.find_by_category("Logical Reasoning - houses (group question)"))}/10" %></td>
-        <td  ><%= "#{result.each_right_answers(Category.find_by_category("Object Oriented Programming Concepts"))}/10" %></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.no_of_question_attended%></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= result.right_answers%></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= number_with_precision(result.mark_percentage, :precision => 2)%></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= number_with_precision(result.find_mark_percentage_if_negative, :precision => 2)%></td>
+        <%
+           math = result.each_right_answers(Category.find_by_category("Mathematics"))
+           obj = result.each_right_answers(Category.find_by_category("Object Oriented Programming Concepts"))
+           log = result.right_answers - math - obj
+        %>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= math == 0 ? "-" : math %></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= log == 0 ? "-" : log %></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= obj == 0 ? "-" : obj %></td>
 
         <%  @candidate = result.candidate
             questions = @candidate.schedule.exam.question_ids
@@ -51,9 +58,9 @@
                attend = "-"
                right = "-"
             %>
-         <% end %>
-        <td ><%= attend %></td>
-        <td ><%= right %></td>
+        <% end %>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= attend %></td>
+        <td style="background: #dcddc0 url(<%= asset_path("cell-grey.jpg") %>);border-width: 1px;padding: 8px;border-style: solid;border-color: #999999;"><%= right %></td>
       </tr>
   <% end %>
 </table>

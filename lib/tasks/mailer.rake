@@ -51,7 +51,7 @@ end
 desc "Send selected result email"
 task :send_selected_result_mail => :environment do
   ids = ENV["CANDIDATE_IDS"].split(",")
-  @results = RecruitmentTest.where(id: ids ).all
+  @results = RecruitmentTest.where(id: ids ).order(mark_percentage: :desc).all
   @users=User.joins(:roles).where( roles: { role_name: "Get Selection Email"})
   @users.each {|admin| UserMailer.admin_selected_result_email(admin,@results).deliver  }
 end
