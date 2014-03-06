@@ -1,6 +1,3 @@
-<i>
-  Question Category:<%= question.category.category %>
-</i> <br/>  <br/>
 <div>
   <div class="qno"  >
     <b>  <%= label_tag no %></b>
@@ -46,17 +43,23 @@
      prev_q = question.previous_question(exam.id, @candidate.submitted)
   %>
 </div>
+<div style="width: 100%; background-color: #ddd8e6; border-radius: 10px; overflow: auto; padding: 10px;">
   <table>
     <tr>
-      <td><%= link_to_function  "Reset Answer" , "reset_answers(#{question.id});",class: "btn btn-small" %></td>
-
-          <% if prev_q %>
-  <td><%= button_to_function "&#8592;Previous".html_safe , "show_this(#{question.id},#{prev_q});", class: "btn btn-large btn-primary" %></td>
-  <% end %>
-  <% if next_q %>
-  <td><%= button_to_function "Next&#8594;".html_safe , "show_this(#{question.id},#{next_q});", class: "btn btn-large btn-primary" %></td>
-  <% end %>
+      <td width="10%"><%= link_to_function  "Reset Answer" , "reset_answers(#{question.id});",class: "btn btn-small" %></td>
+      <td width="20%">
+              <% if prev_q %>
+               <%= button_to_function "&#8592;Previous".html_safe , "show_this(#{question.id},#{prev_q});", class: "btn btn-large btn-primary" %>
+              <% end %>
+    </td>
+    <td width="20%">
+          <% if next_q %>
+          <%= button_to_function "Next&#8594;".html_safe , "show_this(#{question.id},#{next_q});", class: "btn btn-large btn-primary" %>
+          <% end %>
+    </td>
+    <td class="rght" width="50%">Category:<%= question.category.category %></td>
     </tr>
     </table>
+    </div>
 
 

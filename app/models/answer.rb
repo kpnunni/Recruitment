@@ -78,6 +78,7 @@ class Answer < ActiveRecord::Base
   end
 
    def save_mark(current_user)
+     return if current_user.candidate.recruitment_test
      @recruitment_test=RecruitmentTest.new
      @recruitment_test.candidate=current_user.candidate
      @recruitment_test.is_completed= @recruitment_test.completed?

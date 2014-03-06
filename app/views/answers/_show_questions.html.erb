@@ -227,9 +227,9 @@
         </div>
     <% end %>
   </div>
-
-  <h3>Questions:</h3>[Click on the question number button to jumb to that question.]  <br> <br>
-  <div style="overflow: hidden; width: 100%;">
+  <br>
+  <h3>Questions:</h3>
+  <div style="width: 100%; min-height: 50px; background-color: #add8e6; border-radius: 10px; overflow: auto; padding: 10px;">
     <% i = 1 %>
     <% @questions.group_by(&:category_id).each do |category,questions| %>
         <div style="float: left; width: 50%;">

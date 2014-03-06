@@ -3,8 +3,10 @@
   <br />
   <br />
   <%= form_tag( entry_pass_validation_answers_path, method: :post) do %>
-    Enter the code:<%= text_field_tag :pass  %>
-    <%= button_tag "Proceed",class: "btn btn-success" %>
+  <div class="input-append">
+    Enter the code:<%= text_field_tag :pass, "", class: "span2", id: "appendedInputButton"%>
+    <%= submit_tag "Proceed",class: "btn btn-success" %>
+  </div>
   <% end %>
 </div>
 
