@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    var flag= 0,time_used = 0, first_q = <%= @questions.first.id %> ;
+    var flag= 0,time_used = 0, first_q = <%= @questions.first.id %>, locked = false ;
     var additional_url = "<%= additional_answers_url %>" ;
     var feedback_url = "<%= feed_back_answers_url %>" ;
     var partB = <%= @candidate.submitted %> ;
@@ -13,9 +13,9 @@
         startCountdown(<%= @time -1 %>)
     }
 
-    function show_this(current, q_id){
+    function show_this(current, q_id, dir){
         var finish = 0;
-
+        var direction = typeof dir !== 'undefined' ? dir : 'no';
         //from question button
         if(current == 0)
             current = jQuery('div:visible.all_questions').attr('value');
@@ -32,18 +32,25 @@
             jQuery("#loadingdiv").show();
             finish = 2;
         }
-        if(current<q_id)   //next
+        if(direction == 'next')   //next
         {
             jQuery("#question_"+current).hide('slide', {direction: 'left'}, 500, function() {
                jQuery("#question_"+q_id).show('slide', {direction: 'right'}, 500);
             });
         }
-        else              //previous
+        else if(direction == 'previous')             //previous
         {
             jQuery("#question_"+current).hide('slide', {direction: 'right'}, 500, function() {
-               jQuery("#question_"+q_id).show('slide', {direction: 'left'}, 500);
+                jQuery("#question_"+q_id).show('slide', {direction: 'left'}, 500);
             });
         }
+        else             //previous
+        {
+            jQuery("#question_"+current).hide('slide', 250, function() {
+                jQuery("#question_"+q_id).show('slide', 250);
+            });
+        }
+
         var t_used = jQuery('#time_used').val();
 
         //setting up the options
@@ -64,24 +71,45 @@
         //set background black of current question button
         jQuery("#qbutton_"+q_id).css({"background-color": "black"});
 
+        locked =true;
+        jQuery("#timeout").dialog({width: 350, closeOnEscape: false, modal: true,position: 'bottom', open: function(event, ui) { jQuery(".ui-dialog-titlebar-close").hide(); }});
+
+
         //sending aswer details to server
-        jQuery.post("/answers",
-                {
+        jQuery.ajax({
+            type: "POST",
+            url: "/answers",
+            data:{
                     time_used: t_used,
                     question_id: current,
                     option_id: op_id,
                     finish: finish
-                },
+                 },
+            dataType: "json",
+            timeout: 1500,
+            tryCount : 0,
+            retryLimit : 5,
+            success:
                 function(data, status){
+                    locked = false;
+                    jQuery("#timeout").dialog("close");
                     if(finish == 1){
                         window.location.href = additional_url;
                     }
                     else if(finish == 2){
                         window.location.href = feedback_url;
                     }
-                } ,
-                "json"
-        );
+                },
+            error:  function(xhr, textStatus, errorThrown ) {
+                        this.tryCount++;
+                        if (this.tryCount <= this.retryLimit) {
+                            //try again
+                            jQuery.ajax(this);
+                            return;
+                        }
+                        return;
+                    }
+        });
 
         //resetting the timer of this question
         time_used = 1;
@@ -179,9 +207,11 @@
             var remaining = Math.floor(g_iCount/60)+" min "+g_iCount%60+" sec" ;
             document.getElementById('count').innerHTML=remaining.toString().fontcolor(str);
             jQuery('#time_used').val(time_used);
-            time_used++;
-
-            g_iCount = g_iCount - 1;
+            if(!locked)
+            {
+                time_used++;
+                g_iCount--;
+            }
             if (flag == 0){
                 setTimeout(function() {startCountdown(g_iCount); }, 1000);
             }
@@ -261,5 +291,7 @@
 <div id="confirmB" style="display: none;">
   Really want to submit Section B of your exam?
 </div>
-
+ <div id="timeout" style="display: none;">
+  Saving...
+</div>
 
