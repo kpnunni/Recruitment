@@ -61,7 +61,8 @@
             else
                 op_id += "0";
         });
-
+        if(op_id.indexOf("1") == -1)
+           op_id = "0";
         //set background green of question button if select an option
         if(parseInt(op_id) != 0)
             jQuery("#qbutton_"+current).css({"background-color": "green"});

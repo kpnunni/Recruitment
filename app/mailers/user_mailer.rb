@@ -14,7 +14,7 @@ class UserMailer < ActionMailer::Base
     else
       @content=Template.find(1)
     end
-    mail(:to => user.user_email, :subject => "Recruitment test")
+    mail(:to => user.user_email, :subject => "Suyati Online Recruitment Test")
   end
   def admin_schedule_email (admin,schedule)
     @user = admin
