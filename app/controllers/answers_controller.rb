@@ -59,6 +59,7 @@ class AnswersController < ApplicationController
   end
 
   def index
+    @additional_question = feature_enabled
     if params[:candidate_id] == current_user.salt
       @candidate = current_user.candidate
       @exam = @candidate.schedule.exam
@@ -70,6 +71,7 @@ class AnswersController < ApplicationController
     end
   end
   def additional
+    @additional_question = feature_enabled
     #if params[:candidate_id] == current_user.salt
       @questions = Question.includes(:type, :options, :category).additional.order(:id)
       @candidate = current_user.candidate
@@ -272,7 +274,7 @@ class AnswersController < ApplicationController
     if @answer.present?
        @answer.update_attributes({answer: params[:option_id], time_taken: params[:time_used]})
     end
-    start_additional_question if params[:finish] == "1"
+    start_additional_question if params[:finish] == "1" or (params[:finish] == "2" && !feature_enabled)
     render :json => { :success => "success", :status_code => "200" }
   end
 

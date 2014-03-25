@@ -3,6 +3,7 @@
     var additional_url = "<%= additional_answers_url %>" ;
     var feedback_url = "<%= feed_back_answers_url %>" ;
     var partB = <%= @candidate.submitted %> ;
+    var additional_q = <%= @additional_question %> ;
     jQuery("#question_<%= @questions.first.id %>").show("slow");
 
 
@@ -131,6 +132,21 @@
             }
         });
     }
+    function finish_exam(){
+        jQuery("#confirm3").dialog({
+            width: 350,draggable: false, modal: true , closeOnEscape: false,
+            buttons: {
+                "Submit my exam": function() {
+                    show_this(0,-1);
+                    jQuery(this).dialog( "close" );
+                },
+                Cancel: function() {
+                    jQuery(this).dialog( "close" );
+                }
+            }
+        });
+    }
+
     function finish_sectionB(){
         jQuery("#confirmB").dialog({
             width: 350,draggable: false, modal: true , closeOnEscape: false,
@@ -145,6 +161,7 @@
             }
         });
     }
+
     function reset_answers(qid){
         jQuery("input[name="+qid+"]:checked").prop('checked', false);;
     }
@@ -221,7 +238,7 @@
             }
         }
         else
-        {  if(partB)
+        {  if(partB || !additional_q)
             show_this(0,-1);
            else
             show_this(0,0);
@@ -277,10 +294,12 @@
 
 <br/>
 <div align="center">
-<% if controller.action_name == "additional" %>
- <%= button_to_function "Finish Section B".html_safe, "finish_sectionB();" ,class: "btn btn-large btn-danger",:title=>"Submit first part of the exam and attends Section B" %>
-<% else %>
- <%= button_to_function "Finish Section A &#8594&#8594".html_safe, "finish_sectionA();" ,class: "btn btn-large btn-danger",:title=>"Submit second part of the exam" %>
+  <% if controller.action_name == "additional" %>
+      <%= button_to_function "Finish Section B".html_safe, "finish_sectionB();" ,class: "btn btn-large btn-danger",:title=>"Submit first part of the exam and attends Section B" %>
+  <% elsif @additional_question %>
+      <%= button_to_function "Finish Section A &#8594&#8594".html_safe, "finish_sectionA();" ,class: "btn btn-large btn-danger",:title=>"Submit second part of the exam" %>
+  <% else %>
+      <%= button_to_function "Finish Exam", "finish_exam();" ,class: "btn btn-large btn-danger",:title=>"Submit second part of the exam" %>
 <% end %>
 </div>
 <br/> Please call: 9037498886 for immediate assistance <br/>
@@ -289,9 +308,12 @@
   You won't be able to answer or modify from Section A again. Time remaining for Section A will not be carry forward for Section B as it will be elapsed if you go for Submit Section A.<br/><br/>
   If you are done Section A please Press 'Submit my exam' to proceed for Section B else cancel to stay back on Section A.<br/>
 </div>
-<div id="confirmB" style="display: none;">
-  Really want to submit Section B of your exam?
-</div>
+              <div id="confirmB" style="display: none;">
+                Really want to submit Section B of your exam?
+              </div>
+              <div id="confirm3" style="display: none;">
+                Really want to submit your exam?
+              </div>
  <div id="timeout" style="display: none;">
   Saving...
 </div>
