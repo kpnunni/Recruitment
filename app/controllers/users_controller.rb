@@ -70,13 +70,14 @@ class UsersController < ApplicationController
   end
   def updatepass
     @user=User.find(params[:id])
-    @old_password=Digest::SHA2.hexdigest("#{@user.salt}--#{params[:old_password]}")
+    # @old_password=Digest::SHA2.hexdigest("#{@user.salt}--#{params[:old_password]}")
 
-    if @old_password!=@user.password
-      flash[:error]= "old password is not correct"
-      redirect_to chgpass_user_path(@user)
-      return
-    end
+    # if @old_password!=@user.password
+    #   flash[:error]= "old password is not correct"
+    #   redirect_to chgpass_user_path(@user)
+    #   return
+    # end
+
     if params[:user][:login_password].length<4
       flash[:error]="Invalid new password"
       redirect_to chgpass_user_path(@user)

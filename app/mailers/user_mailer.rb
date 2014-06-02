@@ -16,52 +16,44 @@ class UserMailer < ActionMailer::Base
     end
     mail(:to => user.user_email, :subject => "Suyati Online Recruitment Test")
   end
-  def admin_schedule_email (admin,schedule)
-    @user = admin
+  def admin_schedule_email (admin_emails,schedule)
     @schedule= schedule
-    mail(:to => admin.user_email, :subject => "New Schedule")
+    mail(:bcc => admin_emails, :subject => "New Schedule")
   end
   def update_schedule_email(user)
     @content=Template.find(2)
     @user = user
     mail(:to => user.user_email, :subject => "Update schedule")
   end
-  def admin_update_schedule_email(user,schedule)
-    @user = user
+  def admin_update_schedule_email(admin_emails,schedule)
     @schedule= schedule
-    @url = "recruitment-suyati.herokuapp.com"
-    mail(:to => user.user_email, :subject => "Update schedule")
+    mail(:bcc => admin_emails, :subject => "Update schedule")
   end
   def cancel_schedule_email(user,schedule)
     @content=Template.find(3)
     @user = user
     @schedule= schedule
-    @url = "recruitment-suyati.herokuapp.com"
     mail(:to => user.user_email, :subject => "Scheduled exam canceled")
   end
   def exam_complete_email(user,candidate)
     @user = user
     @candidate=candidate
-    @url = "recruitment-suyati.herokuapp.com"
     mail(:to => user.user_email, :subject => "Result for validation")
   end
-  def admin_result_email(user,result)
+  def admin_result_email(admin_emails,result)
     @additional = Question.additional.count
     @results = result
-    @user = user
-    mail(:to => user.user_email, :subject => "Test completed")
+    mail(:bcc => admin_emails, :subject => "Test completed")
   end
   def admin_selected_result_email(user,result)
     @additional = Question.additional.count
     @results = result
-    @user = user
-    mail(:to => user.user_email, :subject => "Mark Details")
+    mail(:bcc => admin_emails, :subject => "Mark Details")
   end
   def result_email(user)
     @pass=Template.find(4)
     @fail=Template.find(5)
     @user = user
-    @url = "recruitment-suyati.herokuapp.com"
     mail(:to => user.user_email, :subject => "Recruitment test result")
   end
   def sent_password(user,token)

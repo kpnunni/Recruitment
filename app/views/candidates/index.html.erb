@@ -33,65 +33,89 @@
           <%= link_to "PRINT", '#', onclick: "javascript:print()", id: "print_link", class: "btn btn-xs" %>
         </div>
     </div>
-      <table   class="index_table" >
-            <tr>
-              <th>name</th>
-              <th>email id</th>
-              <th>phone</th>
-              <th>skills</th>
-              <th>Scheduled?</th>
-              <th>Exam Status</th>
-              <th></th>
-              <% if my_roles.include?('Schedule')   %>
-                  <th></th>
+    <br>
+    <br>
+    <br>
+  <% @candidates.each do |candidate| %>
+    <div align="center">
+      <table  cellpadding="2" cellspacing="3" width="100%" class="index_table" style="border-bottom: 5px solid rgba(132, 242, 246, 1);">
+        <tbody>
+          <tr>
+            <td rowspan="2" width="15%">
+              <%  if candidate.schedule and candidate.schedule.remote and candidate.recruitment_test.nil? %>
+                  <%= link_to   candidate.user.isAlive? ? (image_tag 'candidate_active.png', size: "75x75",  :title=>"Active candidate, Click to Toggle the activation") :( image_tag 'candidate_inactive.png', size: "75x75", :title=>"Inactive candidate, Click to Toggle the activation"),delete_user_path(candidate.user,from: "candidate"),method: :put%>
+              <% else %>
+                <%= image_tag("candidate.png", size: "75x75") %><br>
               <% end %>
-            </tr>
-            <% @candidates.each do |candidate| %>
-                <tr>
-                  <td width="15%" class="lft"  >
-                    <%= candidate.name %>
-                    <%  if candidate.schedule and candidate.schedule.remote and candidate.recruitment_test.nil? %>
-                        <%= link_to   candidate.user.isAlive? ? (image_tag 'active.png',  :title=>"Active candidate, Click to Toggle the activation") :( image_tag 'inactive.png', :title=>"Inactive candidate, Click to Toggle the activation"),delete_user_path(candidate.user,from: "candidate"),method: :put%>
+              <%= label_tag candidate.name, candidate.name, style: "background-color: green; color: white;" %>
+            </td>
+            <td class="lft" width="30%">
+              <b>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</b><%= candidate.user.user_email %><br>
+              <b>Phone&nbsp;&nbsp;&nbsp;:</b><%= candidate.phone1 %><br>
+              <b>Skills&nbsp;&nbsp;&nbsp;&nbsp;:</b><%= candidate.skills %><br>
+              <b>Address:</b><%= candidate.address %>
+
+            </td>
+            <td width="55%" class="lft">
+            <div class="rght" style="float: right;" width="80%">
+              <%= link_to image_tag('edit.png'), edit_candidate_path(candidate) %>
+              <%= link_to  image_tag('delete.png'), candidate, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </div>
+
+            <div style="float: left;" width="20%">
+                 <b>Exam: </b>
+                <% if candidate.schedule.nil?  %>
+                    <%= link_to  'Schedule Now', '#',:remote=>true ,:onclick=>"schedule_now(#{candidate.id});" %>
+                <% elsif candidate.recruitment_test.nil? %>
+                    <% if candidate.schedule.candidates.count<2 %>
+                        <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});", title: "Reschedule" %>
+                    <% else %>
+                        <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), edit_schedule_path(candidate.schedule.id), title: "Reschedule" %>
                     <% end %>
-                  </td>
-                  <td width="20%" class="lft"><%= candidate.user.user_email  %></td>
-                  <td width="10%" class="lft"><%= candidate.phone1 %></td>
-                  <td width="20%" class="lft"><%= candidate.skills%></td>
-                  <td width="15%" >
-                    <% if candidate.schedule.nil?  %>
-                        <%= link_to  'Schedule Now', '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});" %>
-                    <% elsif candidate.recruitment_test.nil? %>
-                        <% if candidate.schedule.candidates.count<2 %>
-                            <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});", title: "Reschedule" %>
-                        <% else %>
-                            <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), edit_schedule_path(candidate.schedule.id), title: "Reschedule" %>
-                        <% end %>
-                    <% elsif candidate.recruitment_test %>
-                        <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>
-                    <% end %>
-                    <div  style="display: none;" id=<%= candidate.id %> >
-                      <%= render 'schedule', :candidate => candidate  %>
-                    </div>
-                  </td>
-                  <% if candidate.recruitment_test %>
-                      <td width="10%"><%="Completed"%></td>
-                  <% elsif candidate.schedule && candidate.schedule.created_at==candidate.schedule.updated_at%>
-                      <td width="10%">
-                        <%="Scheduled"%>
-                        <%= link_to image_tag('resent.png'), resent_schedule_email_candidate_path(candidate,status: "schedule"), title: "Resent schedule email" %>
-                      </td>
-                  <% elsif candidate.schedule%>
-                      <td width="10%">
-                        <%="Re Scheduled"%>
-                        <%= link_to image_tag('resent.png'), resent_schedule_email_candidate_path(candidate,status: "re-schedule"), title: "Resent re-schedule email" %>
-                      </td>
-                  <% else %>
-                      <td width="10%"><%= "Cancelled/Not scheduled" %></td>
-                  <% end %>
-                  <td width="5%" class="dropt" title="edit"  ><%= link_to image_tag('edit.png'), edit_candidate_path(candidate) %></td>
-                  <td width="5%" class="dropt" title="delete"  ><%= link_to  image_tag('delete.png'), candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-                </tr>
+                <% elsif candidate.recruitment_test %>
+                    <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>
+                <% end %>
+            </div>
+            <br>
+            <b>Status: </b>
+            <% if candidate.recruitment_test %>
+                Completed.
+            <% elsif candidate.schedule && candidate.schedule.created_at==candidate.schedule.updated_at%>
+                  <%="Scheduled"%>
+                  <%= link_to image_tag('resent.png'), resent_schedule_email_candidate_path(candidate,status: "schedule"), title: "Resent schedule email" %>
+            <% elsif candidate.schedule%>
+                  <%="Re Scheduled"%>
+                  <%= link_to image_tag('resent.png'), resent_schedule_email_candidate_path(candidate,status: "re-schedule"), title: "Resent re-schedule email" %>
+            <% else %>
+                <%= "Cancelled/Not scheduled" %></td>
             <% end %>
-          </table>
-      <%= pagination_links(@candidates) %>
-      <% end %>
+
+            <% if candidate.recruitment_test %>
+                <br>
+                <b>Mark:</b>
+                <%= "#{number_with_precision(candidate.recruitment_test.mark_percentage, :precision => 2)}%" %>
+                <%= link_to "See Result..", candidate.recruitment_test %>        
+            <% elsif candidate.schedule %>
+                <br>
+                <b>Exam link:</b>
+                <%= clogin_answer_url(candidate.user.salt) %>
+            <% end %>  
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <b>Craeted On:</b><%= candidate.created_at.strftime("%b %d %A,%Y at %I:%M%p") %>
+            </td>
+            <td>
+              <b>Last update:</b><%= candidate.updated_at.strftime("%b %d %A,%Y at %I:%M%p") %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div  style="display: none;" id="<%= candidate.id %>" >
+      <%= render 'schedule', :candidate => candidate  %>
+    </div>
+  <% end %>
+<%= pagination_links(@candidates) %>
+<% end %>

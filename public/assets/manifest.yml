@@ -47,6 +47,12 @@ calendar.gif: calendar-382f786f20752a0eab1d314db272048a.gif
 calendar/index.gif: calendar-382f786f20752a0eab1d314db272048a.gif
 cancel.jpg: cancel-0e36c766c9c3f615881d8c8fae6db668.jpg
 cancel/index.jpg: cancel-0e36c766c9c3f615881d8c8fae6db668.jpg
+candidate.png: candidate-69b9fc20cbf3773833101f965ffc367b.png
+candidate/index.png: candidate-69b9fc20cbf3773833101f965ffc367b.png
+candidate_active.png: candidate_active-15ddc109c67438061ab7bae36c7953e5.png
+candidate_active/index.png: candidate_active-15ddc109c67438061ab7bae36c7953e5.png
+candidate_inactive.png: candidate_inactive-3f1b376004a8ba51a5e4deb9c3c5e64c.png
+candidate_inactive/index.png: candidate_inactive-3f1b376004a8ba51a5e4deb9c3c5e64c.png
 category.png: category-7f3d020719bb9db4da5ddfde8e3551dc.png
 category/index.png: category-7f3d020719bb9db4da5ddfde8e3551dc.png
 cell-blue.jpg: cell-blue-8244461e8c9f2e06607770b3649d7fc3.jpg

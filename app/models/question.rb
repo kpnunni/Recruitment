@@ -29,7 +29,7 @@ class Question < ActiveRecord::Base
     @questions.select! { |q| q.complexity_id == search[:complexity_id].to_i   } if search.try(:[],:complexity_id).present?
     @questions.select! { |q| q.category_id == search[:category_id].to_i       } if search.try(:[],:category_id).present?
     @questions.select! { |q| q.created_by == search[:by]                      } if search.try(:[],:by).present?
-    @questions.select! { |q| q.question.include?(search[:text])               } if search.try(:[],:text).present?
+    @questions.select! { |q| q.question.downcase.include?(search[:text].downcase)               } if search.try(:[],:text).present?
     @questions.select! { |q| q.created_at.between?(search[:from],search[:to]) } if search.try(:[],:from).present? && search.try(:[],:to).present?
     @questions
   end
