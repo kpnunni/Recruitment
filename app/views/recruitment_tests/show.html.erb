@@ -4,7 +4,7 @@
 </h1>
 <br/>
 <b>Email id:</b><%= @recruitment_test.candidate.user.user_email %><br/>
-<b>Exam completed on:</b><%= @recruitment_test.completed_on.strftime("%b %d %A,%Y at %I:%M%p")  %> <br/>
+<b>Exam completed on:</b><%= label_tag "",   @recruitment_test.completed_on.strftime("%b %d %A,%Y at %I:%M%p") , title: "", class: "cdate"   %> <br/>
 <br/>
 
 <%= render 'category_wise_mark' %>

@@ -35,8 +35,11 @@ class SchedulesController < ApplicationController
     @exam=Exam.all
     @schedule = Schedule. find(params[:id])
     @schedule.sh_date=@schedule.sh_date.strftime("%b-%d-%Y  %I:%M%p")
-    @candidates=Candidate.all
-    @candidates.select!  {|c| (@schedule.candidates.include?(c) && c.user.isAlive) ||( c.schedule_id.nil? && c.user.isAlive) }
+    @candidates= @schedule.candidates
+    # @candidates.select!  {|c|
+    #   @schedule.candidates.include?(c) ||
+    #   c.schedule_id.nil? && c.user.isAlive
+    # }
   end
   def create
     @schedule = Schedule.new(params[:schedule])
@@ -50,6 +53,9 @@ class SchedulesController < ApplicationController
       return
     end
     if @schedule.save
+      if @schedule.remote
+        @schedule.candidates.each { |candidate| candidate.user.update_attribute(:isAlive,false) }
+      end
       call_rake :send_schedule_mail, :schedule_id => @schedule.id
       redirect_to schedules_path, notice: 'Exam was successfully scheduled.'
     else
@@ -59,16 +65,18 @@ class SchedulesController < ApplicationController
   def update
     @schedule = Schedule.find(params[:id])
     @exam=Exam.all
-    @candidates=Candidate.all
-    @candidates.select!  {|c| (@schedule.candidates.include?(c) && c.user.isAlive) ||( c.schedule_id.nil? && c.user.isAlive) }
+    @candidates= @schedule.candidates
+    # params[:schedule][:candidate_ids] = @candidates.map(&:id)
+    # @candidates.select!  {|c| (@schedule.candidates.include?(c) && c.user.isAlive) ||( c.schedule_id.nil? && c.user.isAlive) }
     params[:schedule][:updated_by]=current_user.user_email
-    if params[:schedule][:candidate_ids].values.join.to_i==0
-      flash.now[:error]="Please select at least one candidate. "
-      render action: "edit"
-      return
-    end
+    # if params[:schedule][:candidate_ids].values.join.to_i==0
+    #   flash.now[:error]="Please select at least one candidate. "
+    #   render action: "edit"
+    #   return
+    # end
     respond_to do |format|
       if @schedule.update_attributes(params[:schedule])
+        @schedule.candidates.each { |candidate| candidate.user.update_attribute(:isAlive,!@schedule.remote) }
         call_rake :send_update_schedule_mail, :schedule_id => @schedule.id
         format.html { redirect_to @schedule, notice: 'Exam was successfully rescheduled.' }
       else
@@ -93,7 +101,7 @@ class SchedulesController < ApplicationController
     @schedule.destroy if @schedule.candidates.empty?
     redirect_to schedule_path(@schedule) if !@schedule.candidates.empty?
     redirect_to schedules_path if @schedule.candidates.empty?
-    UserMailer.cancel_schedule_email(@candidate.user,@schedule)
+    # UserMailer.cancel_schedule_email(@candidate.user,@schedule)
   end
   def chk_user
     if !current_user.has_role?('Schedule','Re Schedule','Cancel Schedule')

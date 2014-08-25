@@ -7,9 +7,9 @@
         <b>description:</b><%= @exam.description  %> <br />
         <b>Total time:</b><%= @exam.total_time/1.minute   %> minutes <br />
         <b>created_by:</b><%= @exam.created_by  %>  <br />
-        <b>created_at:</b><%= @exam.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %>  <br />
+        <b>created_at:</b><%=  label_tag "",   @exam.created_at.strftime("%b %d %A,%Y at %I:%M%p") , title: "", class: "cdate"   %>  <br />
         <b>modified_by:</b><%= @exam.modified_by %> <br />
-        <b>modified_at:</b><%= @exam.updated_at.strftime("%b %d %A,%Y at %I:%M%p")  %> <br />
+        <b>modified_at:</b><%= label_tag "",    @exam.updated_at.strftime("%b %d %A,%Y at %I:%M%p"), title: "", class: "cdate"    %> <br />
 
 
      <b>Instructions</b> <br />

@@ -39,4 +39,4 @@
   <%=  question.created_by %><br />
 
   <b>created at:</b>
-  <%=  question.created_at.strftime("%b %d %A,%Y at %I:%M%p") %><br />
+  <%=  label_tag "",   question.created_at.strftime("%b %d %A,%Y at %I:%M%p") , title: "", class: "cdate"  %><br />

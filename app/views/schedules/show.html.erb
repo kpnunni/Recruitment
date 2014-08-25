@@ -1,9 +1,9 @@
 
    <h1>Detail</h1>
 
-        <b>Date:</b><%= @schedule.sh_date.strftime("%b %d %A,%Y  %I:%M%p") %> <br />
+        <b>Date:</b><%= label_tag "",    @schedule.sh_date.strftime("%b %d %A,%Y  %I:%M%p"), title: "", class: "cdate"   %> <br />
         <b>Exam:</b><%= @schedule.exam.name  %> <br />
-        <b>created_at:</b><%= @schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %>  <br />
+        <b>created_at:</b><%= label_tag "",    @schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p") , title: "", class: "cdate"   %>  <br />
 
         <%= params[:user_id] %>
 

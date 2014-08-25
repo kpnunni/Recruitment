@@ -6,7 +6,7 @@ class Schedule < ActiveRecord::Base
   accepts_nested_attributes_for :candidates
   after_save :select_candidate
   before_destroy :delete_cid
-  validates_presence_of :sh_date,:candidate_ids
+  validates_presence_of :sh_date
   after_update :clear_odl_test_details
 
   def delete_cid
@@ -19,6 +19,7 @@ class Schedule < ActiveRecord::Base
 
 
   def select_candidate
+    return if self.candidate_ids.nil?
     self.candidates.delete_all
     self.candidate_ids.each do  |cid|
       if cid[1] == "1"

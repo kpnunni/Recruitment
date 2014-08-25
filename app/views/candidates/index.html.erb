@@ -77,9 +77,9 @@
                     <%= link_to  'Schedule Now', '#',:remote=>true ,:onclick=>"schedule_now(#{candidate.id});" %>
                 <% elsif candidate.recruitment_test.nil? %>
                     <% if candidate.schedule.candidates.count<2 %>
-                        <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});", title: "Reschedule" %>
+                        <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), '#',:remote=>true,:onclick=>"schedule_now(#{candidate.id});", title: "Reschedule", class: "cdate" %>
                     <% else %>
-                        <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), edit_schedule_path(candidate.schedule.id), title: "Reschedule" %>
+                        <%=link_to candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p"), edit_schedule_path(candidate.schedule.id), title: "Reschedule", class: "cdate" %>
                     <% end %>
                 <% elsif candidate.recruitment_test %>
                     <%=candidate.schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p")%>
@@ -113,10 +113,10 @@
           </tr>
           <tr>
             <td>
-              <b>Craeted On:</b><%= candidate.created_at.strftime("%b %d %A,%Y at %I:%M%p") %>
+              <b>Craeted On:</b><%= label_tag "", candidate.created_at.strftime("%b %d %A,%Y at %I:%M%p"), title: "", class: "cdate" %>
             </td>
             <td>
-              <b>Last update:</b><%= candidate.updated_at.strftime("%b %d %A,%Y at %I:%M%p") %>
+              <b>Last update:</b><%= label_tag "",  candidate.updated_at.strftime("%b %d %A,%Y at %I:%M%p"), title: "", class: "cdate"  %>
             </td>
           </tr>
         </tbody>

@@ -68,7 +68,7 @@
         <% @schedules1.each {|r|  %>
             <tr>
               <td class="lft_home"  height="0" >
-                <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
+                <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r), title: "", class: "cdate"      %>
               </td>
             </tr>
         <% } %>
@@ -87,7 +87,7 @@
         <% @schedules7.each {|r|  %>
             <tr>
               <td class="lft_home"  height="0" >
-                <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
+                <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r), title: "", class: "cdate"      %>
               </td>
             </tr>
         <% } %>
@@ -106,7 +106,7 @@
         <% @schedules30.each {|r|  %>
             <tr>
               <td class="lft_home"  height="0" >
-                <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r)    %>
+                <%=link_to  r.sh_date.strftime("%b %d %A,%Y at %I:%M%p"),schedule_path(r), title: "", class: "cdate"      %>
               </td>
             </tr>
         <% } %>

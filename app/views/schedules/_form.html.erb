@@ -8,39 +8,44 @@
         </div>
 
 
-        <%= f.label :exam%>
+        <b>Exam:</b>
         <%= f.select  :exam_id , @exam.collect {|e| [e.name,e.id]},{},  style: "width: 300px;"%><br/>
 
+        <b>Date and time:</b>
+        <%= f.text_field  :sh_date  ,:value => (@schedule && @schedule.sh_date.blank? ? '' : @schedule.sh_date.strftime("%d-%m-%Y  %I:%M%p") ) ,  required:{} %>
+        <br/>
 
 
 
-      <br/> <h3>Candidates:</h3><br/>
-     <table class="index_table"  >
-       <tr>
-         <th>select/not</th>
-         <th>Candidate Name</th>
-         <th>Email id</th>
-       </tr>
-
-         <%= f.fields_for :candidate_ids do |f1| %>
-             <% @candidates.each do |c| %>
-           <tr>
-             <td width="20%"  ><%= f1.check_box  c.id , :checked=> !@schedule.candidates.empty?  ? @schedule.candidates.include?(c) : false %></td>
-             <td width="30%" ><%= c.name %></td>
-             <td width="50%" ><%= c.user.user_email %></td>
+        <br/> <h3>Candidates:</h3><br/>
+        <table class="index_table"  >
+          <tr>
+            <% if @schedule.new_record?  %><th>select/not</th> <% end %>
+            <th>Name</th>
+            <th>Email</th>
           </tr>
-         <% end %>
-     </table>
-       <br />
-           <%= f.label :date_and_time %>
-           <%= f.text_field  :sh_date  ,:value => (@schedule && @schedule.sh_date.blank? ? '' : @schedule.sh_date.strftime("%d-%m-%Y  %I:%M%p") ) ,  required:{} %>
-           <br />
-       <%= f.submit class: "btn btn-large btn-success",:disable_with=>"Scheduling"  %>
-        <%= link_to   "Cancel" ,schedules_path,class: "btn btn-large btn-warning" %>
-     <% end %>
-   <% end %>
 
+          <%= f.fields_for :candidate_ids do |f1| %>
+              <% @candidates.each do |c| %>
+                  <tr>
+                   <% if @schedule.new_record?  %>
+                        <td width="20%"  ><%= f1.check_box  c.id , :checked=> !@schedule.candidates.empty?  ? @schedule.candidates.include?(c) : false %></td>
+                    <% end %>
+                    <td width="30%" ><%= c.name %></td>
+                    <td width="50%" ><%= c.user.user_email %></td>
+                  </tr>
+              <% end %>
+              </table>
+              <br />
+              <label><%= f.check_box  :remote %> Attending the exam from remote location?</label>
+              <br />
+              <br />
+              <%= f.submit class: "btn btn-large btn-success",:disable_with=>"Scheduling"  %>
+              <%= link_to   "Cancel" ,schedules_path,class: "btn btn-large btn-warning" %>
+          <% end %>
     <% end %>
+
+<% end %>
 
 
 

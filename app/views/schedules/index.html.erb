@@ -37,11 +37,11 @@
 
       <% @schedules.each do |schedule| %>
           <tr>
-            <td width="25%" ><%= link_to schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p") , schedule_path(schedule) %></td>
+            <td width="25%" ><%= link_to schedule.sh_date.strftime("%b %d %A,%Y at %I:%M%p") , schedule_path(schedule), title: "", class: "cdate"   %></td>
             <td width="15%" ><%= schedule.exam.name  %></td>
             <td width="15%" ><%= schedule.created_by  %></td>
-            <td width="15%" ><%= schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p")  %></td>
-            <td width="15%" ><%= schedule.updated_at.strftime("%b %d %A,%Y at %I:%M%p")  %></td>
+            <td width="15%" ><%=  label_tag "",  schedule.created_at.strftime("%b %d %A,%Y at %I:%M%p") , title: "", class: "cdate"   %></td>
+            <td width="15%" ><%= label_tag "",   schedule.updated_at.strftime("%b %d %A,%Y at %I:%M%p"), title: "", class: "cdate"    %></td>
 
 
             <% if  schedule.sh_date.to_i - Time.new.to_i < 0  %>

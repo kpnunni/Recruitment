@@ -5,7 +5,7 @@ class ChangeColumn < ActiveRecord::Migration
      remove_column :roles_users , :created_at ,:updated_at
      remove_column :exams_instructions  , :created_at ,:updated_at
      remove_column :exams_questions  , :created_at ,:updated_at
-     remove_column :roles_users , :created_at ,:updated_at
+     # remove_column :roles_users , :created_at ,:updated_at
   end
 
   def down

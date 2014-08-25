@@ -16,9 +16,9 @@
     <% end %>
       <br />
      <b>Profile created at:</b>
-    <%= @user.created_at.strftime("%b %d %A,%Y at %I:%M%p") %> <br />
+    <%= label_tag "",    @user.created_at.strftime("%b %d %A,%Y at %I:%M%p"), title: "", class: "cdate"   %> <br />
     <b> Profile updated at:</b>
-    <%= @user.updated_at.strftime("%b %d %A,%Y at %I:%M%p") %> <br /><br />
+    <%= label_tag "",    @user.updated_at.strftime("%b %d %A,%Y at %I:%M%p"), title: "", class: "cdate"   %> <br /><br />
 
 
     <%= link_to image_tag('pass.png'),chgpass_user_path(@user), :class=>"dropt", :title=>"change password"  %>

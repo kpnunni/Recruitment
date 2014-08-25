@@ -894,3 +894,37 @@ a:active  { color: #ccc }  /* active links    */
     top: 11px;
     left: -6px;
 }
+
+.clock {
+    position: relative;
+    width: 100px;
+    height: 120px;
+    /*margin: 0px auto 0 auto;*/
+    background: url(<%= asset_path('clockface.jpg') %>) no-repeat;
+    list-style: none;
+}
+
+.min {
+    position: absolute;
+    width: 5px;
+    height: 107px;
+    top: -3px;
+    left: 47px;
+    background: url(<%= asset_path('minhand.png') %>);
+    z-index: 2;
+}
+.hour {
+    position: absolute;
+    width: 5px;
+    height: 111px;
+    top: -5px;
+    left: 48px;
+    background: url(<%= asset_path('hourhand.png') %>);
+    z-index: 1;
+}
+.date {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    z-index: 3;
+}
