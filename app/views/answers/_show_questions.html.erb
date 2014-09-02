@@ -74,7 +74,9 @@
         jQuery("#qbutton_"+q_id).css({"background-color": "black"});
 
         locked =true;
-        jQuery("#timeout").dialog({width: 350, closeOnEscape: false, modal: true,position: 'bottom', open: function(event, ui) { jQuery(".ui-dialog-titlebar-close").hide(); }});
+        jQuery("#timeout").dialog({width: 950,height: 350, closeOnEscape: false, modal: true, open: function(event, ui) { 
+          jQuery(".ui-dialog-titlebar-close").hide();
+        }});
 
 
         //sending aswer details to server
@@ -88,7 +90,7 @@
                     finish: finish
                  },
             dataType: "json",
-            timeout: 1500,
+            timeout: 15000,
             tryCount : 0,
             retryLimit : 5,
             success:
@@ -104,7 +106,11 @@
                 },
             error:  function(xhr, textStatus, errorThrown ) {
                         this.tryCount++;
-                        if (this.tryCount <= this.retryLimit) {
+                        if (this.tryCount > this.retryLimit) {
+                            jQuery("#timeout").append(
+                                    "<br><br><br><b>Click <a href=\"#\" onclick=\"window.location.reload(true);\" style=\"color: green;\">here</a> if stuck.</b>"
+                            );
+                        } else {
                             //try again
                             jQuery.ajax(this);
                             return;
@@ -299,7 +305,7 @@
   <% elsif @additional_question %>
       <%= button_to_function "Finish Section A &#8594&#8594".html_safe, "finish_sectionA();" ,class: "btn btn-large btn-danger",:title=>"Submit second part of the exam" %>
   <% else %>
-      <%= button_to_function "Finish Exam", "finish_exam();" ,class: "btn btn-large btn-danger",:title=>"Submit second part of the exam" %>
+      <%= button_to_function "Finish Exam", "finish_exam();" ,class: "btn btn-large btn-danger",:title=> 'Submit your exam' %>
 <% end %>
 </div>
 <br/> Please call: 9037498886 for immediate assistance <br/>
