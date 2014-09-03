@@ -27,7 +27,7 @@
     <th width="5%" >Category</th>
     <th width="5%" >Complexity</th>
   </tr>
-  <% @recruitment_test.candidate.answers.each do |ans| %>
+  <% @recruitment_test.candidate.answers.sort.each do |ans| %>
       <%if ans.question %>
           <tr>
         <td class="lft" ><%=ans.question.question   %></td>
