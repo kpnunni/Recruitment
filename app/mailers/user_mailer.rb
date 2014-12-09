@@ -45,7 +45,7 @@ class UserMailer < ActionMailer::Base
     @results = result
     mail(:bcc => admin_emails, :subject => "Test completed")
   end
-  def admin_selected_result_email(user,result)
+  def admin_selected_result_email(admin_emails,result)
     @additional = Question.additional.count
     @results = result
     mail(:bcc => admin_emails, :subject => "Mark Details")
