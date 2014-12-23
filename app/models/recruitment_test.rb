@@ -46,6 +46,22 @@ class RecruitmentTest < ActiveRecord::Base
     end
     count
   end
+
+  def total_confusion
+    candidate.answers.select {
+      |ans| ans.trace and ans.trace.size > 1 
+    }.size
+  end
+
+  def each_confusion(category)
+    candidate.answers.select { |ans|
+      ans.question.category_id == category.id and\
+        ans.trace and ans.trace.size > 1
+    }.size
+  end
+
+
+
   def each_wrong_answers(cat)
     count=0
     candidate=self.candidate
@@ -75,6 +91,13 @@ class RecruitmentTest < ActiveRecord::Base
     end
 
   end
+
+  # def answers_changed(cat)
+  #   q_nos=self.candidate.schedule.exam.questions.select { |q| q.category_id == cat.id}
+  #   self.candidate.answers.each { |ans| 
+  #     if ans.question
+  #   }
+  # end
 
   def calc_mark_percentage(cat)
     q_nos=self.candidate.schedule.exam.questions.select { |q| q.category_id == cat.id}.size

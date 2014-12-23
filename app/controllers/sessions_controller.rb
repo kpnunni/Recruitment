@@ -57,11 +57,11 @@ class SessionsController < ApplicationController
       render "new"
     elsif user.admin?
       sign_in user
-      redirect_to '/homes/admin'
+      redirect_to after_sign_in_path_for
     elsif user.has_role?('Manage Users')||user.has_role?('Manage Questions')||user.has_role?('Manage Candidates')||user.has_role?('Manage Exams')||user.has_role?('Schedule')||
         user.has_role?('Interviewer')||user.has_role?('Add Questions Only')|| user.has_role?('Add Questions')|| user.has_role?('Re Schedule')||user.has_role?('Cancel Schedule')||user.has_role?('Validate Result')||user.has_role?('Manage Templates')||user.has_role?('View Result')
       sign_in user
-      redirect_to '/homes/index'
+      redirect_to after_sign_in_path_for
     else
       flash.now[:error ] = 'You cant login. Contact admin.'
       render "new"

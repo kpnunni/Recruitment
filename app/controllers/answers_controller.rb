@@ -30,7 +30,7 @@ class AnswersController < ApplicationController
       #ordered_questions.flatten!
 
       @candidate.schedule.exam.questions.order(:category_id, :id).each do |q|
-        Answer.create({candidate_id: @candidate.id, question_id: q.id, time_taken: 0, answer: "0"})
+        Answer.create({candidate_id: @candidate.id, question_id: q.id, time_taken: 0, answer: "0", trace: ""})
         #@answer.question=q
         #@answer.candidate=@candidate
         #@answer.time_taken=0
@@ -272,7 +272,8 @@ class AnswersController < ApplicationController
     @candidate = current_user.candidate
     @answer = @candidate.answers.where(question_id: params[:question_id]).first
     if @answer.present?
-       @answer.update_attributes({answer: params[:option_id], time_taken: params[:time_used]})
+      @answer.update_attributes({answer: params[:option_id], time_taken: params[:time_used]})
+      @answer.set_trace(params[:trace])
     end
     start_additional_question if params[:finish] == "1" or (params[:finish] == "2" && !feature_enabled)
     render :json => { :success => "success", :status_code => "200" }

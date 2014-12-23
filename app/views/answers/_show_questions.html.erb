@@ -5,13 +5,27 @@
     var partB = <%= @candidate.submitted %> ;
     var additional_q = <%= @additional_question %> ;
     jQuery("#question_<%= @questions.first.id %>").show("slow");
-
+    var trace = '';
 
     window.onload = function()
     {
         jQuery("#question_"+first_q).show();
         jQuery("#loadingdiv").hide();
         startCountdown(<%= @time -1 %>)
+
+        //to trace the anwer
+        jQuery("input[type='radio']").on("click", function() {
+          name = jQuery(this).attr("name");
+          jQuery("input[name="+name+"]").each(function(trace_count) {
+            if(this.checked) {
+              last_answer = trace.slice(-1);
+              if (last_answer != trace_count+1)
+                trace += trace_count+1;
+            }
+          });
+
+        });
+
     }
 
     function show_this(current, q_id, dir){
@@ -87,6 +101,7 @@
                     time_used: t_used,
                     question_id: current,
                     option_id: op_id,
+                    trace: trace,
                     finish: finish
                  },
             dataType: "json",
@@ -95,6 +110,7 @@
             retryLimit : 5,
             success:
                 function(data, status){
+                    trace = '';
                     locked = false;
                     jQuery("#timeout").dialog("close");
                     if(finish == 1){
@@ -169,7 +185,10 @@
     }
 
     function reset_answers(qid){
+      if (jQuery("input[name=" + qid + "]:checked").length > 0) {
         jQuery("input[name=" + qid + "]:checked").prop('checked', false);
+        trace += '0';
+      }
     }
 
 

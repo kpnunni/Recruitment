@@ -1,6 +1,6 @@
 class Answer < ActiveRecord::Base
   attr_accessor :c_option, :dec_time ,:q_no
-   attr_accessible :candidate_id,:question_id,:answer,:time_taken ,:c_option, :dec_time ,:q_no
+  attr_accessible :candidate_id,:question_id,:answer,:time_taken ,:c_option, :dec_time ,:q_no, :trace
   validates_uniqueness_of :question_id, :scope => :candidate_id
   belongs_to :candidate
   belongs_to :question
@@ -106,5 +106,17 @@ class Answer < ActiveRecord::Base
     else
      user.candidate.recruitment_test.update_attribute(:is_passed,"Pending")
     end
+  end
+
+  def set_trace(current_trace)
+    last_trace = trace.split("").last
+    current_first_trace = current_trace.split("").first
+    if current_trace.size > 0 and last_trace == current_first_trace
+      current_trace = current_trace[1..-1]
+    end
+    # new_trace = ('A'..'Z').to_a[self.answer.split("").index('1')]
+
+    self.trace += current_trace
+    save
   end
 end
