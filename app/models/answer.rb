@@ -109,8 +109,8 @@ class Answer < ActiveRecord::Base
   end
 
   def set_trace(current_trace)
-    trace ||= ''
-    last_trace = trace.split("").last
+    self.trace ||= ''
+    last_trace = self.trace.split("").last
     current_first_trace = current_trace.split("").first
     if current_trace.size > 0 and last_trace == current_first_trace
       current_trace = current_trace[1..-1]
