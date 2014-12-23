@@ -17,7 +17,7 @@
 
 <h3 align="left" >Answer Paper:</h3> <br/>
 
-<% @recruitment_test.candidate.answers.group_by{|answer| answer.question.category_id}.each do |category,answers| %>
+<% @recruitment_test.candidate.answers.reverse.group_by{|answer| answer.question.category_id}.each do |category,answers| %>
   
   <br>
  <h3>Category: <%= Category.find(category).category %> <a href="javascript:void(0);" onclick="jQuery('#result_<%= category %>').toggle()">show/hide</a> </h3>
@@ -28,7 +28,7 @@
     <th width="5%" >Time used</th>
     <th width="5%" >Allowed time</th>
   </tr>
-  <% @recruitment_test.candidate.answers.sort.each do |ans| %>
+  <% answers.sort.each do |ans| %>
       <%if ans.question %>
       <tr>
         <td class="lft" valign="top" >
