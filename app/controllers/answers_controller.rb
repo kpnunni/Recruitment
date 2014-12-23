@@ -384,7 +384,7 @@ class AnswersController < ApplicationController
   def add_additional_answers
     @additional = Question.additional
     @additional.shuffle.each do |q|
-      Answer.create(question_id: q.id, candidate_id: @candidate.id,time_taken: 0, answer: "0")
+      Answer.create(question_id: q.id, candidate_id: @candidate.id,time_taken: 0, answer: "0", trace: '')
     end
     next_ans = @candidate.answers.where(question_id: @additional.map(&:id)).sort.first
   end
