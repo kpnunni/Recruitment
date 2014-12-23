@@ -77,7 +77,7 @@
              attend = @extra_answers.size
              right = @extra_answers.select{|ans| ans.question && ans.answer == ans.question.answer_id }.size
              wrong = attend - right
-             confusion = @recruitment_test.each_confusion(ans.question.category) 
+             confusion = @recruitment_test.each_confusion(@extra_answers.first.question.category) 
           %>
           <table style="font-family: verdana,arial,sans-serif;font-size: 11px;color: #333333;border-width: 1px;border-color: #999999;border-collapse: collapse;">
             <tr>
