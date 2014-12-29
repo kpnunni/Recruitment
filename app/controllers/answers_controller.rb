@@ -272,7 +272,8 @@ class AnswersController < ApplicationController
     @candidate = current_user.candidate
     @answer = @candidate.answers.where(question_id: params[:question_id]).first
     if @answer.present?
-      @answer.update_attributes({answer: params[:option_id], time_taken: params[:time_used]})
+      time_used = @answer.time_taken + params[:time_used].to_i
+      @answer.update_attributes({answer: params[:option_id], time_taken: time_used})
       @answer.set_trace(params[:trace])
     end
     start_additional_question if params[:finish] == "1" or (params[:finish] == "2" && !feature_enabled)

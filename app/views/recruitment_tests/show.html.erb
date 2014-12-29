@@ -1,3 +1,9 @@
+<script>
+  var all_dataset = {};
+  var all_options = {};
+  var calls = 0;
+</script>
+
 <h1>Candidate:
   <%=@recruitment_test.candidate.name %>
 </h1>
@@ -46,11 +52,102 @@
             </ol>
         </td>
         <td valign="top">
+          <div class="flot-placeholder" id="<%= ans.id %>" style="width: 300px; height: 200px;"></div>
           <% if ans.trace %>
-            <%= ans.trace.split("").join("&#10151;").html_safe %>
+            <%#= ans.trace.split("").join("&#10151;").html_safe %>
           <% else %>
-            <%= ans.trace %>
+            <% ans.trace = '' %>
           <% end %>
+            <script>
+              var data = <%= ans.trace.split("").each_with_index.map {|option, count| [count+1, option.to_i ]} %>;
+             
+              var data2 = [
+                [0, <%= ans.question.answer_id.split("").index('1') + 1 %>],[<%= ans.trace.size %>, <%= ans.question.answer_id.split("").index('1') + 1 %>]
+            ];
+            
+            var dataset = [
+                {
+                    label: "Trace",
+                    data: data,
+                    points: { fillColor: "green" }
+                    // color: '#058DC7'
+                },
+                {
+                    label: "Right Answer",
+                    points: {  fillColor: "green" }, 
+                    data: data2
+                }
+            ];
+            all_dataset[<%= ans.id.to_s %>] = dataset;
+
+            function mark_<%= ans.id.to_s %>(ctx, x, y, radius, shadow) 
+            {
+               if (calls == <%= ans.question.answer_id.split("").index('1') %>)
+               {
+                ctx.arc(x, y, radius * 2, 0, shadow ? Math.PI : Math.PI * 2, false);
+               }
+               else
+               {
+                 ctx.arc(x, y, radius * 2, 0, shadow ? Math.PI : Math.PI , false);
+               }
+              calls++;
+            }
+
+
+
+            var options = {
+                series: { 
+                    lines: { show: true },     
+                    points: {
+                        radius: 4,
+                        show: true,
+                        // symbol: mark_<%= ans.id.to_s %>
+                    }
+                },
+                xaxis: {
+                        min: 0,
+                        // align: 'center',
+                        // labelWidth: 30,
+                        max: <%= ans.trace.size %>,
+                        tickSize: 1,
+                        axisLabel: 'Attepts',
+                        tickDecimals:0
+                },
+                yaxis: {
+                        min: 0,
+                        max: <%= ans.question.options.size %>,
+                        tickSize: 1,
+                        axisLabel: 'choices',
+                        tickDecimals:0
+                },
+                grid: {
+                  borderWidth: 1,
+                  minBorderMargin: 20,
+                  labelMargin: 10,
+                  backgroundColor: {
+                      colors: ["#fff", "#e4f4f4"]
+                  },
+                  margin: {
+                      top: 8,
+                      bottom: 20,
+                      left: 20
+                  }
+                },
+                legend: {
+                  // position: 'sw',
+                  // margin: 20,
+                  // container:jQuery("#legendContainer"), 
+                    // labelBoxBorderColor: "none"
+                },
+                axisLabels: {
+                    show: true,
+                },
+                clickable:true,
+                hoverable: true
+            };
+            all_options[<%= ans.id.to_s %>] = options;
+
+            </script>
         </td>
         <td valign="top"><%= ans.time_taken %></td>
         <td valign="top"><%= ans.question.allowed_time %></td>
@@ -61,3 +158,14 @@
 
 </table>
   <% end %>
+<script>
+  
+    jQuery(document).ready(function () {
+      jQuery(".flot-placeholder").each(function() {
+        calls = 0;
+        ans_id = jQuery(this).attr("id");
+        jQuery.plot(this, all_dataset[ans_id], all_options[ans_id]);
+      })
+    });
+
+</script> 

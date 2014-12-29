@@ -4,6 +4,7 @@
     var feedback_url = "<%= feed_back_answers_url %>" ;
     var partB = <%= @candidate.submitted %> ;
     var additional_q = <%= @additional_question %> ;
+    var ajax_request_fail_count = 0;
     jQuery("#question_<%= @questions.first.id %>").show("slow");
     var trace = '';
 
@@ -88,11 +89,13 @@
         jQuery("#qbutton_"+q_id).css({"background-color": "black"});
 
         locked =true;
-        jQuery("#timeout").dialog({width: 950,height: 350, closeOnEscape: false, modal: true, open: function(event, ui) { 
+        jQuery("#timeout").dialog({width: 350,height: 250, closeOnEscape: false, modal: true, open: function(event, ui) { 
           jQuery(".ui-dialog-titlebar-close").hide();
         }});
+        jQuery(".ui-widget-overlay").css({background: "rgba(202, 202, 202, 0.97)", opacity: 1});
 
-
+        jQuery("#timeout-loading").html('<%= image_tag("submitting4.gif", alt: "Loading...", style: "") %>');
+        
         //sending aswer details to server
         jQuery.ajax({
             type: "POST",
@@ -105,13 +108,14 @@
                     finish: finish
                  },
             dataType: "json",
-            timeout: 1500,
+            timeout: 3000,
             tryCount : 0,
             retryLimit : 5,
             success:
                 function(data, status){
                     trace = '';
                     locked = false;
+                    ajax_request_fail_count = 0;
                     jQuery("#timeout").dialog("close");
                     if(finish == 1){
                         window.location.href = additional_url;
@@ -123,9 +127,13 @@
             error:  function(xhr, textStatus, errorThrown ) {
                         this.tryCount++;
                         if (this.tryCount > this.retryLimit) {
-                            jQuery("#timeout").append(
-                                    "<br><br><br><b>Click <a href=\"#\" onclick=\"window.location.reload(true);\" style=\"color: green;\">here</a> if stuck.</b>"
+                            ajax_request_fail_count++;
+                            jQuery("#timeout-loading").html(
+                                    "<br><br><b>Failed..</b><br><br><b>Click <a href='javascript:void(0);' onclick=\"show_this("+current+","+q_id+",'"+dir+"')\" style='color: green;'>here</a> to retry.</b>"
                             );
+                            if (ajax_request_fail_count > 5) {
+                              jQuery("#timeout-loading").append("<br><br><b>If you are still unable to save the answer, close this window and starts again..</b><br>")
+                            }
                         } else {
                             //try again
                             jQuery.ajax(this);
@@ -341,5 +349,6 @@
               </div>
  <div id="timeout" style="display: none;">
   Saving...
+  <div id="timeout-loading"></div>
 </div>
 
