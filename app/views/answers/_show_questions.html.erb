@@ -132,7 +132,7 @@
                                     "<br><br><b>Failed..</b><br><br><b>Click <a href='javascript:void(0);' onclick=\"show_this("+current+","+q_id+",'"+dir+"')\" style='color: green;'>here</a> to retry.</b>"
                             );
                             if (ajax_request_fail_count > 5) {
-                              jQuery("#timeout-loading").append("<br><br><b>If you are still unable to save the answer, close this window and starts again..</b><br>")
+                              jQuery("#timeout-loading").append("<br><br><b>If you are still unable to save the answer, click <a href=\"#\" onclick=\"window.location.reload(true);\" style=\"color: green;\">here</a> to reload this window..</b><br>")
                             }
                         } else {
                             //try again
